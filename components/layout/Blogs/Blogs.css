@@ -1,0 +1,88 @@
+/* components/layout/Blogs/Blogs.css */
+.blogs-section {
+  width: 100%;
+  min-height: 100svh;
+  background-color: #000;
+  padding: 100px 0 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.blogs-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at top,
+    rgba(255, 255, 255, 0.1),
+    transparent 70%
+  );
+  z-index: 1;
+}
+
+/* Swiper container */
+.blogSwiper {
+  width: 100%;
+  max-width: 1200px;
+  padding-bottom: 100px;
+  display: flex;
+  justify-content: center;
+}
+
+/* Swiper slides */
+.blogSwiper .swiper-slide {
+  display: flex;
+  justify-content: center;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  transition: all 0.5s ease;
+}
+
+/* Navigation buttons */
+.blogSwiper .swiper-button-prev,
+.blogSwiper .swiper-button-next {
+  color: white;
+  opacity: 0.6;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.blogSwiper .swiper-button-prev:hover,
+.blogSwiper .swiper-button-next:hover {
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+/* Pagination dots */
+.blogSwiper .swiper-pagination-bullet {
+  background: rgba(255, 255, 255, 0.4);
+  width: 8px;
+  height: 8px;
+  transition: all 0.3s ease;
+}
+
+.blogSwiper .swiper-pagination-bullet-active {
+  background: white;
+  transform: scale(1.3);
+}
+
+/* Hide arrows on mobile */
+@media (max-width: 768px) {
+  .blogSwiper .swiper-button-prev,
+  .blogSwiper .swiper-button-next {
+    display: none;
+  }
+
+  .blogs-section {
+    padding: 120px 0 100px;
+  }
+
+  .blogSwiper {
+    padding-bottom: 80px;
+  }
+}

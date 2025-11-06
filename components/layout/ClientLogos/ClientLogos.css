@@ -1,0 +1,47 @@
+/* ClientLogos.css */
+
+.logos-scroll-container {
+  overflow: hidden;
+  width: 100%;
+}
+
+.logos-scroll-track {
+  display: flex;
+  align-items: center;
+  animation: scroll-left 40s linear infinite;
+  width: fit-content;
+}
+
+/* Pause animation on hover */
+.logos-scroll-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.logo-item {
+  min-width: 220px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .logos-scroll-track {
+    animation-duration: 30s;
+  }
+  
+  .logo-item {
+    min-width: 160px;
+    height: 90px;
+  }
+}

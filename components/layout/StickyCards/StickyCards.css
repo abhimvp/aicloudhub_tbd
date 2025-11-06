@@ -1,0 +1,197 @@
+html,
+body {
+  background-color: #000;
+  overflow-x: hidden;
+}
+
+.sticky-cards {
+  width: 100%;
+  position: relative;
+}
+
+.sticky-card {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.sticky-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom right,
+    rgba(0, 0, 0, 0.8),
+    rgba(0, 0, 0, 0.55)
+  );
+  backdrop-filter: blur(3px);
+  z-index: 1;
+}
+
+/* Vertical Label */
+.vertical-label {
+  position: absolute;
+  left: 2rem;
+  top: 50%;
+  transform: translateY(-50%) rotate(-90deg);
+  transform-origin: left center;
+  z-index: 3;
+}
+
+.vertical-label span {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* Inner content grid */
+.sticky-card-inner {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3rem;
+  width: 90%;
+  max-width: 1200px;
+}
+
+/* Service Card */
+.service-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 1rem;
+  overflow: hidden;
+  color: #fff;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+}
+
+.service-image-wrapper {
+  width: 100%;
+  height: 240px; /* Increased from 180px */
+  overflow: hidden;
+}
+
+.service-top-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.9;
+  transition: transform 0.4s ease;
+}
+
+.service-card:hover .service-top-image {
+  transform: scale(1.05);
+}
+
+.service-content {
+  padding: 1.75rem;
+}
+
+.service-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.service-header img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+.service-header h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.service-description {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  opacity: 0.9;
+  line-height: 1.6;
+}
+
+/* Shadcn Check Icons */
+.service-points {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1rem;
+}
+
+.service-points li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.6rem;
+  font-size: 0.95rem;
+}
+
+.check-icon {
+  width: 18px;
+  height: 18px;
+  color: #4ade80; /* Tailwind green-400 */
+  flex-shrink: 0;
+}
+
+.service-outcome {
+  font-style: italic;
+  font-size: 0.9rem;
+  opacity: 0.85;
+  margin-top: 0.5rem;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .sticky-card-inner {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    width: 95%;
+  }
+
+  .sticky-card {
+    height: auto; /* <-- THIS IS THE KEY FIX */
+    padding: 6rem 1rem 3rem 1rem; /* Added top padding to clear navbar */
+  }
+
+  /* Reposition the FIRST label as a normal header */
+  .vertical-label {
+    transform: none; /* --- Removes the -90deg rotation --- */
+    position: absolute;
+    top: 3rem; /* Match the card's top padding */
+    left: 1rem; /* Match the card's horizontal padding */
+  }
+
+  /* Re-style the text */
+  .vertical-label span {
+    font-size: 1rem; /* A bit bigger, like a title */
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: rgba(255, 255, 255, 0.9);
+    text-transform: uppercase;
+  }
+
+  .service-image-wrapper {
+    height: 200px; /* Give it a good height for mobile */
+  }
+
+  .sticky-card ~ .sticky-card .vertical-label {
+    display: none;
+  }
+}

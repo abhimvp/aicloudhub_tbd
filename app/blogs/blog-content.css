@@ -1,0 +1,22 @@
+/* Blog article content styles - text colors now handled by Tailwind prose classes */
+
+.blog-content h2 {
+  background: linear-gradient(to right, #fb923c, #fef08a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.blog-content h3 {
+  color: #fdba74 !important;
+}
+
+.blog-content a {
+  color: #fb923c !important;
+}
+
+.blog-content ul,
+.blog-content ol {
+  list-style-position: inside;
+  margin-left: 1rem;
+}
