@@ -1,12 +1,23 @@
 // app/layout.tsx
 import type { Metadata } from "next";
-import { Inter, Oswald } from 'next/font/google';
+import { Plus_Jakarta_Sans, Space_Grotesk } from 'next/font/google';
 import "./globals.css";
 import SmoothScroll from "@/components/layout/SmoothScroll";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 
-const inter = Inter({ variable: '--font-inter', subsets: ['latin'] });
-const oswald = Oswald({ variable: '--font-oswald', subsets: ['latin'] });
+const plusJakartaSans = Plus_Jakarta_Sans({ 
+  variable: '--font-sans', 
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700', '800'],
+  display: 'swap',
+});
+
+const spaceGrotesk = Space_Grotesk({ 
+  variable: '--font-heading', 
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: "AI Cloud Hub",
@@ -20,7 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${oswald.variable} antialiased`}>
+      <body className={`${plusJakartaSans.variable} ${spaceGrotesk.variable} font-sans antialiased`}>
         <ThemeProvider>
           <SmoothScroll>
             {children}

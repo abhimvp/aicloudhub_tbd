@@ -1,10 +1,10 @@
 // lib/constants.ts
 export const navItems = [
   { name: "Home", href: "/" },
-  { name: "Services", href: "/#services" },
-  { name: "Courses", href: "/courses" },
+  { name: "Services", href: "/#technology-services" },
+  { name: "Trainings", href: "/courses" },
   { name: "About", href: "/about" },
-  { name: "Blogs", href: "/blogs" },
+  { name: "Resources", href: "/blogs" },
 ];
 
 // Main Business Verticals

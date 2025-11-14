@@ -11,7 +11,7 @@
 }
 
 .animated-services-container.dark {
-  background: linear-gradient(to bottom, #09090b, #18181b);
+  background: linear-gradient(to bottom right, #111827, #1e293b, #18181b);
 }
 
 .services-header {

@@ -3,23 +3,27 @@
 
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
+import { useLenis } from "lenis/react";
 import LandingPage from "@/components/layout/LandingPage/LandingPage";
 import Navbar from "@/components/layout/Navbar/Navbar";
 import Hero from "@/components/layout/HomePage/Hero";
-import Categories from "@/components/layout/HomePage/Categories";
+// import Categories from "@/components/layout/HomePage/Categories";
 import AboutUs from "@/components/layout/HomePage/AboutUs";
-import Testing from "@/components/layout/Services";
 import Blogs from "@/components/layout/Blogs/Blogs";
-import Services from "@/components/layout/Services";
+// import Services from "@/components/layout/Services";
 import Footer from "@/components/layout/Footer/Footer";
+import TechnologyServicesTabs from "@/components/layout/HomePage/TechnologyServicesTabs";
+import ScrollToTop from "@/components/layout/ScrollToTop";
 
 export default function Home() {
   const searchParams = useSearchParams();
   const skipLanding = searchParams.get('skipLanding') === 'true';
+  const lenis = useLenis();
   
   const [showLanding, setShowLanding] = useState(!skipLanding);
   const [heroReady, setHeroReady] = useState(skipLanding);
   const [showNavbar, setShowNavbar] = useState(skipLanding);
+  const [hasScrolledToHash, setHasScrolledToHash] = useState(false);
 
   const handleLandingFinish = () => {
     // Step 1: Fade out landing and show navbar
@@ -39,19 +43,66 @@ export default function Home() {
     document.body.style.overflow = showLanding ? "hidden" : "auto";
   }, [showLanding]);
 
+  // Handle hash navigation - scroll to section after page loads
+  useEffect(() => {
+    if (showLanding || hasScrolledToHash) return;
+
+    const hash = window.location.hash;
+    if (hash) {
+      // Wait for the page to fully render
+      const scrollToSection = () => {
+        // Try multiple times to find the element (in case it's not rendered yet)
+        const tryScroll = (attempts = 0) => {
+          const element = document.querySelector(hash);
+          if (element) {
+            // Use a small delay to ensure the page is fully rendered
+            setTimeout(() => {
+              if (lenis) {
+                lenis.scrollTo(hash, {
+                  duration: 1.5,
+                  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                });
+              } else {
+                element.scrollIntoView({ behavior: "smooth", block: "start" });
+              }
+              setHasScrolledToHash(true);
+            }, 300);
+          } else if (attempts < 10) {
+            // Retry after a short delay if element not found
+            setTimeout(() => tryScroll(attempts + 1), 200);
+          }
+        };
+
+        tryScroll();
+      };
+
+      // If landing is skipped, scroll immediately after a short delay
+      if (skipLanding && showNavbar) {
+        scrollToSection();
+      } else if (!showLanding && showNavbar) {
+        // If landing was shown, wait for it to finish
+        scrollToSection();
+      }
+    }
+  }, [showLanding, showNavbar, skipLanding, lenis, hasScrolledToHash]);
+
   return (
-    <main className="min-h-screen overflow-x-hidden">
+    <main className="min-h-screen overflow-x-hidden bg-white dark:bg-linear-to-br dark:from-gray-900 dark:via-slate-900 dark:to-zinc-950 transition-colors duration-300">
       {showLanding && <LandingPage onFinish={handleLandingFinish} />}
 
       {!showLanding && (
         <>
           {showNavbar && <Navbar />}
-          <Hero startAnimation={heroReady} />
-          <Categories />
-          <AboutUs />
-          <Services />
-          <Blogs />
-          <Footer />
+          <div className="flex flex-col">
+            <Hero startAnimation={heroReady} />
+            {/* <Categories /> */}
+            <TechnologyServicesTabs />
+            <AboutUs />
+            {/* <Services /> */}
+            <Blogs />
+            <Footer />
+          </div>
+          <ScrollToTop />
         </>
       )}
     </main>

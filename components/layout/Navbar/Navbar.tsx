@@ -7,16 +7,19 @@ import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { useLenis } from "lenis/react"; // 1. Import the useLenis hook
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { useTheme } from "@/components/theme/ThemeProvider";
+import { Search, X } from "lucide-react";
 
 const Navbar = () => {
   const { actualTheme } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [showComingSoon, setShowComingSoon] = useState(false);
   const lenis = useLenis(); // 2. Get the Lenis instance
   const pathname = usePathname(); // Get current path
+  const router = useRouter();
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
@@ -35,6 +38,34 @@ const Navbar = () => {
 
   // 3. Create the scroll-to function
   const handleScrollTo = (e: React.MouseEvent, target: string) => {
+    // Handle "/#technology-services" or similar patterns
+    if (target.includes("#technology-services")) {
+      const sectionId = "#technology-services";
+      
+      // If we're on homepage, scroll to section
+      if (isHomePage) {
+        e.preventDefault();
+        if (lenis) {
+          lenis.scrollTo(sectionId, {
+            duration: 2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          });
+        } else {
+          const element = document.querySelector(sectionId);
+          if (element) {
+            element.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        }
+        setIsMobileMenuOpen(false);
+        return;
+      }
+      // If not on homepage, navigate to homepage with skipLanding and hash
+      e.preventDefault();
+      router.push(`/?skipLanding=true${sectionId}`);
+      setIsMobileMenuOpen(false);
+      return;
+    }
+
     // If it's the blogs link or any external page link, don't prevent default
     if (!target.startsWith("#")) {
       setIsMobileMenuOpen(false);
@@ -149,10 +180,16 @@ const Navbar = () => {
           <div className="flex items-baseline space-x-8">
             {navItems.map((item) => {
               // If we're not on homepage and item is Home, navigate to root with skipLanding
-              const href =
+              let href =
                 !isHomePage && item.name === "Home"
                   ? "/?skipLanding=true"
                   : item.href;
+              
+              // If navigating to technology-services from another page, add skipLanding
+              if (!isHomePage && href.includes("#technology-services")) {
+                const hash = href.includes("#") ? href.substring(href.indexOf("#")) : "";
+                href = `/?skipLanding=true${hash}`;
+              }
 
               return (
                 <Link
@@ -169,20 +206,57 @@ const Navbar = () => {
                 </Link>
               );
             })}
+            {/* Careers Link with Coming Soon */}
+            <button
+              onClick={() => setShowComingSoon(true)}
+              className={`px-3 py-2 text-lg font-semibold uppercase transition-colors duration-300 ${
+                actualTheme === "dark"
+                  ? "text-white hover:text-orange-400"
+                  : "text-gray-900 hover:text-orange-600"
+              }`}
+            >
+              Careers
+            </button>
           </div>
         </div>
 
         {/* CTA */}
         <div className="hidden md:flex items-center space-x-4">
           <ThemeToggle />
+          <button
+            onClick={() => {
+              // Add search functionality here if needed
+            }}
+            className={`p-2 rounded-lg transition-colors duration-300 ${
+              actualTheme === "dark"
+                ? "text-white hover:text-orange-400 hover:bg-white/10"
+                : "text-gray-900 hover:text-orange-600 hover:bg-orange-50"
+            }`}
+            aria-label="Search"
+          >
+            <Search className="w-5 h-5" />
+          </button>
           <Link href="/contact">
-            <Button className="font-semibold">Contact Us</Button>
+            <Button className="font-semibold">Let's Talk</Button>
           </Link>
         </div>
 
         {/* Mobile Menu Button */}
         <div className="md:hidden flex items-center space-x-2">
           <ThemeToggle />
+          <button
+            onClick={() => {
+              // Add search functionality here if needed
+            }}
+            className={`p-2 rounded-lg transition-colors duration-300 ${
+              actualTheme === "dark"
+                ? "text-white hover:text-orange-400 hover:bg-white/10"
+                : "text-gray-900 hover:text-orange-600 hover:bg-orange-50"
+            }`}
+            aria-label="Search"
+          >
+            <Search className="w-5 h-5" />
+          </button>
           <button
             onClick={toggleMobileMenu}
             className={`inline-flex items-center justify-center p-2 rounded-md focus:outline-none transition-colors duration-200 ${
@@ -247,10 +321,16 @@ const Navbar = () => {
         <div className="flex flex-col items-stretch text-center">
           {navItems.map((item) => {
             // If we're not on homepage and item is Home, navigate to root with skipLanding
-            const href =
+            let href =
               !isHomePage && item.name === "Home"
                 ? "/?skipLanding=true"
                 : item.href;
+            
+            // If navigating to technology-services from another page, add skipLanding
+            if (!isHomePage && href.includes("#technology-services")) {
+              const hash = href.includes("#") ? href.substring(href.indexOf("#")) : "";
+              href = `/?skipLanding=true${hash}`;
+            }
 
             return (
               <Link
@@ -267,16 +347,89 @@ const Navbar = () => {
               </Link>
             );
           })}
+          <button
+            onClick={() => {
+              setShowComingSoon(true);
+              setIsMobileMenuOpen(false);
+            }}
+            className={`text-lg font-semibold uppercase transition-all duration-200 py-4 ${
+              actualTheme === "dark"
+                ? "text-white hover:text-orange-400 hover:bg-white/10"
+                : "text-gray-900 hover:text-orange-600 hover:bg-orange-50"
+            }`}
+          >
+            Careers
+          </button>
           <Link href="/contact" className="w-full">
             <Button
               className="font-semibold w-full rounded-none py-4"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              Contact Us
+              Let's Talk
             </Button>
           </Link>
         </div>
       </motion.div>
+
+      {/* Coming Soon Popup */}
+      {showComingSoon && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+          {/* Backdrop */}
+          <div
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+            onClick={() => setShowComingSoon(false)}
+          />
+          {/* Popup */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            className={`relative z-10 max-w-md w-full rounded-2xl p-8 shadow-2xl ${
+              actualTheme === "dark"
+                ? "bg-gray-900 border border-white/10"
+                : "bg-white border border-gray-200"
+            }`}
+          >
+            <button
+              onClick={() => setShowComingSoon(false)}
+              className={`absolute top-4 right-4 p-2 rounded-lg transition-colors ${
+                actualTheme === "dark"
+                  ? "text-white hover:bg-white/10"
+                  : "text-gray-600 hover:bg-gray-100"
+              }`}
+            >
+              <X className="w-5 h-5" />
+            </button>
+            <div className="text-center">
+              <div className="mb-4">
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-linear-to-r from-orange-500 to-yellow-400 mb-4">
+                  <span className="text-2xl">🚀</span>
+                </div>
+              </div>
+              <h3
+                className={`text-2xl font-bold mb-2 ${
+                  actualTheme === "dark" ? "text-white" : "text-gray-900"
+                }`}
+              >
+                Coming Soon!
+              </h3>
+              <p
+                className={`mb-6 ${
+                  actualTheme === "dark" ? "text-gray-300" : "text-gray-600"
+                }`}
+              >
+                We're working on something exciting. Stay tuned for career opportunities at AICloudHub!
+              </p>
+              <Button
+                onClick={() => setShowComingSoon(false)}
+                className="bg-linear-to-r from-orange-500 to-yellow-400 text-black font-semibold hover:opacity-90"
+              >
+                Got it!
+              </Button>
+            </div>
+          </motion.div>
+        </div>
+      )}
     </motion.nav>
   );
 };

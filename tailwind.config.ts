@@ -15,8 +15,11 @@ const config: Config = {
         light: "#fff",
         dark: "#000",
       },
-      // Add custom fonts from DEVELOPMENT_PLAN.md
+      // Modern font stack for tech/AI company
       fontFamily: {
+        sans: ['var(--font-sans)', 'system-ui', '-apple-system', 'sans-serif'],
+        heading: ['var(--font-heading)', 'var(--font-sans)', 'system-ui', 'sans-serif'],
+        // Legacy fonts (kept for backward compatibility)
         manrope: ["Manrope", "sans-serif"],
         agdasima: ["Agdasima", "sans-serif"],
         petrona: ["Petrona", "serif"],

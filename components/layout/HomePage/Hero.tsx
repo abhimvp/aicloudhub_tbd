@@ -48,6 +48,7 @@ export default function Hero({ startAnimation = true }: HeroProps) {
   const rootRef = useRef<HTMLElement | null>(null);
   const scrollerRef = useRef<HTMLDivElement | null>(null);
   const headlineRef = useRef<HTMLHeadingElement | null>(null);
+  const taglineRef = useRef<HTMLParagraphElement | null>(null);
   const paraRef = useRef<HTMLParagraphElement | null>(null);
   const ctaRef = useRef<HTMLDivElement | null>(null);
   const tlRef = useRef<gsap.core.Timeline | null>(null);
@@ -90,19 +91,32 @@ export default function Hero({ startAnimation = true }: HeroProps) {
     }
 
     // ✨ Text + CTA animations
-    tl.fromTo(
-      headlineRef.current,
-      { autoAlpha: 0, y: 36 },
-      { autoAlpha: 1, y: 0, duration: 0.8 },
-      "intro"
-    )
-      .fromTo(
+    if (headlineRef.current) {
+      tl.fromTo(
+        headlineRef.current,
+        { autoAlpha: 0, y: 36 },
+        { autoAlpha: 1, y: 0, duration: 0.8 },
+        "intro"
+      );
+    }
+    if (taglineRef.current) {
+      tl.fromTo(
+        taglineRef.current,
+        { autoAlpha: 0, y: 20 },
+        { autoAlpha: 1, y: 0, duration: 0.7 },
+        "intro+=0.15"
+      );
+    }
+    if (paraRef.current) {
+      tl.fromTo(
         paraRef.current,
         { autoAlpha: 0, y: 20 },
         { autoAlpha: 1, y: 0, duration: 0.7 },
-        "intro+=0.1"
-      )
-      .fromTo(
+        "intro+=0.3"
+      );
+    }
+    if (ctaRef.current) {
+      tl.fromTo(
         ctaRef.current,
         { autoAlpha: 0, y: 30 },
         {
@@ -113,6 +127,7 @@ export default function Hero({ startAnimation = true }: HeroProps) {
         },
         "intro+=0.25"
       );
+    }
 
     return () => {
       tl.kill();
@@ -131,14 +146,60 @@ export default function Hero({ startAnimation = true }: HeroProps) {
     return () => clearInterval(interval);
   }, []);
 
+  // Fallback: Ensure text is visible even if GSAP doesn't animate
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (headlineRef.current && headlineRef.current.style.opacity === '0') {
+        headlineRef.current.style.opacity = '1';
+        headlineRef.current.style.transform = 'translateY(0)';
+      }
+      if (taglineRef.current && taglineRef.current.style.opacity === '0') {
+        taglineRef.current.style.opacity = '1';
+        taglineRef.current.style.transform = 'translateY(0)';
+      }
+      if (paraRef.current && paraRef.current.style.opacity === '0') {
+        paraRef.current.style.opacity = '1';
+        paraRef.current.style.transform = 'translateY(0)';
+      }
+      if (ctaRef.current && ctaRef.current.style.opacity === '0') {
+        ctaRef.current.style.opacity = '1';
+        ctaRef.current.style.transform = 'translateY(0)';
+      }
+    }, 2000); // Fallback after 2 seconds
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const scrollToServices = () => {
+    const section = document.querySelector("#technology-services");
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
   return (
     <section
       id="home"
       ref={rootRef}
-      className="relative z-0 flex flex-col lg:flex-row min-h-screen pt-32 pb-16 lg:pt-0 lg:pb-0 items-center overflow-hidden opacity-0 bg-linear-to-br from-orange-50 via-yellow-50 to-white dark:bg-linear-to-br dark:from-gray-900 dark:via-slate-900 dark:to-zinc-900 transition-colors duration-300"
+      className="relative z-0 flex flex-col lg:flex-row min-h-screen pt-32 pb-0 lg:pt-0 lg:pb-0 items-center overflow-hidden opacity-0 transition-colors duration-300"
     >
-      {/* Animated gradient overlay for dark mode */}
-      <div className="absolute inset-0 opacity-0 dark:opacity-100 pointer-events-none transition-opacity duration-300 z-0">
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/Hero_Bg_Image.png"
+          alt="AI Cloud Network Background"
+          fill
+          priority
+          quality={90}
+          className="object-cover object-center"
+          style={{ objectFit: 'cover' }}
+        />
+        {/* Overlay for text readability - stronger in light mode for dark background */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/20 to-transparent dark:from-gray-900/40 dark:via-gray-900/20 dark:to-transparent" />
+      </div>
+
+      {/* Animated gradient overlay for dark mode - reduced opacity */}
+      <div className="absolute inset-0 opacity-0 dark:opacity-20 pointer-events-none transition-opacity duration-300 z-[1]">
         <div className="absolute top-0 left-0 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl animate-pulse" />
         <div
           className="absolute bottom-0 right-0 w-96 h-96 bg-yellow-500/10 rounded-full blur-3xl animate-pulse"
@@ -151,23 +212,31 @@ export default function Hero({ startAnimation = true }: HeroProps) {
       </div>
 
       {/* Left Content */}
-      <div className="relative z-10 max-w-3xl px-8 lg:px-16 text-center lg:text-left">
+      <div className="relative z-20 max-w-3xl px-8 lg:px-16 text-center lg:text-left">
         <div>
           <h1
             ref={headlineRef}
-            className="text-4xl sm:text-5xl md:text-6xl font-black mb-6 opacity-0 translate-y-5 text-gray-900 dark:text-white"
+            className="text-4xl sm:text-5xl md:text-6xl font-black mb-4 opacity-0 translate-y-5 text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)] dark:drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
           >
-            Accelerate your business growth with Smart, Secure, and Connected
-            solutions.
+            Empower Your Business with AI-Driven Innovation
+            
           </h1>
+          
+          <p
+            ref={taglineRef}
+            className="text-xl sm:text-2xl md:text-3xl font-semibold mb-6 opacity-0 translate-y-5 bg-linear-to-r from-orange-400 via-yellow-300 to-orange-500 bg-clip-text text-transparent drop-shadow-[0_3px_10px_rgba(255,140,0,0.5)] dark:from-orange-400 dark:via-yellow-300 dark:to-orange-500"
+          >
+            Build, Scale, and Transform with Smart, Secure, and Connected Solutions.
+          </p>
+          
           <p
             ref={paraRef}
-            className="text-lg mb-8 opacity-0 max-w-xl translate-y-5 leading-relaxed text-gray-700 dark:text-gray-200"
+            className="text-lg mb-8 opacity-0 max-w-xl translate-y-5 leading-relaxed text-gray-100 drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)] dark:text-gray-200 dark:drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]"
           >
-            At AICloudHub, we help businesses and professionals thrive in the
-            digital era through cutting-edge technology services and workforce
-            enablement. Our solutions empower enterprises to innovate, scale,
-            and stay ahead with AI, Cloud, and next-gen technologies.
+            At AICloudHub, we empower enterprises to thrive in the digital age
+            through AI, Cloud, and Automation. From ideation to launch, our
+            intelligent solutions accelerate innovation, strengthen security,
+            and drive business excellence.
           </p>
         </div>
 
@@ -178,6 +247,7 @@ export default function Hero({ startAnimation = true }: HeroProps) {
           <Button
             size="lg"
             className="relative overflow-hidden bg-linear-to-r from-orange-500 to-yellow-400 text-black font-semibold px-8 py-3 rounded-full shadow-[0_0_20px_rgba(255,170,60,0.6)] transition-all duration-300 hover:scale-[1.05] group"
+            onClick={scrollToServices}
           >
             <span className="relative z-10">Explore our Services</span>
 
@@ -245,7 +315,7 @@ export default function Hero({ startAnimation = true }: HeroProps) {
                     <p className="text-base lg:text-lg opacity-90 max-w-md">
                       {vertical.description}
                     </p>
-                    
+
                     {/* Learn More Button */}
                     <div className="pt-4">
                       <Link href={vertical.href}>

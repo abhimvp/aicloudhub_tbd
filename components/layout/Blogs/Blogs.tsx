@@ -64,39 +64,56 @@ const Blogs = () => {
     return () => swiper.off("slideChangeTransitionStart", animateSlides);
   }, []);
 
-  // Background Parallax Effect
-  useEffect(() => {
-    if (!sectionRef.current || !bgRef.current) return;
+  // Background Parallax Effect - Disabled to prevent cut-off issues
+  // useEffect(() => {
+  //   if (!sectionRef.current || !bgRef.current) return;
 
-    gsap.to(bgRef.current, {
-      yPercent: -20, // moves upward as user scrolls
-      ease: "none",
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top bottom", // when section enters viewport
-        end: "bottom top", // until it leaves
-        scrub: 1.5, // smooth follow
-      },
-    });
-  }, []);
+  //   gsap.to(bgRef.current, {
+  //     yPercent: -20, // moves upward as user scrolls
+  //     ease: "none",
+  //     scrollTrigger: {
+  //       trigger: sectionRef.current,
+  //       start: "top bottom", // when section enters viewport
+  //       end: "bottom top", // until it leaves
+  //       scrub: 1.5, // smooth follow
+  //     },
+  //   });
+  // }, []);
 
   return (
     <section
       id="blogs"
       ref={sectionRef}
-      className={`blogs-section flex flex-col items-center justify-center relative overflow-hidden transition-colors duration-300 ${
-        actualTheme === "dark" ? "bg-zinc-950" : "bg-gradient-to-br from-yellow-50 via-orange-50 to-gray-100"
+      className={`blogs-section flex flex-col items-center justify-center relative transition-colors duration-300 py-24 -mb-px ${
+        actualTheme === "dark" ? "bg-linear-to-br from-gray-900 via-slate-900 to-zinc-950" : "bg-gradient-to-br from-yellow-50 via-orange-50 to-gray-100"
       }`}
     >
-      {/* Parallax Background Overlay */}
-      <div
-        ref={bgRef}
-        className={`absolute inset-0 opacity-90 ${
-          actualTheme === "dark" 
-            ? "bg-linear-to-b from-zinc-950 via-zinc-900 to-black" 
-            : "bg-linear-to-b from-orange-50/50 via-yellow-50/40 to-white/50"
-        }`}
-      />
+      {/* Background container with overflow-hidden for glows */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Animated gradient overlay for dark mode */}
+        {actualTheme === "dark" && (
+          <div className="absolute inset-0 opacity-100 pointer-events-none transition-opacity duration-300 z-0">
+            <div className="absolute top-0 left-0 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl animate-pulse" />
+            <div
+              className="absolute bottom-0 right-0 w-96 h-96 bg-yellow-500/10 rounded-full blur-3xl animate-pulse"
+              style={{ animationDelay: "1s" }}
+            />
+            <div
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl animate-pulse"
+              style={{ animationDelay: "2s" }}
+            />
+          </div>
+        )}
+        {/* Static Background Overlay - Parallax removed to prevent cut-off */}
+        <div
+          ref={bgRef}
+          className={`absolute inset-0 ${
+            actualTheme === "dark" 
+              ? "bg-linear-to-b from-gray-900/30 via-slate-900/30 to-zinc-950/30" 
+              : "bg-linear-to-b from-orange-50/30 via-yellow-50/30 to-white/30"
+          }`}
+        />
+      </div>
 
       {/* Content */}
       <motion.h2
@@ -140,42 +157,42 @@ const Blogs = () => {
       </motion.div>
 
       {/* Swiper */}
-      {/* Swiper */}
-      <Swiper
-        ref={swiperRef}
-        grabCursor
-        centeredSlides
-        // --- THIS IS THE FIX ---
-        // We let breakpoints control all the settings.
-        // On desktop (1024px) we set slidesPerView to 3.
-        // Your GSAP animation will now correctly
-        // scale the center (active) slide to 1
-        // and the two side slides to 0.9.
-        breakpoints={{
-          // Mobile: Show main slide + a peek of the next
-          0: {
-            slidesPerView: 1.3,
-            spaceBetween: 20,
-          },
-          // Tablet: Show main slide + two peeking slides
-          768: {
-            slidesPerView: 2.2,
-            spaceBetween: 30,
-          },
-          // Desktop: Show 3 slides
-          1024: {
-            slidesPerView: 3,
-            spaceBetween: 40,
-          },
-        }}
-        // --- END OF FIX ---
+      <div className="w-full max-w-7xl mx-auto relative z-10 px-4 sm:px-6 lg:px-8">
+        <Swiper
+          ref={swiperRef}
+          grabCursor
+          centeredSlides
+          // --- THIS IS THE FIX ---
+          // We let breakpoints control all the settings.
+          // On desktop (1024px) we set slidesPerView to 3.
+          // Your GSAP animation will now correctly
+          // scale the center (active) slide to 1
+          // and the two side slides to 0.9.
+          breakpoints={{
+            // Mobile: Show main slide + a peek of the next
+            0: {
+              slidesPerView: 1.3,
+              spaceBetween: 20,
+            },
+            // Tablet: Show main slide + two peeking slides
+            768: {
+              slidesPerView: 2.2,
+              spaceBetween: 30,
+            },
+            // Desktop: Show 3 slides
+            1024: {
+              slidesPerView: 3,
+              spaceBetween: 40,
+            },
+          }}
+          // --- END OF FIX ---
 
-        onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
-        pagination={{ clickable: true }}
-        navigation
-        modules={[Pagination, Navigation]}
-        className="blogSwiper relative z-10"
-      >
+          onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
+          pagination={{ clickable: true }}
+          navigation
+          modules={[Pagination, Navigation]}
+          className="blogSwiper"
+        >
         {featuredBlogs.map((post) => (
           <SwiperSlide key={post.id}>
             <Link href={`/blogs/${post.slug}`}>
@@ -213,7 +230,8 @@ const Blogs = () => {
             </Link>
           </SwiperSlide>
         ))}
-      </Swiper>
+        </Swiper>
+      </div>
     </section>
   );
 };

@@ -94,12 +94,26 @@ const AnimatedServices = () => {
   return (
     <section
       id="services"
-      className={`animated-services-container ${
+      className={`animated-services-container relative overflow-hidden ${
         actualTheme === "dark" ? "dark" : ""
       }`}
       ref={containerRef}
     >
-      <div className="services-header">
+      {/* Animated gradient overlay for dark mode */}
+      {actualTheme === "dark" && (
+        <div className="absolute inset-0 opacity-100 pointer-events-none transition-opacity duration-300 z-0">
+          <div className="absolute top-0 left-0 w-96 h-96 bg-green-500/10 rounded-full blur-3xl animate-pulse" />
+          <div
+            className="absolute bottom-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl animate-pulse"
+            style={{ animationDelay: "1s" }}
+          />
+          <div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl animate-pulse"
+            style={{ animationDelay: "2s" }}
+          />
+        </div>
+      )}
+      <div className="services-header relative z-10">
         <div className="header-col-1"></div>
         <div className="header-col-2">
           <span
@@ -118,7 +132,7 @@ const AnimatedServices = () => {
       </div>
 
       {flatServices.map((service, index) => (
-        <div key={index} className="animated-service">
+        <div key={index} className="animated-service relative z-10">
           <div className="service-info">
             <h2>{service.title}</h2>
             <p>{service.description}</p>

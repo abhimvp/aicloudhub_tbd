@@ -1,5 +1,5 @@
 /* app/globals.css */
-@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap");
+/* Fonts are now loaded via Next.js font optimization in layout.tsx */
 
 @plugin "tailwindcss-animate";
 @import "tailwindcss";
@@ -47,45 +47,23 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
-/* For Overall layout, the body uses Manrope as the main font with a white background to contrast nicely with dark preloader*/
+/* For Overall layout, the body uses Plus Jakarta Sans as the main font with a white background to contrast nicely with dark preloader*/
 body {
-  font-family: "Manrope";
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
   background-color: var(--light);
 }
 
 /* for headings all h1 are uppercase , bold and tightly spaced to match the bold editorial aesthetic */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading), var(--font-sans), system-ui, sans-serif;
+  font-weight: 700;
+}
+
 h1 {
   text-transform: uppercase;
   /* font-size: 8rem; */
   letter-spacing: 0.2rem;
 }
-
-/* h2 {
-  text-transform: uppercase;
-  font-size: 6rem;
-  line-height: 1;
-  letter-spacing: 0.2rem;
-  font-weight: 700;
-} */
-
-/* For paragraph elements are also uppercase, centered and slightly condensed, giving that small tagline looks that fits well with fashion style layouts */
-/* p {
-  text-transform: uppercase;
-  text-align: center;
-  font-size: 0.8rem;
-  font-weight: 550;
-} */
-
-/* Anchor tags are styles to feel like a logo mark */
-/* a {
-  text-decoration: none;
-  text-transform: uppercase;
-  font-size: 7.5rem;
-  color: var(--light);
-  font-family: "Agdasima", sans-serif;
-  line-height: 0.9;
-  display: block;
-} */
 
 /* preloader - it's fixed to fill the entire viewport & uses a dark background , we'll animate its shape later using a clip by transition to reveal the main content underneath */
 .preloader {
@@ -246,8 +224,8 @@ h1 {
 }
 
 @theme inline {
-  --font-sans: var(--font-inter);
-  --font-heading: var(--font-oswald);
+  --font-sans: var(--font-sans);
+  --font-heading: var(--font-heading);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);

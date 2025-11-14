@@ -13,82 +13,33 @@ const Footer = () => {
 
   return (
     <footer
-      className={`relative overflow-hidden transition-colors duration-300 ${
+      className={`relative overflow-hidden transition-colors duration-300 -mt-px ${
         actualTheme === "dark"
-          ? "bg-[#0a0a0a]"
+          ? "bg-linear-to-br from-gray-900 via-slate-900 to-zinc-950"
           : "bg-gradient-to-b from-gray-50 to-orange-50"
       }`}
     >
-      {/* Hero CTA Section */}
-      <div
-        className={`relative py-24 overflow-hidden transition-colors duration-300 ${
-          actualTheme === "dark"
-            ? "bg-gradient-to-b from-zinc-950 to-zinc-900"
-            : "bg-gradient-to-br from-white via-orange-50 to-yellow-100"
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className={`text-4xl md:text-5xl lg:text-6xl font-black mb-6 leading-tight ${
-              actualTheme === "dark" ? "text-white" : "text-gray-900"
-            }`}
-          >
-            Transform Your Business with
-            <br />
-            <span
-              className={`bg-clip-text text-transparent ${
-                actualTheme === "dark"
-                  ? "bg-linear-to-r from-orange-400 via-yellow-200 to-white"
-                  : "bg-linear-to-r from-orange-600 via-orange-500 to-amber-600"
-              }`}
-            >
-              AI & Cloud Innovation
-            </span>
-          </motion.h2>
-
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1, duration: 0.6, ease: "easeOut" }}
-            className={`text-lg md:text-xl mb-8 max-w-3xl mx-auto ${
-              actualTheme === "dark" ? "text-gray-300" : "text-gray-700"
-            }`}
-          >
-            Join thousands of businesses leveraging cutting-edge AI/ML, Cloud
-            Computing, Cyber Security, and DevOps solutions to scale securely.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2, duration: 0.6, ease: "easeOut" }}
-          >
-            <Link href="/#services">
-              <Button
-                size="lg"
-                className="bg-linear-to-r from-orange-500 to-yellow-400 text-black font-bold text-lg px-10 py-6 rounded-full 
-                hover:shadow-[0_0_30px_rgba(255,140,0,0.6)] transition-all duration-300 hover:scale-105"
-              >
-                Get Started for Free
-              </Button>
-            </Link>
-          </motion.div>
+      {/* Animated gradient overlay for dark mode */}
+      {actualTheme === "dark" && (
+        <div className="absolute inset-0 opacity-100 pointer-events-none transition-opacity duration-300 z-0">
+          <div className="absolute top-0 left-0 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl animate-pulse" />
+          <div
+            className="absolute bottom-0 right-0 w-96 h-96 bg-yellow-500/10 rounded-full blur-3xl animate-pulse"
+            style={{ animationDelay: "1s" }}
+          />
+          <div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl animate-pulse"
+            style={{ animationDelay: "2s" }}
+          />
         </div>
-      </div>
-
+      )}
       {/* Main Footer Content */}
       <div
-        className={`border-t transition-colors duration-300 ${
+        className={`border-t transition-colors duration-300 relative z-10 ${
           actualTheme === "dark" ? "border-white/10" : "border-gray-300"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
             {/* Branding Section */}
             <div className="lg:col-span-2">
@@ -460,7 +411,7 @@ const Footer = () => {
       <div
         className={`relative py-12 md:py-16 overflow-hidden transition-colors duration-300 ${
           actualTheme === "dark"
-            ? "bg-zinc-950"
+            ? "bg-linear-to-br from-gray-900 via-slate-900 to-zinc-950"
             : "bg-gradient-to-b from-orange-50 to-yellow-50"
         }`}
       >
@@ -478,7 +429,7 @@ const Footer = () => {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-center relative px-4 sm:px-6 lg:px-8 flex items-center justify-center min-h-[150px] sm:min-h-[180px] md:min-h-[200px]"
+          className="text-center relative px-4 sm:px-6 lg:px-8 flex items-center justify-center min-h-[150px] sm:min-h-[180px] md:min-h-[200px] z-0"
         >
           <h2
             className="text-[70px] sm:text-[100px] md:text-[140px] lg:text-[180px] xl:text-[220px] 
@@ -488,12 +439,12 @@ const Footer = () => {
               backgroundImage:
                 actualTheme === "dark"
                   ? `linear-gradient(180deg, 
-                    rgb(251, 191, 36) 0%, 
-                    rgb(245, 158, 11) 20%,
-                    rgb(249, 115, 22) 40%,
-                    rgb(234, 88, 12) 60%,
-                    rgb(194, 65, 12) 80%,
-                    rgb(124, 45, 18) 100%
+                    rgba(59, 130, 246, 0.4) 0%, 
+                    rgba(37, 99, 235, 0.35) 20%,
+                    rgba(29, 78, 216, 0.3) 40%,
+                    rgba(30, 64, 175, 0.25) 60%,
+                    rgba(30, 58, 138, 0.2) 80%,
+                    rgba(30, 58, 138, 0.15) 100%
                   )`
                   : `linear-gradient(180deg,
                     rgb(251, 191, 36) 0%,
@@ -506,40 +457,52 @@ const Footer = () => {
               WebkitBackgroundClip: "text",
               backgroundClip: "text",
               color: "transparent",
+              opacity: actualTheme === "dark" ? 0.6 : 1,
               textShadow:
                 actualTheme === "dark"
-                  ? `0 4px 20px rgba(251, 191, 36, 0.5),
-                   0 8px 40px rgba(249, 115, 22, 0.3),
-                   0 12px 60px rgba(234, 88, 12, 0.2)`
+                  ? `0 2px 10px rgba(59, 130, 246, 0.2),
+                   0 4px 20px rgba(37, 99, 235, 0.15),
+                   0 8px 40px rgba(29, 78, 216, 0.1)`
                   : `0 4px 20px rgba(251, 191, 36, 0.4),
                    0 8px 40px rgba(249, 115, 22, 0.3),
                    0 12px 60px rgba(234, 88, 12, 0.2)`,
-              filter: "contrast(1.1) brightness(1.05)",
+              filter: actualTheme === "dark" ? "blur(0.5px)" : "contrast(1.1) brightness(1.05)",
             }}
           >
             AICLOUDHUB
           </h2>
 
-          {/* Additional glow layer */}
+          {/* Additional glow layer - subtle blue for dark mode */}
           <div
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
             style={{
               backgroundImage:
                 actualTheme === "dark"
-                  ? "radial-gradient(ellipse at center, rgba(251, 191, 36, 0.2) 0%, rgba(249, 115, 22, 0.1) 40%, transparent 70%)"
+                  ? "radial-gradient(ellipse at center, rgba(59, 130, 246, 0.15) 0%, rgba(37, 99, 235, 0.08) 40%, transparent 70%)"
                   : "radial-gradient(ellipse at center, rgba(251, 191, 36, 0.15) 0%, rgba(249, 115, 22, 0.08) 40%, transparent 70%)",
             }}
           />
         </motion.div>
+
+        {/* Bottom fade overlay - fades text to background */}
+        <div
+          className="absolute bottom-0 left-0 right-0 h-[60%] pointer-events-none z-30"
+          style={{
+            backgroundImage:
+              actualTheme === "dark"
+                ? "linear-gradient(to bottom, transparent 0%, rgba(9, 9, 11, 0.5) 25%, rgba(9, 9, 11, 0.8) 60%, rgba(9, 9, 11, 0.95) 85%, rgb(9, 9, 11) 100%)"
+                : "linear-gradient(to bottom, transparent 0%, rgba(254, 252, 232, 0.4) 20%, rgba(254, 252, 232, 0.7) 50%, rgba(254, 252, 232, 0.9) 80%, rgb(254, 252, 232) 100%)",
+          }}
+        />
       </div>
 
       {/* Legal Footer */}
       <div
-        className={`border-t transition-colors duration-300 ${
+        className={`border-t transition-colors duration-300 relative z-10 ${
           actualTheme === "dark" ? "border-white/10" : "border-gray-300"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 relative z-10">
           <div
             className={`flex flex-col md:flex-row justify-between items-center gap-4 text-sm ${
               actualTheme === "dark" ? "text-gray-500" : "text-gray-600"
