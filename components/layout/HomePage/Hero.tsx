@@ -181,7 +181,7 @@ export default function Hero({ startAnimation = true }: HeroProps) {
     <section
       id="home"
       ref={rootRef}
-      className="relative z-0 flex flex-col lg:flex-row min-h-screen pt-32 pb-0 lg:pt-0 lg:pb-0 items-center overflow-hidden opacity-0 transition-colors duration-300"
+      className="relative z-0 min-h-screen pt-32 pb-16 lg:pt-0 lg:pb-0 overflow-hidden opacity-0 transition-colors duration-300"
     >
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
@@ -211,43 +211,44 @@ export default function Hero({ startAnimation = true }: HeroProps) {
         />
       </div>
 
-      {/* Left Content */}
-      <div className="relative z-20 max-w-3xl px-8 lg:px-16 text-center lg:text-left">
-        <div>
-          <h1
-            ref={headlineRef}
-            className="text-4xl sm:text-5xl md:text-6xl font-black mb-4 opacity-0 translate-y-5 text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)] dark:drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
-          >
-            Empower Your Business with AI-Driven Innovation
+      {/* Container for responsive layout */}
+      <div className="relative z-10 h-full min-h-screen flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12 xl:gap-16 container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        {/* Left Content */}
+        <div className="relative z-20 w-full lg:w-[48%] xl:w-[50%] text-center lg:text-left flex-shrink-0 py-8 lg:py-0">
+          <div>
+            <h1
+              ref={headlineRef}
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-black mb-3 md:mb-4 opacity-0 translate-y-5 text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)] dark:drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] leading-tight"
+            >
+              Empower Your Business with AI-Driven Innovation
+            </h1>
             
-          </h1>
-          
-          <p
-            ref={taglineRef}
-            className="text-xl sm:text-2xl md:text-3xl font-semibold mb-6 opacity-0 translate-y-5 bg-linear-to-r from-orange-400 via-yellow-300 to-orange-500 bg-clip-text text-transparent drop-shadow-[0_3px_10px_rgba(255,140,0,0.5)] dark:from-orange-400 dark:via-yellow-300 dark:to-orange-500"
-          >
-            Build, Scale, and Transform with Smart, Secure, and Connected Solutions.
-          </p>
-          
-          <p
-            ref={paraRef}
-            className="text-lg mb-8 opacity-0 max-w-xl translate-y-5 leading-relaxed text-gray-100 drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)] dark:text-gray-200 dark:drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]"
-          >
-            At AICloudHub, we empower enterprises to thrive in the digital age
-            through AI, Cloud, and Automation. From ideation to launch, our
-            intelligent solutions accelerate innovation, strengthen security,
-            and drive business excellence.
-          </p>
-        </div>
+            <p
+              ref={taglineRef}
+              className="text-lg sm:text-xl md:text-2xl lg:text-xl xl:text-2xl font-semibold mb-4 md:mb-6 opacity-0 translate-y-5 bg-linear-to-r from-orange-400 via-yellow-300 to-orange-500 bg-clip-text text-transparent drop-shadow-[0_3px_10px_rgba(255,140,0,0.5)] dark:from-orange-400 dark:via-yellow-300 dark:to-orange-500 leading-snug"
+            >
+              Build, Scale, and Transform with Smart, Secure, and Connected Solutions.
+            </p>
+            
+            <p
+              ref={paraRef}
+              className="text-base md:text-lg lg:text-base xl:text-lg mb-6 md:mb-8 opacity-0 translate-y-5 leading-relaxed text-gray-100 drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)] dark:text-gray-200 dark:drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)] max-w-full lg:max-w-lg mx-auto lg:mx-0"
+            >
+              At AICloudHub, we empower enterprises to thrive in the digital age
+              through AI, Cloud, and Automation. From ideation to launch, our
+              intelligent solutions accelerate innovation, strengthen security,
+              and drive business excellence.
+            </p>
+          </div>
 
-        <div
-          ref={ctaRef}
-          className="flex flex-col sm:flex-row gap-4 opacity-0 translate-y-8 justify-center lg:justify-start"
-        >
-          <Button
-            size="lg"
-            className="relative overflow-hidden bg-linear-to-r from-orange-500 to-yellow-400 text-black font-semibold px-8 py-3 rounded-full shadow-[0_0_20px_rgba(255,170,60,0.6)] transition-all duration-300 hover:scale-[1.05] group"
-            onClick={scrollToServices}
+          <div
+            ref={ctaRef}
+            className="flex flex-col sm:flex-row gap-3 md:gap-4 opacity-0 translate-y-8 justify-center lg:justify-start"
+          >
+            <Button
+              size="lg"
+              className="relative overflow-hidden bg-linear-to-r from-orange-500 to-yellow-400 text-black font-semibold px-6 md:px-8 py-3 rounded-full shadow-[0_0_20px_rgba(255,170,60,0.6)] transition-all duration-300 hover:scale-[1.05] group"
+              onClick={scrollToServices}
           >
             <span className="relative z-10">Explore our Services</span>
 
@@ -262,7 +263,7 @@ export default function Hero({ startAnimation = true }: HeroProps) {
           <Button
             size="lg"
             variant="outline"
-            className="border-2 border-gray-300 text-gray-900 bg-white/80 hover:bg-white dark:border-white/60 dark:text-white dark:bg-white/5 dark:hover:bg-white/15 backdrop-blur-sm px-8 py-3 rounded-full transition-all duration-300 hover:scale-[1.05] dark:hover:border-white/80"
+            className="border-2 border-gray-300 text-gray-900 bg-white/80 hover:bg-white dark:border-white/60 dark:text-white dark:bg-white/5 dark:hover:bg-white/15 backdrop-blur-sm px-6 md:px-8 py-3 rounded-full transition-all duration-300 hover:scale-[1.05] dark:hover:border-white/80"
           >
             About Us
           </Button>
@@ -270,10 +271,10 @@ export default function Hero({ startAnimation = true }: HeroProps) {
       </div>
 
       {/* Right Visual Stage - Business Verticals Scroller */}
-      <div className="relative z-30 w-full mt-16 lg:mt-0 lg:absolute lg:right-0 lg:top-1/2 lg:transform lg:-translate-y-1/2 lg:w-[50%] max-w-[720px] px-8 lg:px-12">
+      <div className="relative z-20 w-full lg:w-[48%] xl:w-[45%] flex-shrink-0">
         <div
           ref={scrollerRef}
-          className="relative w-full h-[480px] lg:h-[560px] rounded-3xl overflow-hidden shadow-2xl"
+          className="relative w-full h-[420px] sm:h-[480px] lg:h-[500px] xl:h-[560px] rounded-3xl overflow-hidden shadow-2xl mx-auto max-w-[600px] lg:max-w-full"
         >
           {BUSINESS_VERTICALS.map((vertical, index) => {
             const Icon = vertical.icon;
@@ -296,32 +297,32 @@ export default function Hero({ startAnimation = true }: HeroProps) {
                 />
 
                 {/* Content */}
-                <div className="relative z-10 h-full flex flex-col justify-between p-8 lg:p-12 text-white">
+                <div className="relative z-10 h-full flex flex-col justify-between p-6 sm:p-8 lg:p-10 xl:p-12 text-white">
                   {/* Icon */}
                   <div className="flex justify-start">
-                    <div className="p-4 bg-white/20 backdrop-blur-sm rounded-2xl">
-                      <Icon size={48} strokeWidth={2} />
+                    <div className="p-3 sm:p-4 bg-white/20 backdrop-blur-sm rounded-2xl">
+                      <Icon size={40} className="sm:w-12 sm:h-12" strokeWidth={2} />
                     </div>
                   </div>
 
                   {/* Text Content */}
-                  <div className="space-y-4">
-                    <h2 className="text-4xl lg:text-5xl font-bold tracking-tight">
+                  <div className="space-y-3 sm:space-y-4">
+                    <h2 className="text-3xl sm:text-4xl lg:text-4xl xl:text-5xl font-bold tracking-tight leading-tight">
                       {vertical.title}
                     </h2>
-                    <p className="text-xl lg:text-2xl font-medium opacity-95">
+                    <p className="text-lg sm:text-xl lg:text-xl xl:text-2xl font-medium opacity-95 leading-snug">
                       {vertical.tagline}
                     </p>
-                    <p className="text-base lg:text-lg opacity-90 max-w-md">
+                    <p className="text-sm sm:text-base lg:text-base xl:text-lg opacity-90 max-w-md leading-relaxed">
                       {vertical.description}
                     </p>
 
                     {/* Learn More Button */}
-                    <div className="pt-4">
+                    <div className="pt-2 sm:pt-4">
                       <Link href={vertical.href}>
                         <Button
                           size="lg"
-                          className="bg-white text-gray-900 hover:bg-white/90 font-semibold px-6 py-3 rounded-full shadow-lg transition-all duration-300 hover:scale-105"
+                          className="bg-white text-gray-900 hover:bg-white/90 font-semibold px-5 sm:px-6 py-2.5 sm:py-3 rounded-full shadow-lg transition-all duration-300 hover:scale-105 text-sm sm:text-base"
                         >
                           Learn More
                         </Button>
@@ -330,7 +331,7 @@ export default function Hero({ startAnimation = true }: HeroProps) {
                   </div>
 
                   {/* Placeholder for smiling image - can be added later */}
-                  <div className="absolute bottom-0 right-0 w-48 h-48 lg:w-64 lg:h-64 opacity-20">
+                  <div className="absolute bottom-0 right-0 w-32 h-32 sm:w-48 sm:h-48 lg:w-56 lg:h-56 xl:w-64 xl:h-64 opacity-20">
                     <div className="w-full h-full rounded-full bg-white/30 backdrop-blur-md" />
                   </div>
                 </div>
@@ -339,21 +340,22 @@ export default function Hero({ startAnimation = true }: HeroProps) {
           })}
 
           {/* Navigation Dots */}
-          <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 flex gap-3">
+          <div className="absolute bottom-4 sm:bottom-6 left-1/2 transform -translate-x-1/2 z-20 flex gap-2 sm:gap-3">
             {BUSINESS_VERTICALS.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setActiveIndex(index)}
                 className={`transition-all duration-300 rounded-full ${
                   index === activeIndex
-                    ? "w-12 h-3 bg-white"
-                    : "w-3 h-3 bg-white/50 hover:bg-white/75"
+                    ? "w-10 sm:w-12 h-2.5 sm:h-3 bg-white"
+                    : "w-2.5 sm:w-3 h-2.5 sm:h-3 bg-white/50 hover:bg-white/75"
                 }`}
                 aria-label={`Go to slide ${index + 1}`}
               />
             ))}
           </div>
         </div>
+      </div>
       </div>
 
       {/* Scroll Indicator */}
