@@ -53,45 +53,40 @@ const ClientLogos = () => {
 
         {/* Scrolling Logos Container */}
         <div className="relative">
-          {/* Gradient Overlays for fade effect */}
-          <div
-            className={`absolute left-0 top-0 bottom-0 w-32 z-10 pointer-events-none ${
-              actualTheme === "dark"
-                ? "bg-linear-to-r from-zinc-950 to-transparent"
-                : "bg-linear-to-r from-gray-50 to-transparent"
-            }`}
-          />
-          <div
-            className={`absolute right-0 top-0 bottom-0 w-32 z-10 pointer-events-none ${
-              actualTheme === "dark"
-                ? "bg-linear-to-l from-zinc-950 to-transparent"
-                : "bg-linear-to-l from-gray-50 to-transparent"
-            }`}
-          />
-
           {/* Scrolling Track */}
           <div className="logos-scroll-container">
             <div className="logos-scroll-track">
-              {duplicatedLogos.map((client, index) => (
-                <div
-                  key={`${client.name}-${index}`}
-                  className={`logo-item shrink-0 mx-8 transition-all duration-300 ${
-                    actualTheme === "dark"
-                      ? "bg-white/5 hover:bg-white/10 border-white/10"
-                      : "bg-white hover:bg-gray-50 border-gray-200"
-                  } border rounded-xl p-6 backdrop-blur-sm`}
-                >
-                  <div className="relative w-40 h-20 flex items-center justify-center">
-                    <Image
-                      src={client.logo}
-                      alt={client.name}
-                      fill
-                      className="object-contain transition-all duration-300"
-                      sizes="160px"
-                    />
+              {duplicatedLogos.map((client, index) => {
+                const scale = client.scale || 1.0;
+                
+                return (
+                  <div
+                    key={`${client.name}-${index}`}
+                    className={`logo-item shrink-0 mx-6 transition-all duration-300 hover:scale-105 ${
+                      actualTheme === "dark"
+                        ? "bg-white hover:bg-gray-50 border-gray-200"
+                        : "bg-white hover:bg-gray-50 border-gray-200"
+                    } border shadow-sm hover:shadow-md rounded-xl backdrop-blur-sm overflow-hidden`}
+                    style={{ width: '240px', height: '130px' }}
+                  >
+                    <div className="relative flex items-center justify-center w-full h-full p-6">
+                      <div 
+                        className="relative w-full h-full"
+                        style={{ transform: `scale(${scale})` }}
+                      >
+                        <Image
+                          src={client.logo}
+                          alt={client.name}
+                          fill
+                          className="object-contain! transition-opacity duration-300 hover:opacity-80"
+                          sizes="200px"
+                          style={{ objectFit: 'contain' }}
+                        />
+                      </div>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>

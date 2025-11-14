@@ -23,9 +23,11 @@ import {
   Star,
   Filter,
   ChevronDown,
+  Mail,
 } from "lucide-react";
 import Navbar from "@/components/layout/Navbar/Navbar";
 import { useTheme } from "@/components/theme/ThemeProvider";
+import CourseInquiryForm from "@/components/layout/CourseInquiryForm";
 
 export default function CoursesPage() {
   const { actualTheme } = useTheme();
@@ -36,6 +38,8 @@ export default function CoursesPage() {
   const [selectedLevel, setSelectedLevel] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState("newest");
+  const [isInquiryFormOpen, setIsInquiryFormOpen] = useState(false);
+  const [selectedCourse, setSelectedCourse] = useState<string>("");
 
   // Update selected category when URL param changes
   useEffect(() => {
@@ -60,6 +64,11 @@ export default function CoursesPage() {
 
   const sortedCourses = sortCourses(filteredCourses, sortBy);
 
+  const handleInquiry = (courseTitle: string) => {
+    setSelectedCourse(courseTitle);
+    setIsInquiryFormOpen(true);
+  };
+
   return (
     <main
       className={`min-h-screen transition-colors duration-300 ${
@@ -75,7 +84,7 @@ export default function CoursesPage() {
         className={`relative pt-32 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden transition-colors duration-300 ${
           actualTheme === "dark"
             ? "bg-zinc-950"
-            : "bg-gradient-to-br from-orange-50 via-yellow-50 to-white"
+            : "bg-linear-to-br from-orange-50 via-yellow-50 to-white"
         }`}
       >
         {/* Background Effects */}
@@ -332,16 +341,16 @@ export default function CoursesPage() {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.5, delay: index * 0.1 }}
                     >
-                      <Link href={`/courses/${course.slug}`}>
-                        <Card
-                          className={`group backdrop-blur-lg overflow-hidden transition-all duration-300 h-full cursor-pointer hover:scale-[1.02] hover:shadow-xl hover:shadow-orange-500/10 ${
-                            actualTheme === "dark"
-                              ? "bg-white/5 border-white/10 hover:bg-white/10 hover:border-orange-400/50"
-                              : "bg-white border-gray-200 hover:bg-orange-50/50 hover:border-orange-400 shadow-lg"
-                          }`}
-                        >
+                      <Card
+                        className={`group backdrop-blur-lg overflow-hidden transition-all duration-300 h-full hover:scale-[1.02] hover:shadow-xl hover:shadow-orange-500/10 ${
+                          actualTheme === "dark"
+                            ? "bg-white/5 border-white/10 hover:bg-white/10 hover:border-orange-400/50"
+                            : "bg-white border-gray-200 hover:bg-orange-50/50 hover:border-orange-400 shadow-lg"
+                        }`}
+                      >
+                        <Link href={`/courses/${course.slug}`}>
                           {/* Image */}
-                          <div className="relative h-48 overflow-hidden">
+                          <div className="relative h-48 overflow-hidden cursor-pointer">
                             <Image
                               src={course.thumbnail}
                               alt={course.title}
@@ -368,19 +377,14 @@ export default function CoursesPage() {
                                 </span>
                               </div>
                             )}
-
-                            {/* Price */}
-                            <div className="absolute bottom-4 right-4">
-                              <span className="px-3 py-1 bg-black/60 backdrop-blur-sm text-white text-lg font-bold rounded-lg">
-                                ${course.price}
-                              </span>
-                            </div>
                           </div>
+                        </Link>
 
-                          <CardContent className="p-6">
+                        <CardContent className="p-6">
+                          <Link href={`/courses/${course.slug}`}>
                             {/* Title */}
                             <h3
-                              className={`text-xl font-bold mb-3 group-hover:text-orange-400 transition-colors line-clamp-2 ${
+                              className={`text-xl font-bold mb-3 group-hover:text-orange-400 transition-colors line-clamp-2 cursor-pointer ${
                                 actualTheme === "dark"
                                   ? "text-white"
                                   : "text-gray-900"
@@ -459,21 +463,35 @@ export default function CoursesPage() {
                                 </p>
                               </div>
                             </div>
+                          </Link>
 
-                            {/* Details Button */}
+                          {/* Action Buttons */}
+                          <div className="flex gap-3 mt-4">
+                            <Link href={`/courses/${course.slug}`} className="flex-1">
+                              <Button
+                                variant="outline"
+                                className={`w-full font-semibold transition-all duration-300 ${
+                                  actualTheme === "dark"
+                                    ? "border-orange-400/60 text-orange-400 hover:bg-linear-to-r hover:from-orange-500 hover:to-yellow-400 hover:text-black group-hover:border-orange-400"
+                                    : "border-orange-400 text-orange-500 hover:bg-linear-to-r hover:from-orange-500 hover:to-amber-500 hover:text-white hover:border-orange-500"
+                                }`}
+                              >
+                                View Details
+                              </Button>
+                            </Link>
                             <Button
-                              variant="outline"
-                              className={`w-full font-semibold transition-all duration-300 ${
-                                actualTheme === "dark"
-                                  ? "border-orange-400/60 text-orange-400 hover:bg-linear-to-r hover:from-orange-500 hover:to-yellow-400 hover:text-black group-hover:border-orange-400"
-                                  : "border-orange-400 text-orange-500 hover:bg-linear-to-r hover:from-orange-500 hover:to-amber-500 hover:text-white hover:border-orange-500"
-                              }`}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleInquiry(course.title);
+                              }}
+                              className="flex-1 bg-linear-to-r from-orange-500 to-yellow-400 text-black font-semibold hover:scale-105 transition-transform"
                             >
-                              View Details
+                              <Mail className="w-4 h-4 mr-2" />
+                              Inquire
                             </Button>
-                          </CardContent>
-                        </Card>
-                      </Link>
+                          </div>
+                        </CardContent>
+                      </Card>
                     </motion.div>
                   ))}
                 </div>
@@ -482,6 +500,13 @@ export default function CoursesPage() {
           </div>
         </div>
       </section>
+
+      {/* Inquiry Form Modal */}
+      <CourseInquiryForm
+        isOpen={isInquiryFormOpen}
+        onClose={() => setIsInquiryFormOpen(false)}
+        courseTitle={selectedCourse}
+      />
     </main>
   );
 }

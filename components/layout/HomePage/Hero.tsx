@@ -1,31 +1,57 @@
 // components/layout/HomePage/Hero.tsx
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { gsap, useGSAP } from "@/utils/gsap";
 import { Button } from "@/components/ui/button";
-import { Bot } from "lucide-react";
+import { Code2, GraduationCap, Users } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
 interface HeroProps {
   startAnimation?: boolean;
 }
 
-const BLOCKS = [
-  { height: 100, label: "Collect", gradient: "from-pink-400 to-pink-300" },
-  { height: 150, label: "Process", gradient: "from-violet-400 to-violet-300" },
-  { height: 200, label: "Connect", gradient: "from-sky-400 to-sky-300" },
-  { height: 250, label: "AI", gradient: "from-indigo-400 to-indigo-300" },
-  { height: 300, label: "Launch", gradient: "from-emerald-400 to-emerald-300" },
+const BUSINESS_VERTICALS = [
+  {
+    title: "IT Services",
+    tagline: "Innovative Technology Solutions for Modern Business",
+    description:
+      "Transform your business with cutting-edge cloud, AI, and digital solutions",
+    icon: Code2,
+    gradient: "from-blue-500 to-cyan-400",
+    image: "/images/it-services.jpg", // placeholder
+    href: "/services/it-services",
+  },
+  {
+    title: "Corporate Training",
+    tagline: "Empower Your Workforce with Future-Ready Skills",
+    description: "Upskill your teams with industry-leading training programs",
+    icon: GraduationCap,
+    gradient: "from-purple-500 to-pink-400",
+    image: "/images/training.jpg", // placeholder
+    href: "/services/corporate-training",
+  },
+  {
+    title: "Staffing",
+    tagline: "Connect with Top-Tier Tech Talent",
+    description:
+      "Find the perfect talent to accelerate your digital transformation",
+    icon: Users,
+    gradient: "from-orange-500 to-yellow-400",
+    image: "/images/staffing.jpg", // placeholder
+    href: "/services/staffing",
+  },
 ];
 
 export default function Hero({ startAnimation = true }: HeroProps) {
   const rootRef = useRef<HTMLElement | null>(null);
-  const blocksRef = useRef<HTMLDivElement | null>(null);
-  const botRef = useRef<HTMLDivElement | null>(null);
+  const scrollerRef = useRef<HTMLDivElement | null>(null);
   const headlineRef = useRef<HTMLHeadingElement | null>(null);
   const paraRef = useRef<HTMLParagraphElement | null>(null);
   const ctaRef = useRef<HTMLDivElement | null>(null);
   const tlRef = useRef<gsap.core.Timeline | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   useGSAP(() => {
     if (!startAnimation || !rootRef.current) return;
@@ -47,86 +73,23 @@ export default function Hero({ startAnimation = true }: HeroProps) {
     // Label to sync everything
     tl.add("intro", "+=0.1");
 
-    // 🧱 Blocks animation
-    const blockEls = blocksRef.current?.querySelectorAll<HTMLElement>(".block");
-    if (blockEls?.length) {
+    // 🎨 Scroller animation
+    const scrollerEl = scrollerRef.current;
+    if (scrollerEl) {
       tl.fromTo(
-        blockEls,
-        { opacity: 0, scale: 0.8, y: 40 },
+        scrollerEl,
+        { opacity: 0, x: 100 },
         {
           opacity: 1,
-          scale: 1,
-          y: 0,
-          duration: 0.55,
-          stagger: 0.12,
-          ease: "back.out(1.4)",
+          x: 0,
+          duration: 0.8,
+          ease: "power3.out",
         },
         "intro"
       );
     }
 
-    // 🤖 Bot animation
-    const bot = botRef.current!;
-    if (bot && blockEls && blockEls.length > 0 && blocksRef.current) {
-      tl.set(bot, { autoAlpha: 0, scale: 0.95 }, "intro");
-      tl.to(bot, { autoAlpha: 1, scale: 1, duration: 0.4 }, "intro+=0.1");
-
-      const parentRect = bot.parentElement!.getBoundingClientRect();
-      const botRect = bot.getBoundingClientRect();
-      const botHalfW = botRect.width / 2;
-      const blocksStyle = window.getComputedStyle(blocksRef.current);
-      const paddingBottom = parseFloat(blocksStyle.paddingBottom);
-
-      const targets = Array.from(blockEls).map((el: HTMLElement) => {
-        const rect = el.getBoundingClientRect();
-        const x = rect.left - parentRect.left + rect.width / 2 - botHalfW;
-        const y = -el.offsetHeight - paddingBottom - 12;
-        return { x, y };
-      });
-
-      if (targets.length > 0) {
-        gsap.set(bot, { x: targets[0].x, y: targets[0].y });
-
-        let delay = "intro+=0.15";
-        targets.forEach((t, i) => {
-          const isLast = i === targets.length - 1;
-          tl.to(
-            bot,
-            {
-              x: t.x,
-              y: t.y - 30,
-              rotation: i % 2 === 0 ? 6 : -6,
-              duration: 0.45,
-              ease: "power2.out",
-            },
-            delay
-          ).to(
-            bot,
-            {
-              y: t.y,
-              rotation: 0,
-              duration: 0.28,
-              ease: "bounce.out",
-              onComplete: isLast
-                ? () => {
-                    gsap.to(bot, {
-                      y: t.y - 25,
-                      duration: 0.25,
-                      ease: "power1.out",
-                      yoyo: true,
-                      repeat: 1,
-                    });
-                  }
-                : undefined,
-            },
-            "-=0.15"
-          );
-          delay = "+=0.2";
-        });
-      }
-    }
-
-    // ✨ Text + CTA animations (run simultaneously)
+    // ✨ Text + CTA animations
     tl.fromTo(
       headlineRef.current,
       { autoAlpha: 0, y: 36 },
@@ -147,23 +110,6 @@ export default function Hero({ startAnimation = true }: HeroProps) {
           y: 0,
           duration: 0.8,
           ease: "power3.out",
-          onStart: () => {
-            // subtle shine on primary button
-            const btn = ctaRef.current?.querySelector(".primary-btn");
-            if (btn) {
-              gsap.fromTo(
-                btn,
-                { boxShadow: "0 0 0px rgba(255,180,70,0.0)" },
-                {
-                  boxShadow: "0 0 20px rgba(255,180,70,0.5)",
-                  duration: 0.5,
-                  yoyo: true,
-                  repeat: 1,
-                  ease: "sine.inOut",
-                }
-              );
-            }
-          },
         },
         "intro+=0.25"
       );
@@ -175,6 +121,15 @@ export default function Hero({ startAnimation = true }: HeroProps) {
       document.body.style.overflow = "auto";
     };
   }, [startAnimation]);
+
+  // Auto-rotate scroller every 4 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % BUSINESS_VERTICALS.length);
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <section
@@ -202,10 +157,7 @@ export default function Hero({ startAnimation = true }: HeroProps) {
             ref={headlineRef}
             className="text-4xl sm:text-5xl md:text-6xl font-black mb-6 opacity-0 translate-y-5 text-gray-900 dark:text-white"
           >
-            Accelerate your business growth with{" "}
-            <span className="font-bold bg-linear-to-r from-orange-500 to-yellow-400 bg-clip-text text-transparent">
-              Smart, Secure, and Connected
-            </span>{" "}
+            Accelerate your business growth with Smart, Secure, and Connected
             solutions.
           </h1>
           <p
@@ -247,32 +199,88 @@ export default function Hero({ startAnimation = true }: HeroProps) {
         </div>
       </div>
 
-      {/* Right Visual Stage */}
-      <div className="relative z-30 w-full mt-16 lg:mt-0 lg:absolute lg:right-0 lg:top-1/2 lg:transform lg:-translate-y-1/2 lg:w-[56%] max-w-[980px]">
-        <div className="relative w-full h-[520px] flex items-end justify-center pointer-events-none">
-          {/* Bot */}
-          <div
-            ref={botRef}
-            className="absolute z-50 bottom-0 left-0 opacity-0 text-black dark:text-black drop-shadow-[0_0_12px_rgba(0,0,0,0.5)] pointer-events-none"
-          >
-            <Bot size={58} strokeWidth={2.5} />
-          </div>
+      {/* Right Visual Stage - Business Verticals Scroller */}
+      <div className="relative z-30 w-full mt-16 lg:mt-0 lg:absolute lg:right-0 lg:top-1/2 lg:transform lg:-translate-y-1/2 lg:w-[50%] max-w-[720px] px-8 lg:px-12">
+        <div
+          ref={scrollerRef}
+          className="relative w-full h-[480px] lg:h-[560px] rounded-3xl overflow-hidden shadow-2xl"
+        >
+          {BUSINESS_VERTICALS.map((vertical, index) => {
+            const Icon = vertical.icon;
+            const isActive = index === activeIndex;
 
-          {/* Blocks */}
-          <div
-            ref={blocksRef}
-            className="flex items-end gap-3 sm:gap-6 lg:gap-8 justify-center px-6 py-8 bg-transparent rounded-lg z-20"
-          >
-            {BLOCKS.map((b, i) => (
+            return (
               <div
-                key={i}
-                className={`w-14 sm:w-20 lg:w-24 rounded-lg lg:rounded-2xl shadow-lg relative flex items-end justify-center bg-linear-to-t ${b.gradient} border border-white/30`}
-                style={{ height: b.height }}
+                key={index}
+                className={`absolute inset-0 transition-all duration-700 ease-in-out ${
+                  isActive
+                    ? "opacity-100 translate-x-0"
+                    : index < activeIndex
+                    ? "opacity-0 -translate-x-full"
+                    : "opacity-0 translate-x-full"
+                }`}
               >
-                <span className="absolute -bottom-6 text-xs font-medium text-gray-700 dark:text-gray-300">
-                  {b.label}
-                </span>
+                {/* Background Gradient */}
+                <div
+                  className={`absolute inset-0 bg-linear-to-br ${vertical.gradient} opacity-90`}
+                />
+
+                {/* Content */}
+                <div className="relative z-10 h-full flex flex-col justify-between p-8 lg:p-12 text-white">
+                  {/* Icon */}
+                  <div className="flex justify-start">
+                    <div className="p-4 bg-white/20 backdrop-blur-sm rounded-2xl">
+                      <Icon size={48} strokeWidth={2} />
+                    </div>
+                  </div>
+
+                  {/* Text Content */}
+                  <div className="space-y-4">
+                    <h2 className="text-4xl lg:text-5xl font-bold tracking-tight">
+                      {vertical.title}
+                    </h2>
+                    <p className="text-xl lg:text-2xl font-medium opacity-95">
+                      {vertical.tagline}
+                    </p>
+                    <p className="text-base lg:text-lg opacity-90 max-w-md">
+                      {vertical.description}
+                    </p>
+                    
+                    {/* Learn More Button */}
+                    <div className="pt-4">
+                      <Link href={vertical.href}>
+                        <Button
+                          size="lg"
+                          className="bg-white text-gray-900 hover:bg-white/90 font-semibold px-6 py-3 rounded-full shadow-lg transition-all duration-300 hover:scale-105"
+                        >
+                          Learn More
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
+
+                  {/* Placeholder for smiling image - can be added later */}
+                  <div className="absolute bottom-0 right-0 w-48 h-48 lg:w-64 lg:h-64 opacity-20">
+                    <div className="w-full h-full rounded-full bg-white/30 backdrop-blur-md" />
+                  </div>
+                </div>
               </div>
+            );
+          })}
+
+          {/* Navigation Dots */}
+          <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 flex gap-3">
+            {BUSINESS_VERTICALS.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setActiveIndex(index)}
+                className={`transition-all duration-300 rounded-full ${
+                  index === activeIndex
+                    ? "w-12 h-3 bg-white"
+                    : "w-3 h-3 bg-white/50 hover:bg-white/75"
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
             ))}
           </div>
         </div>

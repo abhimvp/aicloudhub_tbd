@@ -16,10 +16,10 @@ const AboutPage = () => {
     {
       name: "Roshi Jambula",
       title: "Chief Executive Officer",
-      emoji: "👩",
+      emoji: "👩‍💼",
       description:
         "A visionary leader with over 25 years of techno-functional expertise, Roshi drives AiCloudHub's mission to revolutionize IT services through innovation, agility, and customer-centric transformation. She leads digital initiatives across Retail, Telecom, and E-commerce, empowering clients with scalable, AI-powered solutions.",
-      image: "/categories-AI-ML.jpg", // Placeholder
+      image: "/categories-AI-ML.jpg", // Placeholder - will be replaced with Roshi's photo
     },
     {
       name: "Rama Raju",
@@ -28,22 +28,6 @@ const AboutPage = () => {
       description:
         "With more than 25 years of experience, Rama leads AiCloudHub's technology vision—architecting secure, scalable, and future-ready solutions across AI, Cloud, and IoT. His focus on innovation ensures clients stay ahead in an ever-evolving digital landscape.",
       image: "/categories-cloud-computing.jpg", // Placeholder
-    },
-    {
-      name: "Mansoor Ahmed",
-      title: "Vice President, Engineering",
-      emoji: "🧑‍💻",
-      description:
-        "A technology strategist with 24+ years of experience, Mansoor oversees product development and engineering excellence at AiCloudHub. He ensures agile execution, operational efficiency, and seamless delivery, helping clients achieve faster innovation and lasting impact.",
-      image: "/categories-cyber-security.jpg", // Placeholder
-    },
-    {
-      name: "Suresh G",
-      title: "Vice President, Sales",
-      emoji: "💼",
-      description:
-        "With over 20 years in global sales and business development, Suresh drives AiCloudHub's strategic growth through long-term partnerships and client success. He specializes in market expansion, tailored solutions, and customer engagement that deliver measurable business outcomes.",
-      image: "/categories-devops.jpg", // Placeholder
     },
   ];
 
@@ -491,17 +475,23 @@ const AboutPage = () => {
                 actualTheme === "dark" ? "text-white" : "text-gray-900"
               }`}
             >
-              Leadership
+              Leadership Team
             </h2>
             <p
-              className={`text-xl ${
+              className={`text-xl mb-2 ${
                 actualTheme === "dark" ? "text-gray-300" : "text-gray-700"
               }`}
             >
-              Meet our leaders:{" "}
               <span className="text-orange-400">
                 Guided by experience. Driven by innovation.
               </span>
+            </p>
+            <p
+              className={`text-lg ${
+                actualTheme === "dark" ? "text-gray-400" : "text-gray-600"
+              }`}
+            >
+              🌟 Woman-Empowered Leadership • Building the Future Together
             </p>
           </motion.div>
 
@@ -609,6 +599,75 @@ const AboutPage = () => {
               </motion.div>
             ))}
           </div>
+
+          {/* Women in Leadership Highlight */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="mt-20 max-w-5xl mx-auto"
+          >
+            <div
+              className={`backdrop-blur-xl border rounded-3xl p-10 md:p-12 relative overflow-hidden ${
+                actualTheme === "dark"
+                  ? "bg-gradient-to-br from-purple-500/10 via-pink-500/10 to-orange-500/10 border-purple-500/30"
+                  : "bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50 border-purple-300"
+              }`}
+            >
+              {/* Decorative elements */}
+              <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl" />
+              <div className="absolute bottom-0 left-0 w-64 h-64 bg-pink-500/10 rounded-full blur-3xl" />
+
+              <div className="relative z-10 text-center">
+                <motion.div
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, type: "spring" }}
+                  className="text-6xl mb-6"
+                >
+                  👩‍💼✨
+                </motion.div>
+
+                <h3
+                  className={`text-3xl md:text-4xl font-black mb-4 ${
+                    actualTheme === "dark" ? "text-white" : "text-gray-900"
+                  }`}
+                >
+                  Women-Empowered Organization
+                </h3>
+
+                <p
+                  className={`text-xl leading-relaxed max-w-3xl mx-auto mb-6 ${
+                    actualTheme === "dark" ? "text-gray-300" : "text-gray-700"
+                  }`}
+                >
+                  At <span className="text-purple-400 font-bold">AiCloudHub</span>, we believe in the power of{" "}
+                  <span className="text-pink-400 font-bold">diverse leadership</span>. Our CEO, Roshi Jambula,
+                  exemplifies our commitment to empowering women in technology—driving innovation, fostering
+                  inclusive culture, and inspiring the next generation of tech leaders.
+                </p>
+
+                <div
+                  className={`inline-flex items-center gap-2 px-6 py-3 rounded-full ${
+                    actualTheme === "dark"
+                      ? "bg-purple-500/20 border border-purple-500/30"
+                      : "bg-purple-100 border border-purple-300"
+                  }`}
+                >
+                  <span className="text-2xl">🚀</span>
+                  <span
+                    className={`font-semibold ${
+                      actualTheme === "dark" ? "text-purple-300" : "text-purple-700"
+                    }`}
+                  >
+                    Building Tomorrow's Technology, Today
+                  </span>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 

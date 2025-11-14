@@ -4,7 +4,7 @@
 import React, { useRef } from "react";
 import * as motion from "motion/react-client";
 import { useScroll, useTransform } from "motion/react";
-import { TopCategories } from "@/lib/constants";
+import { BusinessVerticals } from "@/lib/constants";
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -33,8 +33,8 @@ const Categories = () => {
       style={{ scale, opacity, y }}
       className={`relative py-24 overflow-hidden transition-colors duration-300 shadow-[0_-10px_40px_rgba(0,0,0,0.5)] ${
         actualTheme === "dark"
-          ? "bg-gradient-to-b from-zinc-950 to-zinc-900"
-          : "bg-gradient-to-br from-orange-50 via-yellow-50 to-white"
+          ? "bg-linear-to-b from-zinc-950 to-zinc-900"
+          : "bg-linear-to-br from-orange-50 via-yellow-50 to-white"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -50,7 +50,7 @@ const Categories = () => {
                 : "bg-linear-to-r from-orange-600 via-orange-500 to-amber-600 bg-clip-text text-transparent"
             }`}
           >
-            Our Top Categories
+            Our Business Verticals
           </motion.h2>
 
           <motion.h3
@@ -62,7 +62,7 @@ const Categories = () => {
               actualTheme === "dark" ? "text-white/90" : "text-gray-900"
             }`}
           >
-            Learn. Build. Grow.
+            IT Services • Corporate Training • Staffing
           </motion.h3>
 
           <motion.p
@@ -74,14 +74,13 @@ const Categories = () => {
               actualTheme === "dark" ? "text-gray-300" : "text-gray-700"
             }`}
           >
-            Master the technologies shaping tomorrow through expert-guided,
-            real-world training at AICloudHub.
+            Empowering businesses through technology solutions, workforce enablement, and strategic talent acquisition.
           </motion.p>
         </div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {TopCategories.map((category, index) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {BusinessVerticals.map((vertical, index) => (
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -92,7 +91,7 @@ const Categories = () => {
                 delay: index * 0.2,
               }}
               whileHover={{ scale: 1.02, y: -4 }}
-              key={category.title}
+              key={vertical.title}
               className="group cursor-pointer"
             >
               <Card
@@ -106,9 +105,9 @@ hover:-translate-y-1 backdrop-blur-md border h-full flex flex-col ${
                 {/* Image Section */}
                 <div className="relative overflow-hidden rounded-t-lg w-full h-48">
                   <Image
-                    src={category.image}
+                    src={vertical.image}
                     fill
-                    alt={category.title}
+                    alt={vertical.title}
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                 </div>
@@ -129,7 +128,7 @@ hover:-translate-y-1 backdrop-blur-md border h-full flex flex-col ${
                         actualTheme === "dark" ? "text-white" : "text-gray-900"
                       }`}
                     >
-                      {category.title}
+                      {vertical.title}
                     </motion.h3>
 
                     <motion.p
@@ -147,17 +146,13 @@ hover:-translate-y-1 backdrop-blur-md border h-full flex flex-col ${
                           : "text-gray-600"
                       }`}
                     >
-                      {category.description}
+                      {vertical.description}
                     </motion.p>
                   </div>
 
                   {/* Fixed Button Position */}
                   <div className="mt-auto">
-                    <Link
-                      href={`/courses?category=${encodeURIComponent(
-                        category.title
-                      )}`}
-                    >
+                    <Link href={vertical.href}>
                       <Button
                         variant="outline"
                         className="w-full border border-orange-400/60 text-orange-700 
@@ -165,7 +160,7 @@ hover:-translate-y-1 backdrop-blur-md border h-full flex flex-col ${
         hover:text-black font-semibold transition-all duration-300 
         rounded-full shadow-[0_0_8px_rgba(255,165,0,0.4)]"
                       >
-                        Learn More
+                        Explore Services
                       </Button>
                     </Link>
                   </div>

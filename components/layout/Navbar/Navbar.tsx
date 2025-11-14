@@ -156,7 +156,7 @@ const Navbar = () => {
 
               return (
                 <Link
-                  className={`px-3 py-2 text-lg font-semibold transition-colors duration-300 ${
+                  className={`px-3 py-2 text-lg font-semibold uppercase transition-colors duration-300 ${
                     actualTheme === "dark"
                       ? "text-white hover:text-orange-400"
                       : "text-gray-900 hover:text-orange-600"
@@ -257,7 +257,7 @@ const Navbar = () => {
                 key={item.name}
                 href={href}
                 onClick={(e) => handleScrollTo(e, href)}
-                className={`text-lg font-semibold transition-all duration-200 py-4 ${
+                className={`text-lg font-semibold uppercase transition-all duration-200 py-4 ${
                   actualTheme === "dark"
                     ? "text-white hover:text-orange-400 hover:bg-white/10"
                     : "text-gray-900 hover:text-orange-600 hover:bg-orange-50"

@@ -1,7 +1,7 @@
 // app/courses/[slug]/page.tsx
 "use client";
 
-import React, { use } from "react";
+import React, { use, useState } from "react";
 import * as motion from "motion/react-client";
 import { getCourseBySlug, getRelatedCourses } from "@/lib/courseData";
 import Image from "next/image";
@@ -17,12 +17,13 @@ import {
   Award,
   CheckCircle,
   Play,
-  DollarSign,
   Calendar,
+  Mail,
 } from "lucide-react";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/layout/Navbar/Navbar";
 import { useTheme } from "@/components/theme/ThemeProvider";
+import CourseInquiryForm from "@/components/layout/CourseInquiryForm";
 
 interface CoursePageProps {
   params: Promise<{
@@ -34,6 +35,7 @@ export default function CoursePage({ params }: CoursePageProps) {
   const { slug } = use(params);
   const { actualTheme } = useTheme();
   const course = getCourseBySlug(slug);
+  const [isInquiryFormOpen, setIsInquiryFormOpen] = useState(false);
 
   if (!course) {
     notFound();
@@ -249,49 +251,36 @@ export default function CoursePage({ params }: CoursePageProps) {
                 </div>
 
                 <CardContent className="p-6">
-                  {/* Price */}
-                  <div className="flex items-center justify-between mb-6">
-                    <div>
-                      <p
-                        className={`text-sm mb-1 transition-colors duration-300 ${
-                          actualTheme === "dark"
-                            ? "text-gray-400"
-                            : "text-gray-600"
-                        }`}
-                      >
-                        Course Price
-                      </p>
-                      <p
-                        className={`text-4xl font-bold transition-colors duration-300 ${
-                          actualTheme === "dark"
-                            ? "text-white"
-                            : "text-gray-900"
-                        }`}
-                      >
-                        ${course.price}
-                      </p>
-                    </div>
-                    <DollarSign className="w-8 h-8 text-orange-400" />
+                  {/* Corporate Training Info */}
+                  <div className="mb-6 pb-6 border-b transition-colors duration-300">
+                    <h3
+                      className={`text-2xl font-bold mb-3 transition-colors duration-300 ${
+                        actualTheme === "dark" ? "text-white" : "text-gray-900"
+                      }`}
+                    >
+                      Corporate Training Program
+                    </h3>
+                    <p
+                      className={`text-sm leading-relaxed transition-colors duration-300 ${
+                        actualTheme === "dark"
+                          ? "text-gray-400"
+                          : "text-gray-600"
+                      }`}
+                    >
+                      This course is designed for corporate teams. Get in touch
+                      with us to discuss customized training solutions for your
+                      organization.
+                    </p>
                   </div>
 
-                  {/* Enroll Button */}
+                  {/* Inquiry Button */}
                   <Button
                     size="lg"
-                    className="w-full bg-linear-to-r from-orange-500 to-yellow-400 text-black font-bold hover:scale-105 transition-transform mb-4"
+                    onClick={() => setIsInquiryFormOpen(true)}
+                    className="w-full bg-linear-to-r from-orange-500 to-yellow-400 text-black font-bold hover:scale-105 transition-transform mb-6"
                   >
-                    Enroll Now
-                  </Button>
-
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className={`w-full mb-6 transition-colors duration-300 ${
-                      actualTheme === "dark"
-                        ? "border-white/20 text-white hover:bg-white/10"
-                        : "border-gray-300 text-gray-900 hover:bg-gray-100"
-                    }`}
-                  >
-                    Add to Wishlist
+                    <Mail className="w-5 h-5 mr-2" />
+                    Inquire About This Course
                   </Button>
 
                   {/* Course Includes */}
@@ -613,11 +602,6 @@ export default function CoursePage({ params }: CoursePageProps) {
                             {relatedCourse.category}
                           </span>
                         </div>
-                        <div className="absolute bottom-4 right-4">
-                          <span className="px-3 py-1 bg-black/60 backdrop-blur-sm text-white font-bold rounded-lg">
-                            ${relatedCourse.price}
-                          </span>
-                        </div>
                       </div>
 
                       <CardContent className="p-6">
@@ -664,6 +648,13 @@ export default function CoursePage({ params }: CoursePageProps) {
           </div>
         </section>
       )}
+
+      {/* Inquiry Form Modal */}
+      <CourseInquiryForm
+        isOpen={isInquiryFormOpen}
+        onClose={() => setIsInquiryFormOpen(false)}
+        courseTitle={course.title}
+      />
     </main>
   );
 }
