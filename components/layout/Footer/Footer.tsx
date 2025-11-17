@@ -40,9 +40,9 @@ const Footer = () => {
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             {/* Branding Section */}
-            <div className="lg:col-span-2">
+            <div className="md:col-span-2">
               <Link href="/" className="inline-block mb-6">
                 <Image
                   src={aiCloudHubLogo}
@@ -130,133 +130,6 @@ const Footer = () => {
                   </svg>
                 </a>
               </div>
-            </div>
-
-            {/* Useful Links */}
-            <div>
-              <h3
-                className={`font-bold text-lg mb-6 ${
-                  actualTheme === "dark" ? "text-yellow-400" : "text-orange-600"
-                }`}
-              >
-                Useful Links
-              </h3>
-              <ul className="space-y-4">
-                <li>
-                  <Link
-                    href="/"
-                    className={`hover:text-orange-400 transition-colors flex items-center gap-2 ${
-                      actualTheme === "dark" ? "text-gray-400" : "text-gray-600"
-                    }`}
-                  >
-                    <span className="text-orange-400">›</span> Home
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/courses"
-                    className={`hover:text-orange-400 transition-colors flex items-center gap-2 ${
-                      actualTheme === "dark" ? "text-gray-400" : "text-gray-600"
-                    }`}
-                  >
-                    <span className="text-orange-400">›</span> Courses
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/#about"
-                    className={`hover:text-orange-400 transition-colors flex items-center gap-2 ${
-                      actualTheme === "dark" ? "text-gray-400" : "text-gray-600"
-                    }`}
-                  >
-                    <span className="text-orange-400">›</span> About us
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/#services"
-                    className={`hover:text-orange-400 transition-colors flex items-center gap-2 ${
-                      actualTheme === "dark" ? "text-gray-400" : "text-gray-600"
-                    }`}
-                  >
-                    <span className="text-orange-400">›</span> Contact us
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/terms"
-                    className={`hover:text-orange-400 transition-colors flex items-center gap-2 ${
-                      actualTheme === "dark" ? "text-gray-400" : "text-gray-600"
-                    }`}
-                  >
-                    <span className="text-orange-400">›</span> Terms And
-                    Conditions
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/privacy"
-                    className={`hover:text-orange-400 transition-colors flex items-center gap-2 ${
-                      actualTheme === "dark" ? "text-gray-400" : "text-gray-600"
-                    }`}
-                  >
-                    <span className="text-orange-400">›</span> Privacy Policy
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            {/* Popular Categories */}
-            <div>
-              <h3
-                className={`font-bold text-lg mb-6 ${
-                  actualTheme === "dark" ? "text-yellow-400" : "text-orange-600"
-                }`}
-              >
-                Popular Categories
-              </h3>
-              <ul className="space-y-4">
-                <li>
-                  <Link
-                    href="/courses?category=AI%20%26%20ML"
-                    className={`hover:text-orange-400 transition-colors flex items-center gap-2 ${
-                      actualTheme === "dark" ? "text-gray-400" : "text-gray-600"
-                    }`}
-                  >
-                    <span className="text-orange-400">›</span> AI & ML
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/courses?category=Cloud%20Computing"
-                    className={`hover:text-orange-400 transition-colors flex items-center gap-2 ${
-                      actualTheme === "dark" ? "text-gray-400" : "text-gray-600"
-                    }`}
-                  >
-                    <span className="text-orange-400">›</span> Cloud Computing
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/courses?category=Cyber%20Security"
-                    className={`hover:text-orange-400 transition-colors flex items-center gap-2 ${
-                      actualTheme === "dark" ? "text-gray-400" : "text-gray-600"
-                    }`}
-                  >
-                    <span className="text-orange-400">›</span> Cyber Security
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/courses?category=DevOps%20Engineering"
-                    className={`hover:text-orange-400 transition-colors flex items-center gap-2 ${
-                      actualTheme === "dark" ? "text-gray-400" : "text-gray-600"
-                    }`}
-                  >
-                    <span className="text-orange-400">›</span> DevOps
-                  </Link>
-                </li>
-              </ul>
             </div>
 
             {/* Address */}
@@ -407,95 +280,6 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Massive Typography Section */}
-      <div
-        className={`relative py-12 md:py-16 overflow-hidden transition-colors duration-300 ${
-          actualTheme === "dark"
-            ? "bg-linear-to-br from-gray-900 via-slate-900 to-zinc-950"
-            : "bg-gradient-to-b from-orange-50 to-yellow-50"
-        }`}
-      >
-        {/* Noise texture overlay */}
-        <div
-          className="absolute inset-0 opacity-[0.15] mix-blend-overlay pointer-events-none"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-            backgroundRepeat: "repeat",
-          }}
-        />
-
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-center relative px-4 sm:px-6 lg:px-8 flex items-center justify-center min-h-[150px] sm:min-h-[180px] md:min-h-[200px] z-0"
-        >
-          <h2
-            className="text-[70px] sm:text-[100px] md:text-[140px] lg:text-[180px] xl:text-[220px] 
-            font-black leading-none tracking-[-0.04em]
-            select-none pointer-events-none max-w-full"
-            style={{
-              backgroundImage:
-                actualTheme === "dark"
-                  ? `linear-gradient(180deg, 
-                    rgba(59, 130, 246, 0.4) 0%, 
-                    rgba(37, 99, 235, 0.35) 20%,
-                    rgba(29, 78, 216, 0.3) 40%,
-                    rgba(30, 64, 175, 0.25) 60%,
-                    rgba(30, 58, 138, 0.2) 80%,
-                    rgba(30, 58, 138, 0.15) 100%
-                  )`
-                  : `linear-gradient(180deg,
-                    rgb(251, 191, 36) 0%,
-                    rgb(245, 158, 11) 20%,
-                    rgb(249, 115, 22) 40%,
-                    rgb(234, 88, 12) 60%,
-                    rgb(194, 65, 12) 80%,
-                    rgb(154, 52, 18) 100%
-                  )`,
-              WebkitBackgroundClip: "text",
-              backgroundClip: "text",
-              color: "transparent",
-              opacity: actualTheme === "dark" ? 0.6 : 1,
-              textShadow:
-                actualTheme === "dark"
-                  ? `0 2px 10px rgba(59, 130, 246, 0.2),
-                   0 4px 20px rgba(37, 99, 235, 0.15),
-                   0 8px 40px rgba(29, 78, 216, 0.1)`
-                  : `0 4px 20px rgba(251, 191, 36, 0.4),
-                   0 8px 40px rgba(249, 115, 22, 0.3),
-                   0 12px 60px rgba(234, 88, 12, 0.2)`,
-              filter: actualTheme === "dark" ? "blur(0.5px)" : "contrast(1.1) brightness(1.05)",
-            }}
-          >
-            AICLOUDHUB
-          </h2>
-
-          {/* Additional glow layer - subtle blue for dark mode */}
-          <div
-            className="absolute inset-0 flex items-center justify-center pointer-events-none"
-            style={{
-              backgroundImage:
-                actualTheme === "dark"
-                  ? "radial-gradient(ellipse at center, rgba(59, 130, 246, 0.15) 0%, rgba(37, 99, 235, 0.08) 40%, transparent 70%)"
-                  : "radial-gradient(ellipse at center, rgba(251, 191, 36, 0.15) 0%, rgba(249, 115, 22, 0.08) 40%, transparent 70%)",
-            }}
-          />
-        </motion.div>
-
-        {/* Bottom fade overlay - fades text to background */}
-        <div
-          className="absolute bottom-0 left-0 right-0 h-[60%] pointer-events-none z-30"
-          style={{
-            backgroundImage:
-              actualTheme === "dark"
-                ? "linear-gradient(to bottom, transparent 0%, rgba(9, 9, 11, 0.5) 25%, rgba(9, 9, 11, 0.8) 60%, rgba(9, 9, 11, 0.95) 85%, rgb(9, 9, 11) 100%)"
-                : "linear-gradient(to bottom, transparent 0%, rgba(254, 252, 232, 0.4) 20%, rgba(254, 252, 232, 0.7) 50%, rgba(254, 252, 232, 0.9) 80%, rgb(254, 252, 232) 100%)",
-          }}
-        />
-      </div>
-
       {/* Legal Footer */}
       <div
         className={`border-t transition-colors duration-300 relative z-10 ${
@@ -508,7 +292,7 @@ const Footer = () => {
               actualTheme === "dark" ? "text-gray-500" : "text-gray-600"
             }`}
           >
-            <p>© 2025 AICloudHub. All rights reserved.</p>
+            <p>© 2025 aiCloudHub. All rights reserved.</p>
             <div className="flex gap-6">
               <Link
                 href="/terms"

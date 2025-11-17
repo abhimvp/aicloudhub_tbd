@@ -3,95 +3,24 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import {
-  BrainCircuit,
-  CloudCog,
-  AppWindow,
-  BarChart3,
-  ChevronDown,
-} from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { useTheme } from "@/components/theme/ThemeProvider";
 import * as motion from "motion/react-client";
+import { SERVICES_DATA } from "@/lib/servicesData";
 
-type Service = {
-  id: string;
-  title: string;
-  subtitle: string;
-  description: string[];
+// Transform data for homepage display
+const SERVICES = SERVICES_DATA.map((service) => ({
+  id: service.id,
+  title: service.title,
+  subtitle: service.subtitle,
+  description: service.description,
+  Icon: service.Icon,
+  image: service.image,
   cta: {
-    label: string;
-    href: string;
-  };
-  Icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
-  image: string;
-};
-
-const SERVICES: Service[] = [
-  {
-    id: "ai-ml",
-    title: "AI & Machine Learning",
-    subtitle:
-      "Harness the power of AI to drive automation, intelligent analytics, and smarter decision-making.",
-    description: [
-      "Transform your business with intelligent automation, predictive analytics, and data-driven insights.",
-      "Our AI solutions empower you to make smarter, faster, and more impactful decisions.",
-    ],
-    cta: {
-      label: "Learn More →",
-      href: "/services/ai-ml",
-    },
-    Icon: BrainCircuit,
-    image: "/ServiceSectionImages/Services-AI-ML.png",
+    label: "Learn More →",
+    href: `/services/${service.id}`,
   },
-  {
-    id: "cloud",
-    title: "Cloud Services",
-    subtitle:
-      "Modernize your infrastructure with scalable and secure cloud-native solutions.",
-    description: [
-      "From migration to management, we help you achieve agility and performance across platforms.",
-      "Build a resilient, future-ready foundation with proactive governance and automation.",
-    ],
-    cta: {
-      label: "Learn More →",
-      href: "/services/cloud",
-    },
-    Icon: CloudCog,
-    image: "/ServiceSectionImages/Services-Cloud-Migration.png",
-  },
-  {
-    id: "applications",
-    title: "Application Services",
-    subtitle:
-      "Build, modernize, and optimize your business applications for enhanced usability and performance.",
-    description: [
-      "Our end-to-end engineering services combine agile delivery with modern UI/UX practices.",
-      "Ship experiences that feel intuitive, performant, and ready for continuous evolution.",
-    ],
-    cta: {
-      label: "Learn More →",
-      href: "/services/applications",
-    },
-    Icon: AppWindow,
-    image: "/ServiceSectionImages/Services-IT-Staffing.png",
-  },
-  {
-    id: "data-analytics",
-    title: "Data & Analytics",
-    subtitle:
-      "Convert your enterprise data into actionable insights for strategic growth.",
-    description: [
-      "We design analytics frameworks that uncover patterns, trends, and real-time intelligence.",
-      "Empower teams with trusted dashboards, governed pipelines, and decision-ready data.",
-    ],
-    cta: {
-      label: "Learn More →",
-      href: "/services/data-analytics",
-    },
-    Icon: BarChart3,
-    image: "/ServiceSectionImages/Services-DE-Analytics.png",
-  },
-];
+}));
 
 export default function TechnologyServicesTabs() {
   const [activeId, setActiveId] = useState<string>(SERVICES[0].id);
@@ -135,8 +64,8 @@ export default function TechnologyServicesTabs() {
       <div
         className={`absolute inset-0 -z-10 ${
           isDark
-            ? "bg-[radial-gradient(circle_at_top,_rgba(255,153,51,0.25),rgba(15,23,42,0))]"
-            : "bg-[radial-gradient(circle_at_top,_rgba(249,115,22,0.15),rgba(255,255,255,0))]"
+            ? "bg-[radial-gradient(circle_at_top,rgba(255,153,51,0.25),rgba(15,23,42,0))]"
+            : "bg-[radial-gradient(circle_at_top,rgba(249,115,22,0.15),rgba(255,255,255,0))]"
         }`}
       />
       <div className="max-w-6xl mx-auto space-y-10">

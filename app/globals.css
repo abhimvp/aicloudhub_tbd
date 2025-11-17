@@ -60,7 +60,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   /* font-size: 8rem; */
   letter-spacing: 0.2rem;
 }
@@ -305,4 +305,27 @@ h1 {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Custom Scrollbar Styles */
+.scrollbar-thin::-webkit-scrollbar {
+  height: 8px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  @apply bg-orange-100 dark:bg-gray-800 rounded-full;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  @apply bg-orange-500 rounded-full hover:bg-orange-600;
+}
+
+/* Firefox scrollbar */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(249 115 22) rgb(254 215 170);
+}
+
+.dark .scrollbar-thin {
+  scrollbar-color: rgb(249 115 22) rgb(31 41 55);
 }

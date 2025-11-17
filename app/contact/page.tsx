@@ -1,11 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import * as motion from "motion/react-client";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/components/theme/ThemeProvider";
-import Navbar from "@/components/layout/Navbar/Navbar";
-import Footer from "@/components/layout/Footer/Footer";
+import ScrollToTop from "@/components/layout/ScrollToTop";
 
 const interests = [
   "Artificial Intelligence",
@@ -27,13 +26,7 @@ export default function ContactPage() {
     interest: [] as string[],
     requirements: "",
     date: "",
-    captcha: "",
     agreeToSMS: false,
-  });
-
-  const [captchaQuestion] = useState({
-    num1: Math.floor(Math.random() * 10) + 1,
-    num2: Math.floor(Math.random() * 10) + 1,
   });
 
   const handleInterestToggle = (interest: string) => {
@@ -47,12 +40,6 @@ export default function ContactPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const correctAnswer = captchaQuestion.num1 + captchaQuestion.num2;
-
-    if (parseInt(formData.captcha) !== correctAnswer) {
-      alert("Incorrect captcha. Please try again.");
-      return;
-    }
 
     // Handle form submission
     console.log("Form submitted:", formData);
@@ -71,37 +58,35 @@ export default function ContactPage() {
   };
 
   return (
-    <>
-      <Navbar />
-      <div
-        className={`min-h-screen pt-32 pb-16 px-4 sm:px-6 lg:px-8 ${
-          actualTheme === "dark"
-            ? "bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900"
-            : "bg-gradient-to-b from-gray-50 via-white to-gray-50"
-        }`}
-      >
-        <div className="max-w-7xl mx-auto">
-          {/* Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-12"
+    <div
+      className={`min-h-screen pt-32 pb-16 px-4 sm:px-6 lg:px-8 ${
+        actualTheme === "dark"
+          ? "bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900"
+          : "bg-gradient-to-b from-gray-50 via-white to-gray-50"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-12"
+        >
+          <h1
+            className={`text-5xl md:text-6xl font-bold mb-4 ${
+              actualTheme === "dark" ? "text-white" : "text-gray-900"
+            }`}
           >
-            <h1
-              className={`text-5xl md:text-6xl font-bold mb-4 ${
-                actualTheme === "dark" ? "text-white" : "text-gray-900"
-              }`}
-            >
-              CONTACT <span className="text-orange-600">US</span>
-            </h1>
-            <p
-              className={`text-lg ${
-                actualTheme === "dark" ? "text-gray-300" : "text-gray-600"
-              }`}
-            >
-              Let's discuss how we can help you achieve your goals
-            </p>
+            CONTACT <span className="text-orange-600">US</span>
+          </h1>
+          <p
+            className={`text-lg ${
+              actualTheme === "dark" ? "text-gray-300" : "text-gray-600"
+            }`}
+          >
+            Let's discuss how we can help you achieve your goals
+          </p>
           </motion.div>
 
           <div className="grid lg:grid-cols-2 gap-12">
@@ -278,38 +263,6 @@ export default function ContactPage() {
                   />
                 </div>
 
-                {/* Captcha */}
-                <div>
-                  <label
-                    className={`block text-sm font-semibold mb-2 ${
-                      actualTheme === "dark" ? "text-gray-300" : "text-gray-700"
-                    }`}
-                  >
-                    Custom Captcha *
-                  </label>
-                  <div className="flex items-center gap-4">
-                    <span
-                      className={`text-lg font-semibold ${
-                        actualTheme === "dark" ? "text-white" : "text-gray-900"
-                      }`}
-                    >
-                      {captchaQuestion.num1} + {captchaQuestion.num2} =
-                    </span>
-                    <input
-                      type="number"
-                      name="captcha"
-                      required
-                      value={formData.captcha}
-                      onChange={handleChange}
-                      className={`w-24 px-4 py-2 rounded-full border focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all ${
-                        actualTheme === "dark"
-                          ? "bg-white/5 border-white/20 text-white"
-                          : "bg-gray-50 border-gray-200 text-gray-900"
-                      }`}
-                    />
-                  </div>
-                </div>
-
                 {/* Submit Button */}
                 <Button
                   type="submit"
@@ -475,8 +428,7 @@ export default function ContactPage() {
             </motion.div>
           </div>
         </div>
-      </div>
-      <Footer />
-    </>
+      <ScrollToTop />
+    </div>
   );
 }

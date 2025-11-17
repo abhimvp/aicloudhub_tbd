@@ -25,9 +25,9 @@ import {
   ChevronDown,
   Mail,
 } from "lucide-react";
-import Navbar from "@/components/layout/Navbar/Navbar";
 import { useTheme } from "@/components/theme/ThemeProvider";
 import CourseInquiryForm from "@/components/layout/CourseInquiryForm";
+import ScrollToTop from "@/components/layout/ScrollToTop";
 
 export default function CoursesPage() {
   const { actualTheme } = useTheme();
@@ -77,8 +77,6 @@ export default function CoursesPage() {
           : "bg-white"
       }`}
     >
-      <Navbar />
-
       {/* Hero Section */}
       <section
         className={`relative pt-32 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden transition-colors duration-300 ${
@@ -507,6 +505,7 @@ export default function CoursesPage() {
         onClose={() => setIsInquiryFormOpen(false)}
         courseTitle={selectedCourse}
       />
+      <ScrollToTop />
     </main>
   );
 }

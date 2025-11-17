@@ -2,13 +2,12 @@
 "use client";
 import React from "react";
 import * as motion from "motion/react-client";
-import Navbar from "@/components/layout/Navbar/Navbar";
-import Footer from "@/components/layout/Footer/Footer";
 import ClientLogos from "@/components/layout/ClientLogos/ClientLogos";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useTheme } from "@/components/theme/ThemeProvider";
+import ScrollToTop from "@/components/layout/ScrollToTop";
 
 const AboutPage = () => {
   const { actualTheme } = useTheme();
@@ -82,8 +81,6 @@ const AboutPage = () => {
         actualTheme === "dark" ? "bg-[#0a0a0a]" : "bg-white"
       }`}
     >
-      <Navbar />
-
       {/* Hero Section */}
       <section
         className={`relative pt-32 pb-20 overflow-hidden transition-colors duration-300 ${
@@ -876,8 +873,7 @@ const AboutPage = () => {
           </motion.div>
         </div>
       </section>
-
-      <Footer />
+      <ScrollToTop />
     </main>
   );
 };

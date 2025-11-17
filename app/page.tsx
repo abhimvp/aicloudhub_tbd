@@ -6,12 +6,12 @@ import { useSearchParams } from "next/navigation";
 import { useLenis } from "lenis/react";
 import LandingPage from "@/components/layout/LandingPage/LandingPage";
 import Navbar from "@/components/layout/Navbar/Navbar";
+import Footer from "@/components/layout/Footer/Footer";
 import Hero from "@/components/layout/HomePage/Hero";
 // import Categories from "@/components/layout/HomePage/Categories";
 import AboutUs from "@/components/layout/HomePage/AboutUs";
 import Blogs from "@/components/layout/Blogs/Blogs";
 // import Services from "@/components/layout/Services";
-import Footer from "@/components/layout/Footer/Footer";
 import TechnologyServicesTabs from "@/components/layout/HomePage/TechnologyServicesTabs";
 import ScrollToTop from "@/components/layout/ScrollToTop";
 
@@ -22,19 +22,17 @@ export default function Home() {
   
   const [showLanding, setShowLanding] = useState(!skipLanding);
   const [heroReady, setHeroReady] = useState(skipLanding);
-  const [showNavbar, setShowNavbar] = useState(skipLanding);
   const [hasScrolledToHash, setHasScrolledToHash] = useState(false);
 
   const handleLandingFinish = () => {
-    // Step 1: Fade out landing and show navbar
+    // Step 1: Fade out landing
     setTimeout(() => {
       setShowLanding(false);
-      setShowNavbar(true);
 
       // Step 2: After a short cinematic overlap, start Hero animations
       setTimeout(() => {
         setHeroReady(true);
-      }, 100); // slight overlap with Navbar entrance
+      }, 100);
     }, 400);
   };
 
@@ -77,14 +75,14 @@ export default function Home() {
       };
 
       // If landing is skipped, scroll immediately after a short delay
-      if (skipLanding && showNavbar) {
+      if (skipLanding && !showLanding) {
         scrollToSection();
-      } else if (!showLanding && showNavbar) {
+      } else if (!showLanding) {
         // If landing was shown, wait for it to finish
         scrollToSection();
       }
     }
-  }, [showLanding, showNavbar, skipLanding, lenis, hasScrolledToHash]);
+  }, [showLanding, skipLanding, lenis, hasScrolledToHash]);
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-white dark:bg-linear-to-br dark:from-gray-900 dark:via-slate-900 dark:to-zinc-950 transition-colors duration-300">
@@ -92,7 +90,7 @@ export default function Home() {
 
       {!showLanding && (
         <>
-          {showNavbar && <Navbar />}
+          <Navbar />
           <div className="flex flex-col">
             <Hero startAnimation={heroReady} />
             {/* <Categories /> */}
@@ -100,8 +98,8 @@ export default function Home() {
             <AboutUs />
             {/* <Services /> */}
             <Blogs />
-            <Footer />
           </div>
+          <Footer />
           <ScrollToTop />
         </>
       )}

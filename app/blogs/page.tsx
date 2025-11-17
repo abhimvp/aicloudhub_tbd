@@ -9,8 +9,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Search, Calendar, Clock, ArrowRight } from "lucide-react";
-import Navbar from "@/components/layout/Navbar/Navbar";
 import { useTheme } from "@/components/theme/ThemeProvider";
+import ScrollToTop from "@/components/layout/ScrollToTop";
 
 export default function BlogsPage() {
   const { actualTheme } = useTheme();
@@ -34,8 +34,6 @@ export default function BlogsPage() {
           : "bg-white"
       }`}
     >
-      <Navbar />
-
       {/* Hero Section */}
       <section
         className={`relative pt-32 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden transition-colors duration-300 ${
@@ -340,6 +338,7 @@ export default function BlogsPage() {
           </div>
         </div>
       </section>
+      <ScrollToTop />
     </main>
   );
 }

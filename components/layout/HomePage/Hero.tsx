@@ -14,6 +14,16 @@ interface HeroProps {
 
 const BUSINESS_VERTICALS = [
   {
+    title: "IT Staffing",
+    tagline: "Connect with Top-Tier Tech Talent",
+    description:
+      "Find the perfect talent to accelerate your digital transformation",
+    icon: Users,
+    gradient: "from-orange-500 to-yellow-400",
+    image: "/images/staffing.jpg", // placeholder
+    href: "/services/staffing",
+  },
+  {
     title: "IT Services",
     tagline: "Innovative Technology Solutions for Modern Business",
     description:
@@ -31,16 +41,6 @@ const BUSINESS_VERTICALS = [
     gradient: "from-purple-500 to-pink-400",
     image: "/images/training.jpg", // placeholder
     href: "/services/corporate-training",
-  },
-  {
-    title: "Staffing",
-    tagline: "Connect with Top-Tier Tech Talent",
-    description:
-      "Find the perfect talent to accelerate your digital transformation",
-    icon: Users,
-    gradient: "from-orange-500 to-yellow-400",
-    image: "/images/staffing.jpg", // placeholder
-    href: "/services/staffing",
   },
 ];
 
@@ -181,21 +181,13 @@ export default function Hero({ startAnimation = true }: HeroProps) {
     <section
       id="home"
       ref={rootRef}
-      className="relative z-0 min-h-screen pt-32 pb-16 lg:pt-0 lg:pb-0 overflow-hidden opacity-0 transition-colors duration-300"
+      className="relative z-0 min-h-screen pt-32 pb-16 lg:pt-0 lg:pb-0 overflow-hidden opacity-0 transition-colors duration-300 bg-linear-to-r from-gray-900 via-slate-900 to-zinc-900 dark:from-gray-950 dark:via-slate-950 dark:to-zinc-950"
     >
-      {/* Background Image */}
-      <div className="absolute inset-0 z-0">
-        <Image
-          src="/Hero_Bg_Image.png"
-          alt="AI Cloud Network Background"
-          fill
-          priority
-          quality={90}
-          className="object-cover object-center"
-          style={{ objectFit: 'cover' }}
-        />
-        {/* Overlay for text readability - stronger in light mode for dark background */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/20 to-transparent dark:from-gray-900/40 dark:via-gray-900/20 dark:to-transparent" />
+      {/* Animated floating shapes for visual interest */}
+      <div className="absolute inset-0 opacity-20 pointer-events-none">
+        <div className="absolute top-20 left-10 w-32 h-32 bg-orange-500 rounded-full blur-3xl" />
+        <div className="absolute top-40 right-20 w-40 h-40 bg-yellow-500 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 left-1/3 w-36 h-36 bg-cyan-500 rounded-full blur-3xl" />
       </div>
 
       {/* Animated gradient overlay for dark mode - reduced opacity */}

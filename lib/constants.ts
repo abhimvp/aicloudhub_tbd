@@ -1,6 +1,5 @@
 // lib/constants.ts
 export const navItems = [
-  { name: "Home", href: "/" },
   { name: "Services", href: "/#technology-services" },
   { name: "Trainings", href: "/courses" },
   { name: "About", href: "/about" },
