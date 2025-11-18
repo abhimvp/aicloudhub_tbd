@@ -10,13 +10,12 @@ import { useLenis } from "lenis/react"; // 1. Import the useLenis hook
 import { usePathname, useRouter } from "next/navigation";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { useTheme } from "@/components/theme/ThemeProvider";
-import { Search, X } from "lucide-react";
+import { Search } from "lucide-react";
 
 const Navbar = () => {
   const { actualTheme } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [showComingSoon, setShowComingSoon] = useState(false);
   const lenis = useLenis(); // 2. Get the Lenis instance
   const pathname = usePathname(); // Get current path
   const router = useRouter();
@@ -206,17 +205,17 @@ const Navbar = () => {
                 </Link>
               );
             })}
-            {/* Careers Link with Coming Soon */}
-            <button
-              onClick={() => setShowComingSoon(true)}
+            <Link
               className={`px-3 py-2 text-lg font-semibold uppercase transition-colors duration-300 ${
                 actualTheme === "dark"
                   ? "text-white hover:text-orange-400"
                   : "text-gray-900 hover:text-orange-600"
               }`}
+              href="/careers"
+              onClick={(e) => handleScrollTo(e, "/careers")}
             >
               Careers
-            </button>
+            </Link>
           </div>
         </div>
 
@@ -347,9 +346,10 @@ const Navbar = () => {
               </Link>
             );
           })}
-          <button
-            onClick={() => {
-              setShowComingSoon(true);
+          <Link
+            href="/careers"
+            onClick={(e) => {
+              handleScrollTo(e, "/careers");
               setIsMobileMenuOpen(false);
             }}
             className={`text-lg font-semibold uppercase transition-all duration-200 py-4 ${
@@ -359,7 +359,7 @@ const Navbar = () => {
             }`}
           >
             Careers
-          </button>
+          </Link>
           <Link href="/contact" className="w-full">
             <Button
               className="font-semibold w-full rounded-none py-4"
@@ -371,65 +371,6 @@ const Navbar = () => {
         </div>
       </motion.div>
 
-      {/* Coming Soon Popup */}
-      {showComingSoon && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-          {/* Backdrop */}
-          <div
-            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-            onClick={() => setShowComingSoon(false)}
-          />
-          {/* Popup */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            className={`relative z-10 max-w-md w-full rounded-2xl p-8 shadow-2xl ${
-              actualTheme === "dark"
-                ? "bg-gray-900 border border-white/10"
-                : "bg-white border border-gray-200"
-            }`}
-          >
-            <button
-              onClick={() => setShowComingSoon(false)}
-              className={`absolute top-4 right-4 p-2 rounded-lg transition-colors ${
-                actualTheme === "dark"
-                  ? "text-white hover:bg-white/10"
-                  : "text-gray-600 hover:bg-gray-100"
-              }`}
-            >
-              <X className="w-5 h-5" />
-            </button>
-            <div className="text-center">
-              <div className="mb-4">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-linear-to-r from-orange-500 to-yellow-400 mb-4">
-                  <span className="text-2xl">🚀</span>
-                </div>
-              </div>
-              <h3
-                className={`text-2xl font-bold mb-2 ${
-                  actualTheme === "dark" ? "text-white" : "text-gray-900"
-                }`}
-              >
-                Coming Soon!
-              </h3>
-              <p
-                className={`mb-6 ${
-                  actualTheme === "dark" ? "text-gray-300" : "text-gray-600"
-                }`}
-              >
-                We're working on something exciting. Stay tuned for career opportunities at AICloudHub!
-              </p>
-              <Button
-                onClick={() => setShowComingSoon(false)}
-                className="bg-linear-to-r from-orange-500 to-yellow-400 text-black font-semibold hover:opacity-90"
-              >
-                Got it!
-              </Button>
-            </div>
-          </motion.div>
-        </div>
-      )}
     </motion.nav>
   );
 };
