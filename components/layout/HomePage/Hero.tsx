@@ -20,7 +20,7 @@ const BUSINESS_VERTICALS = [
       "Find the perfect talent to accelerate your digital transformation",
     icon: Users,
     gradient: "from-orange-500 to-yellow-400",
-    image: "/images/staffing.jpg", // placeholder
+    image: "/HeroSectionITStaffing.png",
     href: "/services/staffing",
   },
   {
@@ -30,7 +30,7 @@ const BUSINESS_VERTICALS = [
       "Transform your business with cutting-edge cloud, AI, and digital solutions",
     icon: Code2,
     gradient: "from-blue-500 to-cyan-400",
-    image: "/images/it-services.jpg", // placeholder
+    image: "/HeroSectionITServices.png",
     href: "/services/it-services",
   },
   {
@@ -39,7 +39,7 @@ const BUSINESS_VERTICALS = [
     description: "Upskill your teams with industry-leading training programs",
     icon: GraduationCap,
     gradient: "from-purple-500 to-pink-400",
-    image: "/images/training.jpg", // placeholder
+    image: "/HeroSectionCorporateTraining.png",
     href: "/services/corporate-training",
   },
 ];
@@ -53,6 +53,7 @@ export default function Hero({ startAnimation = true }: HeroProps) {
   const ctaRef = useRef<HTMLDivElement | null>(null);
   const tlRef = useRef<gsap.core.Timeline | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
 
   useGSAP(() => {
     if (!startAnimation || !rootRef.current) return;
@@ -137,14 +138,16 @@ export default function Hero({ startAnimation = true }: HeroProps) {
     };
   }, [startAnimation]);
 
-  // Auto-rotate scroller every 4 seconds
+  // Auto-rotate scroller every 7 seconds for better readability, pause on hover
   useEffect(() => {
     const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % BUSINESS_VERTICALS.length);
-    }, 4000);
+      if (!isPaused) {
+        setActiveIndex((prev) => (prev + 1) % BUSINESS_VERTICALS.length);
+      }
+    }, 7000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [isPaused]);
 
   // Fallback: Ensure text is visible even if GSAP doesn't animate
   useEffect(() => {
@@ -252,21 +255,25 @@ export default function Hero({ startAnimation = true }: HeroProps) {
             />
           </Button>
 
-          <Button
-            size="lg"
-            variant="outline"
-            className="border-2 border-gray-300 text-gray-900 bg-white/80 hover:bg-white dark:border-white/60 dark:text-white dark:bg-white/5 dark:hover:bg-white/15 backdrop-blur-sm px-6 md:px-8 py-3 rounded-full transition-all duration-300 hover:scale-[1.05] dark:hover:border-white/80"
-          >
-            About Us
-          </Button>
+          <Link href="/about">
+            <Button
+              size="lg"
+              variant="outline"
+              className="border-2 border-gray-300 text-gray-900 bg-white/80 hover:bg-white dark:border-white/60 dark:text-white dark:bg-white/5 dark:hover:bg-white/15 backdrop-blur-sm px-6 md:px-8 py-3 rounded-full transition-all duration-300 hover:scale-[1.05] dark:hover:border-white/80"
+            >
+              About Us
+            </Button>
+          </Link>
         </div>
       </div>
 
       {/* Right Visual Stage - Business Verticals Scroller */}
-      <div className="relative z-20 w-full lg:w-[48%] xl:w-[45%] flex-shrink-0">
+      <div className="relative z-20 w-full lg:w-[48%] xl:w-[45%] shrink-0">
         <div
           ref={scrollerRef}
-          className="relative w-full h-[420px] sm:h-[480px] lg:h-[500px] xl:h-[560px] rounded-3xl overflow-hidden shadow-2xl mx-auto max-w-[600px] lg:max-w-full"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          className="relative w-full h-[420px] sm:h-[480px] lg:h-[500px] xl:h-[560px] rounded-3xl overflow-hidden shadow-2xl mx-auto max-w-[600px] lg:max-w-full cursor-pointer"
         >
           {BUSINESS_VERTICALS.map((vertical, index) => {
             const Icon = vertical.icon;
@@ -283,29 +290,37 @@ export default function Hero({ startAnimation = true }: HeroProps) {
                     : "opacity-0 translate-x-full"
                 }`}
               >
-                {/* Background Gradient */}
-                <div
-                  className={`absolute inset-0 bg-linear-to-br ${vertical.gradient} opacity-90`}
-                />
+                {/* Background Image */}
+                <div className="absolute inset-0">
+                  <Image
+                    src={vertical.image}
+                    alt={vertical.title}
+                    fill
+                    className="object-cover"
+                    priority={index === 0}
+                  />
+                  {/* Dark gradient at bottom for text readability */}
+                  <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent" />
+                </div>
 
                 {/* Content */}
                 <div className="relative z-10 h-full flex flex-col justify-between p-6 sm:p-8 lg:p-10 xl:p-12 text-white">
                   {/* Icon */}
                   <div className="flex justify-start">
-                    <div className="p-3 sm:p-4 bg-white/20 backdrop-blur-sm rounded-2xl">
+                    <div className="p-3 sm:p-4 bg-white/25 backdrop-blur-md rounded-2xl shadow-lg border border-white/20">
                       <Icon size={40} className="sm:w-12 sm:h-12" strokeWidth={2} />
                     </div>
                   </div>
 
                   {/* Text Content */}
                   <div className="space-y-3 sm:space-y-4">
-                    <h2 className="text-3xl sm:text-4xl lg:text-4xl xl:text-5xl font-bold tracking-tight leading-tight">
+                    <h2 className="text-3xl sm:text-4xl lg:text-4xl xl:text-5xl font-bold tracking-tight leading-tight drop-shadow-lg">
                       {vertical.title}
                     </h2>
-                    <p className="text-lg sm:text-xl lg:text-xl xl:text-2xl font-medium opacity-95 leading-snug">
+                    <p className="text-lg sm:text-xl lg:text-xl xl:text-2xl font-medium leading-snug drop-shadow-md">
                       {vertical.tagline}
                     </p>
-                    <p className="text-sm sm:text-base lg:text-base xl:text-lg opacity-90 max-w-md leading-relaxed">
+                    <p className="text-sm sm:text-base lg:text-base xl:text-lg max-w-md leading-relaxed drop-shadow-md">
                       {vertical.description}
                     </p>
 
@@ -314,17 +329,12 @@ export default function Hero({ startAnimation = true }: HeroProps) {
                       <Link href={vertical.href}>
                         <Button
                           size="lg"
-                          className="bg-white text-gray-900 hover:bg-white/90 font-semibold px-5 sm:px-6 py-2.5 sm:py-3 rounded-full shadow-lg transition-all duration-300 hover:scale-105 text-sm sm:text-base"
+                          className="bg-white text-gray-900 hover:bg-white/95 font-semibold px-5 sm:px-6 py-2.5 sm:py-3 rounded-full shadow-xl transition-all duration-300 hover:scale-105 text-sm sm:text-base"
                         >
                           Learn More
                         </Button>
                       </Link>
                     </div>
-                  </div>
-
-                  {/* Placeholder for smiling image - can be added later */}
-                  <div className="absolute bottom-0 right-0 w-32 h-32 sm:w-48 sm:h-48 lg:w-56 lg:h-56 xl:w-64 xl:h-64 opacity-20">
-                    <div className="w-full h-full rounded-full bg-white/30 backdrop-blur-md" />
                   </div>
                 </div>
               </div>

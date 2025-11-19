@@ -10,7 +10,6 @@ import { useLenis } from "lenis/react"; // 1. Import the useLenis hook
 import { usePathname, useRouter } from "next/navigation";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { useTheme } from "@/components/theme/ThemeProvider";
-import { Search } from "lucide-react";
 
 const Navbar = () => {
   const { actualTheme } = useTheme();
@@ -222,19 +221,6 @@ const Navbar = () => {
         {/* CTA */}
         <div className="hidden md:flex items-center space-x-4">
           <ThemeToggle />
-          <button
-            onClick={() => {
-              // Add search functionality here if needed
-            }}
-            className={`p-2 rounded-lg transition-colors duration-300 ${
-              actualTheme === "dark"
-                ? "text-white hover:text-orange-400 hover:bg-white/10"
-                : "text-gray-900 hover:text-orange-600 hover:bg-orange-50"
-            }`}
-            aria-label="Search"
-          >
-            <Search className="w-5 h-5" />
-          </button>
           <Link href="/contact">
             <Button className="font-semibold">Let's Talk</Button>
           </Link>
@@ -243,19 +229,6 @@ const Navbar = () => {
         {/* Mobile Menu Button */}
         <div className="md:hidden flex items-center space-x-2">
           <ThemeToggle />
-          <button
-            onClick={() => {
-              // Add search functionality here if needed
-            }}
-            className={`p-2 rounded-lg transition-colors duration-300 ${
-              actualTheme === "dark"
-                ? "text-white hover:text-orange-400 hover:bg-white/10"
-                : "text-gray-900 hover:text-orange-600 hover:bg-orange-50"
-            }`}
-            aria-label="Search"
-          >
-            <Search className="w-5 h-5" />
-          </button>
           <button
             onClick={toggleMobileMenu}
             className={`inline-flex items-center justify-center p-2 rounded-md focus:outline-none transition-colors duration-200 ${
