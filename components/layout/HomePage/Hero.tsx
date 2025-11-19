@@ -54,15 +54,8 @@ export default function Hero() {
   useGSAP(() => {
     if (!rootRef.current) return;
 
-    // 🔒 Lock scroll at the start of animation
-    document.body.style.overflow = "hidden";
-
     const tl = gsap.timeline({
       defaults: { ease: "power3.out" },
-      onComplete: () => {
-        // 🔓 Unlock scroll once the full timeline finishes
-        document.body.style.overflow = "auto";
-      },
     });
     tlRef.current = tl;
 
@@ -129,8 +122,6 @@ export default function Hero() {
     return () => {
       tl.kill();
       tlRef.current = null;
-      // ensure scroll is restored even if unmounted early
-      document.body.style.overflow = "auto";
     };
   }, []);
 
@@ -180,10 +171,10 @@ export default function Hero() {
     <section
       id="home"
       ref={rootRef}
-      className="relative z-0 min-h-screen pt-32 pb-16 lg:pt-0 lg:pb-0 overflow-hidden opacity-0 transition-colors duration-300 bg-linear-to-r from-gray-900 via-slate-900 to-zinc-900 dark:from-gray-950 dark:via-slate-950 dark:to-zinc-950"
+      className="relative z-0 min-h-screen pt-32 pb-16 lg:pt-0 lg:pb-0 opacity-0 transition-colors duration-300 bg-linear-to-r from-gray-900 via-slate-900 to-zinc-900 dark:from-gray-950 dark:via-slate-950 dark:to-zinc-950"
     >
       {/* Animated floating shapes for visual interest */}
-      <div className="absolute inset-0 opacity-20 pointer-events-none">
+      <div className="absolute inset-0 opacity-20 pointer-events-none overflow-hidden">
         <div className="absolute top-20 left-10 w-32 h-32 bg-orange-500 rounded-full blur-3xl" />
         <div className="absolute top-40 right-20 w-40 h-40 bg-yellow-500 rounded-full blur-3xl" />
         <div className="absolute bottom-20 left-1/3 w-36 h-36 bg-cyan-500 rounded-full blur-3xl" />

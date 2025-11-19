@@ -7,7 +7,7 @@ import ScrollToTop from "@/components/layout/ScrollToTop";
 
 export default function Home() {
   return (
-    <main className="min-h-screen overflow-x-hidden bg-white dark:bg-linear-to-br dark:from-gray-900 dark:via-slate-900 dark:to-zinc-950 transition-colors duration-300">
+    <main className="min-h-screen bg-white dark:bg-linear-to-br dark:from-gray-900 dark:via-slate-900 dark:to-zinc-950 transition-colors duration-300">
       <div className="flex flex-col">
         <Hero />
         <TechnologyServicesTabs />
