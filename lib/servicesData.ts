@@ -3,6 +3,7 @@ import {
   CloudCog,
   AppWindow,
   BarChart3,
+  UserCheck,
   LucideIcon,
 } from "lucide-react";
 
@@ -588,6 +589,136 @@ export const SERVICES_DATA: ServiceDetail[] = [
       description:
         "Let's help you unlock insights, accelerate innovation, and drive measurable business results.",
       buttonText: "Get in Touch →",
+    },
+  },
+  {
+    id: "staffing",
+    title: "IT Staffing",
+    subtitle:
+      "Access top-tier tech talent to accelerate your digital transformation journey.",
+    description: [
+      "Scale your teams with skilled professionals across AI, Cloud, Development, and Data domains.",
+      "Our IT staffing solutions provide flexible, vetted talent to meet your project demands and strategic goals.",
+    ],
+    Icon: UserCheck,
+    image: "/ServiceSectionImages/Services-IT-Staffing.png",
+    heroTitle: "Strategic IT Talent Solutions",
+    heroDescription:
+      "Partner with us to access pre-vetted, skilled professionals who integrate seamlessly with your teams. From contract to permanent placement, we provide the right talent at the right time.",
+    heroImage: "/HeroSectionITStaffing.png",
+    heroCTA: {
+      primary: "Find Talent",
+      secondary: "View Services",
+    },
+    offerings: [
+      {
+        title: "Contract Staffing",
+        description:
+          "Access specialized talent for short-term projects, seasonal demands, or specific initiatives with flexible engagement models.",
+      },
+      {
+        title: "Contract-to-Hire",
+        description:
+          "Evaluate candidates on the job before making permanent hiring decisions, reducing recruitment risk and ensuring cultural fit.",
+      },
+      {
+        title: "Direct Placement",
+        description:
+          "Find permanent team members through our comprehensive screening process, from junior developers to senior architects.",
+      },
+      {
+        title: "Project-Based Teams",
+        description:
+          "Deploy complete, pre-assembled teams with complementary skills for end-to-end project delivery.",
+      },
+    ],
+    capabilities: [
+      {
+        title: "AI & ML Engineers",
+        description:
+          "Data scientists, ML engineers, AI architects, and GenAI specialists with expertise in modern frameworks and tools.",
+      },
+      {
+        title: "Cloud Architects & Engineers",
+        description:
+          "AWS, Azure, and GCP certified professionals skilled in cloud-native development, DevOps, and infrastructure automation.",
+      },
+      {
+        title: "Full-Stack Developers",
+        description:
+          "Frontend and backend developers proficient in React, Angular, Node.js, Python, Java, .NET, and modern frameworks.",
+      },
+      {
+        title: "Data Engineers & Analysts",
+        description:
+          "Experts in data pipelines, ETL, data warehousing, BI tools, and analytics platforms for data-driven decision making.",
+      },
+      {
+        title: "DevOps & SRE",
+        description:
+          "Site reliability engineers and DevOps specialists focused on CI/CD, automation, monitoring, and infrastructure as code.",
+      },
+      {
+        title: "Cybersecurity Specialists",
+        description:
+          "Security architects, penetration testers, and compliance experts to protect your digital assets and meet regulatory requirements.",
+      },
+    ],
+    process: [
+      {
+        step: 1,
+        title: "Requirements Discovery",
+        description:
+          "Understand your technical needs, team culture, project timeline, and specific skill requirements in detail.",
+      },
+      {
+        step: 2,
+        title: "Talent Sourcing & Screening",
+        description:
+          "Leverage our network and rigorous vetting process including technical assessments and cultural fit evaluation.",
+      },
+      {
+        step: 3,
+        title: "Candidate Presentation",
+        description:
+          "Present qualified candidates with detailed profiles, technical evaluations, and recommendations within 48-72 hours.",
+      },
+      {
+        step: 4,
+        title: "Interview & Selection",
+        description:
+          "Coordinate interviews, facilitate technical discussions, and support your decision-making process.",
+      },
+      {
+        step: 5,
+        title: "Onboarding & Support",
+        description:
+          "Ensure smooth integration with ongoing support, performance monitoring, and talent management throughout the engagement.",
+      },
+    ],
+    industries: [
+      "Technology & SaaS",
+      "Financial Services",
+      "Healthcare & Life Sciences",
+      "Retail & E-Commerce",
+      "Manufacturing & IoT",
+    ],
+    whyChoose: {
+      title: "Why Choose aicloudhub for IT Staffing?",
+      reasons: [
+        "Extensive network of pre-vetted, certified technology professionals",
+        "Deep expertise across emerging technologies (AI, Cloud, Data)",
+        "Flexible engagement models from contract to permanent placement",
+        "Rapid turnaround with quality candidates in 48-72 hours",
+        "Ongoing support and performance management throughout engagement",
+      ],
+      image: "/WhyChooseAICloudhubAIML.png",
+    },
+    finalCTA: {
+      title: "Ready to Build Your Dream Team?",
+      description:
+        "Let's connect you with top-tier tech talent to accelerate your projects and achieve your business goals.",
+      buttonText: "Start Hiring →",
     },
   },
 ];
