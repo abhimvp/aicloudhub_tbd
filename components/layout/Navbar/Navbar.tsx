@@ -57,9 +57,9 @@ const Navbar = () => {
         setIsMobileMenuOpen(false);
         return;
       }
-      // If not on homepage, navigate to homepage with skipLanding and hash
+      // If not on homepage, navigate to homepage with hash
       e.preventDefault();
-      router.push(`/?skipLanding=true${sectionId}`);
+      router.push(`/${sectionId}`);
       setIsMobileMenuOpen(false);
       return;
     }
@@ -131,9 +131,9 @@ const Navbar = () => {
           className="flex items-center"
         >
           <Link
-            href={isHomePage ? "#home" : "/?skipLanding=true"}
+            href={isHomePage ? "#home" : "/"}
             onClick={(e) =>
-              handleScrollTo(e, isHomePage ? "#home" : "/?skipLanding=true")
+              handleScrollTo(e, isHomePage ? "#home" : "/")
             }
             aria-label="Scroll to home"
           >
@@ -156,9 +156,9 @@ const Navbar = () => {
           className="flex items-center absolute left-4 sm:left-6 lg:left-8"
         >
           <Link
-            href={isHomePage ? "#home" : "/?skipLanding=true"}
+            href={isHomePage ? "#home" : "/"}
             onClick={(e) =>
-              handleScrollTo(e, isHomePage ? "#home" : "/?skipLanding=true")
+              handleScrollTo(e, isHomePage ? "#home" : "/")
             }
             aria-label="Scroll to home"
           >
@@ -177,16 +177,16 @@ const Navbar = () => {
         <div className="hidden md:block mx-auto">
           <div className="flex items-baseline space-x-8">
             {navItems.map((item) => {
-              // If we're not on homepage and item is Home, navigate to root with skipLanding
+              // If we're not on homepage and item is Home, navigate to root
               let href =
                 !isHomePage && item.name === "Home"
-                  ? "/?skipLanding=true"
+                  ? "/"
                   : item.href;
               
-              // If navigating to technology-services from another page, add skipLanding
+              // If navigating to technology-services from another page, add hash
               if (!isHomePage && href.includes("#technology-services")) {
                 const hash = href.includes("#") ? href.substring(href.indexOf("#")) : "";
-                href = `/?skipLanding=true${hash}`;
+                href = `/${hash}`;
               }
 
               return (
@@ -292,16 +292,16 @@ const Navbar = () => {
       >
         <div className="flex flex-col items-stretch text-center">
           {navItems.map((item) => {
-            // If we're not on homepage and item is Home, navigate to root with skipLanding
+            // If we're not on homepage and item is Home, navigate to root
             let href =
               !isHomePage && item.name === "Home"
-                ? "/?skipLanding=true"
+                ? "/"
                 : item.href;
             
-            // If navigating to technology-services from another page, add skipLanding
+            // If navigating to technology-services from another page, add hash
             if (!isHomePage && href.includes("#technology-services")) {
               const hash = href.includes("#") ? href.substring(href.indexOf("#")) : "";
-              href = `/?skipLanding=true${hash}`;
+              href = `/${hash}`;
             }
 
             return (

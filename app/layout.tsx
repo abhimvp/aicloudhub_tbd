@@ -4,8 +4,8 @@ import { Plus_Jakarta_Sans, Space_Grotesk } from 'next/font/google';
 import "./globals.css";
 import SmoothScroll from "@/components/layout/SmoothScroll";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
-import { LandingProvider } from "@/components/layout/LandingProvider";
-import ConditionalLayout from "@/components/layout/ConditionalLayout";
+import Navbar from "@/components/layout/Navbar/Navbar";
+import Footer from "@/components/layout/Footer/Footer";
 
 const plusJakartaSans = Plus_Jakarta_Sans({ 
   variable: '--font-sans', 
@@ -35,11 +35,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${plusJakartaSans.variable} ${spaceGrotesk.variable} font-sans antialiased`}>
         <ThemeProvider>
-          <LandingProvider>
-            <SmoothScroll>
-              <ConditionalLayout>{children}</ConditionalLayout>
-            </SmoothScroll>
-          </LandingProvider>
+          <SmoothScroll>
+            <Navbar />
+            {children}
+            <Footer />
+          </SmoothScroll>
         </ThemeProvider>
       </body>
     </html>

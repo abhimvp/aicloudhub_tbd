@@ -8,10 +8,6 @@ import { Code2, GraduationCap, Users } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-interface HeroProps {
-  startAnimation?: boolean;
-}
-
 const BUSINESS_VERTICALS = [
   {
     title: "IT Staffing",
@@ -44,7 +40,7 @@ const BUSINESS_VERTICALS = [
   },
 ];
 
-export default function Hero({ startAnimation = true }: HeroProps) {
+export default function Hero() {
   const rootRef = useRef<HTMLElement | null>(null);
   const scrollerRef = useRef<HTMLDivElement | null>(null);
   const headlineRef = useRef<HTMLHeadingElement | null>(null);
@@ -56,7 +52,7 @@ export default function Hero({ startAnimation = true }: HeroProps) {
   const [isPaused, setIsPaused] = useState(false);
 
   useGSAP(() => {
-    if (!startAnimation || !rootRef.current) return;
+    if (!rootRef.current) return;
 
     // 🔒 Lock scroll at the start of animation
     document.body.style.overflow = "hidden";
@@ -136,7 +132,7 @@ export default function Hero({ startAnimation = true }: HeroProps) {
       // ensure scroll is restored even if unmounted early
       document.body.style.overflow = "auto";
     };
-  }, [startAnimation]);
+  }, []);
 
   // Auto-rotate scroller every 7 seconds for better readability, pause on hover
   useEffect(() => {
