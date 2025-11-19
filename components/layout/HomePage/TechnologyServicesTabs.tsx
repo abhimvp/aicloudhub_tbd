@@ -7,6 +7,13 @@ import { ChevronDown } from "lucide-react";
 import { useTheme } from "@/components/theme/ThemeProvider";
 import * as motion from "motion/react-client";
 import { SERVICES_DATA } from "@/lib/servicesData";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 // Transform data for homepage display
 const SERVICES = SERVICES_DATA.map((service) => ({
@@ -83,9 +90,7 @@ export default function TechnologyServicesTabs() {
           >
             Our Technology Services
           </p>
-          <h2
-            className={`text-3xl sm:text-4xl font-black ${headingColor}`}
-          >
+          <h2 className={`text-3xl sm:text-4xl font-black ${headingColor}`}>
             Empowering Enterprises with Intelligent, Secure, and Scalable
             Solutions.
           </h2>
@@ -100,37 +105,46 @@ export default function TechnologyServicesTabs() {
           transition={{ delay: 0.2, duration: 0.6, ease: "easeOut" }}
         >
           <div className="relative">
-            <select
+            <Select
               value={activeId}
-              onChange={(e) => setActiveId(e.target.value)}
-              className={`w-full appearance-none rounded-lg border px-4 py-3 pl-12 pr-10 text-base font-semibold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
-                isDark
-                  ? "border-white/20 bg-white/10 text-white focus:ring-orange-400 focus:border-orange-400 [&>option]:bg-gray-900 [&>option]:text-white"
-                  : "border-orange-200 bg-white text-slate-900 focus:ring-orange-500 focus:border-orange-500 shadow-md [&>option]:bg-white [&>option]:text-slate-900"
-              }`}
-              aria-label="Select technology service"
+              onValueChange={(value) => setActiveId(value)}
             >
-              {SERVICES.map(({ id, title }) => (
-                <option
-                  key={id}
-                  value={id}
-                  className={isDark ? "bg-gray-900 text-white" : "bg-white text-slate-900"}
-                >
-                  {title}
-                </option>
-              ))}
-            </select>
+              <SelectTrigger
+                className={`w-full h-12 pl-12 pr-10 rounded-lg border text-base font-semibold transition-all duration-300 focus:ring-2 focus:ring-offset-2 ${
+                  isDark
+                    ? "border-white/20 bg-white/10 text-white focus:ring-orange-400 focus:border-orange-400"
+                    : "border-orange-200 bg-white text-slate-900 focus:ring-orange-500 focus:border-orange-500 shadow-md"
+                }`}
+                aria-label="Select technology service"
+              >
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent
+                className={`rounded-xl ${
+                  isDark
+                    ? "bg-gray-900 border-white/20"
+                    : "bg-white border-orange-200 shadow-xl"
+                }`}
+              >
+                {SERVICES.map(({ id, title }) => (
+                  <SelectItem
+                    key={id}
+                    value={id}
+                    className={`cursor-pointer ${
+                      isDark
+                        ? "text-white focus:bg-white/10 focus:text-white"
+                        : "text-slate-900 focus:bg-orange-50"
+                    }`}
+                  >
+                    {title}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
             <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2">
               <activeService.Icon
                 className={`h-5 w-5 ${
                   isDark ? "text-orange-400" : "text-orange-600"
-                }`}
-              />
-            </div>
-            <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2">
-              <ChevronDown
-                className={`h-5 w-5 ${
-                  isDark ? "text-zinc-400" : "text-slate-500"
                 }`}
               />
             </div>
@@ -162,12 +176,20 @@ export default function TechnologyServicesTabs() {
                 <div className="flex items-center gap-2">
                   <Icon
                     className={`h-5 w-5 ${
-                      isActive ? (isDark ? "text-white" : "text-slate-900") : tabInactive
+                      isActive
+                        ? isDark
+                          ? "text-white"
+                          : "text-slate-900"
+                        : tabInactive
                     }`}
                   />
                   <span
                     className={`text-lg ${
-                      isActive ? (isDark ? "text-white" : "text-slate-900") : tabInactive
+                      isActive
+                        ? isDark
+                          ? "text-white"
+                          : "text-slate-900"
+                        : tabInactive
                     }`}
                   >
                     {title}
@@ -185,7 +207,9 @@ export default function TechnologyServicesTabs() {
 
         <motion.div
           className={`mt-10 rounded-3xl border px-6 py-10 sm:px-12 transition-colors duration-300 ${
-            isDark ? "border-white/10 bg-white/5" : "border-orange-100 bg-white shadow-lg"
+            isDark
+              ? "border-white/10 bg-white/5"
+              : "border-orange-100 bg-white shadow-lg"
           }`}
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -238,4 +262,3 @@ export default function TechnologyServicesTabs() {
     </section>
   );
 }
-
