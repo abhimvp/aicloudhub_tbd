@@ -861,7 +861,7 @@ const AboutPage = () => {
               Let's innovate together and build solutions that drive real
               impact.
             </p>
-            <Link href="/#services">
+            <Link href="/contact">
               <Button
                 size="lg"
                 className="bg-linear-to-r from-orange-500 to-yellow-400 text-black font-bold text-lg px-12 py-6 rounded-full 

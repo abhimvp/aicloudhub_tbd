@@ -93,57 +93,61 @@ export default function CourseInquiryForm({
             className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
           />
 
-          {/* Modal */}
-          <div className="fixed inset-0 flex items-center justify-center z-50 p-4 pointer-events-none">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="pointer-events-auto w-full max-w-2xl max-h-[90vh] overflow-y-auto"
-            >
-              <Card
-                className={`transition-colors duration-300 ${
-                  actualTheme === "dark"
-                    ? "bg-zinc-900 border-white/10"
-                    : "bg-white border-gray-200"
-                }`}
-              >
-                <CardContent className="p-8">
-                  {/* Header */}
-                  <div className="flex items-start justify-between mb-6">
-                    <div className="flex-1">
-                      <h2
-                        className={`text-3xl font-bold mb-2 transition-colors duration-300 ${
-                          actualTheme === "dark" ? "text-white" : "text-gray-900"
-                        }`}
-                      >
-                        {isSuccess ? "Inquiry Sent!" : "Inquire About This Course"}
-                      </h2>
-                      {!isSuccess && (
-                        <p
-                          className={`text-lg transition-colors duration-300 ${
-                            actualTheme === "dark"
-                              ? "text-gray-400"
-                              : "text-gray-600"
-                          }`}
-                        >
-                          {courseTitle}
-                        </p>
-                      )}
-                    </div>
-                    <button
-                      onClick={onClose}
-                      className={`p-2 rounded-lg transition-colors ${
+          {/* Slide-in Side Panel */}
+          <motion.div
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "spring", damping: 30, stiffness: 300 }}
+            className={`fixed top-0 right-0 h-full w-full sm:w-[600px] z-50 shadow-2xl overflow-y-auto ${
+              actualTheme === "dark"
+                ? "bg-zinc-900"
+                : "bg-white"
+            }`}
+          >
+            {/* Header */}
+            <div className={`sticky top-0 z-10 px-8 py-6 border-b ${
+              actualTheme === "dark"
+                ? "bg-zinc-900 border-white/10"
+                : "bg-white border-gray-200"
+            }`}>
+              <div className="flex items-start justify-between">
+                <div className="flex-1">
+                  <h2
+                    className={`text-2xl sm:text-3xl font-bold mb-2 transition-colors duration-300 ${
+                      actualTheme === "dark" ? "text-white" : "text-gray-900"
+                    }`}
+                  >
+                    {isSuccess ? "Inquiry Sent!" : "Inquire About This Course"}
+                  </h2>
+                  {!isSuccess && (
+                    <p
+                      className={`text-base sm:text-lg transition-colors duration-300 ${
                         actualTheme === "dark"
-                          ? "hover:bg-white/10 text-gray-400 hover:text-white"
-                          : "hover:bg-gray-100 text-gray-600 hover:text-gray-900"
+                          ? "text-gray-400"
+                          : "text-gray-600"
                       }`}
                     >
-                      <X className="w-6 h-6" />
-                    </button>
-                  </div>
+                      {courseTitle}
+                    </p>
+                  )}
+                </div>
+                <button
+                  onClick={onClose}
+                  className={`p-2 rounded-lg transition-colors ${
+                    actualTheme === "dark"
+                      ? "hover:bg-white/10 text-gray-400 hover:text-white"
+                      : "hover:bg-gray-100 text-gray-600 hover:text-gray-900"
+                  }`}
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+            </div>
 
-                  {isSuccess ? (
+            {/* Content */}
+            <div className="px-8 py-6">
+              {isSuccess ? (
                     <motion.div
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
@@ -341,12 +345,10 @@ export default function CourseInquiryForm({
                       </div>
                     </form>
                   )}
-                </CardContent>
-              </Card>
-            </motion.div>
-          </div>
-        </>
-      )}
-    </AnimatePresence>
-  );
-}
+                </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
+      );
+    }
