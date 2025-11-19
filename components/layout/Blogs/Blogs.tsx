@@ -196,7 +196,11 @@ const Blogs = () => {
         {featuredBlogs.map((post) => (
           <SwiperSlide key={post.id}>
             <Link href={`/blogs/${post.slug}`}>
-              <div className="relative w-full bg-neutral-900 rounded-3xl overflow-hidden shadow-xl cursor-pointer transition-all duration-700 hover:shadow-2xl hover:shadow-orange-500/20">
+              <div className={`relative w-full rounded-3xl overflow-hidden shadow-xl cursor-pointer transition-all duration-700 hover:shadow-2xl ${
+                actualTheme === "dark" 
+                  ? "bg-neutral-900 hover:shadow-orange-500/20" 
+                  : "bg-white hover:shadow-orange-500/30 border border-orange-100"
+              }`}>
                 <div className="relative w-full h-[260px] overflow-hidden rounded-t-3xl">
                   <Image
                     src={post.cover}
@@ -214,16 +218,22 @@ const Blogs = () => {
                     </span>
                   </div>
                 </div>
-                <div className="p-6 text-left text-white">
-                  <h3 className="text-xl font-semibold mb-2 line-clamp-2 hover:text-orange-400 transition-colors">
+                <div className={`p-6 text-left ${
+                  actualTheme === "dark" ? "text-white" : "text-slate-900"
+                }`}>
+                  <h3 className={`text-xl font-semibold mb-2 line-clamp-2 hover:text-orange-400 transition-colors`}>
                     {post.title}
                   </h3>
-                  <p className="text-gray-400 text-sm mb-3 line-clamp-2">
+                  <p className={`text-sm mb-3 line-clamp-2 ${
+                    actualTheme === "dark" ? "text-gray-400" : "text-slate-600"
+                  }`}>
                     {post.excerpt}
                   </p>
                   <div className="flex items-center justify-between">
-                    <p className="text-gray-500 text-xs">{post.date}</p>
-                    <span className="text-orange-400 text-xs font-semibold">{post.readTime}</span>
+                    <p className={`text-xs ${
+                      actualTheme === "dark" ? "text-gray-500" : "text-slate-500"
+                    }`}>{post.date}</p>
+                    <span className="text-orange-500 text-xs font-semibold">{post.readTime}</span>
                   </div>
                 </div>
               </div>

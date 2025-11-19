@@ -10,7 +10,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, Clock, ArrowLeft, Tag, Share2, User } from "lucide-react";
 import { notFound } from "next/navigation";
-import Navbar from "@/components/layout/Navbar/Navbar";
 import { useTheme } from "@/components/theme/ThemeProvider";
 import "../blog-content.css";
 
@@ -39,8 +38,6 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
           : "bg-white"
       }`}
     >
-      <Navbar />
-
       {/* Back Button */}
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-8">
         <Link href="/blogs">

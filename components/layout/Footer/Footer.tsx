@@ -306,12 +306,6 @@ const Footer = () => {
               >
                 Privacy Policy
               </Link>
-              <Link
-                href="/cookies"
-                className="hover:text-orange-400 transition-colors"
-              >
-                Cookie policy
-              </Link>
             </div>
           </div>
         </div>

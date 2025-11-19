@@ -21,7 +21,6 @@ import {
   Mail,
 } from "lucide-react";
 import { notFound } from "next/navigation";
-import Navbar from "@/components/layout/Navbar/Navbar";
 import { useTheme } from "@/components/theme/ThemeProvider";
 import CourseInquiryForm from "@/components/layout/CourseInquiryForm";
 
@@ -51,8 +50,6 @@ export default function CoursePage({ params }: CoursePageProps) {
           : "bg-white"
       }`}
     >
-      <Navbar />
-
       {/* Back Button */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-8">
         <Link href="/courses">

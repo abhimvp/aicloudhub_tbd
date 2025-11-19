@@ -171,7 +171,7 @@ export default function Hero() {
     <section
       id="home"
       ref={rootRef}
-      className="relative z-0 min-h-screen pt-32 pb-16 lg:pt-0 lg:pb-0 opacity-0 transition-colors duration-300 bg-linear-to-r from-gray-900 via-slate-900 to-zinc-900 dark:from-gray-950 dark:via-slate-950 dark:to-zinc-950"
+      className="relative z-0 min-h-screen pt-32 pb-16 lg:pt-0 lg:pb-0 opacity-0 transition-colors duration-300 bg-linear-to-br from-orange-50 via-white to-yellow-50 dark:bg-linear-to-r dark:from-gray-950 dark:via-slate-950 dark:to-zinc-950"
     >
       {/* Animated floating shapes for visual interest */}
       <div className="absolute inset-0 opacity-20 pointer-events-none overflow-hidden">
@@ -200,21 +200,21 @@ export default function Hero() {
           <div>
             <h1
               ref={headlineRef}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-black mb-3 md:mb-4 opacity-0 translate-y-5 text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)] dark:drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] leading-tight"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-black mb-3 md:mb-4 opacity-0 translate-y-5 text-slate-900 dark:text-white leading-tight"
             >
               Empower Your Business with AI-Driven Innovation
             </h1>
             
             <p
               ref={taglineRef}
-              className="text-lg sm:text-xl md:text-2xl lg:text-xl xl:text-2xl font-semibold mb-4 md:mb-6 opacity-0 translate-y-5 bg-linear-to-r from-orange-400 via-yellow-300 to-orange-500 bg-clip-text text-transparent drop-shadow-[0_3px_10px_rgba(255,140,0,0.5)] dark:from-orange-400 dark:via-yellow-300 dark:to-orange-500 leading-snug"
+              className="text-lg sm:text-xl md:text-2xl lg:text-xl xl:text-2xl font-semibold mb-4 md:mb-6 opacity-0 translate-y-5 bg-linear-to-r from-orange-600 via-orange-500 to-yellow-500 dark:from-orange-400 dark:via-yellow-300 dark:to-orange-500 bg-clip-text text-transparent leading-snug"
             >
               Build, Scale, and Transform with Smart, Secure, and Connected Solutions.
             </p>
             
             <p
               ref={paraRef}
-              className="text-base md:text-lg lg:text-base xl:text-lg mb-6 md:mb-8 opacity-0 translate-y-5 leading-relaxed text-gray-100 drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)] dark:text-gray-200 dark:drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)] max-w-full lg:max-w-lg mx-auto lg:mx-0"
+              className="text-base md:text-lg lg:text-base xl:text-lg mb-6 md:mb-8 opacity-0 translate-y-5 leading-relaxed text-slate-700 dark:text-gray-200 max-w-full lg:max-w-lg mx-auto lg:mx-0"
             >
               At AICloudHub, we empower enterprises to thrive in the digital age
               through AI, Cloud, and Automation. From ideation to launch, our
@@ -246,7 +246,7 @@ export default function Hero() {
             <Button
               size="lg"
               variant="outline"
-              className="border-2 border-gray-300 text-gray-900 bg-white/80 hover:bg-white dark:border-white/60 dark:text-white dark:bg-white/5 dark:hover:bg-white/15 backdrop-blur-sm px-6 md:px-8 py-3 rounded-full transition-all duration-300 hover:scale-[1.05] dark:hover:border-white/80"
+              className="border-2 border-slate-300 text-slate-900 bg-white hover:bg-slate-50 dark:border-white/60 dark:text-white dark:bg-white/5 dark:hover:bg-white/15 px-6 md:px-8 py-3 rounded-full transition-all duration-300 hover:scale-[1.05] dark:hover:border-white/80"
             >
               About Us
             </Button>
@@ -349,8 +349,8 @@ export default function Hero() {
 
       {/* Scroll Indicator */}
       <div className="hidden lg:block absolute left-1/2 transform -translate-x-1/2 bottom-8 z-30">
-        <div className="w-7 h-12 border-2 border-gray-900 dark:border-white rounded-full flex items-start justify-center p-1">
-          <div className="w-1.5 h-3 bg-gray-900 dark:bg-white rounded-full animate-bounce" />
+        <div className="w-7 h-12 border-2 border-slate-400 dark:border-white rounded-full flex items-start justify-center p-1">
+          <div className="w-1.5 h-3 bg-slate-600 dark:bg-white rounded-full animate-bounce" />
         </div>
       </div>
     </section>

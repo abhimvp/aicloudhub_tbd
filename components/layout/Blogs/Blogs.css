@@ -60,15 +60,27 @@
 
 /* Pagination dots */
 .blogSwiper .swiper-pagination-bullet {
-  background: rgba(255, 255, 255, 0.4);
-  width: 8px;
-  height: 8px;
+  background: rgba(0, 0, 0, 0.3);
+  width: 10px;
+  height: 10px;
   transition: all 0.3s ease;
+  opacity: 1;
+}
+
+/* Dark mode pagination dots */
+.dark .blogSwiper .swiper-pagination-bullet {
+  background: rgba(255, 255, 255, 0.4);
 }
 
 .blogSwiper .swiper-pagination-bullet-active {
-  background: white;
-  transform: scale(1.3);
+  background: rgb(249, 115, 22);
+  transform: scale(1.4);
+  opacity: 1;
+}
+
+/* Dark mode active pagination dot */
+.dark .blogSwiper .swiper-pagination-bullet-active {
+  background: rgb(251, 146, 60);
 }
 
 /* Hide arrows on mobile */
