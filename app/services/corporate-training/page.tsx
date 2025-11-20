@@ -54,7 +54,7 @@ export default async function CorporateTrainingPage() {
   return (
     <div className="min-h-screen bg-linear-to-br from-white via-orange-50/40 to-yellow-50/50 dark:from-gray-900 dark:via-slate-900 dark:to-zinc-950">
       {/* Hero Section with Floating Elements */}
-      <section className="relative bg-linear-to-r from-gray-900 via-slate-900 to-zinc-900 dark:from-gray-950 dark:via-slate-950 dark:to-zinc-950 text-white overflow-hidden">
+      <section className="relative bg-linear-to-b from-orange-50 via-white to-amber-50 text-slate-900 dark:from-gray-950 dark:via-slate-950 dark:to-zinc-950 dark:text-white overflow-hidden">
         {/* Animated floating shapes */}
         <div className="absolute inset-0 opacity-20 pointer-events-none">
           <motion.div
@@ -108,32 +108,32 @@ export default async function CorporateTrainingPage() {
               transition={{ duration: 0.6 }}
             >
               {/* Breadcrumb Navigation */}
-              <div className="flex items-center gap-2 text-sm text-white/70 mb-6">
+              <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-white/70 mb-6">
                 <Link
                   href="/?skipLanding=true"
-                  className="hover:text-orange-400 transition-colors"
+                  className="hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
                 >
                   Home
                 </Link>
-                <ChevronRight className="w-4 h-4" />
+                <ChevronRight className="w-4 h-4 text-slate-400 dark:text-white/50" />
                 <Link
                   href="/?skipLanding=true#technology-services"
-                  className="hover:text-orange-400 transition-colors"
+                  className="hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
                 >
                   Services
                 </Link>
-                <ChevronRight className="w-4 h-4" />
-                <span className="text-white font-medium">{vertical.title}</span>
+                <ChevronRight className="w-4 h-4 text-slate-400 dark:text-white/50" />
+                <span className="text-slate-900 dark:text-white font-medium">{vertical.title}</span>
               </div>
 
-              <div className="inline-flex items-center gap-3 rounded-full border border-orange-400/30 bg-orange-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-orange-300 mb-6">
-                <Icon className="h-4 w-4" />
+              <div className="inline-flex items-center gap-3 rounded-full border border-orange-500/30 bg-orange-100 text-orange-700 dark:bg-orange-500/10 dark:text-orange-300 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] mb-6">
+                <Icon className="h-4 w-4 text-orange-600 dark:text-orange-300" />
                 {vertical.title}
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-6">
                 {vertical.heroTitle}
               </h1>
-              <p className="text-lg md:text-xl text-gray-300 mb-8 leading-relaxed">
+              <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-8 leading-relaxed">
                 {vertical.heroDescription}
               </p>
               <div className="flex flex-wrap gap-4">
@@ -145,7 +145,7 @@ export default async function CorporateTrainingPage() {
                 </Link>
                 <a
                   href="#categories"
-                  className="inline-flex px-8 py-4 border-2 border-white/20 text-white font-semibold rounded-lg hover:bg-white/10 transition"
+                  className="inline-flex px-8 py-4 border-2 border-slate-900/20 text-slate-900 dark:border-white/20 dark:text-white font-semibold rounded-lg hover:bg-slate-900/5 dark:hover:bg-white/10 transition"
                 >
                   {vertical.heroCTA.secondary}
                 </a>

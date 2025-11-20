@@ -27,8 +27,8 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   // Initialize theme from localStorage only on client side
   useEffect(() => {
     setMounted(true);
-    const stored = localStorage.getItem("theme") as Theme;
-    if (stored && (stored === "light" || stored === "dark")) {
+    const stored = localStorage.getItem("theme") as Theme | null;
+    if (stored === "light" || stored === "dark") {
       setTheme(stored);
     }
   }, []);

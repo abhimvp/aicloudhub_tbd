@@ -5,7 +5,7 @@ import { ChevronRight, Shield } from "lucide-react";
 
 export async function generateMetadata() {
   return {
-    title: "Privacy Policy — aicloudhub",
+    title: "Privacy Policy",
     description: "Privacy Policy for aiCloudhub - Learn about how we collect, use, and protect your personal information.",
   };
 }

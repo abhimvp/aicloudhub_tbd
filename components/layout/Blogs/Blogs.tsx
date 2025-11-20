@@ -207,6 +207,7 @@ const Blogs = () => {
                     alt={post.title}
                     fill
                     priority
+                    sizes="(max-width: 768px) 90vw, (max-width: 1024px) 45vw, 30vw"
                     className="object-cover object-center transition-transform duration-700 ease-out hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />

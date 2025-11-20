@@ -1,5 +1,7 @@
 // tailwind.config.ts
 import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
+import typography from "@tailwindcss/typography";
 
 const config: Config = {
   content: [
@@ -17,17 +19,27 @@ const config: Config = {
       },
       // Modern font stack for tech/AI company
       fontFamily: {
-        sans: ['var(--font-sans)', 'system-ui', '-apple-system', 'sans-serif'],
-        heading: ['var(--font-heading)', 'var(--font-sans)', 'system-ui', 'sans-serif'],
+        sans: [
+          "var(--font-sans)",
+          "system-ui",
+          "-apple-system",
+          "sans-serif",
+        ],
+        heading: [
+          "var(--font-heading)",
+          "var(--font-sans)",
+          "system-ui",
+          "sans-serif",
+        ],
         // Legacy fonts (kept for backward compatibility)
         manrope: ["Manrope", "sans-serif"],
         agdasima: ["Agdasima", "sans-serif"],
         petrona: ["Petrona", "serif"],
-        serif: ['"Playfair Display"', 'serif'],
+        serif: ['"Playfair Display"', "serif"],
       },
     },
   },
   // Add plugins from package.json
-  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
+  plugins: [tailwindcssAnimate, typography],
 };
 export default config;

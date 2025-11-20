@@ -169,6 +169,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
               fill
               className="object-cover"
               priority
+              sizes="(max-width: 768px) 100vw, (max-width: 1280px) 80vw, 70vw"
             />
             <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent" />
           </div>
@@ -230,6 +231,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
                     alt={blog.author.name}
                     fill
                     className="object-cover"
+                    sizes="64px"
                   />
                 </div>
                 <div>
@@ -309,6 +311,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
                           alt={relatedBlog.title}
                           fill
                           className="object-cover transition-transform duration-500 group-hover:scale-110"
+                          sizes="(max-width: 768px) 100vw, 33vw"
                         />
                         <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
                         <div className="absolute top-4 left-4">

@@ -13,9 +13,9 @@ export async function generateMetadata() {
 
 export default function ITServicesPage() {
   return (
-    <div className="min-h-screen pt-24 sm:pt-28 bg-linear-to-br from-white via-orange-50/40 to-yellow-50/50 dark:from-gray-900 dark:via-slate-900 dark:to-zinc-950">
+    <div className="min-h-screen bg-linear-to-br from-white via-orange-50/40 to-yellow-50/50 dark:from-gray-900 dark:via-slate-900 dark:to-zinc-950">
       {/* Hero Section with Floating Elements */}
-      <section className="relative bg-linear-to-r from-gray-900 via-slate-900 to-zinc-900 dark:from-gray-950 dark:via-slate-950 dark:to-zinc-950 text-white overflow-hidden">
+      <section className="relative bg-linear-to-b from-orange-50 via-white to-amber-50 text-slate-900 dark:from-gray-950 dark:via-slate-950 dark:to-zinc-950 dark:text-white overflow-hidden">
         {/* Animated floating shapes */}
         <div className="absolute inset-0 opacity-20 pointer-events-none">
           <motion.div
@@ -69,32 +69,32 @@ export default function ITServicesPage() {
               transition={{ duration: 0.6 }}
             >
               {/* Breadcrumb Navigation */}
-              <div className="flex items-center gap-2 text-sm text-white/70 mb-6">
+              <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-white/70 mb-6">
                 <Link
                   href="/?skipLanding=true"
-                  className="hover:text-orange-400 transition-colors"
+                  className="hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
                 >
                   Home
                 </Link>
-                <ChevronRight className="w-4 h-4" />
+                <ChevronRight className="w-4 h-4 text-slate-400 dark:text-white/50" />
                 <Link
                   href="/?skipLanding=true#technology-services"
-                  className="hover:text-orange-400 transition-colors"
+                  className="hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
                 >
                   Services
                 </Link>
-                <ChevronRight className="w-4 h-4" />
-                <span className="text-white font-medium">IT Services</span>
+                <ChevronRight className="w-4 h-4 text-slate-400 dark:text-white/50" />
+                <span className="text-slate-900 dark:text-white font-medium">IT Services</span>
               </div>
 
-              <div className="inline-flex items-center gap-3 rounded-full border border-blue-400/30 bg-blue-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-blue-300 mb-6">
-                <Code2 className="h-4 w-4" />
+              <div className="inline-flex items-center gap-3 rounded-full border border-blue-500/30 bg-blue-100 text-blue-700 dark:bg-blue-500/10 dark:text-blue-200 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] mb-6">
+                <Code2 className="h-4 w-4 text-blue-600 dark:text-blue-200" />
                 IT Services
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-6">
                 Innovative Technology Solutions for Modern Business
               </h1>
-              <p className="text-lg md:text-xl text-gray-300 mb-8 leading-relaxed">
+              <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-8 leading-relaxed">
                 Transform your business with cutting-edge cloud, AI, and digital solutions. 
                 Our comprehensive IT services help you stay ahead in the digital landscape 
                 and drive sustainable growth.
@@ -108,7 +108,7 @@ export default function ITServicesPage() {
                 </Link>
                 <a
                   href="#overview"
-                  className="inline-flex px-8 py-4 border-2 border-white/20 text-white font-semibold rounded-lg hover:bg-white/10 transition"
+                  className="inline-flex px-8 py-4 border-2 border-slate-900/20 text-slate-900 dark:border-white/20 dark:text-white font-semibold rounded-lg hover:bg-slate-900/5 dark:hover:bg-white/10 transition"
                 >
                   Learn More
                 </a>

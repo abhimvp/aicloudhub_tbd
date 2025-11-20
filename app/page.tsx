@@ -1,9 +1,16 @@
 // app/page.tsx
+import type { Metadata } from "next";
 import Hero from "@/components/layout/HomePage/Hero";
 import AboutUs from "@/components/layout/HomePage/AboutUs";
 import Blogs from "@/components/layout/Blogs/Blogs";
 import TechnologyServicesTabs from "@/components/layout/HomePage/TechnologyServicesTabs";
 import ScrollToTop from "@/components/layout/ScrollToTop";
+
+export const metadata: Metadata = {
+  title: 'AI Cloud Hub',
+  description:
+    'AI Cloud Hub delivers AI consulting, cloud migration, and corporate upskilling programs for high-growth enterprises.',
+};
 
 export default function Home() {
   return (

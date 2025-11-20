@@ -285,6 +285,7 @@ export default function Hero() {
                     fill
                     className="object-cover"
                     priority={index === 0}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1280px) 60vw, 45vw"
                   />
                   {/* Dark gradient at bottom for text readability */}
                   <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent" />

@@ -5,7 +5,7 @@ import { ChevronRight, FileText } from "lucide-react";
 
 export async function generateMetadata() {
   return {
-    title: "Terms & Conditions — aicloudhub",
+    title: "Terms & Conditions",
     description: "Terms and Conditions for aiCloudhub - Learn about our terms of service, intellectual property, and legal policies.",
   };
 }
