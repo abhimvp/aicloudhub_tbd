@@ -12,9 +12,9 @@ export async function generateMetadata() {
 
 export default function PrivacyPage() {
   return (
-    <div className="min-h-screen pt-24 sm:pt-28 bg-linear-to-br from-white via-orange-50/40 to-yellow-50/50 dark:from-gray-900 dark:via-slate-900 dark:to-zinc-950">
+    <div className="min-h-screen bg-linear-to-br from-white via-orange-50/40 to-yellow-50/50 dark:from-gray-900 dark:via-slate-900 dark:to-zinc-950">
       {/* Hero Section */}
-      <section className="relative bg-linear-to-r from-gray-900 via-slate-900 to-zinc-900 dark:from-gray-950 dark:via-slate-950 dark:to-zinc-950 text-white overflow-hidden">
+      <section className="relative bg-linear-to-b from-orange-50 via-white to-amber-50 text-slate-900 dark:from-gray-950 dark:via-slate-950 dark:to-zinc-950 dark:text-white overflow-hidden">
         {/* Animated floating shapes */}
         <div className="absolute inset-0 opacity-20 pointer-events-none">
           <motion.div
@@ -54,25 +54,27 @@ export default function PrivacyPage() {
               transition={{ duration: 0.6 }}
             >
               {/* Breadcrumb Navigation */}
-              <div className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-white/70 mb-4 sm:mb-6 flex-wrap">
+              <div className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-slate-600 dark:text-white/70 mb-4 sm:mb-6 flex-wrap">
                 <Link
                   href="/?skipLanding=true"
-                  className="hover:text-orange-400 transition-colors whitespace-nowrap"
+                  className="hover:text-orange-500 dark:hover:text-orange-400 transition-colors whitespace-nowrap"
                 >
                   Home
                 </Link>
-                <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
-                <span className="text-white font-medium break-words">Privacy Policy</span>
+                <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0 text-slate-400 dark:text-white/50" />
+                <span className="text-slate-900 dark:text-white font-medium break-words">
+                  Privacy Policy
+                </span>
               </div>
 
-              <div className="inline-flex items-center gap-2 sm:gap-3 rounded-full border border-blue-400/30 bg-blue-500/10 px-3 sm:px-4 py-1.5 sm:py-2 text-[10px] sm:text-xs font-semibold uppercase tracking-[0.2em] sm:tracking-[0.3em] text-blue-300 mb-4 sm:mb-6">
-                <Shield className="h-3 w-3 sm:h-4 sm:w-4" />
+              <div className="inline-flex items-center gap-2 sm:gap-3 rounded-full border border-blue-500/30 bg-blue-100 text-blue-700 dark:bg-blue-500/10 dark:text-blue-200 px-3 sm:px-4 py-1.5 sm:py-2 text-[10px] sm:text-xs font-semibold uppercase tracking-[0.2em] sm:tracking-[0.3em] mb-4 sm:mb-6">
+                <Shield className="h-3 w-3 sm:h-4 sm:w-4 text-blue-600 dark:text-blue-200" />
                 <span className="whitespace-nowrap">Privacy & Security</span>
               </div>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-4 sm:mb-6 break-words">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-4 sm:mb-6 break-words text-slate-900 dark:text-white">
                 Privacy Policy
               </h1>
-              <p className="text-base sm:text-lg md:text-xl text-gray-300 leading-relaxed">
+              <p className="text-base sm:text-lg md:text-xl text-slate-700 dark:text-gray-300 leading-relaxed">
                 At aiCloudhub, we respect your privacy and are committed to protecting your personal information.
               </p>
             </motion.div>

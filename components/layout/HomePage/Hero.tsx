@@ -194,9 +194,9 @@ export default function Hero() {
       </div>
 
       {/* Container for responsive layout */}
-      <div className="relative z-10 h-full min-h-screen flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12 xl:gap-16 container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+      <div className="relative z-10 h-full min-h-screen flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-14 xl:gap-20 mx-auto px-4 sm:px-8 xl:px-12 max-w-[90rem] w-full">
         {/* Left Content */}
-        <div className="relative z-20 w-full lg:w-[48%] xl:w-[50%] text-center lg:text-left flex-shrink-0 py-8 lg:py-0">
+        <div className="relative z-20 w-full lg:w-[55%] xl:w-[52%] text-center lg:text-left flex-shrink-0 py-8 lg:py-0">
           <div>
             <h1
               ref={headlineRef}
@@ -255,7 +255,7 @@ export default function Hero() {
       </div>
 
       {/* Right Visual Stage - Business Verticals Scroller */}
-      <div className="relative z-20 w-full lg:w-[48%] xl:w-[45%] shrink-0">
+      <div className="relative z-20 w-full lg:w-[45%] xl:w-[40%] shrink-0 max-w-[640px] lg:max-w-none">
         <div
           ref={scrollerRef}
           onMouseEnter={() => setIsPaused(true)}
