@@ -92,43 +92,39 @@ const Navbar = () => {
 
   return (
     <motion.nav
-      initial={{ y: -80, opacity: 0 }}
+      initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 1, ease: "easeOut" }}
+      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       className={`fixed left-0 right-0 z-50 transition-all duration-500 
     
     // --- Mobile Styles (default) ---
-    // Full-width bar at the very top, always blurred
     top-0 px-4 border-b backdrop-blur-xl
     ${
       actualTheme === "dark"
-        ? "bg-black/30 border-white/10"
-        : "bg-white/80 border-orange-200"
+        ? "bg-black/40 border-white/5"
+        : "bg-white/60 border-orange-100/50"
     }
 
     // --- Desktop Styles (md and up) ---
-    // Becomes a "pill"
-    md:top-4 md:mx-auto md:max-w-7xl sm:px-6 lg:px-8 
+    md:top-6 md:mx-auto md:max-w-6xl md:px-8
     md:rounded-full md:border 
     
     // Desktop scroll logic
     ${
       isScrolled
         ? actualTheme === "dark"
-          ? "md:bg-white/10 md:backdrop-blur-xl md:shadow-md"
-          : "md:bg-white/90 md:backdrop-blur-xl md:shadow-md md:border-orange-200"
-        : actualTheme === "dark"
-        ? "md:bg-transparent md:border-transparent md:border-b-transparent"
-        : "md:bg-white/20 md:border-orange-100/50 md:backdrop-blur-md"
+          ? "md:bg-zinc-900/70 md:backdrop-blur-2xl md:border-white/10 md:shadow-2xl md:shadow-black/40"
+          : "md:bg-white/70 md:backdrop-blur-2xl md:border-white/40 md:shadow-xl md:shadow-orange-500/10"
+        : "md:bg-transparent md:border-transparent md:shadow-none md:backdrop-blur-none"
     }`}
     >
-      <div className="flex justify-between items-center h-18 relative">
+      <div className="flex justify-between items-center h-16 md:h-20 relative">
         {/* Logo Transition */}
         <motion.div
           initial={false}
-          animate={{ opacity: isScrolled ? 0 : 1 }}
+          animate={{ opacity: isScrolled ? 0 : 1, x: isScrolled ? -20 : 0 }}
           transition={{ duration: 0.3 }}
-          className="flex items-center"
+          className={`flex items-center ${isScrolled ? 'pointer-events-none' : ''}`}
         >
           <Link
             href={isHomePage ? "#home" : "/"}
@@ -140,9 +136,9 @@ const Navbar = () => {
             <Image
               src="/AiCloudHub.png"
               alt="AICLOUDHUB Logo"
-              width={1024}
-              height={328}
-              className="object-contain h-18 w-auto"
+              width={240}
+              height={80}
+              className="object-contain h-12 md:h-16 w-auto"
               priority
             />
           </Link>
@@ -151,9 +147,9 @@ const Navbar = () => {
         {/* Mini Icon when scrolled */}
         <motion.div
           initial={false}
-          animate={{ opacity: isScrolled ? 1 : 0 }}
+          animate={{ opacity: isScrolled ? 1 : 0, scale: isScrolled ? 1 : 0.8 }}
           transition={{ duration: 0.3 }}
-          className="flex items-center absolute left-4 sm:left-6 lg:left-8"
+          className={`flex items-center absolute left-0 ${!isScrolled ? 'pointer-events-none' : ''}`}
         >
           <Link
             href={isHomePage ? "#home" : "/"}
@@ -167,15 +163,15 @@ const Navbar = () => {
               alt="AICloudHub Icon"
               width={40}
               height={40}
-              className="object-contain h-10 w-auto"
+              className="object-contain h-9 w-auto"
               priority
             />
           </Link>
         </motion.div>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:block mx-auto">
-          <div className="flex items-baseline space-x-8">
+        <div className="hidden md:block mx-auto absolute left-1/2 -translate-x-1/2">
+          <div className="flex items-center space-x-1">
             {navItems.map((item) => {
               // If we're not on homepage and item is Home, navigate to root
               let href =
@@ -191,24 +187,24 @@ const Navbar = () => {
 
               return (
                 <Link
-                  className={`px-3 py-2 text-lg font-semibold uppercase transition-colors duration-300 ${
+                  className={`relative px-5 py-2 text-sm font-medium tracking-wide transition-all duration-300 rounded-full group ${
                     actualTheme === "dark"
-                      ? "text-white hover:text-orange-400"
-                      : "text-gray-900 hover:text-orange-600"
+                      ? "text-zinc-300 hover:text-white hover:bg-white/10"
+                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/50"
                   }`}
                   key={item.name}
                   href={href}
-                  onClick={(e) => handleScrollTo(e, href)} // 5. Add onClick
+                  onClick={(e) => handleScrollTo(e, href)}
                 >
                   {item.name}
                 </Link>
               );
             })}
             <Link
-              className={`px-3 py-2 text-lg font-semibold uppercase transition-colors duration-300 ${
+              className={`relative px-5 py-2 text-sm font-medium tracking-wide transition-all duration-300 rounded-full group ${
                 actualTheme === "dark"
-                  ? "text-white hover:text-orange-400"
-                  : "text-gray-900 hover:text-orange-600"
+                  ? "text-zinc-300 hover:text-white hover:bg-white/10"
+                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/50"
               }`}
               href="/careers"
               onClick={(e) => handleScrollTo(e, "/careers")}
@@ -219,10 +215,19 @@ const Navbar = () => {
         </div>
 
         {/* CTA */}
-        <div className="hidden md:flex items-center space-x-4">
+        <div className="hidden md:flex items-center gap-3">
           <ThemeToggle />
           <Link href="/contact">
-            <Button className="font-semibold">Let's Talk</Button>
+            <Button 
+              size="sm"
+              className={`rounded-full px-6 font-medium transition-all duration-300 ${
+                actualTheme === 'dark'
+                  ? 'bg-white text-black hover:bg-zinc-200'
+                  : 'bg-slate-900 text-white hover:bg-slate-800'
+              }`}
+            >
+              Let's Talk
+            </Button>
           </Link>
         </div>
 
@@ -231,10 +236,10 @@ const Navbar = () => {
           <ThemeToggle />
           <button
             onClick={toggleMobileMenu}
-            className={`inline-flex items-center justify-center p-2 rounded-md focus:outline-none transition-colors duration-200 ${
+            className={`inline-flex items-center justify-center p-2 rounded-full transition-colors duration-200 ${
               actualTheme === "dark"
-                ? "text-white hover:text-orange-400"
-                : "text-gray-900 hover:text-orange-600"
+                ? "text-white hover:bg-white/10"
+                : "text-gray-900 hover:bg-gray-100"
             }`}
             aria-expanded={isMobileMenuOpen}
             type="button"
@@ -283,14 +288,14 @@ const Navbar = () => {
           height: isMobileMenuOpen ? "auto" : 0,
           opacity: isMobileMenuOpen ? 1 : 0,
         }}
-        transition={{ duration: 0.4, ease: "easeInOut" }}
-        className={`overflow-hidden md:hidden backdrop-blur-xl rounded-2xl mt-2 border ${
+        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+        className={`overflow-hidden md:hidden backdrop-blur-2xl rounded-3xl mt-4 border shadow-2xl ${
           actualTheme === "dark"
-            ? `border-border ${isScrolled ? "bg-black/60" : "bg-black/30"}`
-            : `border-orange-200 ${isScrolled ? "bg-white/80" : "bg-white/60"}`
+            ? `border-white/10 bg-zinc-900/90`
+            : `border-white/40 bg-white/90`
         }`}
       >
-        <div className="flex flex-col items-stretch text-center">
+        <div className="flex flex-col items-stretch text-center p-2 space-y-1">
           {navItems.map((item) => {
             // If we're not on homepage and item is Home, navigate to root
             let href =
@@ -309,10 +314,10 @@ const Navbar = () => {
                 key={item.name}
                 href={href}
                 onClick={(e) => handleScrollTo(e, href)}
-                className={`text-lg font-semibold uppercase transition-all duration-200 py-4 ${
+                className={`text-base font-medium tracking-wide transition-all duration-200 py-3 rounded-xl ${
                   actualTheme === "dark"
-                    ? "text-white hover:text-orange-400 hover:bg-white/10"
-                    : "text-gray-900 hover:text-orange-600 hover:bg-orange-50"
+                    ? "text-zinc-300 hover:text-white hover:bg-white/10"
+                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
                 }`}
               >
                 {item.name}
@@ -325,22 +330,26 @@ const Navbar = () => {
               handleScrollTo(e, "/careers");
               setIsMobileMenuOpen(false);
             }}
-            className={`text-lg font-semibold uppercase transition-all duration-200 py-4 ${
+            className={`text-base font-medium tracking-wide transition-all duration-200 py-3 rounded-xl ${
               actualTheme === "dark"
-                ? "text-white hover:text-orange-400 hover:bg-white/10"
-                : "text-gray-900 hover:text-orange-600 hover:bg-orange-50"
+                ? "text-zinc-300 hover:text-white hover:bg-white/10"
+                : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
             }`}
           >
             Careers
           </Link>
-          <Link href="/contact" className="w-full">
-            <Button
-              className="font-semibold w-full rounded-none py-4"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Let's Talk
-            </Button>
-          </Link>
+          <div className="pt-2 pb-1 px-2">
+            <Link href="/contact" className="w-full block">
+              <Button
+                className={`font-semibold w-full rounded-xl py-6 ${
+                  actualTheme === 'dark' ? 'bg-white text-black' : 'bg-slate-900 text-white'
+                }`}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Let's Talk
+              </Button>
+            </Link>
+          </div>
         </div>
       </motion.div>
 

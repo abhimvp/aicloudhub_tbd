@@ -5,6 +5,9 @@ import AboutUs from "@/components/layout/HomePage/AboutUs";
 import Blogs from "@/components/layout/Blogs/Blogs";
 import TechnologyServicesTabs from "@/components/layout/HomePage/TechnologyServicesTabs";
 import ScrollToTop from "@/components/layout/ScrollToTop";
+import ClientLogos from "@/components/layout/ClientLogos/ClientLogos";
+import Stats from "@/components/layout/HomePage/Stats";
+import CTA from "@/components/layout/HomePage/CTA";
 
 export const metadata: Metadata = {
   title: 'AI Cloud Hub',
@@ -17,9 +20,12 @@ export default function Home() {
     <main className="min-h-screen bg-white dark:bg-linear-to-br dark:from-gray-900 dark:via-slate-900 dark:to-zinc-950 transition-colors duration-300">
       <div className="flex flex-col">
         <Hero />
+        <ClientLogos />
+        <Stats />
         <TechnologyServicesTabs />
         <AboutUs />
         <Blogs />
+        <CTA />
       </div>
       <ScrollToTop />
     </main>

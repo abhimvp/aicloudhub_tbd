@@ -4,7 +4,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { gsap, useGSAP } from "@/utils/gsap";
 import { Button } from "@/components/ui/button";
-import { Code2, GraduationCap, Users } from "lucide-react";
+import { Code2, GraduationCap, Users, ArrowRight, Sparkles } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -171,17 +171,25 @@ export default function Hero() {
     <section
       id="home"
       ref={rootRef}
-      className="relative z-0 min-h-screen pt-32 pb-16 lg:pt-0 lg:pb-0 opacity-0 transition-colors duration-300 bg-linear-to-br from-orange-50 via-white to-yellow-50 dark:bg-linear-to-r dark:from-gray-950 dark:via-slate-950 dark:to-zinc-950"
+      className="relative z-0 min-h-screen pt-32 pb-16 lg:pt-0 lg:pb-0 opacity-0 transition-colors duration-300 bg-linear-to-br from-orange-50 via-white to-yellow-50 dark:bg-linear-to-r dark:from-gray-950 dark:via-slate-950 dark:to-zinc-950 overflow-hidden"
     >
+      {/* Tech Grid Background */}
+      <div className="absolute inset-0 z-0 opacity-[0.15] dark:opacity-[0.05]" 
+        style={{
+          backgroundImage: `linear-gradient(#999 1px, transparent 1px), linear-gradient(90deg, #999 1px, transparent 1px)`,
+          backgroundSize: '50px 50px'
+        }}
+      />
+
       {/* Animated floating shapes for visual interest */}
       <div className="absolute inset-0 opacity-20 pointer-events-none overflow-hidden">
-        <div className="absolute top-20 left-10 w-32 h-32 bg-orange-500 rounded-full blur-3xl" />
-        <div className="absolute top-40 right-20 w-40 h-40 bg-yellow-500 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 left-1/3 w-36 h-36 bg-cyan-500 rounded-full blur-3xl" />
+        <div className="absolute top-20 left-10 w-72 h-72 bg-orange-500/30 rounded-full blur-[100px] animate-pulse" />
+        <div className="absolute top-40 right-20 w-96 h-96 bg-yellow-500/20 rounded-full blur-[120px] animate-pulse delay-700" />
+        <div className="absolute bottom-20 left-1/3 w-80 h-80 bg-cyan-500/20 rounded-full blur-[100px] animate-pulse delay-1000" />
       </div>
 
       {/* Animated gradient overlay for dark mode - reduced opacity */}
-      <div className="absolute inset-0 opacity-0 dark:opacity-20 pointer-events-none transition-opacity duration-300 z-[1]">
+      <div className="absolute inset-0 opacity-0 dark:opacity-20 pointer-events-none transition-opacity duration-300 z-1">
         <div className="absolute top-0 left-0 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl animate-pulse" />
         <div
           className="absolute bottom-0 right-0 w-96 h-96 bg-yellow-500/10 rounded-full blur-3xl animate-pulse"
@@ -194,27 +202,41 @@ export default function Hero() {
       </div>
 
       {/* Container for responsive layout */}
-      <div className="relative z-10 h-full min-h-screen flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-14 xl:gap-20 mx-auto px-4 sm:px-8 xl:px-12 max-w-[90rem] w-full">
+      <div className="relative z-10 h-full min-h-screen flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-14 xl:gap-20 mx-auto px-4 sm:px-8 xl:px-12 max-w-360 w-full">
         {/* Left Content */}
-        <div className="relative z-20 w-full lg:w-[55%] xl:w-[52%] text-center lg:text-left flex-shrink-0 py-8 lg:py-0">
+        <div className="relative z-20 w-full lg:w-[55%] xl:w-[52%] text-center lg:text-left shrink-0 py-8 lg:py-0">
           <div>
+            {/* Badge */}
+            <div 
+              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 dark:bg-orange-500/10 border border-orange-200 dark:border-orange-500/20 text-orange-700 dark:text-orange-300 text-sm font-medium mb-6 opacity-0 translate-y-4"
+              ref={(el) => {
+                if (el && !headlineRef.current?.classList.contains('badge-animated')) {
+                  gsap.to(el, { autoAlpha: 1, y: 0, duration: 0.6, delay: 0.2 });
+                  el.classList.add('badge-animated');
+                }
+              }}
+            >
+              <Sparkles className="w-4 h-4" />
+              <span>Next-Gen Digital Transformation</span>
+            </div>
+
             <h1
               ref={headlineRef}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-black mb-3 md:mb-4 opacity-0 translate-y-5 text-slate-900 dark:text-white leading-tight"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl font-bold tracking-tight mb-6 opacity-0 translate-y-5 text-slate-900 dark:text-white leading-[1.1]"
             >
-              Empower Your Business with AI-Driven Innovation
+              Empower Your Business with <span className="bg-linear-to-r from-orange-600 to-yellow-500 dark:from-orange-400 dark:to-yellow-300 bg-clip-text text-transparent">AI-Driven Innovation</span>
             </h1>
             
             <p
               ref={taglineRef}
-              className="text-lg sm:text-xl md:text-2xl lg:text-xl xl:text-2xl font-semibold mb-4 md:mb-6 opacity-0 translate-y-5 bg-linear-to-r from-orange-600 via-orange-500 to-yellow-500 dark:from-orange-400 dark:via-yellow-300 dark:to-orange-500 bg-clip-text text-transparent leading-snug"
+              className="text-lg sm:text-xl md:text-2xl font-medium mb-6 opacity-0 translate-y-5 text-slate-600 dark:text-slate-300 leading-relaxed tracking-wide"
             >
               Build, Scale, and Transform with Smart, Secure, and Connected Solutions.
             </p>
             
             <p
               ref={paraRef}
-              className="text-base md:text-lg lg:text-base xl:text-lg mb-6 md:mb-8 opacity-0 translate-y-5 leading-relaxed text-slate-700 dark:text-gray-200 max-w-full lg:max-w-lg mx-auto lg:mx-0"
+              className="text-base md:text-lg mb-8 opacity-0 translate-y-5 leading-relaxed text-slate-500 dark:text-slate-400 max-w-full lg:max-w-xl mx-auto lg:mx-0"
             >
               At AICloudHub, we empower enterprises to thrive in the digital age
               through AI, Cloud, and Automation. From ideation to launch, our
@@ -225,28 +247,23 @@ export default function Hero() {
 
           <div
             ref={ctaRef}
-            className="flex flex-col sm:flex-row gap-3 md:gap-4 opacity-0 translate-y-8 justify-center lg:justify-start"
+            className="flex flex-col sm:flex-row gap-4 opacity-0 translate-y-8 justify-center lg:justify-start"
           >
             <Button
               size="lg"
-              className="relative overflow-hidden bg-linear-to-r from-orange-500 to-yellow-400 text-black font-semibold px-6 md:px-8 py-3 rounded-full shadow-[0_0_20px_rgba(255,170,60,0.6)] transition-all duration-300 hover:scale-[1.05] group"
+              className="relative overflow-hidden bg-orange-600 hover:bg-orange-700 text-white font-semibold px-8 py-6 rounded-full shadow-lg shadow-orange-500/20 transition-all duration-300 hover:scale-[1.02] group text-lg"
               onClick={scrollToServices}
           >
-            <span className="relative z-10">Explore our Services</span>
-
-            {/* ✨ Moving shine overlay */}
-            <span
-              className="absolute inset-0 bg-linear-to-r from-transparent via-white/40 to-transparent 
-                   translate-x-[-200%] group-hover:translate-x-[200%] 
-                   transition-transform duration-[1.5s] ease-in-out rounded-full"
-            />
+            <span className="relative z-10 flex items-center gap-2">
+              Explore Services <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </span>
           </Button>
 
           <Link href="/about">
             <Button
               size="lg"
               variant="outline"
-              className="border-2 border-slate-300 text-slate-900 bg-white hover:bg-slate-50 dark:border-white/60 dark:text-white dark:bg-white/5 dark:hover:bg-white/15 px-6 md:px-8 py-3 rounded-full transition-all duration-300 hover:scale-[1.05] dark:hover:border-white/80"
+              className="border-2 border-slate-200 text-slate-700 bg-transparent hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800 px-8 py-6 rounded-full transition-all duration-300 hover:scale-[1.02] text-lg"
             >
               About Us
             </Button>
@@ -260,7 +277,7 @@ export default function Hero() {
           ref={scrollerRef}
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
-          className="relative w-full h-[420px] sm:h-[480px] lg:h-[500px] xl:h-[560px] rounded-3xl overflow-hidden shadow-2xl mx-auto max-w-[600px] lg:max-w-full cursor-pointer"
+          className="relative w-full h-[500px] sm:h-[560px] lg:h-[600px] rounded-4xl overflow-hidden shadow-2xl mx-auto max-w-[600px] lg:max-w-full cursor-pointer group"
         >
           {BUSINESS_VERTICALS.map((vertical, index) => {
             const Icon = vertical.icon;
@@ -269,12 +286,10 @@ export default function Hero() {
             return (
               <div
                 key={index}
-                className={`absolute inset-0 transition-all duration-700 ease-in-out ${
+                className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
                   isActive
-                    ? "opacity-100 translate-x-0"
-                    : index < activeIndex
-                    ? "opacity-0 -translate-x-full"
-                    : "opacity-0 translate-x-full"
+                    ? "opacity-100 scale-100 z-10"
+                    : "opacity-0 scale-105 z-0"
                 }`}
               >
                 {/* Background Image */}
@@ -283,45 +298,40 @@ export default function Hero() {
                     src={vertical.image}
                     alt={vertical.title}
                     fill
-                    className="object-cover"
+                    className="object-cover transition-transform duration-[10s] ease-linear group-hover:scale-110"
                     priority={index === 0}
                     sizes="(max-width: 768px) 100vw, (max-width: 1280px) 60vw, 45vw"
                   />
-                  {/* Dark gradient at bottom for text readability */}
-                  <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent" />
+                  {/* Gradient Overlay - Lighter to show faces */}
+                  <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
                 </div>
 
-                {/* Content */}
-                <div className="relative z-10 h-full flex flex-col justify-between p-6 sm:p-8 lg:p-10 xl:p-12 text-white">
-                  {/* Icon */}
-                  <div className="flex justify-start">
-                    <div className="p-3 sm:p-4 bg-white/25 backdrop-blur-md rounded-2xl shadow-lg border border-white/20">
-                      <Icon size={40} className="sm:w-12 sm:h-12" strokeWidth={2} />
+                {/* Content Card */}
+                <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
+                  <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-5 sm:p-6 shadow-lg transform transition-all duration-500 hover:bg-white/10 hover:backdrop-blur-md hover:-translate-y-1">
+                    {/* Icon */}
+                    <div className={`inline-flex p-2.5 rounded-lg bg-linear-to-br ${vertical.gradient} mb-3 shadow-md`}>
+                      <Icon size={24} className="text-white" strokeWidth={2} />
                     </div>
-                  </div>
 
-                  {/* Text Content */}
-                  <div className="space-y-3 sm:space-y-4">
-                    <h2 className="text-3xl sm:text-4xl lg:text-4xl xl:text-5xl font-bold tracking-tight leading-tight drop-shadow-lg">
-                      {vertical.title}
-                    </h2>
-                    <p className="text-lg sm:text-xl lg:text-xl xl:text-2xl font-medium leading-snug drop-shadow-md">
-                      {vertical.tagline}
-                    </p>
-                    <p className="text-sm sm:text-base lg:text-base xl:text-lg max-w-md leading-relaxed drop-shadow-md">
-                      {vertical.description}
-                    </p>
+                    {/* Text Content */}
+                    <div className="space-y-2">
+                      <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+                        {vertical.title}
+                      </h2>
+                      <p className="text-base font-medium text-orange-200/90">
+                        {vertical.tagline}
+                      </p>
+                      <p className="text-sm text-gray-300 leading-relaxed line-clamp-2">
+                        {vertical.description}
+                      </p>
 
-                    {/* Learn More Button */}
-                    <div className="pt-2 sm:pt-4">
-                      <Link href={vertical.href}>
-                        <Button
-                          size="lg"
-                          className="bg-white text-gray-900 hover:bg-white/95 font-semibold px-5 sm:px-6 py-2.5 sm:py-3 rounded-full shadow-xl transition-all duration-300 hover:scale-105 text-sm sm:text-base"
-                        >
-                          Learn More
-                        </Button>
-                      </Link>
+                      {/* Learn More Link */}
+                      <div className="pt-3">
+                        <Link href={vertical.href} className="inline-flex items-center text-white text-sm font-semibold hover:text-orange-300 transition-colors group/link">
+                          Learn More <ArrowRight className="ml-2 w-3.5 h-3.5 transition-transform group-hover/link:translate-x-1" />
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -330,15 +340,15 @@ export default function Hero() {
           })}
 
           {/* Navigation Dots */}
-          <div className="absolute bottom-4 sm:bottom-6 left-1/2 transform -translate-x-1/2 z-20 flex gap-2 sm:gap-3">
+          <div className="absolute top-6 right-6 z-20 flex flex-col gap-3">
             {BUSINESS_VERTICALS.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setActiveIndex(index)}
-                className={`transition-all duration-300 rounded-full ${
+                className={`transition-all duration-300 rounded-full border border-white/30 ${
                   index === activeIndex
-                    ? "w-10 sm:w-12 h-2.5 sm:h-3 bg-white"
-                    : "w-2.5 sm:w-3 h-2.5 sm:h-3 bg-white/50 hover:bg-white/75"
+                    ? "w-3 h-8 bg-white"
+                    : "w-3 h-3 bg-white/30 hover:bg-white/50"
                 }`}
                 aria-label={`Go to slide ${index + 1}`}
               />
