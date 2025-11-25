@@ -42,7 +42,7 @@ export default function ITServicesPage() {
           />
         </div>
 
-        <div className="container mx-auto px-4 sm:px-6 py-16 sm:py-20 lg:py-28 relative z-10">
+        <div className="container mx-auto px-4 sm:px-6 py-20 lg:py-28 relative z-10">
           <div className="grid lg:grid-cols-2 items-center gap-12 max-w-7xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -70,8 +70,8 @@ export default function ITServicesPage() {
                 </span>
               </div>
 
-              <div className="inline-flex items-center gap-3 rounded-full border border-blue-500/30 bg-blue-100 text-blue-700 dark:bg-blue-500/10 dark:text-blue-200 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] mb-6 backdrop-blur-sm">
-                <Code2 className="h-4 w-4 text-blue-600 dark:text-blue-200" />
+              <div className="inline-flex items-center gap-3 rounded-full border border-orange-500/30 bg-orange-100 text-orange-700 dark:bg-orange-500/10 dark:text-orange-300 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] mb-6 backdrop-blur-sm">
+                <Code2 className="h-4 w-4 text-orange-600 dark:text-orange-300" />
                 IT Services
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-6 tracking-tight">
@@ -104,10 +104,10 @@ export default function ITServicesPage() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <div className="relative w-full max-w-lg">
-                <div className="absolute inset-0 bg-linear-to-br from-blue-500/20 to-cyan-500/20 rounded-2xl blur-2xl" />
+              <div className="relative w-full max-w-2xl">
+                <div className="absolute inset-0 bg-linear-to-br from-orange-500/20 to-yellow-500/20 rounded-2xl blur-2xl" />
                 <Image
-                  src="/HeroSectionITServices.png"
+                  src="/ServiceSectionImages/ServicePage_ITServices.webp"
                   alt="IT Services"
                   width={600}
                   height={400}
@@ -131,7 +131,7 @@ export default function ITServicesPage() {
           transition={{ duration: 0.6 }}
           className="text-center"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-100 dark:bg-blue-500/20 border border-blue-300 dark:border-blue-500/30 text-blue-700 dark:text-blue-300 text-sm font-semibold mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-100 dark:bg-orange-500/20 border border-orange-300 dark:border-orange-500/30 text-orange-700 dark:text-orange-300 text-sm font-semibold mb-6">
             <span>Page Under Development</span>
           </div>
           <h2 className="text-3xl lg:text-4xl font-black mb-6 text-slate-900 dark:text-white">

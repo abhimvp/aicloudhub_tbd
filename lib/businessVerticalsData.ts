@@ -70,7 +70,7 @@ export const BUSINESS_VERTICALS_DATA: BusinessVerticalDetail[] = [
     heroTitle: "Corporate Training by aiCloudHub",
     heroDescription:
       "Empowering Teams. Transforming Capabilities. Accelerating Digital Success. Build future-ready teams with hands-on, industry-aligned training programs created by practitioners with real-world experience.",
-    heroImage: "/ServiceSectionImages/Services-Corporate-Training.png",
+    heroImage: "/ServiceSectionImages/ServicePage_Training.webp",
     heroCTA: {
       primary: "Request a Training Proposal",
       secondary: "Explore Training Categories",

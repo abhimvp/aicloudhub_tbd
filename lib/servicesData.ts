@@ -75,7 +75,7 @@ export const SERVICES_DATA: ServiceDetail[] = [
     heroTitle: "AI-Driven Innovation for Business Growth",
     heroDescription:
       "We transform data into strategic advantage. Our AI & ML services enable enterprises to automate intelligently, make predictive decisions, and drive innovation - with security, scalability, and governance.",
-    heroImage: "/AIMLHeroImg.png",
+    heroImage: "/ServiceSectionImages/ServicePage_AIML.webp",
     heroCTA: {
       primary: "Book a Discovery",
       secondary: "Explore Offerings",
@@ -198,7 +198,7 @@ export const SERVICES_DATA: ServiceDetail[] = [
     heroTitle: "Cloud Services for Scalable, Secure Innovation",
     heroDescription:
       "We help enterprises migrate, architect, and manage cloud environments to accelerate business innovation and reduce operational risk.",
-    heroImage: "/CloudServicesHeroImg.png",
+    heroImage: "/ServiceSectionImages/ServicePage_Cloud.webp",
     heroCTA: {
       primary: "Talk to a Cloud Architect",
       secondary: "Our Services",
@@ -339,7 +339,7 @@ export const SERVICES_DATA: ServiceDetail[] = [
     heroTitle: "Application Services That Deliver Modern, Scalable Software",
     heroDescription:
       "From product engineering to modernization and managed services, we build resilient, cloud-native applications that drive business outcomes and user delight.",
-    heroImage: "/ApplicationServicesHeroImg.png",
+    heroImage: "/ServiceSectionImages/ServicePage_Apps.webp",
     heroCTA: {
       primary: "Talk to Our Architects",
       secondary: "Explore Services",
@@ -480,7 +480,7 @@ export const SERVICES_DATA: ServiceDetail[] = [
     heroTitle: "Data & Analytics Services",
     heroDescription:
       "Turning raw data into real business value with modern data engineering, analytics, and intelligent insights.",
-    heroImage: "/DataAnalyticsHeroImg.png",
+    heroImage: "/ServiceSectionImages/ServicePage_Analytics.webp",
     heroCTA: {
       primary: "Get in Touch",
       secondary: "Explore Services",
@@ -604,7 +604,7 @@ export const SERVICES_DATA: ServiceDetail[] = [
     heroTitle: "Strategic IT Talent Solutions",
     heroDescription:
       "Partner with us to access pre-vetted, skilled professionals who integrate seamlessly with your teams. From contract to permanent placement, we provide the right talent at the right time.",
-    heroImage: "/HeroSectionITStaffing.png",
+    heroImage: "/ServiceSectionImages/ServicePage_Staffing.webp",
     heroCTA: {
       primary: "Find Talent",
       secondary: "View Services",

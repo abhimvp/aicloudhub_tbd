@@ -3,13 +3,13 @@
 import React from "react";
 import * as motion from "motion/react-client";
 import { useTheme } from "@/components/theme/ThemeProvider";
-import { Briefcase, CheckCircle, Globe, Users } from "lucide-react";
+import { Briefcase, CheckCircle, DollarSign, Globe, Users } from "lucide-react";
 
 const stats = [
-  { label: "Years of Experience", value: "10+", icon: Briefcase },
-  { label: "Projects Delivered", value: "500+", icon: CheckCircle },
-  { label: "Global Clients", value: "50+", icon: Globe },
-  { label: "Expert Consultants", value: "100+", icon: Users },
+  { label: "Years of Experience", value: "5+", icon: Briefcase },
+  { label: "Financial Value", value: "50M+", icon: DollarSign },
+  { label: "Global Clients", value: "20+", icon: Globe },
+  { label: "Professionals", value: "50+", icon: Users },
 ];
 
 const Stats = () => {

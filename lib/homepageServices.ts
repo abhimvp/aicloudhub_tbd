@@ -36,7 +36,7 @@ export const HOMEPAGE_SERVICE_SUMMARIES: Record<
       "Our AI solutions empower you to make smarter, faster, and more impactful decisions.",
     ],
     Icon: BrainCircuit,
-    image: "/ServiceSectionImages/Services-AI-ML.png",
+    image: "/HeroSectionAIML.webp",
     cta: {
       label: "Explore AI Services →",
       href: "/services/ai-ml",
@@ -52,7 +52,7 @@ export const HOMEPAGE_SERVICE_SUMMARIES: Record<
       "Build a resilient, future-ready foundation with proactive governance and automation.",
     ],
     Icon: CloudCog,
-    image: "/ServiceSectionImages/Services-Cloud-Migration.png",
+    image: "/HeroSectionCloud.webp",
     cta: {
       label: "See Cloud Capabilities →",
       href: "/services/cloud",
@@ -68,7 +68,7 @@ export const HOMEPAGE_SERVICE_SUMMARIES: Record<
       "Ship experiences that feel intuitive, performant, and ready for continuous evolution.",
     ],
     Icon: AppWindow,
-    image: "/ServiceSectionImages/Services-IT-Staffing.png",
+    image: "/HeroSectionApplications.webp",
     cta: {
       label: "Modernize Apps →",
       href: "/services/applications",
@@ -84,7 +84,7 @@ export const HOMEPAGE_SERVICE_SUMMARIES: Record<
       "Empower teams with trusted dashboards, governed pipelines, and decision-ready data.",
     ],
     Icon: BarChart3,
-    image: "/ServiceSectionImages/Services-DE-Analytics.png",
+    image: "/HeroSectionDataAnalytics.webp",
     cta: {
       label: "Unlock Insights →",
       href: "/services/data-analytics",

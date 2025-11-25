@@ -42,7 +42,7 @@ export default function ITStaffingPage() {
           />
         </div>
 
-        <div className="container mx-auto px-4 sm:px-6 py-16 sm:py-20 lg:py-28 relative z-10">
+        <div className="container mx-auto px-4 sm:px-6 py-20 lg:py-28 relative z-10">
           <div className="grid lg:grid-cols-2 items-center gap-12 max-w-7xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -104,10 +104,10 @@ export default function ITStaffingPage() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <div className="relative w-full max-w-lg">
+              <div className="relative w-full max-w-2xl">
                 <div className="absolute inset-0 bg-linear-to-br from-orange-500/20 to-yellow-500/20 rounded-2xl blur-2xl" />
                 <Image
-                  src="/HeroSectionITStaffing.png"
+                  src="/ServiceSectionImages/ServicePage_Staffing.webp"
                   alt="IT Staffing"
                   width={600}
                   height={400}

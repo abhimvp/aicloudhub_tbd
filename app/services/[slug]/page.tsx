@@ -140,9 +140,9 @@ export default async function ServicePage({
   const isAIML = service.id === "ai-ml";
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-white via-orange-50/40 to-yellow-50/50 dark:from-gray-900 dark:via-slate-900 dark:to-zinc-950">
+    <div className="min-h-screen bg-linear-to-br from-white via-orange-50/40 to-yellow-50/50 dark:bg-linear-to-r dark:from-gray-950 dark:via-slate-950 dark:to-zinc-950 transition-colors duration-300">
       {/* Hero Section with Floating Elements */}
-      <section className="relative bg-linear-to-b from-orange-50 via-white to-amber-50 text-slate-900 dark:from-gray-950 dark:via-slate-950 dark:to-zinc-950 dark:text-white overflow-hidden">
+      <section className="relative bg-linear-to-br from-orange-50 via-white to-yellow-50 dark:bg-linear-to-r dark:from-gray-950 dark:via-slate-950 dark:to-zinc-950 text-slate-900 dark:text-white overflow-hidden transition-colors duration-300">
         {/* Animated floating shapes */}
         <div className="absolute inset-0 opacity-20 pointer-events-none">
           <motion.div
@@ -248,7 +248,7 @@ export default async function ServicePage({
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <div className="relative w-full max-w-lg">
+              <div className="relative w-full max-w-2xl">
                 <div className="absolute inset-0 bg-linear-to-br from-orange-500/20 to-yellow-500/20 rounded-2xl blur-2xl" />
                 <Image
                   src={service.heroImage}
@@ -286,9 +286,8 @@ export default async function ServicePage({
         </motion.div>
 
         <div
-          className={`grid gap-4 lg:gap-6 ${
-            isAIML ? "md:grid-cols-3" : "md:grid-cols-2 lg:grid-cols-3"
-          }`}
+          className={`grid gap-4 lg:gap-6 ${isAIML ? "md:grid-cols-3" : "md:grid-cols-2 lg:grid-cols-3"
+            }`}
         >
           {service.offerings.map((offering, index) => {
             const OfferingIcon = getOfferingIcon(index, service.id);
@@ -603,7 +602,7 @@ export default async function ServicePage({
       </section>
 
       {/* Final CTA Section */}
-      <section className="py-16 lg:py-24 text-center bg-white dark:bg-gray-900/50">
+      <section className="py-16 lg:py-24 text-center bg-linear-to-r from-orange-600 via-orange-500 to-yellow-500 dark:from-orange-700 dark:via-orange-600 dark:to-yellow-600 text-white">
         <div className="container mx-auto px-6 max-w-5xl">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -611,10 +610,10 @@ export default async function ServicePage({
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h3 className="text-3xl lg:text-4xl font-black mb-6 text-slate-900 dark:text-white">
+            <h3 className="text-3xl lg:text-4xl font-black mb-6">
               {service.finalCTA.title}
             </h3>
-            <p className="text-lg text-slate-600 dark:text-zinc-300 mb-8 max-w-2xl mx-auto">
+            <p className="text-lg text-white/95 mb-8 max-w-2xl mx-auto">
               {service.finalCTA.description}
             </p>
             <Link
