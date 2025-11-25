@@ -100,7 +100,7 @@ export const HOMEPAGE_SERVICE_SUMMARIES: Record<
       "Our IT staffing solutions provide flexible, vetted talent to meet your project demands and strategic goals.",
     ],
     Icon: UserCheck,
-    image: "/ServiceSectionImages/Services-IT-Staffing.png",
+    image: "/HeroSectionITStaffing.webp",
     cta: {
       label: "Find Talent →",
       href: "/services/staffing",
@@ -115,7 +115,7 @@ export const HOMEPAGE_SERVICE_SUMMARIES: Record<
       "Our practitioner-led programs combine hands-on labs, live projects, and tailored curricula for your business.",
     ],
     Icon: GraduationCap,
-    image: "/ServiceSectionImages/Services-Corporate-Training.png",
+    image: "/HeroSectionCorporateTraining.webp",
     cta: {
       label: "Explore Trainings →",
       href: "/services/corporate-training",
@@ -130,11 +130,10 @@ export const HOMEPAGE_SERVICE_SUMMARIES: Record<
       "From cloud-native platforms to secure operations, we deliver future-ready software, automation, and 24/7 support built for growth.",
     ],
     Icon: BriefcaseBusiness,
-    image: "/HeroSectionITServices.png",
+    image: "/HeroSectionITServices.webp",
     cta: {
       label: "Discover IT Services →",
       href: "/services/it-services",
     },
   },
 };
-

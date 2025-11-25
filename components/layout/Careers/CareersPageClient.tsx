@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React, { useState } from "react";
 import * as motion from "motion/react-client";
@@ -10,9 +10,9 @@ import ScrollToTop from "@/components/layout/ScrollToTop";
 const CareersPageClient = () => {
   const { actualTheme } = useTheme();
   const [selectedFileName, setSelectedFileName] = useState<string | null>(null);
-  const [formStatus, setFormStatus] = useState<"idle" | "processing" | "success">(
-    "idle"
-  );
+  const [formStatus, setFormStatus] = useState<
+    "idle" | "processing" | "success"
+  >("idle");
   const [searchQuery, setSearchQuery] = useState("");
 
   const culturePillars = [
@@ -24,7 +24,8 @@ const CareersPageClient = () => {
     },
     {
       title: "Prototype mindset",
-      description: "Launch, learn, and iterate—every teammate ships meaningful work.",
+      description:
+        "Launch, learn, and iterate—every teammate ships meaningful work.",
       emoji: "🛠️",
     },
     {
@@ -112,16 +113,18 @@ const CareersPageClient = () => {
   return (
     <main className={`min-h-screen transition-colors duration-300 ${bgClass}`}>
       <section
-        className={`relative overflow-hidden pt-32 pb-16 ${actualTheme === "dark"
-          ? "bg-linear-to-r from-gray-950 via-slate-950 to-zinc-950"
-          : "bg-linear-to-br from-orange-50 via-white to-yellow-50"
-          }`}
+        className={`relative overflow-hidden pt-32 pb-16 ${
+          actualTheme === "dark"
+            ? "bg-linear-to-r from-gray-950 via-slate-950 to-zinc-950"
+            : "bg-linear-to-br from-orange-50 via-white to-yellow-50"
+        }`}
       >
         {/* Tech Grid Background */}
-        <div className="absolute inset-0 z-0 opacity-[0.15] dark:opacity-[0.05]"
+        <div
+          className="absolute inset-0 z-0 opacity-[0.15] dark:opacity-[0.05]"
           style={{
             backgroundImage: `linear-gradient(#999 1px, transparent 1px), linear-gradient(90deg, #999 1px, transparent 1px)`,
-            backgroundSize: '50px 50px'
+            backgroundSize: "50px 50px",
           }}
         />
 
@@ -133,7 +136,7 @@ const CareersPageClient = () => {
         </div>
 
         {/* Animated gradient overlay for dark mode */}
-        {actualTheme === 'dark' && (
+        {actualTheme === "dark" && (
           <div className="absolute inset-0 opacity-20 pointer-events-none transition-opacity duration-300 z-1">
             <div className="absolute top-0 left-0 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl animate-pulse" />
             <div
@@ -161,9 +164,18 @@ const CareersPageClient = () => {
               transition={{ duration: 0.5 }}
               className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-semibold border backdrop-blur-sm"
               style={{
-                borderColor: actualTheme === "dark" ? "rgba(249, 115, 22, 0.3)" : "rgba(249, 115, 22, 0.2)",
-                backgroundColor: actualTheme === "dark" ? "rgba(249, 115, 22, 0.1)" : "rgba(255, 237, 213, 0.5)",
-                color: actualTheme === "dark" ? "rgb(253, 186, 116)" : "rgb(194, 65, 12)",
+                borderColor:
+                  actualTheme === "dark"
+                    ? "rgba(249, 115, 22, 0.3)"
+                    : "rgba(249, 115, 22, 0.2)",
+                backgroundColor:
+                  actualTheme === "dark"
+                    ? "rgba(249, 115, 22, 0.1)"
+                    : "rgba(255, 237, 213, 0.5)",
+                color:
+                  actualTheme === "dark"
+                    ? "rgb(253, 186, 116)"
+                    : "rgb(194, 65, 12)",
               }}
             >
               <span className="relative flex h-2 w-2">
@@ -175,19 +187,19 @@ const CareersPageClient = () => {
 
             <h1 className="text-4xl md:text-6xl font-black leading-tight tracking-tight">
               Build a career that feels <br className="hidden md:block" />
-              <span
-                className="bg-linear-to-r from-orange-500 via-amber-500 to-orange-600 bg-clip-text text-transparent"
-              >
+              <span className="bg-linear-to-r from-orange-500 via-amber-500 to-orange-600 bg-clip-text text-transparent">
                 handcrafted for your ambition
               </span>
             </h1>
             <p
-              className={`text-lg md:text-xl max-w-3xl mx-auto leading-relaxed ${actualTheme === "dark" ? "text-slate-400" : "text-slate-600"
-                }`}
+              className={`text-lg md:text-xl max-w-3xl mx-auto leading-relaxed ${
+                actualTheme === "dark" ? "text-slate-400" : "text-slate-600"
+              }`}
             >
-              We are a cloud-native, AI-forward studio where strategists, engineers,
-              and product craft leaders invent customer moments that feel effortless.
-              Join the crew that treats careers like long-form design projects.
+              We are a cloud-native, AI-forward studio where strategists,
+              engineers, and product craft leaders invent customer moments that
+              feel effortless. Join the crew that treats careers like long-form
+              design projects.
             </p>
             <div className="flex flex-wrap justify-center gap-4 pt-4">
               <Button
@@ -211,11 +223,20 @@ const CareersPageClient = () => {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <h2 className={`text-3xl md:text-5xl font-black mb-6 ${actualTheme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
+            <h2
+              className={`text-3xl md:text-5xl font-black mb-6 ${
+                actualTheme === "dark" ? "text-white" : "text-slate-900"
+              }`}
+            >
               The <span className="text-orange-500">values</span> that drive us
             </h2>
-            <p className={`text-xl max-w-2xl mx-auto ${actualTheme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
-              We&apos;re building a company where you can do the best work of your life.
+            <p
+              className={`text-xl max-w-2xl mx-auto ${
+                actualTheme === "dark" ? "text-slate-400" : "text-slate-600"
+              }`}
+            >
+              We&apos;re building a company where you can do the best work of
+              your life.
             </p>
           </motion.div>
 
@@ -227,16 +248,25 @@ const CareersPageClient = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className={`p-8 rounded-3xl border transition-all duration-300 hover:scale-[1.02] ${actualTheme === "dark"
-                  ? "bg-zinc-900/50 border-white/10 hover:bg-zinc-800/80 hover:border-orange-500/30"
-                  : "bg-white border-gray-200 shadow-lg hover:shadow-xl hover:border-orange-200"
-                  }`}
+                className={`p-8 rounded-3xl border transition-all duration-300 hover:scale-[1.02] ${
+                  actualTheme === "dark"
+                    ? "bg-zinc-900/50 border-white/10 hover:bg-zinc-800/80 hover:border-orange-500/30"
+                    : "bg-white border-gray-200 shadow-lg hover:shadow-xl hover:border-orange-200"
+                }`}
               >
                 <div className="text-4xl mb-4">{pillar.emoji}</div>
-                <h3 className={`text-xl font-bold mb-3 ${actualTheme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
+                <h3
+                  className={`text-xl font-bold mb-3 ${
+                    actualTheme === "dark" ? "text-white" : "text-slate-900"
+                  }`}
+                >
                   {pillar.title}
                 </h3>
-                <p className={`leading-relaxed ${actualTheme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
+                <p
+                  className={`leading-relaxed ${
+                    actualTheme === "dark" ? "text-slate-400" : "text-slate-600"
+                  }`}
+                >
                   {pillar.description}
                 </p>
               </motion.div>
@@ -247,10 +277,9 @@ const CareersPageClient = () => {
 
       <section
         id="open-roles"
-        className={`py-20 relative ${actualTheme === "dark"
-          ? "bg-zinc-950"
-          : "bg-white"
-          }`}
+        className={`py-20 relative ${
+          actualTheme === "dark" ? "bg-zinc-950" : "bg-white"
+        }`}
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 relative z-10">
           <motion.div
@@ -263,14 +292,19 @@ const CareersPageClient = () => {
             <p className="text-sm font-bold uppercase tracking-[0.35em] text-orange-500">
               Open roles
             </p>
-            <h2 className={`text-3xl md:text-5xl font-black ${actualTheme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
+            <h2
+              className={`text-3xl md:text-5xl font-black ${
+                actualTheme === "dark" ? "text-white" : "text-slate-900"
+              }`}
+            >
               Teams hiring right now
             </h2>
             <div
-              className={`max-w-3xl mx-auto flex items-center gap-3 rounded-2xl border px-4 py-3 transition-all duration-300 ${actualTheme === "dark"
-                ? "border-white/10 bg-white/5 focus-within:bg-white/10 focus-within:border-orange-500/50"
-                : "border-gray-200 bg-white shadow-sm focus-within:shadow-md focus-within:border-orange-400"
-                }`}
+              className={`max-w-3xl mx-auto flex items-center gap-3 rounded-2xl border px-4 py-3 transition-all duration-300 ${
+                actualTheme === "dark"
+                  ? "border-white/10 bg-white/5 focus-within:bg-white/10 focus-within:border-orange-500/50"
+                  : "border-gray-200 bg-white shadow-sm focus-within:shadow-md focus-within:border-orange-400"
+              }`}
             >
               <span className="text-xl">🔍</span>
               <input
@@ -278,10 +312,11 @@ const CareersPageClient = () => {
                 value={searchQuery}
                 onChange={(event) => setSearchQuery(event.target.value)}
                 placeholder="Search by role, location, or team"
-                className={`flex-1 bg-transparent focus:outline-none text-base ${actualTheme === "dark"
-                  ? "text-white placeholder:text-gray-400"
-                  : "text-gray-900 placeholder:text-gray-500"
-                  }`}
+                className={`flex-1 bg-transparent focus:outline-none text-base ${
+                  actualTheme === "dark"
+                    ? "text-white placeholder:text-gray-400"
+                    : "text-gray-900 placeholder:text-gray-500"
+                }`}
               />
             </div>
           </motion.div>
@@ -289,12 +324,14 @@ const CareersPageClient = () => {
           <div className="grid grid-cols-1 gap-6">
             {filteredJobs.length === 0 && (
               <div
-                className={`rounded-3xl border p-10 text-center text-lg font-semibold ${actualTheme === "dark"
-                  ? "border-white/10 bg-white/5 text-gray-300"
-                  : "border-gray-200 bg-white text-gray-600"
-                  }`}
+                className={`rounded-3xl border p-10 text-center text-lg font-semibold ${
+                  actualTheme === "dark"
+                    ? "border-white/10 bg-white/5 text-gray-300"
+                    : "border-gray-200 bg-white text-gray-600"
+                }`}
               >
-                No roles match “{searchQuery}”. Try another keyword or pitch us a role.
+                No roles match “{searchQuery}”. Try another keyword or pitch us
+                a role.
               </div>
             )}
             {filteredJobs.map((job, index) => (
@@ -304,50 +341,79 @@ const CareersPageClient = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className={`group rounded-3xl border p-6 md:p-8 flex flex-col gap-5 transition-all duration-300 hover:scale-[1.01] ${actualTheme === "dark"
-                  ? "border-white/10 bg-zinc-900/50 hover:bg-zinc-800/80 hover:border-orange-500/30"
-                  : "border-gray-200 bg-white shadow-sm hover:shadow-xl hover:shadow-orange-500/5 hover:border-orange-200"
-                  }`}
+                className={`group rounded-3xl border p-6 md:p-8 flex flex-col gap-5 transition-all duration-300 hover:scale-[1.01] ${
+                  actualTheme === "dark"
+                    ? "border-white/10 bg-zinc-900/50 hover:bg-zinc-800/80 hover:border-orange-500/30"
+                    : "border-gray-200 bg-white shadow-sm hover:shadow-xl hover:shadow-orange-500/5 hover:border-orange-200"
+                }`}
               >
                 <div className="flex flex-wrap gap-3 items-center justify-between">
                   <div>
-                    <h3 className={`text-2xl font-bold mb-1 ${actualTheme === 'dark' ? 'text-white' : 'text-slate-900'}`}>{job.title}</h3>
+                    <h3
+                      className={`text-2xl font-bold mb-1 ${
+                        actualTheme === "dark" ? "text-white" : "text-slate-900"
+                      }`}
+                    >
+                      {job.title}
+                    </h3>
                     <p
-                      className={`text-sm font-bold uppercase tracking-wide ${actualTheme === "dark"
-                        ? "text-orange-300"
-                        : "text-orange-600"
-                        }`}
+                      className={`text-sm font-bold uppercase tracking-wide ${
+                        actualTheme === "dark"
+                          ? "text-orange-300"
+                          : "text-orange-600"
+                      }`}
                     >
                       {job.team}
                     </p>
                   </div>
                   <Button
                     variant="secondary"
-                    className={`rounded-full px-6 py-2 text-sm font-bold transition-colors ${actualTheme === 'dark'
-                      ? 'bg-white/10 text-white hover:bg-white/20'
-                      : 'bg-orange-50 text-orange-700 hover:bg-orange-100'
-                      }`}
+                    className={`rounded-full px-6 py-2 text-sm font-bold transition-colors ${
+                      actualTheme === "dark"
+                        ? "bg-white/10 text-white hover:bg-white/20"
+                        : "bg-orange-50 text-orange-700 hover:bg-orange-100"
+                    }`}
                   >
                     Mock apply
                   </Button>
                 </div>
                 <p
-                  className={`text-base leading-relaxed ${actualTheme === "dark" ? "text-slate-400" : "text-slate-600"
-                    }`}
+                  className={`text-base leading-relaxed ${
+                    actualTheme === "dark" ? "text-slate-400" : "text-slate-600"
+                  }`}
                 >
                   {job.snippet}
                 </p>
                 <div
-                  className={`flex flex-wrap gap-3 text-sm font-medium ${actualTheme === "dark" ? "text-slate-400" : "text-slate-500"
-                    }`}
+                  className={`flex flex-wrap gap-3 text-sm font-medium ${
+                    actualTheme === "dark" ? "text-slate-400" : "text-slate-500"
+                  }`}
                 >
-                  <span className={`px-3 py-1 rounded-full border ${actualTheme === 'dark' ? 'border-white/10 bg-white/5' : 'border-slate-200 bg-slate-50'}`}>
+                  <span
+                    className={`px-3 py-1 rounded-full border ${
+                      actualTheme === "dark"
+                        ? "border-white/10 bg-white/5"
+                        : "border-slate-200 bg-slate-50"
+                    }`}
+                  >
                     {job.location}
                   </span>
-                  <span className={`px-3 py-1 rounded-full border ${actualTheme === 'dark' ? 'border-white/10 bg-white/5' : 'border-slate-200 bg-slate-50'}`}>
+                  <span
+                    className={`px-3 py-1 rounded-full border ${
+                      actualTheme === "dark"
+                        ? "border-white/10 bg-white/5"
+                        : "border-slate-200 bg-slate-50"
+                    }`}
+                  >
                     {job.type}
                   </span>
-                  <span className={`px-3 py-1 rounded-full border ${actualTheme === 'dark' ? 'border-white/10 bg-white/5' : 'border-slate-200 bg-slate-50'}`}>
+                  <span
+                    className={`px-3 py-1 rounded-full border ${
+                      actualTheme === "dark"
+                        ? "border-white/10 bg-white/5"
+                        : "border-slate-200 bg-slate-50"
+                    }`}
+                  >
                     {job.experience}
                   </span>
                 </div>
@@ -364,19 +430,27 @@ const CareersPageClient = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           onSubmit={handleMockSubmit}
-          className={`rounded-4xl border p-8 space-y-6 backdrop-blur-xl ${actualTheme === "dark"
-            ? "border-white/10 bg-zinc-900/80 shadow-2xl shadow-black/50"
-            : "border-orange-100 bg-white/80 shadow-2xl shadow-orange-500/10"
-            }`}
+          className={`rounded-4xl border p-8 space-y-6 backdrop-blur-xl ${
+            actualTheme === "dark"
+              ? "border-white/10 bg-zinc-900/80 shadow-2xl shadow-black/50"
+              : "border-orange-100 bg-white/80 shadow-2xl shadow-orange-500/10"
+          }`}
         >
           <div className="space-y-2">
             <p className="text-sm font-bold uppercase tracking-[0.35em] text-orange-500">
               Mock application
             </p>
-            <h2 className={`text-3xl font-black ${actualTheme === 'dark' ? 'text-white' : 'text-slate-900'}`}>Drop your resume</h2>
+            <h2
+              className={`text-3xl font-black ${
+                actualTheme === "dark" ? "text-white" : "text-slate-900"
+              }`}
+            >
+              Drop your resume
+            </h2>
             <p
-              className={`text-base ${actualTheme === "dark" ? "text-slate-400" : "text-slate-600"
-                }`}
+              className={`text-base ${
+                actualTheme === "dark" ? "text-slate-400" : "text-slate-600"
+              }`}
             >
               This is a preview of the experience. Files are not stored yet, and
               clicking submit simply simulates the confirmation state.
@@ -394,10 +468,11 @@ const CareersPageClient = () => {
             name="fullName"
             required
             placeholder="Alex Rivera"
-            className={`w-full rounded-2xl px-4 py-3 border focus:outline-none focus:ring-2 transition-all ${actualTheme === "dark"
-              ? "bg-zinc-800/50 border-white/10 focus:ring-orange-500/50 text-white placeholder-zinc-500"
-              : "bg-white border-slate-200 focus:ring-orange-400 focus:border-orange-400"
-              }`}
+            className={`w-full rounded-2xl px-4 py-3 border focus:outline-none focus:ring-2 transition-all ${
+              actualTheme === "dark"
+                ? "bg-zinc-800/50 border-white/10 focus:ring-orange-500/50 text-white placeholder-zinc-500"
+                : "bg-white border-slate-200 focus:ring-orange-400 focus:border-orange-400"
+            }`}
           />
 
           <label
@@ -412,10 +487,11 @@ const CareersPageClient = () => {
             name="email"
             required
             placeholder="you@email.com"
-            className={`w-full rounded-2xl px-4 py-3 border focus:outline-none focus:ring-2 transition-all ${actualTheme === "dark"
-              ? "bg-zinc-800/50 border-white/10 focus:ring-orange-500/50 text-white placeholder-zinc-500"
-              : "bg-white border-slate-200 focus:ring-orange-400 focus:border-orange-400"
-              }`}
+            className={`w-full rounded-2xl px-4 py-3 border focus:outline-none focus:ring-2 transition-all ${
+              actualTheme === "dark"
+                ? "bg-zinc-800/50 border-white/10 focus:ring-orange-500/50 text-white placeholder-zinc-500"
+                : "bg-white border-slate-200 focus:ring-orange-400 focus:border-orange-400"
+            }`}
           />
 
           <div className="space-y-2">
@@ -426,26 +502,36 @@ const CareersPageClient = () => {
               Resume upload (mock)
             </label>
             <div
-              className={`rounded-2xl border border-dashed p-5 flex flex-col gap-3 transition-colors ${actualTheme === "dark"
-                ? "border-white/20 bg-zinc-800/30 hover:bg-zinc-800/50"
-                : "border-orange-200 bg-orange-50/50 hover:bg-orange-50"
-                }`}
+              className={`rounded-2xl border border-dashed p-5 flex flex-col gap-3 transition-colors ${
+                actualTheme === "dark"
+                  ? "border-white/20 bg-zinc-800/30 hover:bg-zinc-800/50"
+                  : "border-orange-200 bg-orange-50/50 hover:bg-orange-50"
+              }`}
             >
               <input
                 id="resume"
                 type="file"
                 accept=".pdf,.doc,.docx"
                 onChange={handleFileChange}
-                className={`text-sm ${actualTheme === 'dark' ? 'text-slate-300' : 'text-slate-600'}`}
+                className={`text-sm ${
+                  actualTheme === "dark" ? "text-slate-300" : "text-slate-600"
+                }`}
               />
               <p
-                className={`text-xs ${actualTheme === "dark" ? "text-slate-500" : "text-slate-500"
-                  }`}
+                className={`text-xs ${
+                  actualTheme === "dark" ? "text-slate-500" : "text-slate-500"
+                }`}
               >
                 Files stay on your device during this mock experience.
               </p>
               {selectedFileName && (
-                <p className={`text-sm font-semibold ${actualTheme === 'dark' ? 'text-orange-300' : 'text-orange-600'}`}>
+                <p
+                  className={`text-sm font-semibold ${
+                    actualTheme === "dark"
+                      ? "text-orange-300"
+                      : "text-orange-600"
+                  }`}
+                >
                   Selected: {selectedFileName}
                 </p>
               )}
@@ -460,16 +546,17 @@ const CareersPageClient = () => {
             {formStatus === "processing"
               ? "Simulating..."
               : formStatus === "success"
-                ? "Received! (mock)"
-                : "Submit for preview"}
+              ? "Received! (mock)"
+              : "Submit for preview"}
           </Button>
 
           <p
-            className={`text-sm italic ${actualTheme === "dark" ? "text-slate-500" : "text-slate-500"
-              }`}
+            className={`text-sm italic ${
+              actualTheme === "dark" ? "text-slate-500" : "text-slate-500"
+            }`}
           >
-            Nothing is stored yet—we’ll wire integrations once the team finalizes
-            the workflow.
+            Nothing is stored yet—we’ll wire integrations once the team
+            finalizes the workflow.
           </p>
         </motion.form>
       </section>
@@ -479,4 +566,3 @@ const CareersPageClient = () => {
 };
 
 export default CareersPageClient;
-

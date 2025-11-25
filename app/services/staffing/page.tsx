@@ -7,7 +7,8 @@ import { Users, ChevronRight, CheckCircle2 } from "lucide-react";
 export async function generateMetadata() {
   return {
     title: "IT Staffing — aiCloudHub",
-    description: "Connect with Top-Tier Tech Talent - Find the perfect talent to accelerate your digital transformation",
+    description:
+      "Connect with Top-Tier Tech Talent - Find the perfect talent to accelerate your digital transformation",
   };
 }
 
@@ -17,10 +18,11 @@ export default function ITStaffingPage() {
       {/* Hero Section with Floating Elements */}
       <section className="relative bg-linear-to-br from-orange-50 via-white to-yellow-50 dark:bg-linear-to-r dark:from-gray-950 dark:via-slate-950 dark:to-zinc-950 text-slate-900 dark:text-white overflow-hidden transition-colors duration-300">
         {/* Tech Grid Background */}
-        <div className="absolute inset-0 z-0 opacity-[0.15] dark:opacity-[0.05]"
+        <div
+          className="absolute inset-0 z-0 opacity-[0.15] dark:opacity-[0.05]"
           style={{
             backgroundImage: `linear-gradient(#999 1px, transparent 1px), linear-gradient(90deg, #999 1px, transparent 1px)`,
-            backgroundSize: '50px 50px'
+            backgroundSize: "50px 50px",
           }}
         />
 
@@ -50,20 +52,22 @@ export default function ITStaffingPage() {
               {/* Breadcrumb Navigation */}
               <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-white/70 mb-6">
                 <Link
-                  href="/?skipLanding=true"
+                  href="/"
                   className="hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
                 >
                   Home
                 </Link>
                 <ChevronRight className="w-4 h-4 text-slate-400 dark:text-white/50" />
                 <Link
-                  href="/?skipLanding=true#services"
+                  href="/#services"
                   className="hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
                 >
                   Services
                 </Link>
                 <ChevronRight className="w-4 h-4 text-slate-400 dark:text-white/50" />
-                <span className="text-slate-900 dark:text-white font-medium">IT Staffing</span>
+                <span className="text-slate-900 dark:text-white font-medium">
+                  IT Staffing
+                </span>
               </div>
 
               <div className="inline-flex items-center gap-3 rounded-full border border-orange-500/30 bg-orange-100 text-orange-700 dark:bg-orange-500/10 dark:text-orange-300 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] mb-6 backdrop-blur-sm">
@@ -74,9 +78,9 @@ export default function ITStaffingPage() {
                 Connect with Top-Tier Tech Talent
               </h1>
               <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-8 leading-relaxed">
-                Find the perfect talent to accelerate your digital transformation.
-                Our IT staffing solutions connect you with skilled professionals who
-                drive innovation and deliver results.
+                Find the perfect talent to accelerate your digital
+                transformation. Our IT staffing solutions connect you with
+                skilled professionals who drive innovation and deliver results.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link
@@ -135,13 +139,15 @@ export default function ITStaffingPage() {
             IT Staffing Services
           </h2>
           <p className="text-lg text-slate-600 dark:text-zinc-300 leading-relaxed mb-8">
-            We&apos;re building a comprehensive page for our IT Staffing services.
-            This page will showcase our talent acquisition solutions, recruitment
-            process, and how we help businesses find the right tech professionals.
+            We&apos;re building a comprehensive page for our IT Staffing
+            services. This page will showcase our talent acquisition solutions,
+            recruitment process, and how we help businesses find the right tech
+            professionals.
           </p>
           <p className="text-base text-slate-500 dark:text-zinc-400 leading-relaxed">
-            In the meantime, please contact us to learn more about our IT staffing
-            solutions and how we can help you find the perfect talent for your team.
+            In the meantime, please contact us to learn more about our IT
+            staffing solutions and how we can help you find the perfect talent
+            for your team.
           </p>
         </motion.div>
       </section>
@@ -205,8 +211,8 @@ export default function ITStaffingPage() {
               Ready to Find Your Next Tech Talent?
             </h3>
             <p className="text-lg text-white/95 mb-8 max-w-2xl mx-auto">
-              Contact us today to learn more about our IT staffing solutions
-              and how we can help you build your dream team.
+              Contact us today to learn more about our IT staffing solutions and
+              how we can help you build your dream team.
             </p>
             <Link
               href="/contact"
@@ -223,4 +229,3 @@ export default function ITStaffingPage() {
     </div>
   );
 }
-

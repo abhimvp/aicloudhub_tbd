@@ -46,7 +46,8 @@ export const courses: Course[] = [
     id: 1,
     slug: "machine-learning-fundamentals",
     title: "Machine Learning Fundamentals",
-    shortDescription: "Master the foundations of ML with hands-on projects and real-world applications",
+    shortDescription:
+      "Master the foundations of ML with hands-on projects and real-world applications",
     description:
       "Dive deep into the world of Machine Learning with this comprehensive course. Learn essential algorithms, data preprocessing, model evaluation, and deployment strategies. Build real-world projects including image classification, sentiment analysis, and predictive models.",
     thumbnail: "/categories-AI-ML.jpg",
@@ -139,7 +140,8 @@ export const courses: Course[] = [
     id: 2,
     slug: "advanced-deep-learning-nlp",
     title: "Advanced Deep Learning & NLP",
-    shortDescription: "Build state-of-the-art NLP models with transformers, BERT, and GPT architectures",
+    shortDescription:
+      "Build state-of-the-art NLP models with transformers, BERT, and GPT architectures",
     description:
       "Take your AI skills to the next level with advanced deep learning and natural language processing. Learn to build transformer models, fine-tune BERT and GPT, create chatbots, and work with large language models. Includes hands-on projects with real datasets.",
     thumbnail: "/categories-AI-ML.jpg",
@@ -235,7 +237,8 @@ export const courses: Course[] = [
     id: 3,
     slug: "aws-solutions-architect",
     title: "AWS Solutions Architect Professional",
-    shortDescription: "Master AWS cloud architecture and prepare for the Solutions Architect certification",
+    shortDescription:
+      "Master AWS cloud architecture and prepare for the Solutions Architect certification",
     description:
       "Comprehensive AWS training covering compute, storage, networking, databases, and security. Learn to design scalable, highly available systems on AWS. Includes real-world architecture scenarios and certification prep.",
     thumbnail: "/categories-cloud-computing.jpg",
@@ -328,7 +331,8 @@ export const courses: Course[] = [
     id: 4,
     slug: "multi-cloud-architecture",
     title: "Multi-Cloud Architecture: AWS, Azure & GCP",
-    shortDescription: "Design and manage applications across multiple cloud platforms",
+    shortDescription:
+      "Design and manage applications across multiple cloud platforms",
     description:
       "Learn to architect solutions across AWS, Azure, and Google Cloud Platform. Understand cloud-agnostic design patterns, multi-cloud strategies, and hybrid cloud implementations. Perfect for organizations using multiple cloud providers.",
     thumbnail: "/categories-cloud-computing.jpg",
@@ -424,7 +428,8 @@ export const courses: Course[] = [
     id: 5,
     slug: "ethical-hacking-penetration-testing",
     title: "Ethical Hacking & Penetration Testing",
-    shortDescription: "Learn offensive security techniques and become a certified ethical hacker",
+    shortDescription:
+      "Learn offensive security techniques and become a certified ethical hacker",
     description:
       "Master the art of ethical hacking with hands-on penetration testing. Learn to identify vulnerabilities, exploit systems ethically, and secure networks. Covers web application security, network penetration testing, and more.",
     thumbnail: "/categories-cyber-security.jpg",
@@ -517,7 +522,8 @@ export const courses: Course[] = [
     id: 6,
     slug: "cybersecurity-for-cloud",
     title: "Cloud Security Architecture & Best Practices",
-    shortDescription: "Secure cloud infrastructure and applications with industry best practices",
+    shortDescription:
+      "Secure cloud infrastructure and applications with industry best practices",
     description:
       "Comprehensive cloud security training covering AWS, Azure, and GCP. Learn to implement security controls, conduct security audits, and ensure compliance in cloud environments. Includes hands-on labs and real-world scenarios.",
     thumbnail: "/categories-cyber-security.jpg",
@@ -612,7 +618,8 @@ export const courses: Course[] = [
     id: 7,
     slug: "devops-bootcamp-ci-cd",
     title: "Complete DevOps Bootcamp with CI/CD",
-    shortDescription: "Master DevOps practices, tools, and automation for modern software delivery",
+    shortDescription:
+      "Master DevOps practices, tools, and automation for modern software delivery",
     description:
       "Comprehensive DevOps training covering CI/CD pipelines, containerization, orchestration, and infrastructure as code. Learn Docker, Kubernetes, Jenkins, GitLab CI, Terraform, and monitoring tools. Build production-ready deployment pipelines.",
     thumbnail: "/categories-devops.jpg",
@@ -716,7 +723,8 @@ export const courses: Course[] = [
     id: 8,
     slug: "advanced-kubernetes-microservices",
     title: "Advanced Kubernetes & Microservices Architecture",
-    shortDescription: "Build and deploy scalable microservices on Kubernetes at enterprise scale",
+    shortDescription:
+      "Build and deploy scalable microservices on Kubernetes at enterprise scale",
     description:
       "Advanced course on Kubernetes and microservices patterns. Learn service mesh, advanced networking, security, monitoring, and troubleshooting. Deploy complex microservices applications with Istio, implement GitOps workflows, and master Kubernetes operators.",
     thumbnail: "/categories-devops.jpg",
@@ -857,17 +865,15 @@ export const getFeaturedCourses = (): Course[] => {
   return courses.filter((course) => course.featured);
 };
 
-export const getRelatedCourses = (
-  currentSlug: string,
-  limit = 3
-): Course[] => {
+export const getRelatedCourses = (currentSlug: string, limit = 3): Course[] => {
   const currentCourse = getCourseBySlug(currentSlug);
   if (!currentCourse) return [];
 
   return courses
     .filter(
       (course) =>
-        course.slug !== currentSlug && course.category === currentCourse.category
+        course.slug !== currentSlug &&
+        course.category === currentCourse.category
     )
     .slice(0, limit);
 };

@@ -6,7 +6,8 @@ import { ChevronRight, FileText } from "lucide-react";
 export async function generateMetadata() {
   return {
     title: "Terms & Conditions",
-    description: "Terms and Conditions for aiCloudHub - Learn about our terms of service, intellectual property, and legal policies.",
+    description:
+      "Terms and Conditions for aiCloudHub - Learn about our terms of service, intellectual property, and legal policies.",
   };
 }
 
@@ -56,7 +57,7 @@ export default function TermsPage() {
               {/* Breadcrumb Navigation */}
               <div className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-slate-600 dark:text-white/70 mb-4 sm:mb-6 flex-wrap">
                 <Link
-                  href="/?skipLanding=true"
+                  href="/"
                   className="hover:text-orange-500 dark:hover:text-orange-400 transition-colors whitespace-nowrap"
                 >
                   Home
@@ -75,7 +76,8 @@ export default function TermsPage() {
                 Terms & Conditions
               </h1>
               <p className="text-base sm:text-lg md:text-xl text-slate-700 dark:text-gray-300 leading-relaxed">
-                Please read these terms carefully before using our website, services, or training programs.
+                Please read these terms carefully before using our website,
+                services, or training programs.
               </p>
             </motion.div>
           </div>
@@ -92,9 +94,13 @@ export default function TermsPage() {
         >
           <div className="bg-white dark:bg-white/5 rounded-2xl border border-orange-100 dark:border-white/10 shadow-lg p-4 sm:p-6 md:p-8 lg:p-12">
             <p className="text-slate-600 dark:text-zinc-300 leading-relaxed mb-6 sm:mb-8 text-base sm:text-lg">
-              Welcome to <span className="font-semibold bg-linear-to-r from-orange-500 to-yellow-400 bg-clip-text text-transparent">aiCloudHub</span>. By accessing or using our website, services, or training programs,
-              you agree to comply with and be bound by the following Terms & Conditions. If you do not
-              agree, please discontinue use.
+              Welcome to{" "}
+              <span className="font-semibold bg-linear-to-r from-orange-500 to-yellow-400 bg-clip-text text-transparent">
+                aiCloudHub
+              </span>
+              . By accessing or using our website, services, or training
+              programs, you agree to comply with and be bound by the following
+              Terms & Conditions. If you do not agree, please discontinue use.
             </p>
 
             <div className="space-y-6 sm:space-y-8">
@@ -105,12 +111,22 @@ export default function TermsPage() {
                 </h2>
                 <ul className="space-y-3 text-slate-600 dark:text-zinc-300 leading-relaxed">
                   <li className="flex items-start gap-3">
-                    <span className="text-orange-500 dark:text-orange-400 mt-1">•</span>
-                    <span>Our website and services are provided for lawful purposes only.</span>
+                    <span className="text-orange-500 dark:text-orange-400 mt-1">
+                      •
+                    </span>
+                    <span>
+                      Our website and services are provided for lawful purposes
+                      only.
+                    </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <span className="text-orange-500 dark:text-orange-400 mt-1">•</span>
-                    <span>You agree not to misuse, copy, or resell our content or intellectual property.</span>
+                    <span className="text-orange-500 dark:text-orange-400 mt-1">
+                      •
+                    </span>
+                    <span>
+                      You agree not to misuse, copy, or resell our content or
+                      intellectual property.
+                    </span>
                   </li>
                 </ul>
               </div>
@@ -122,12 +138,22 @@ export default function TermsPage() {
                 </h2>
                 <ul className="space-y-3 text-slate-600 dark:text-zinc-300 leading-relaxed">
                   <li className="flex items-start gap-3">
-                    <span className="text-orange-500 dark:text-orange-400 mt-1">•</span>
-                    <span>All content, including logos, text, graphics, and training materials, are the property of aiCloudHub.</span>
+                    <span className="text-orange-500 dark:text-orange-400 mt-1">
+                      •
+                    </span>
+                    <span>
+                      All content, including logos, text, graphics, and training
+                      materials, are the property of aiCloudHub.
+                    </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <span className="text-orange-500 dark:text-orange-400 mt-1">•</span>
-                    <span>You may not reproduce, distribute, or use our content without written consent.</span>
+                    <span className="text-orange-500 dark:text-orange-400 mt-1">
+                      •
+                    </span>
+                    <span>
+                      You may not reproduce, distribute, or use our content
+                      without written consent.
+                    </span>
                   </li>
                 </ul>
               </div>
@@ -138,8 +164,10 @@ export default function TermsPage() {
                   3. Service & Training Disclaimer
                 </h2>
                 <p className="text-slate-600 dark:text-zinc-300 leading-relaxed">
-                  While we provide corporate training and IT services with the highest standards, we do not
-                  guarantee specific outcomes. Success depends on individual effort and organizational implementation.
+                  While we provide corporate training and IT services with the
+                  highest standards, we do not guarantee specific outcomes.
+                  Success depends on individual effort and organizational
+                  implementation.
                 </p>
               </div>
 
@@ -149,8 +177,9 @@ export default function TermsPage() {
                   4. Limitation of Liability
                 </h2>
                 <p className="text-slate-600 dark:text-zinc-300 leading-relaxed">
-                  aiCloudHub will not be liable for any indirect, incidental, or consequential damages arising
-                  from use of our website, services, or training.
+                  aiCloudHub will not be liable for any indirect, incidental, or
+                  consequential damages arising from use of our website,
+                  services, or training.
                 </p>
               </div>
 
@@ -160,7 +189,8 @@ export default function TermsPage() {
                   5. Governing Law
                 </h2>
                 <p className="text-slate-600 dark:text-zinc-300 leading-relaxed">
-                  These Terms shall be governed by the laws of USA/Atlanta where aiCloudHub is registered.
+                  These Terms shall be governed by the laws of USA/Atlanta where
+                  aiCloudHub is registered.
                 </p>
               </div>
             </div>
@@ -168,7 +198,8 @@ export default function TermsPage() {
             {/* Contact Section */}
             <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-orange-100 dark:border-white/10">
               <p className="text-slate-600 dark:text-zinc-300 leading-relaxed mb-4 text-sm sm:text-base">
-                If you have any questions about these Terms & Conditions, please contact us.
+                If you have any questions about these Terms & Conditions, please
+                contact us.
               </p>
               <Link
                 href="/contact"
@@ -187,4 +218,3 @@ export default function TermsPage() {
     </div>
   );
 }
-

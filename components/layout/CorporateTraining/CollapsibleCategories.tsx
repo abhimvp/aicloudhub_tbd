@@ -153,11 +153,9 @@ export default function CollapsibleCategories({
                 </motion.div>
               </div>
             </motion.div>
-
           </motion.article>
         );
       })}
     </div>
   );
 }
-

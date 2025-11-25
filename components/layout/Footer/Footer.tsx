@@ -13,10 +13,11 @@ const Footer = () => {
 
   return (
     <footer
-      className={`relative overflow-hidden transition-colors duration-300 -mt-px ${actualTheme === "dark"
+      className={`relative overflow-hidden transition-colors duration-300 -mt-px ${
+        actualTheme === "dark"
           ? "bg-linear-to-br from-gray-900 via-slate-900 to-zinc-950"
           : "bg-gradient-to-b from-gray-50 to-orange-50"
-        }`}
+      }`}
     >
       {/* Animated gradient overlay for dark mode */}
       {actualTheme === "dark" && (
@@ -34,8 +35,9 @@ const Footer = () => {
       )}
       {/* Main Footer Content */}
       <div
-        className={`border-t transition-colors duration-300 relative z-10 ${actualTheme === "dark" ? "border-white/10" : "border-gray-300"
-          }`}
+        className={`border-t transition-colors duration-300 relative z-10 ${
+          actualTheme === "dark" ? "border-white/10" : "border-gray-300"
+        }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
@@ -52,8 +54,9 @@ const Footer = () => {
               </Link>
 
               <p
-                className={`leading-relaxed mb-8 max-w-md ${actualTheme === "dark" ? "text-gray-400" : "text-gray-600"
-                  }`}
+                className={`leading-relaxed mb-8 max-w-md ${
+                  actualTheme === "dark" ? "text-gray-400" : "text-gray-600"
+                }`}
               >
                 aiCloudHub Inc. is a trusted partner in digital transformation.
                 Specializing in Cloud, DevOps, AI/ML, Data & Analytics,
@@ -132,15 +135,17 @@ const Footer = () => {
             {/* Address */}
             <div>
               <h3
-                className={`font-bold text-lg mb-6 ${actualTheme === "dark" ? "text-yellow-400" : "text-orange-600"
-                  }`}
+                className={`font-bold text-lg mb-6 ${
+                  actualTheme === "dark" ? "text-yellow-400" : "text-orange-600"
+                }`}
               >
                 Address
               </h3>
               <ul className="space-y-4">
                 <li
-                  className={`flex items-start gap-2 ${actualTheme === "dark" ? "text-gray-400" : "text-gray-600"
-                    }`}
+                  className={`flex items-start gap-2 ${
+                    actualTheme === "dark" ? "text-gray-400" : "text-gray-600"
+                  }`}
                 >
                   <svg
                     className="w-5 h-5 text-orange-400 mt-1 shrink-0"
@@ -166,8 +171,9 @@ const Footer = () => {
                   </span>
                 </li>
                 <li
-                  className={`flex items-center gap-2 ${actualTheme === "dark" ? "text-gray-400" : "text-gray-600"
-                    }`}
+                  className={`flex items-center gap-2 ${
+                    actualTheme === "dark" ? "text-gray-400" : "text-gray-600"
+                  }`}
                 >
                   <svg
                     className="w-5 h-5 text-orange-400 shrink-0"
@@ -190,8 +196,9 @@ const Footer = () => {
                   </a>
                 </li>
                 <li
-                  className={`flex items-start gap-2 ${actualTheme === "dark" ? "text-gray-400" : "text-gray-600"
-                    }`}
+                  className={`flex items-start gap-2 ${
+                    actualTheme === "dark" ? "text-gray-400" : "text-gray-600"
+                  }`}
                 >
                   <svg
                     className="w-5 h-5 text-orange-400 mt-1 shrink-0"
@@ -218,8 +225,9 @@ const Footer = () => {
                   </span>
                 </li>
                 <li
-                  className={`flex items-center gap-2 ${actualTheme === "dark" ? "text-gray-400" : "text-gray-600"
-                    }`}
+                  className={`flex items-center gap-2 ${
+                    actualTheme === "dark" ? "text-gray-400" : "text-gray-600"
+                  }`}
                 >
                   <svg
                     className="w-5 h-5 text-orange-400 shrink-0"
@@ -242,8 +250,9 @@ const Footer = () => {
                   </a>
                 </li>
                 <li
-                  className={`flex items-center gap-2 ${actualTheme === "dark" ? "text-gray-400" : "text-gray-600"
-                    }`}
+                  className={`flex items-center gap-2 ${
+                    actualTheme === "dark" ? "text-gray-400" : "text-gray-600"
+                  }`}
                 >
                   <svg
                     className="w-5 h-5 text-yellow-400 shrink-0"
@@ -273,13 +282,15 @@ const Footer = () => {
 
       {/* Legal Footer */}
       <div
-        className={`border-t transition-colors duration-300 relative z-10 ${actualTheme === "dark" ? "border-white/10" : "border-gray-300"
-          }`}
+        className={`border-t transition-colors duration-300 relative z-10 ${
+          actualTheme === "dark" ? "border-white/10" : "border-gray-300"
+        }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 relative z-10">
           <div
-            className={`flex flex-col md:flex-row justify-between items-center gap-4 text-sm ${actualTheme === "dark" ? "text-gray-500" : "text-gray-600"
-              }`}
+            className={`flex flex-col md:flex-row justify-between items-center gap-4 text-sm ${
+              actualTheme === "dark" ? "text-gray-500" : "text-gray-600"
+            }`}
           >
             <p>© 2025 aiCloudHub. All rights reserved.</p>
             <div className="flex gap-6">

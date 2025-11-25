@@ -7,7 +7,8 @@ import { Code2, ChevronRight, CheckCircle2 } from "lucide-react";
 export async function generateMetadata() {
   return {
     title: "IT Services — aiCloudHub",
-    description: "Innovative Technology Solutions for Modern Business - Transform your business with cutting-edge cloud, AI, and digital solutions",
+    description:
+      "Innovative Technology Solutions for Modern Business - Transform your business with cutting-edge cloud, AI, and digital solutions",
   };
 }
 
@@ -17,10 +18,11 @@ export default function ITServicesPage() {
       {/* Hero Section with Floating Elements */}
       <section className="relative bg-linear-to-br from-orange-50 via-white to-yellow-50 dark:bg-linear-to-r dark:from-gray-950 dark:via-slate-950 dark:to-zinc-950 text-slate-900 dark:text-white overflow-hidden transition-colors duration-300">
         {/* Tech Grid Background */}
-        <div className="absolute inset-0 z-0 opacity-[0.15] dark:opacity-[0.05]"
+        <div
+          className="absolute inset-0 z-0 opacity-[0.15] dark:opacity-[0.05]"
           style={{
             backgroundImage: `linear-gradient(#999 1px, transparent 1px), linear-gradient(90deg, #999 1px, transparent 1px)`,
-            backgroundSize: '50px 50px'
+            backgroundSize: "50px 50px",
           }}
         />
 
@@ -50,20 +52,22 @@ export default function ITServicesPage() {
               {/* Breadcrumb Navigation */}
               <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-white/70 mb-6">
                 <Link
-                  href="/?skipLanding=true"
+                  href="/"
                   className="hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
                 >
                   Home
                 </Link>
                 <ChevronRight className="w-4 h-4 text-slate-400 dark:text-white/50" />
                 <Link
-                  href="/?skipLanding=true#services"
+                  href="/#services"
                   className="hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
                 >
                   Services
                 </Link>
                 <ChevronRight className="w-4 h-4 text-slate-400 dark:text-white/50" />
-                <span className="text-slate-900 dark:text-white font-medium">IT Services</span>
+                <span className="text-slate-900 dark:text-white font-medium">
+                  IT Services
+                </span>
               </div>
 
               <div className="inline-flex items-center gap-3 rounded-full border border-blue-500/30 bg-blue-100 text-blue-700 dark:bg-blue-500/10 dark:text-blue-200 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] mb-6 backdrop-blur-sm">
@@ -74,9 +78,9 @@ export default function ITServicesPage() {
                 Innovative Technology Solutions for Modern Business
               </h1>
               <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-8 leading-relaxed">
-                Transform your business with cutting-edge cloud, AI, and digital solutions.
-                Our comprehensive IT services help you stay ahead in the digital landscape
-                and drive sustainable growth.
+                Transform your business with cutting-edge cloud, AI, and digital
+                solutions. Our comprehensive IT services help you stay ahead in
+                the digital landscape and drive sustainable growth.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link
@@ -134,13 +138,15 @@ export default function ITServicesPage() {
             IT Services & Solutions
           </h2>
           <p className="text-lg text-slate-600 dark:text-zinc-300 leading-relaxed mb-8">
-            We&apos;re building a comprehensive page for our IT Services offerings.
-            This page will showcase our technology solutions, service capabilities,
-            and how we help businesses transform their digital infrastructure.
+            We&apos;re building a comprehensive page for our IT Services
+            offerings. This page will showcase our technology solutions, service
+            capabilities, and how we help businesses transform their digital
+            infrastructure.
           </p>
           <p className="text-base text-slate-500 dark:text-zinc-400 leading-relaxed">
-            In the meantime, please contact us to learn more about our IT services
-            and how we can help accelerate your digital transformation journey.
+            In the meantime, please contact us to learn more about our IT
+            services and how we can help accelerate your digital transformation
+            journey.
           </p>
         </motion.div>
       </section>
@@ -204,8 +210,8 @@ export default function ITServicesPage() {
               Ready to Transform Your Business?
             </h3>
             <p className="text-lg text-white/95 mb-8 max-w-2xl mx-auto">
-              Contact us today to learn more about our IT services and how we can
-              help you achieve your digital transformation goals.
+              Contact us today to learn more about our IT services and how we
+              can help you achieve your digital transformation goals.
             </p>
             <Link
               href="/contact"
@@ -222,4 +228,3 @@ export default function ITServicesPage() {
     </div>
   );
 }
-

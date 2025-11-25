@@ -6,7 +6,8 @@ import { ChevronRight, Shield } from "lucide-react";
 export async function generateMetadata() {
   return {
     title: "Privacy Policy",
-    description: "Privacy Policy for aiCloudHub - Learn about how we collect, use, and protect your personal information.",
+    description:
+      "Privacy Policy for aiCloudHub - Learn about how we collect, use, and protect your personal information.",
   };
 }
 
@@ -56,7 +57,7 @@ export default function PrivacyPage() {
               {/* Breadcrumb Navigation */}
               <div className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-slate-600 dark:text-white/70 mb-4 sm:mb-6 flex-wrap">
                 <Link
-                  href="/?skipLanding=true"
+                  href="/"
                   className="hover:text-orange-500 dark:hover:text-orange-400 transition-colors whitespace-nowrap"
                 >
                   Home
@@ -75,7 +76,8 @@ export default function PrivacyPage() {
                 Privacy Policy
               </h1>
               <p className="text-base sm:text-lg md:text-xl text-slate-700 dark:text-gray-300 leading-relaxed">
-                At aiCloudHub, we respect your privacy and are committed to protecting your personal information.
+                At aiCloudHub, we respect your privacy and are committed to
+                protecting your personal information.
               </p>
             </motion.div>
           </div>
@@ -91,7 +93,6 @@ export default function PrivacyPage() {
           className="prose prose-lg dark:prose-invert max-w-none"
         >
           <div className="bg-white dark:bg-white/5 rounded-2xl border border-orange-100 dark:border-white/10 shadow-lg p-4 sm:p-6 md:p-8 lg:p-12 space-y-8 sm:space-y-10">
-
             {/* Section 1 */}
             <div>
               <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-slate-900 dark:text-white break-words">
@@ -99,11 +100,18 @@ export default function PrivacyPage() {
               </h2>
               <ul className="space-y-3 text-slate-600 dark:text-zinc-300 leading-relaxed">
                 <li className="flex items-start gap-3">
-                  <span className="text-orange-500 dark:text-orange-400 mt-1">•</span>
-                  <span>Personal details (name, email, phone) when you register for services or trainings.</span>
+                  <span className="text-orange-500 dark:text-orange-400 mt-1">
+                    •
+                  </span>
+                  <span>
+                    Personal details (name, email, phone) when you register for
+                    services or trainings.
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-orange-500 dark:text-orange-400 mt-1">•</span>
+                  <span className="text-orange-500 dark:text-orange-400 mt-1">
+                    •
+                  </span>
                   <span>Website usage data (via cookies, analytics).</span>
                 </li>
               </ul>
@@ -116,15 +124,24 @@ export default function PrivacyPage() {
               </h2>
               <ul className="space-y-3 text-slate-600 dark:text-zinc-300 leading-relaxed">
                 <li className="flex items-start gap-3">
-                  <span className="text-orange-500 dark:text-orange-400 mt-1">•</span>
+                  <span className="text-orange-500 dark:text-orange-400 mt-1">
+                    •
+                  </span>
                   <span>To provide services and training programs.</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-orange-500 dark:text-orange-400 mt-1">•</span>
-                  <span>To send updates, newsletters, and relevant offers (with your consent).</span>
+                  <span className="text-orange-500 dark:text-orange-400 mt-1">
+                    •
+                  </span>
+                  <span>
+                    To send updates, newsletters, and relevant offers (with your
+                    consent).
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-orange-500 dark:text-orange-400 mt-1">•</span>
+                  <span className="text-orange-500 dark:text-orange-400 mt-1">
+                    •
+                  </span>
                   <span>To improve our website and services.</span>
                 </li>
               </ul>
@@ -137,12 +154,19 @@ export default function PrivacyPage() {
               </h2>
               <ul className="space-y-3 text-slate-600 dark:text-zinc-300 leading-relaxed">
                 <li className="flex items-start gap-3">
-                  <span className="text-orange-500 dark:text-orange-400 mt-1">•</span>
+                  <span className="text-orange-500 dark:text-orange-400 mt-1">
+                    •
+                  </span>
                   <span>We do not sell or rent personal data.</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-orange-500 dark:text-orange-400 mt-1">•</span>
-                  <span>Data may be shared with trusted partners (e.g., payment providers, cloud hosting) only for service delivery.</span>
+                  <span className="text-orange-500 dark:text-orange-400 mt-1">
+                    •
+                  </span>
+                  <span>
+                    Data may be shared with trusted partners (e.g., payment
+                    providers, cloud hosting) only for service delivery.
+                  </span>
                 </li>
               </ul>
             </div>
@@ -154,12 +178,22 @@ export default function PrivacyPage() {
               </h2>
               <ul className="space-y-3 text-slate-600 dark:text-zinc-300 leading-relaxed">
                 <li className="flex items-start gap-3">
-                  <span className="text-orange-500 dark:text-orange-400 mt-1">•</span>
-                  <span>Our website uses cookies to enhance user experience and track performance.</span>
+                  <span className="text-orange-500 dark:text-orange-400 mt-1">
+                    •
+                  </span>
+                  <span>
+                    Our website uses cookies to enhance user experience and
+                    track performance.
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-orange-500 dark:text-orange-400 mt-1">•</span>
-                  <span>You may disable cookies in your browser, though some features may not work properly.</span>
+                  <span className="text-orange-500 dark:text-orange-400 mt-1">
+                    •
+                  </span>
+                  <span>
+                    You may disable cookies in your browser, though some
+                    features may not work properly.
+                  </span>
                 </li>
               </ul>
             </div>
@@ -170,7 +204,9 @@ export default function PrivacyPage() {
                 Refund & Cancellation Policy
               </h2>
               <p className="text-slate-600 dark:text-zinc-300 leading-relaxed mb-6">
-                We strive to provide the best training and IT services. If for any reason you are not satisfied, our refund policy is as follows:
+                We strive to provide the best training and IT services. If for
+                any reason you are not satisfied, our refund policy is as
+                follows:
               </p>
 
               <div className="space-y-6">
@@ -180,16 +216,30 @@ export default function PrivacyPage() {
                   </h3>
                   <ul className="space-y-3 text-slate-600 dark:text-zinc-300 leading-relaxed">
                     <li className="flex items-start gap-3">
-                      <span className="text-orange-500 dark:text-orange-400 mt-1">•</span>
-                      <span>Cancellations made at least 14 days before the start date are eligible for a full refund.</span>
+                      <span className="text-orange-500 dark:text-orange-400 mt-1">
+                        •
+                      </span>
+                      <span>
+                        Cancellations made at least 14 days before the start
+                        date are eligible for a full refund.
+                      </span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <span className="text-orange-500 dark:text-orange-400 mt-1">•</span>
-                      <span>Cancellations within 7 days may be eligible for a partial refund (50%).</span>
+                      <span className="text-orange-500 dark:text-orange-400 mt-1">
+                        •
+                      </span>
+                      <span>
+                        Cancellations within 7 days may be eligible for a
+                        partial refund (50%).
+                      </span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <span className="text-orange-500 dark:text-orange-400 mt-1">•</span>
-                      <span>No refunds will be issued once training has commenced.</span>
+                      <span className="text-orange-500 dark:text-orange-400 mt-1">
+                        •
+                      </span>
+                      <span>
+                        No refunds will be issued once training has commenced.
+                      </span>
                     </li>
                   </ul>
                 </div>
@@ -199,7 +249,8 @@ export default function PrivacyPage() {
                     IT Services
                   </h3>
                   <p className="text-slate-600 dark:text-zinc-300 leading-relaxed">
-                    For IT services, refund eligibility will be reviewed case by case, based on contract agreements.
+                    For IT services, refund eligibility will be reviewed case by
+                    case, based on contract agreements.
                   </p>
                 </div>
               </div>
@@ -211,14 +262,19 @@ export default function PrivacyPage() {
                 Disclaimer
               </h2>
               <p className="text-slate-600 dark:text-zinc-300 leading-relaxed">
-                The information, training programs, and services provided by aiCloudHub are for educational and professional development purposes only. While we strive for accuracy and quality, aiCloudHub makes no guarantees regarding outcomes or performance improvements.
+                The information, training programs, and services provided by
+                aiCloudHub are for educational and professional development
+                purposes only. While we strive for accuracy and quality,
+                aiCloudHub makes no guarantees regarding outcomes or performance
+                improvements.
               </p>
             </div>
 
             {/* Contact Section */}
             <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-orange-100 dark:border-white/10">
               <p className="text-slate-600 dark:text-zinc-300 leading-relaxed mb-4 text-sm sm:text-base">
-                If you have any questions about this Privacy Policy, please contact us.
+                If you have any questions about this Privacy Policy, please
+                contact us.
               </p>
               <Link
                 href="/contact"

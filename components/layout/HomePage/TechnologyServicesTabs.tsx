@@ -77,10 +77,11 @@ export default function TechnologyServicesTabs() {
         </div>
       )}
       <div
-        className={`absolute inset-0 -z-10 ${isDark
+        className={`absolute inset-0 -z-10 ${
+          isDark
             ? "bg-[radial-gradient(circle_at_top,rgba(255,153,51,0.25),rgba(15,23,42,0))]"
             : "bg-[radial-gradient(circle_at_top,rgba(249,115,22,0.15),rgba(255,255,255,0))]"
-          }`}
+        }`}
       />
       <div className="max-w-6xl mx-auto space-y-10">
         <motion.div
@@ -91,8 +92,9 @@ export default function TechnologyServicesTabs() {
           transition={{ delay: 0.1, duration: 0.6, ease: "easeOut" }}
         >
           <p
-            className={`text-sm font-semibold uppercase tracking-[0.4em] ${isDark ? "text-orange-400" : "text-orange-600"
-              }`}
+            className={`text-sm font-semibold uppercase tracking-[0.4em] ${
+              isDark ? "text-orange-400" : "text-orange-600"
+            }`}
           >
             Our Technology Services
           </p>
@@ -116,19 +118,21 @@ export default function TechnologyServicesTabs() {
               onValueChange={(value) => setActiveId(value)}
             >
               <SelectTrigger
-                className={`w-full h-12 pl-12 pr-10 rounded-lg border text-base font-semibold transition-all duration-300 focus:ring-2 focus:ring-offset-2 ${isDark
+                className={`w-full h-12 pl-12 pr-10 rounded-lg border text-base font-semibold transition-all duration-300 focus:ring-2 focus:ring-offset-2 ${
+                  isDark
                     ? "border-white/20 bg-white/10 text-white focus:ring-orange-400 focus:border-orange-400"
                     : "border-orange-200 bg-white text-slate-900 focus:ring-orange-500 focus:border-orange-500 shadow-md"
-                  }`}
+                }`}
                 aria-label="Select technology service"
               >
                 <SelectValue />
               </SelectTrigger>
               <SelectContent
-                className={`rounded-xl ${isDark
+                className={`rounded-xl ${
+                  isDark
                     ? "bg-gray-900 border-white/20"
                     : "bg-white border-orange-200 shadow-xl"
-                  }`}
+                }`}
               >
                 {ORDERED_SERVICE_IDS.map((id) => {
                   const service = SERVICE_SUMMARIES[id];
@@ -137,10 +141,11 @@ export default function TechnologyServicesTabs() {
                     <SelectItem
                       key={id}
                       value={id}
-                      className={`cursor-pointer ${isDark
+                      className={`cursor-pointer ${
+                        isDark
                           ? "text-white focus:bg-white/10 focus:text-white"
                           : "text-slate-900 focus:bg-orange-50"
-                        }`}
+                      }`}
                     >
                       {service.title}
                     </SelectItem>
@@ -150,8 +155,9 @@ export default function TechnologyServicesTabs() {
             </Select>
             <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2">
               <activeService.Icon
-                className={`h-5 w-5 ${isDark ? "text-orange-400" : "text-orange-600"
-                  }`}
+                className={`h-5 w-5 ${
+                  isDark ? "text-orange-400" : "text-orange-600"
+                }`}
               />
             </div>
           </div>
@@ -191,27 +197,30 @@ export default function TechnologyServicesTabs() {
                     >
                       <div className="flex items-center gap-2">
                         <Icon
-                          className={`h-5 w-5 ${isActive
+                          className={`h-5 w-5 ${
+                            isActive
                               ? isDark
                                 ? "text-white"
                                 : "text-slate-900"
                               : tabInactive
-                            }`}
+                          }`}
                         />
                         <span
-                          className={`text-lg ${isActive
+                          className={`text-lg ${
+                            isActive
                               ? isDark
                                 ? "text-white"
                                 : "text-slate-900"
                               : tabInactive
-                            }`}
+                          }`}
                         >
                           {service.title}
                         </span>
                       </div>
                       <span
-                        className={`absolute bottom-0 left-0 h-1 w-full rounded-full transition-opacity ${isActive ? `${tabUnderline} opacity-100` : "opacity-0"
-                          }`}
+                        className={`absolute bottom-0 left-0 h-1 w-full rounded-full transition-opacity ${
+                          isActive ? `${tabUnderline} opacity-100` : "opacity-0"
+                        }`}
                       />
                     </button>
                   );
@@ -222,52 +231,72 @@ export default function TechnologyServicesTabs() {
         </motion.div>
 
         <motion.div
-          className={`mt-10 rounded-3xl border px-6 py-10 sm:px-12 transition-colors duration-300 ${isDark
+          className={`mt-10 rounded-3xl border px-6 py-10 sm:px-12 transition-colors duration-300 ${
+            isDark
               ? "border-white/10 bg-white/5"
               : "border-orange-100 bg-white shadow-lg"
-            }`}
+          }`}
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.3, duration: 0.6, ease: "easeOut" }}
         >
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-stretch">
+            {/* Image Container - Fixed aspect ratio */}
             <div
-              className={`w-full overflow-hidden rounded-2xl ${isDark ? "bg-black/10" : "bg-white shadow-xl"
-                } lg:w-7/12`}
+              className={`w-full overflow-hidden rounded-2xl ${
+                isDark ? "bg-black/10" : "bg-white shadow-xl"
+              } lg:w-7/12`}
             >
-              <Image
-                src={activeService.image}
-                alt={activeService.title}
-                width={960}
-                height={540}
-                className="h-full w-full rounded-2xl object-cover"
-              />
+              <div className="relative aspect-video">
+                <Image
+                  src={activeService.image}
+                  alt={activeService.title}
+                  fill
+                  className="rounded-2xl object-cover"
+                  sizes="(max-width: 1024px) 100vw, 58vw"
+                />
+              </div>
             </div>
-            <div className="w-full space-y-4 lg:w-5/12">
+            {/* Content Container - Fixed height with flex layout */}
+            <div className="w-full lg:w-5/12 flex flex-col min-h-80 lg:min-h-72">
+              {/* Badge */}
               <div
-                className={`inline-flex items-center gap-3 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] ${panelBadge}`}
+                className={`inline-flex w-fit items-center gap-3 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] ${panelBadge}`}
               >
                 <activeService.Icon className="h-4 w-4" />
                 {activeService.title}
               </div>
+
+              {/* Title */}
               <p
-                className={`text-xl font-semibold ${isDark ? "text-white" : "text-slate-900"
-                  }`}
+                className={`text-xl font-semibold mt-4 ${
+                  isDark ? "text-white" : "text-slate-900"
+                }`}
               >
                 {activeService.subtitle}
               </p>
-              <div className={`space-y-4 ${bodyText}`}>
-                {activeService.description.map((paragraph, index) => (
-                  <p key={index}>{paragraph}</p>
-                ))}
+
+              {/* Description - Flex grow to fill space */}
+              <div className={`flex-1 mt-4 ${bodyText}`}>
+                <div className="space-y-3">
+                  {activeService.description.map((paragraph, index) => (
+                    <p key={index} className="line-clamp-3 lg:line-clamp-none">
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
               </div>
-              <Link
-                href={activeService.cta.href}
-                className={`inline-flex w-fit items-center rounded-lg px-6 py-3 text-sm font-semibold transition ${ctaClasses}`}
-              >
-                {activeService.cta.label}
-              </Link>
+
+              {/* CTA Button - Always at bottom */}
+              <div className="mt-6">
+                <Link
+                  href={activeService.cta.href}
+                  className={`inline-flex w-fit items-center rounded-lg px-6 py-3 text-sm font-semibold transition ${ctaClasses}`}
+                >
+                  {activeService.cta.label}
+                </Link>
+              </div>
             </div>
           </div>
         </motion.div>

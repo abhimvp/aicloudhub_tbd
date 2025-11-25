@@ -21,7 +21,7 @@ import {
   ShoppingBag,
   Stethoscope,
   Factory,
-  Banknote
+  Banknote,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -82,8 +82,8 @@ const getBentoGridClass = (index: number, isAIML: boolean) => {
 const getWhyChooseImage = (serviceId: string) => {
   const imageMap: Record<string, string> = {
     "ai-ml": "/WhyChooseAICloudhubAIML.png",
-    "cloud": "/WhyChooseAICloudhubCloudServices.png",
-    "applications": "/WhyChooseAICloudhubApplicationServices.png",
+    cloud: "/WhyChooseAICloudhubCloudServices.png",
+    applications: "/WhyChooseAICloudhubApplicationServices.png",
     "data-analytics": "/WhyChooseAICloudhubDataAnalytics.png",
   };
   return imageMap[serviceId] || "/WhyChooseAICloudhubAIML.png";
@@ -125,9 +125,9 @@ export async function generateMetadata({
 }
 
 export default async function ServicePage({
-  params
+  params,
 }: {
-  params: Promise<{ slug: string }>
+  params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
   const service = getServiceBySlug(slug);
@@ -197,15 +197,23 @@ export default async function ServicePage({
             >
               {/* Breadcrumb Navigation */}
               <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-white/70 mb-6">
-                <Link href="/?skipLanding=true" className="hover:text-orange-500 dark:hover:text-orange-400 transition-colors">
+                <Link
+                  href="/"
+                  className="hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
+                >
                   Home
                 </Link>
                 <ChevronRight className="w-4 h-4 text-slate-400 dark:text-white/50" />
-                <Link href="/?skipLanding=true#services" className="hover:text-orange-500 dark:hover:text-orange-400 transition-colors">
+                <Link
+                  href="/#services"
+                  className="hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
+                >
                   Services
                 </Link>
                 <ChevronRight className="w-4 h-4 text-slate-400 dark:text-white/50" />
-                <span className="text-slate-900 dark:text-white font-medium">{service.title}</span>
+                <span className="text-slate-900 dark:text-white font-medium">
+                  {service.title}
+                </span>
               </div>
 
               <div className="inline-flex items-center gap-3 rounded-full border border-orange-500/30 bg-orange-100 text-orange-700 dark:bg-orange-500/10 dark:text-orange-300 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] mb-6">
@@ -273,14 +281,14 @@ export default async function ServicePage({
           <p className="text-center text-slate-600 dark:text-zinc-400 mb-12 max-w-3xl mx-auto">
             {isAIML
               ? "Comprehensive AI & ML solutions designed to transform your business operations"
-              : `Everything you need for ${service.title.toLowerCase()}`
-            }
+              : `Everything you need for ${service.title.toLowerCase()}`}
           </p>
         </motion.div>
 
         <div
-          className={`grid gap-4 lg:gap-6 ${isAIML ? "md:grid-cols-3" : "md:grid-cols-2 lg:grid-cols-3"
-            }`}
+          className={`grid gap-4 lg:gap-6 ${
+            isAIML ? "md:grid-cols-3" : "md:grid-cols-2 lg:grid-cols-3"
+          }`}
         >
           {service.offerings.map((offering, index) => {
             const OfferingIcon = getOfferingIcon(index, service.id);
@@ -288,8 +296,10 @@ export default async function ServicePage({
             return (
               <motion.article
                 key={index}
-                className={`group relative bg-white dark:bg-white/5 rounded-3xl border border-orange-100 dark:border-white/10 shadow-lg dark:shadow-none p-6 lg:p-8 hover:shadow-2xl hover:border-orange-300 dark:hover:border-orange-500/50 transition-all duration-500 overflow-hidden ${getBentoGridClass(index, isAIML)
-                  } flex flex-col`}
+                className={`group relative bg-white dark:bg-white/5 rounded-3xl border border-orange-100 dark:border-white/10 shadow-lg dark:shadow-none p-6 lg:p-8 hover:shadow-2xl hover:border-orange-300 dark:hover:border-orange-500/50 transition-all duration-500 overflow-hidden ${getBentoGridClass(
+                  index,
+                  isAIML
+                )} flex flex-col`}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.08 }}
@@ -329,7 +339,9 @@ export default async function ServicePage({
             transition={{ duration: 0.6, delay: 0.3 }}
           >
             <h2 className="text-3xl lg:text-4xl font-black text-center mb-12 text-slate-900 dark:text-white">
-              {service.solutions ? "Capabilities & Technologies" : "Key Capabilities"}
+              {service.solutions
+                ? "Capabilities & Technologies"
+                : "Key Capabilities"}
             </h2>
           </motion.div>
 
@@ -506,7 +518,10 @@ export default async function ServicePage({
                   className="group relative"
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ ...industryTransition, delay: 2.2 + index * 0.1 }}
+                  transition={{
+                    ...industryTransition,
+                    delay: 2.2 + index * 0.1,
+                  }}
                   whileHover={INDUSTRY_HOVER}
                 >
                   <div className="relative p-6 lg:p-8 bg-white dark:bg-white/5 rounded-2xl border-2 border-orange-100 dark:border-white/10 shadow-lg font-semibold text-center text-slate-900 dark:text-white hover:border-orange-400 dark:hover:border-orange-500 transition-all duration-300 overflow-hidden h-[150px] flex flex-col items-center justify-center gap-3">

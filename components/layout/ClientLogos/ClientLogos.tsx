@@ -58,7 +58,7 @@ const ClientLogos = () => {
             <div className="logos-scroll-track">
               {duplicatedLogos.map((client, index) => {
                 const scale = client.scale || 1.0;
-                
+
                 return (
                   <div
                     key={`${client.name}-${index}`}
@@ -67,10 +67,10 @@ const ClientLogos = () => {
                         ? "bg-white hover:bg-gray-50 border-gray-200"
                         : "bg-white hover:bg-gray-50 border-gray-200"
                     } border shadow-sm hover:shadow-md rounded-xl backdrop-blur-sm overflow-hidden`}
-                    style={{ width: '240px', height: '130px' }}
+                    style={{ width: "240px", height: "130px" }}
                   >
                     <div className="relative flex items-center justify-center w-full h-full p-6">
-                      <div 
+                      <div
                         className="relative w-full h-full"
                         style={{ transform: `scale(${scale})` }}
                       >
@@ -80,7 +80,7 @@ const ClientLogos = () => {
                           fill
                           className="object-contain! transition-opacity duration-300 hover:opacity-80"
                           sizes="200px"
-                          style={{ objectFit: 'contain' }}
+                          style={{ objectFit: "contain" }}
                         />
                       </div>
                     </div>

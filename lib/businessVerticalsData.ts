@@ -209,7 +209,8 @@ export const BUSINESS_VERTICALS_DATA: BusinessVerticalDetail[] = [
       },
     ],
     finalCTA: {
-      title: "Empower your team. Accelerate transformation. Build tomorrow's capabilities today.",
+      title:
+        "Empower your team. Accelerate transformation. Build tomorrow's capabilities today.",
       description:
         "Contact us to customize a training program for your organization.",
       buttonText: "Request a Training Proposal →",
@@ -228,4 +229,3 @@ export function getBusinessVerticalBySlug(
 export function getAllBusinessVerticalSlugs(): string[] {
   return BUSINESS_VERTICALS_DATA.map((vertical) => vertical.id);
 }
-

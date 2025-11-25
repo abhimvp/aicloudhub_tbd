@@ -100,17 +100,17 @@ export default function CourseInquiryForm({
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 30, stiffness: 300 }}
             className={`fixed top-0 right-0 h-full w-full sm:w-[600px] z-50 shadow-2xl overflow-y-auto ${
-              actualTheme === "dark"
-                ? "bg-zinc-900"
-                : "bg-white"
+              actualTheme === "dark" ? "bg-zinc-900" : "bg-white"
             }`}
           >
             {/* Header */}
-            <div className={`sticky top-0 z-10 px-8 py-6 border-b ${
-              actualTheme === "dark"
-                ? "bg-zinc-900 border-white/10"
-                : "bg-white border-gray-200"
-            }`}>
+            <div
+              className={`sticky top-0 z-10 px-8 py-6 border-b ${
+                actualTheme === "dark"
+                  ? "bg-zinc-900 border-white/10"
+                  : "bg-white border-gray-200"
+              }`}
+            >
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <h2
@@ -148,207 +148,205 @@ export default function CourseInquiryForm({
             {/* Content */}
             <div className="px-8 py-6">
               {isSuccess ? (
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      className="text-center py-12"
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="text-center py-12"
+                >
+                  <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <CheckCircle className="w-12 h-12 text-white" />
+                  </div>
+                  <h3
+                    className={`text-2xl font-bold mb-3 transition-colors duration-300 ${
+                      actualTheme === "dark" ? "text-white" : "text-gray-900"
+                    }`}
+                  >
+                    Thank You!
+                  </h3>
+                  <p
+                    className={`text-lg transition-colors duration-300 ${
+                      actualTheme === "dark" ? "text-gray-300" : "text-gray-600"
+                    }`}
+                  >
+                    We've received your inquiry and will get back to you
+                    shortly.
+                  </p>
+                </motion.div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  {/* Name */}
+                  <div>
+                    <label
+                      htmlFor="name"
+                      className={`block text-sm font-semibold mb-2 transition-colors duration-300 ${
+                        actualTheme === "dark"
+                          ? "text-gray-300"
+                          : "text-gray-700"
+                      }`}
                     >
-                      <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <CheckCircle className="w-12 h-12 text-white" />
-                      </div>
-                      <h3
-                        className={`text-2xl font-bold mb-3 transition-colors duration-300 ${
-                          actualTheme === "dark" ? "text-white" : "text-gray-900"
-                        }`}
-                      >
-                        Thank You!
-                      </h3>
-                      <p
-                        className={`text-lg transition-colors duration-300 ${
-                          actualTheme === "dark"
-                            ? "text-gray-300"
-                            : "text-gray-600"
-                        }`}
-                      >
-                        We've received your inquiry and will get back to you
-                        shortly.
-                      </p>
-                    </motion.div>
-                  ) : (
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                      {/* Name */}
-                      <div>
-                        <label
-                          htmlFor="name"
-                          className={`block text-sm font-semibold mb-2 transition-colors duration-300 ${
-                            actualTheme === "dark"
-                              ? "text-gray-300"
-                              : "text-gray-700"
-                          }`}
-                        >
-                          Full Name *
-                        </label>
-                        <input
-                          type="text"
-                          id="name"
-                          name="name"
-                          required
-                          value={formData.name}
-                          onChange={handleChange}
-                          className={`w-full px-4 py-3 rounded-lg transition-colors duration-300 ${
-                            actualTheme === "dark"
-                              ? "bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:border-orange-400/50"
-                              : "bg-white border border-gray-300 text-gray-900 placeholder-gray-400 focus:border-orange-500"
-                          } focus:outline-none`}
-                          placeholder="John Doe"
-                        />
-                      </div>
+                      Full Name *
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      required
+                      value={formData.name}
+                      onChange={handleChange}
+                      className={`w-full px-4 py-3 rounded-lg transition-colors duration-300 ${
+                        actualTheme === "dark"
+                          ? "bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:border-orange-400/50"
+                          : "bg-white border border-gray-300 text-gray-900 placeholder-gray-400 focus:border-orange-500"
+                      } focus:outline-none`}
+                      placeholder="John Doe"
+                    />
+                  </div>
 
-                      {/* Email */}
-                      <div>
-                        <label
-                          htmlFor="email"
-                          className={`block text-sm font-semibold mb-2 transition-colors duration-300 ${
-                            actualTheme === "dark"
-                              ? "text-gray-300"
-                              : "text-gray-700"
-                          }`}
-                        >
-                          Email Address *
-                        </label>
-                        <input
-                          type="email"
-                          id="email"
-                          name="email"
-                          required
-                          value={formData.email}
-                          onChange={handleChange}
-                          className={`w-full px-4 py-3 rounded-lg transition-colors duration-300 ${
-                            actualTheme === "dark"
-                              ? "bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:border-orange-400/50"
-                              : "bg-white border border-gray-300 text-gray-900 placeholder-gray-400 focus:border-orange-500"
-                          } focus:outline-none`}
-                          placeholder="john@company.com"
-                        />
-                      </div>
+                  {/* Email */}
+                  <div>
+                    <label
+                      htmlFor="email"
+                      className={`block text-sm font-semibold mb-2 transition-colors duration-300 ${
+                        actualTheme === "dark"
+                          ? "text-gray-300"
+                          : "text-gray-700"
+                      }`}
+                    >
+                      Email Address *
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      required
+                      value={formData.email}
+                      onChange={handleChange}
+                      className={`w-full px-4 py-3 rounded-lg transition-colors duration-300 ${
+                        actualTheme === "dark"
+                          ? "bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:border-orange-400/50"
+                          : "bg-white border border-gray-300 text-gray-900 placeholder-gray-400 focus:border-orange-500"
+                      } focus:outline-none`}
+                      placeholder="john@company.com"
+                    />
+                  </div>
 
-                      {/* Company */}
-                      <div>
-                        <label
-                          htmlFor="company"
-                          className={`block text-sm font-semibold mb-2 transition-colors duration-300 ${
-                            actualTheme === "dark"
-                              ? "text-gray-300"
-                              : "text-gray-700"
-                          }`}
-                        >
-                          Company Name *
-                        </label>
-                        <input
-                          type="text"
-                          id="company"
-                          name="company"
-                          required
-                          value={formData.company}
-                          onChange={handleChange}
-                          className={`w-full px-4 py-3 rounded-lg transition-colors duration-300 ${
-                            actualTheme === "dark"
-                              ? "bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:border-orange-400/50"
-                              : "bg-white border border-gray-300 text-gray-900 placeholder-gray-400 focus:border-orange-500"
-                          } focus:outline-none`}
-                          placeholder="Acme Corporation"
-                        />
-                      </div>
+                  {/* Company */}
+                  <div>
+                    <label
+                      htmlFor="company"
+                      className={`block text-sm font-semibold mb-2 transition-colors duration-300 ${
+                        actualTheme === "dark"
+                          ? "text-gray-300"
+                          : "text-gray-700"
+                      }`}
+                    >
+                      Company Name *
+                    </label>
+                    <input
+                      type="text"
+                      id="company"
+                      name="company"
+                      required
+                      value={formData.company}
+                      onChange={handleChange}
+                      className={`w-full px-4 py-3 rounded-lg transition-colors duration-300 ${
+                        actualTheme === "dark"
+                          ? "bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:border-orange-400/50"
+                          : "bg-white border border-gray-300 text-gray-900 placeholder-gray-400 focus:border-orange-500"
+                      } focus:outline-none`}
+                      placeholder="Acme Corporation"
+                    />
+                  </div>
 
-                      {/* Phone */}
-                      <div>
-                        <label
-                          htmlFor="phone"
-                          className={`block text-sm font-semibold mb-2 transition-colors duration-300 ${
-                            actualTheme === "dark"
-                              ? "text-gray-300"
-                              : "text-gray-700"
-                          }`}
-                        >
-                          Phone Number
-                        </label>
-                        <input
-                          type="tel"
-                          id="phone"
-                          name="phone"
-                          value={formData.phone}
-                          onChange={handleChange}
-                          className={`w-full px-4 py-3 rounded-lg transition-colors duration-300 ${
-                            actualTheme === "dark"
-                              ? "bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:border-orange-400/50"
-                              : "bg-white border border-gray-300 text-gray-900 placeholder-gray-400 focus:border-orange-500"
-                          } focus:outline-none`}
-                          placeholder="+1 (555) 123-4567"
-                        />
-                      </div>
+                  {/* Phone */}
+                  <div>
+                    <label
+                      htmlFor="phone"
+                      className={`block text-sm font-semibold mb-2 transition-colors duration-300 ${
+                        actualTheme === "dark"
+                          ? "text-gray-300"
+                          : "text-gray-700"
+                      }`}
+                    >
+                      Phone Number
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      className={`w-full px-4 py-3 rounded-lg transition-colors duration-300 ${
+                        actualTheme === "dark"
+                          ? "bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:border-orange-400/50"
+                          : "bg-white border border-gray-300 text-gray-900 placeholder-gray-400 focus:border-orange-500"
+                      } focus:outline-none`}
+                      placeholder="+1 (555) 123-4567"
+                    />
+                  </div>
 
-                      {/* Message */}
-                      <div>
-                        <label
-                          htmlFor="message"
-                          className={`block text-sm font-semibold mb-2 transition-colors duration-300 ${
-                            actualTheme === "dark"
-                              ? "text-gray-300"
-                              : "text-gray-700"
-                          }`}
-                        >
-                          Additional Information
-                        </label>
-                        <textarea
-                          id="message"
-                          name="message"
-                          rows={4}
-                          value={formData.message}
-                          onChange={handleChange}
-                          className={`w-full px-4 py-3 rounded-lg transition-colors duration-300 ${
-                            actualTheme === "dark"
-                              ? "bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:border-orange-400/50"
-                              : "bg-white border border-gray-300 text-gray-900 placeholder-gray-400 focus:border-orange-500"
-                          } focus:outline-none resize-none`}
-                          placeholder="Tell us about your training needs, number of participants, preferred schedule, etc."
-                        />
-                      </div>
+                  {/* Message */}
+                  <div>
+                    <label
+                      htmlFor="message"
+                      className={`block text-sm font-semibold mb-2 transition-colors duration-300 ${
+                        actualTheme === "dark"
+                          ? "text-gray-300"
+                          : "text-gray-700"
+                      }`}
+                    >
+                      Additional Information
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      rows={4}
+                      value={formData.message}
+                      onChange={handleChange}
+                      className={`w-full px-4 py-3 rounded-lg transition-colors duration-300 ${
+                        actualTheme === "dark"
+                          ? "bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:border-orange-400/50"
+                          : "bg-white border border-gray-300 text-gray-900 placeholder-gray-400 focus:border-orange-500"
+                      } focus:outline-none resize-none`}
+                      placeholder="Tell us about your training needs, number of participants, preferred schedule, etc."
+                    />
+                  </div>
 
-                      {/* Submit Button */}
-                      <div className="flex gap-4 pt-4">
-                        <Button
-                          type="button"
-                          variant="outline"
-                          onClick={onClose}
-                          className={`flex-1 transition-colors duration-300 ${
-                            actualTheme === "dark"
-                              ? "border-white/20 text-white hover:bg-white/10"
-                              : "border-gray-300 text-gray-900 hover:bg-gray-100"
-                          }`}
-                        >
-                          Cancel
-                        </Button>
-                        <Button
-                          type="submit"
-                          disabled={isSubmitting}
-                          className="flex-1 bg-linear-to-r from-orange-500 to-yellow-400 text-black font-bold hover:scale-105 transition-transform disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                          {isSubmitting ? (
-                            "Sending..."
-                          ) : (
-                            <>
-                              <Send className="w-4 h-4 mr-2" />
-                              Send Inquiry
-                            </>
-                          )}
-                        </Button>
-                      </div>
-                    </form>
-                  )}
-                </div>
-              </motion.div>
-            </>
-          )}
-        </AnimatePresence>
-      );
-    }
+                  {/* Submit Button */}
+                  <div className="flex gap-4 pt-4">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={onClose}
+                      className={`flex-1 transition-colors duration-300 ${
+                        actualTheme === "dark"
+                          ? "border-white/20 text-white hover:bg-white/10"
+                          : "border-gray-300 text-gray-900 hover:bg-gray-100"
+                      }`}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="flex-1 bg-linear-to-r from-orange-500 to-yellow-400 text-black font-bold hover:scale-105 transition-transform disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {isSubmitting ? (
+                        "Sending..."
+                      ) : (
+                        <>
+                          <Send className="w-4 h-4 mr-2" />
+                          Send Inquiry
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                </form>
+              )}
+            </div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
+  );
+}

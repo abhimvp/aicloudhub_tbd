@@ -139,8 +139,7 @@ export const SERVICES_DATA: ServiceDetail[] = [
       {
         step: 2,
         title: "Design & Prototyping",
-        description:
-          "Rapid PoCs to validate value and architecture choices.",
+        description: "Rapid PoCs to validate value and architecture choices.",
       },
       {
         step: 3,

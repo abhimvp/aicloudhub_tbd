@@ -74,7 +74,8 @@ const Categories = () => {
               actualTheme === "dark" ? "text-gray-300" : "text-gray-700"
             }`}
           >
-            Empowering businesses through technology solutions, workforce enablement, and strategic talent acquisition.
+            Empowering businesses through technology solutions, workforce
+            enablement, and strategic talent acquisition.
           </motion.p>
         </div>
 

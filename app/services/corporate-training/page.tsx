@@ -56,10 +56,11 @@ export default async function CorporateTrainingPage() {
       {/* Hero Section with Floating Elements */}
       <section className="relative bg-linear-to-br from-orange-50 via-white to-yellow-50 dark:bg-linear-to-r dark:from-gray-950 dark:via-slate-950 dark:to-zinc-950 text-slate-900 dark:text-white overflow-hidden transition-colors duration-300">
         {/* Tech Grid Background */}
-        <div className="absolute inset-0 z-0 opacity-[0.15] dark:opacity-[0.05]"
+        <div
+          className="absolute inset-0 z-0 opacity-[0.15] dark:opacity-[0.05]"
           style={{
             backgroundImage: `linear-gradient(#999 1px, transparent 1px), linear-gradient(90deg, #999 1px, transparent 1px)`,
-            backgroundSize: '50px 50px'
+            backgroundSize: "50px 50px",
           }}
         />
 
@@ -89,20 +90,22 @@ export default async function CorporateTrainingPage() {
               {/* Breadcrumb Navigation */}
               <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-white/70 mb-6">
                 <Link
-                  href="/?skipLanding=true"
+                  href="/"
                   className="hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
                 >
                   Home
                 </Link>
                 <ChevronRight className="w-4 h-4 text-slate-400 dark:text-white/50" />
                 <Link
-                  href="/?skipLanding=true#services"
+                  href="/#services"
                   className="hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
                 >
                   Services
                 </Link>
                 <ChevronRight className="w-4 h-4 text-slate-400 dark:text-white/50" />
-                <span className="text-slate-900 dark:text-white font-medium">{vertical.title}</span>
+                <span className="text-slate-900 dark:text-white font-medium">
+                  {vertical.title}
+                </span>
               </div>
 
               <div className="inline-flex items-center gap-3 rounded-full border border-orange-500/30 bg-orange-100 text-orange-700 dark:bg-orange-500/10 dark:text-orange-300 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] mb-6">
@@ -199,7 +202,8 @@ export default async function CorporateTrainingPage() {
               Our Core Training Categories
             </h2>
             <p className="text-slate-600 dark:text-zinc-400 max-w-3xl mx-auto">
-              Comprehensive training programs across all major technology domains
+              Comprehensive training programs across all major technology
+              domains
             </p>
           </div>
         </motion.div>
@@ -392,4 +396,3 @@ export default async function CorporateTrainingPage() {
     </div>
   );
 }
-

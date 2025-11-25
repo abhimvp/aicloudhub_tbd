@@ -84,8 +84,11 @@ const Blogs = () => {
     <section
       id="blogs"
       ref={sectionRef}
-      className={`blogs-section flex flex-col items-center justify-center relative transition-colors duration-300 py-24 -mb-px ${actualTheme === "dark" ? "bg-linear-to-br from-gray-900 via-slate-900 to-zinc-950" : "bg-gradient-to-br from-yellow-50 via-orange-50 to-gray-100"
-        }`}
+      className={`blogs-section flex flex-col items-center justify-center relative transition-colors duration-300 py-24 -mb-px ${
+        actualTheme === "dark"
+          ? "bg-linear-to-br from-gray-900 via-slate-900 to-zinc-950"
+          : "bg-gradient-to-br from-yellow-50 via-orange-50 to-gray-100"
+      }`}
     >
       {/* Background container with overflow-hidden for glows */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -106,17 +109,19 @@ const Blogs = () => {
         {/* Static Background Overlay - Parallax removed to prevent cut-off */}
         <div
           ref={bgRef}
-          className={`absolute inset-0 ${actualTheme === "dark"
-            ? "bg-linear-to-b from-gray-900/30 via-slate-900/30 to-zinc-950/30"
-            : "bg-linear-to-b from-orange-50/30 via-yellow-50/30 to-white/30"
-            }`}
+          className={`absolute inset-0 ${
+            actualTheme === "dark"
+              ? "bg-linear-to-b from-gray-900/30 via-slate-900/30 to-zinc-950/30"
+              : "bg-linear-to-b from-orange-50/30 via-yellow-50/30 to-white/30"
+          }`}
         />
       </div>
 
       {/* Content */}
       <motion.h2
-        className={`text-4xl md:text-6xl font-serif mb-4 relative z-10 ${actualTheme === "dark" ? "text-white" : "text-gray-900"
-          }`}
+        className={`text-4xl md:text-6xl font-serif mb-4 relative z-10 ${
+          actualTheme === "dark" ? "text-white" : "text-gray-900"
+        }`}
         initial={{ y: 60, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8 }}
@@ -125,8 +130,9 @@ const Blogs = () => {
       </motion.h2>
 
       <motion.p
-        className={`mb-8 relative z-10 ${actualTheme === "dark" ? "text-gray-400" : "text-gray-600"
-          }`}
+        className={`mb-8 relative z-10 ${
+          actualTheme === "dark" ? "text-gray-400" : "text-gray-600"
+        }`}
         initial={{ y: 40, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.8 }}
@@ -192,10 +198,13 @@ const Blogs = () => {
           {featuredBlogs.map((post) => (
             <SwiperSlide key={post.id}>
               <Link href={`/blogs/${post.slug}`}>
-                <div className={`relative w-full rounded-3xl overflow-hidden shadow-xl cursor-pointer transition-all duration-700 hover:shadow-2xl ${actualTheme === "dark"
-                  ? "bg-neutral-900 hover:shadow-orange-500/20"
-                  : "bg-white hover:shadow-orange-500/30 border border-orange-100"
-                  }`}>
+                <div
+                  className={`relative w-full rounded-3xl overflow-hidden shadow-xl cursor-pointer transition-all duration-700 hover:shadow-2xl ${
+                    actualTheme === "dark"
+                      ? "bg-neutral-900 hover:shadow-orange-500/20"
+                      : "bg-white hover:shadow-orange-500/30 border border-orange-100"
+                  }`}
+                >
                   <div className="relative w-full h-[260px] overflow-hidden rounded-t-3xl">
                     <Image
                       src={post.cover}
@@ -214,19 +223,38 @@ const Blogs = () => {
                       </span>
                     </div>
                   </div>
-                  <div className={`p-6 text-left ${actualTheme === "dark" ? "text-white" : "text-slate-900"
-                    }`}>
-                    <h3 className={`text-xl font-semibold mb-2 line-clamp-2 hover:text-orange-400 transition-colors`}>
+                  <div
+                    className={`p-6 text-left ${
+                      actualTheme === "dark" ? "text-white" : "text-slate-900"
+                    }`}
+                  >
+                    <h3
+                      className={`text-xl font-semibold mb-2 line-clamp-2 hover:text-orange-400 transition-colors`}
+                    >
                       {post.title}
                     </h3>
-                    <p className={`text-sm mb-3 line-clamp-2 ${actualTheme === "dark" ? "text-gray-400" : "text-slate-600"
-                      }`}>
+                    <p
+                      className={`text-sm mb-3 line-clamp-2 ${
+                        actualTheme === "dark"
+                          ? "text-gray-400"
+                          : "text-slate-600"
+                      }`}
+                    >
                       {post.excerpt}
                     </p>
                     <div className="flex items-center justify-between">
-                      <p className={`text-xs ${actualTheme === "dark" ? "text-gray-500" : "text-slate-500"
-                        }`}>{post.date}</p>
-                      <span className="text-orange-500 text-xs font-semibold">{post.readTime}</span>
+                      <p
+                        className={`text-xs ${
+                          actualTheme === "dark"
+                            ? "text-gray-500"
+                            : "text-slate-500"
+                        }`}
+                      >
+                        {post.date}
+                      </p>
+                      <span className="text-orange-500 text-xs font-semibold">
+                        {post.readTime}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -235,7 +263,7 @@ const Blogs = () => {
           ))}
         </Swiper>
       </div>
-    </section >
+    </section>
   );
 };
 
