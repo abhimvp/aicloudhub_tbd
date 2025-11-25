@@ -50,7 +50,7 @@ If you received a Git repository:
 
 ```bash
 git clone <repository-url>
-cd future-aicloudhub-main
+cd future-aiCloudHub-main
 ```
 
 If you received a ZIP file, extract it and navigate to the folder in your terminal.
@@ -207,7 +207,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Replace the TODO section with:
 await resend.emails.send({
-  from: 'noreply@aicloudhub.com',
+  from: 'noreply@aiCloudHub.com',
   to: 'info@acloudhub.com',
   subject: emailContent.subject,
   text: emailContent.body,
@@ -302,7 +302,7 @@ The contact page likely needs similar email integration as the course inquiry fo
 #### 8. **Domain & Email Configuration**
 
 **Email Setup:**
-- Ensure `noreply@aicloudhub.com` is configured
+- Ensure `noreply@aiCloudHub.com` is configured
 - Verify `info@acloudhub.com` is monitored
 - Set up SPF, DKIM, and DMARC records for email deliverability
 

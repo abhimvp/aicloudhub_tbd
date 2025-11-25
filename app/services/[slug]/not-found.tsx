@@ -30,7 +30,7 @@ export default function NotFound() {
           </Link>
           
           <Link
-            href="/#technology-services"
+            href="/#services"
             className="inline-flex items-center gap-2 px-8 py-4 border-2 border-orange-500 dark:border-orange-400 text-orange-600 dark:text-orange-400 font-semibold rounded-lg hover:bg-orange-50 dark:hover:bg-orange-500/10 transition"
           >
             View All Services

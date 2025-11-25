@@ -3,10 +3,12 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ChevronDown } from "lucide-react";
 import { useTheme } from "@/components/theme/ThemeProvider";
 import * as motion from "motion/react-client";
-import { SERVICES_DATA } from "@/lib/servicesData";
+import {
+  HOMEPAGE_SERVICE_SUMMARIES,
+  type HomepageServiceSummary,
+} from "@/lib/homepageServices";
 import {
   Select,
   SelectContent,
@@ -15,26 +17,32 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-// Transform data for homepage display
-const SERVICES = SERVICES_DATA.map((service) => ({
-  id: service.id,
-  title: service.title,
-  subtitle: service.subtitle,
-  description: service.description,
-  Icon: service.Icon,
-  image: service.image,
-  cta: {
-    label: "Learn More →",
-    href: `/services/${service.id}`,
-  },
-}));
+const SERVICE_SUMMARIES: Record<string, HomepageServiceSummary> =
+  HOMEPAGE_SERVICE_SUMMARIES;
+
+const TAB_ROWS = [
+  ["staffing", "corporate-training", "it-services"],
+  ["ai-ml", "cloud", "applications", "data-analytics"],
+];
+
+const FILTERED_TAB_ROWS = TAB_ROWS.map((row) =>
+  row.filter((id) => SERVICE_SUMMARIES[id])
+).filter((row) => row.length > 0);
+
+const ORDERED_SERVICE_IDS = FILTERED_TAB_ROWS.flat();
+const DEFAULT_SERVICE_ID =
+  ORDERED_SERVICE_IDS[0] ?? Object.keys(SERVICE_SUMMARIES)[0] ?? "";
 
 export default function TechnologyServicesTabs() {
-  const [activeId, setActiveId] = useState<string>(SERVICES[0].id);
+  const [activeId, setActiveId] = useState<string>(DEFAULT_SERVICE_ID);
   const { actualTheme } = useTheme();
   const isDark = actualTheme === "dark";
-  const activeService = SERVICES.find((service) => service.id === activeId)!;
-  const subtleText = isDark ? "text-zinc-400" : "text-slate-500";
+  const activeService =
+    SERVICE_SUMMARIES[activeId] ?? SERVICE_SUMMARIES[DEFAULT_SERVICE_ID];
+
+  if (!activeService) {
+    return null;
+  }
   const sectionBg = isDark
     ? "bg-linear-to-br from-gray-900 via-slate-900 to-zinc-950"
     : "bg-gradient-to-br from-white via-orange-50/40 to-yellow-50/50";
@@ -51,7 +59,7 @@ export default function TechnologyServicesTabs() {
 
   return (
     <section
-      id="technology-services"
+      id="services"
       className={`relative px-4 py-24 sm:px-6 lg:px-8 transition-colors duration-300 ${sectionBg} -mt-px overflow-hidden`}
     >
       {/* Animated gradient overlay for dark mode */}
@@ -69,11 +77,10 @@ export default function TechnologyServicesTabs() {
         </div>
       )}
       <div
-        className={`absolute inset-0 -z-10 ${
-          isDark
+        className={`absolute inset-0 -z-10 ${isDark
             ? "bg-[radial-gradient(circle_at_top,rgba(255,153,51,0.25),rgba(15,23,42,0))]"
             : "bg-[radial-gradient(circle_at_top,rgba(249,115,22,0.15),rgba(255,255,255,0))]"
-        }`}
+          }`}
       />
       <div className="max-w-6xl mx-auto space-y-10">
         <motion.div
@@ -84,9 +91,8 @@ export default function TechnologyServicesTabs() {
           transition={{ delay: 0.1, duration: 0.6, ease: "easeOut" }}
         >
           <p
-            className={`text-sm font-semibold uppercase tracking-[0.4em] ${
-              isDark ? "text-orange-400" : "text-orange-600"
-            }`}
+            className={`text-sm font-semibold uppercase tracking-[0.4em] ${isDark ? "text-orange-400" : "text-orange-600"
+              }`}
           >
             Our Technology Services
           </p>
@@ -110,42 +116,42 @@ export default function TechnologyServicesTabs() {
               onValueChange={(value) => setActiveId(value)}
             >
               <SelectTrigger
-                className={`w-full h-12 pl-12 pr-10 rounded-lg border text-base font-semibold transition-all duration-300 focus:ring-2 focus:ring-offset-2 ${
-                  isDark
+                className={`w-full h-12 pl-12 pr-10 rounded-lg border text-base font-semibold transition-all duration-300 focus:ring-2 focus:ring-offset-2 ${isDark
                     ? "border-white/20 bg-white/10 text-white focus:ring-orange-400 focus:border-orange-400"
                     : "border-orange-200 bg-white text-slate-900 focus:ring-orange-500 focus:border-orange-500 shadow-md"
-                }`}
+                  }`}
                 aria-label="Select technology service"
               >
                 <SelectValue />
               </SelectTrigger>
               <SelectContent
-                className={`rounded-xl ${
-                  isDark
+                className={`rounded-xl ${isDark
                     ? "bg-gray-900 border-white/20"
                     : "bg-white border-orange-200 shadow-xl"
-                }`}
+                  }`}
               >
-                {SERVICES.map(({ id, title }) => (
-                  <SelectItem
-                    key={id}
-                    value={id}
-                    className={`cursor-pointer ${
-                      isDark
-                        ? "text-white focus:bg-white/10 focus:text-white"
-                        : "text-slate-900 focus:bg-orange-50"
-                    }`}
-                  >
-                    {title}
-                  </SelectItem>
-                ))}
+                {ORDERED_SERVICE_IDS.map((id) => {
+                  const service = SERVICE_SUMMARIES[id];
+                  if (!service) return null;
+                  return (
+                    <SelectItem
+                      key={id}
+                      value={id}
+                      className={`cursor-pointer ${isDark
+                          ? "text-white focus:bg-white/10 focus:text-white"
+                          : "text-slate-900 focus:bg-orange-50"
+                        }`}
+                    >
+                      {service.title}
+                    </SelectItem>
+                  );
+                })}
               </SelectContent>
             </Select>
             <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2">
               <activeService.Icon
-                className={`h-5 w-5 ${
-                  isDark ? "text-orange-400" : "text-orange-600"
-                }`}
+                className={`h-5 w-5 ${isDark ? "text-orange-400" : "text-orange-600"
+                  }`}
               />
             </div>
           </div>
@@ -153,7 +159,7 @@ export default function TechnologyServicesTabs() {
 
         {/* Desktop Tabs */}
         <motion.div
-          className="mt-12 hidden md:flex flex-wrap justify-center gap-x-12 gap-y-4 text-base font-semibold"
+          className="mt-12 hidden w-full md:block"
           role="tablist"
           aria-label="Technology services"
           initial={{ opacity: 0, y: 25 }}
@@ -161,56 +167,65 @@ export default function TechnologyServicesTabs() {
           viewport={{ once: true }}
           transition={{ delay: 0.2, duration: 0.6, ease: "easeOut" }}
         >
-          {SERVICES.map(({ id, title, subtitle, Icon }) => {
-            const isActive = activeId === id;
-            return (
-              <button
-                key={id}
-                role="tab"
-                aria-selected={isActive}
-                aria-controls={`${id}-panel`}
-                id={`${id}-tab`}
-                className="relative pb-3 transition-all duration-300"
-                onClick={() => setActiveId(id)}
+          <div className="flex flex-col items-center gap-6 text-base font-semibold">
+            {FILTERED_TAB_ROWS.map((row, rowIndex) => (
+              <div
+                key={`service-row-${rowIndex}`}
+                className="flex flex-wrap justify-center gap-x-12 gap-y-4"
               >
-                <div className="flex items-center gap-2">
-                  <Icon
-                    className={`h-5 w-5 ${
-                      isActive
-                        ? isDark
-                          ? "text-white"
-                          : "text-slate-900"
-                        : tabInactive
-                    }`}
-                  />
-                  <span
-                    className={`text-lg ${
-                      isActive
-                        ? isDark
-                          ? "text-white"
-                          : "text-slate-900"
-                        : tabInactive
-                    }`}
-                  >
-                    {title}
-                  </span>
-                </div>
-                <span
-                  className={`absolute bottom-0 left-0 h-1 w-full rounded-full transition-opacity ${
-                    isActive ? `${tabUnderline} opacity-100` : "opacity-0"
-                  }`}
-                />
-              </button>
-            );
-          })}
+                {row.map((id) => {
+                  const service = SERVICE_SUMMARIES[id];
+                  if (!service) return null;
+                  const isActive = activeId === id;
+                  const Icon = service.Icon;
+
+                  return (
+                    <button
+                      key={id}
+                      role="tab"
+                      aria-selected={isActive}
+                      aria-controls={`${id}-panel`}
+                      id={`${id}-tab`}
+                      className="relative pb-3 transition-all duration-300"
+                      onClick={() => setActiveId(id)}
+                    >
+                      <div className="flex items-center gap-2">
+                        <Icon
+                          className={`h-5 w-5 ${isActive
+                              ? isDark
+                                ? "text-white"
+                                : "text-slate-900"
+                              : tabInactive
+                            }`}
+                        />
+                        <span
+                          className={`text-lg ${isActive
+                              ? isDark
+                                ? "text-white"
+                                : "text-slate-900"
+                              : tabInactive
+                            }`}
+                        >
+                          {service.title}
+                        </span>
+                      </div>
+                      <span
+                        className={`absolute bottom-0 left-0 h-1 w-full rounded-full transition-opacity ${isActive ? `${tabUnderline} opacity-100` : "opacity-0"
+                          }`}
+                      />
+                    </button>
+                  );
+                })}
+              </div>
+            ))}
+          </div>
         </motion.div>
 
         <motion.div
-          className={`mt-10 rounded-3xl border px-6 py-10 sm:px-12 transition-colors duration-300 ${
-            isDark
+          className={`mt-10 rounded-3xl border px-6 py-10 sm:px-12 transition-colors duration-300 ${isDark
               ? "border-white/10 bg-white/5"
               : "border-orange-100 bg-white shadow-lg"
-          }`}
+            }`}
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -218,9 +233,8 @@ export default function TechnologyServicesTabs() {
         >
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
             <div
-              className={`w-full overflow-hidden rounded-2xl ${
-                isDark ? "bg-black/10" : "bg-white shadow-xl"
-              } lg:w-7/12`}
+              className={`w-full overflow-hidden rounded-2xl ${isDark ? "bg-black/10" : "bg-white shadow-xl"
+                } lg:w-7/12`}
             >
               <Image
                 src={activeService.image}
@@ -238,9 +252,8 @@ export default function TechnologyServicesTabs() {
                 {activeService.title}
               </div>
               <p
-                className={`text-xl font-semibold ${
-                  isDark ? "text-white" : "text-slate-900"
-                }`}
+                className={`text-xl font-semibold ${isDark ? "text-white" : "text-slate-900"
+                  }`}
               >
                 {activeService.subtitle}
               </p>

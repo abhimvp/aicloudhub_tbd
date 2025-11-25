@@ -62,12 +62,12 @@ export const BUSINESS_VERTICALS_DATA: BusinessVerticalDetail[] = [
     tagline: "Empower Your Workforce with Future-Ready Skills",
     description: [
       "Modern enterprises need a workforce that can adopt new technologies fast, adapt to changing market dynamics, and deliver innovation at scale.",
-      "At aicloudhub, we deliver corporate technology training programs designed for today's digital-first organizations. Our training programs are highly practical, industry-aligned, hands-on, and created by experts with real-world implementation experience across all major technology domains.",
+      "At aiCloudHub, we deliver corporate technology training programs designed for today's digital-first organizations. Our training programs are highly practical, industry-aligned, hands-on, and created by experts with real-world implementation experience across all major technology domains.",
       "We help teams upgrade their skills so businesses can accelerate transformation with confidence.",
     ],
     Icon: GraduationCap,
     image: "/ServiceSectionImages/Services-Corporate-Training.png",
-    heroTitle: "Corporate Training by aicloudhub",
+    heroTitle: "Corporate Training by aiCloudHub",
     heroDescription:
       "Empowering Teams. Transforming Capabilities. Accelerating Digital Success. Build future-ready teams with hands-on, industry-aligned training programs created by practitioners with real-world experience.",
     heroImage: "/ServiceSectionImages/Services-Corporate-Training.png",
@@ -149,7 +149,7 @@ export const BUSINESS_VERTICALS_DATA: BusinessVerticalDetail[] = [
       },
     ],
     whyChoose: {
-      title: "Why Corporate Training with aicloudhub?",
+      title: "Why Corporate Training with aiCloudHub?",
       reasons: [
         "Real-world curriculum created by practitioners, not theorists",
         "Hands-on labs, live projects, and simulations",

@@ -6,58 +6,37 @@ import { Code2, ChevronRight, CheckCircle2 } from "lucide-react";
 
 export async function generateMetadata() {
   return {
-    title: "IT Services — aicloudhub",
+    title: "IT Services — aiCloudHub",
     description: "Innovative Technology Solutions for Modern Business - Transform your business with cutting-edge cloud, AI, and digital solutions",
   };
 }
 
 export default function ITServicesPage() {
   return (
-    <div className="min-h-screen bg-linear-to-br from-white via-orange-50/40 to-yellow-50/50 dark:from-gray-900 dark:via-slate-900 dark:to-zinc-950">
+    <div className="min-h-screen bg-linear-to-br from-white via-orange-50/40 to-yellow-50/50 dark:bg-linear-to-r dark:from-gray-950 dark:via-slate-950 dark:to-zinc-950 transition-colors duration-300">
       {/* Hero Section with Floating Elements */}
-      <section className="relative bg-linear-to-b from-orange-50 via-white to-amber-50 text-slate-900 dark:from-gray-950 dark:via-slate-950 dark:to-zinc-950 dark:text-white overflow-hidden">
+      <section className="relative bg-linear-to-br from-orange-50 via-white to-yellow-50 dark:bg-linear-to-r dark:from-gray-950 dark:via-slate-950 dark:to-zinc-950 text-slate-900 dark:text-white overflow-hidden transition-colors duration-300">
+        {/* Tech Grid Background */}
+        <div className="absolute inset-0 z-0 opacity-[0.15] dark:opacity-[0.05]"
+          style={{
+            backgroundImage: `linear-gradient(#999 1px, transparent 1px), linear-gradient(90deg, #999 1px, transparent 1px)`,
+            backgroundSize: '50px 50px'
+          }}
+        />
+
         {/* Animated floating shapes */}
-        <div className="absolute inset-0 opacity-20 pointer-events-none">
-          <motion.div
-            className="absolute top-20 left-10 w-32 h-32 bg-blue-500 rounded-full blur-3xl"
-            animate={{
-              y: [0, -30, 0],
-              x: [0, 20, 0],
-              scale: [1, 1.2, 1],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-          <motion.div
-            className="absolute top-40 right-20 w-40 h-40 bg-cyan-500 rounded-full blur-3xl"
-            animate={{
-              y: [0, 40, 0],
-              x: [0, -30, 0],
-              scale: [1, 1.3, 1],
-            }}
-            transition={{
-              duration: 10,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 1,
-            }}
-          />
-          <motion.div
-            className="absolute bottom-20 left-1/3 w-36 h-36 bg-purple-500 rounded-full blur-3xl"
-            animate={{
-              y: [0, -20, 0],
-              x: [0, 30, 0],
-              scale: [1, 1.1, 1],
-            }}
-            transition={{
-              duration: 9,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 2,
-            }}
+        <div className="absolute inset-0 opacity-20 pointer-events-none overflow-hidden">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-orange-500/30 rounded-full blur-[100px] animate-pulse" />
+          <div className="absolute top-40 right-20 w-96 h-96 bg-yellow-500/20 rounded-full blur-[120px] animate-pulse delay-700" />
+          <div className="absolute bottom-20 left-1/3 w-80 h-80 bg-cyan-500/20 rounded-full blur-[100px] animate-pulse delay-1000" />
+        </div>
+
+        {/* Animated gradient overlay for dark mode */}
+        <div className="absolute inset-0 opacity-0 dark:opacity-20 pointer-events-none transition-opacity duration-300 z-1">
+          <div className="absolute top-0 left-0 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl animate-pulse" />
+          <div
+            className="absolute bottom-0 right-0 w-96 h-96 bg-yellow-500/10 rounded-full blur-3xl animate-pulse"
+            style={{ animationDelay: "1s" }}
           />
         </div>
 
@@ -78,7 +57,7 @@ export default function ITServicesPage() {
                 </Link>
                 <ChevronRight className="w-4 h-4 text-slate-400 dark:text-white/50" />
                 <Link
-                  href="/?skipLanding=true#technology-services"
+                  href="/?skipLanding=true#services"
                   className="hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
                 >
                   Services
@@ -87,16 +66,16 @@ export default function ITServicesPage() {
                 <span className="text-slate-900 dark:text-white font-medium">IT Services</span>
               </div>
 
-              <div className="inline-flex items-center gap-3 rounded-full border border-blue-500/30 bg-blue-100 text-blue-700 dark:bg-blue-500/10 dark:text-blue-200 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] mb-6">
+              <div className="inline-flex items-center gap-3 rounded-full border border-blue-500/30 bg-blue-100 text-blue-700 dark:bg-blue-500/10 dark:text-blue-200 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] mb-6 backdrop-blur-sm">
                 <Code2 className="h-4 w-4 text-blue-600 dark:text-blue-200" />
                 IT Services
               </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-6">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-6 tracking-tight">
                 Innovative Technology Solutions for Modern Business
               </h1>
               <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-8 leading-relaxed">
-                Transform your business with cutting-edge cloud, AI, and digital solutions. 
-                Our comprehensive IT services help you stay ahead in the digital landscape 
+                Transform your business with cutting-edge cloud, AI, and digital solutions.
+                Our comprehensive IT services help you stay ahead in the digital landscape
                 and drive sustainable growth.
               </p>
               <div className="flex flex-wrap gap-4">
@@ -149,26 +128,25 @@ export default function ITServicesPage() {
           className="text-center"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-100 dark:bg-blue-500/20 border border-blue-300 dark:border-blue-500/30 text-blue-700 dark:text-blue-300 text-sm font-semibold mb-6">
-            <span>🚧</span>
             <span>Page Under Development</span>
           </div>
           <h2 className="text-3xl lg:text-4xl font-black mb-6 text-slate-900 dark:text-white">
             IT Services & Solutions
           </h2>
           <p className="text-lg text-slate-600 dark:text-zinc-300 leading-relaxed mb-8">
-            We're building a comprehensive page for our IT Services offerings. 
-            This page will showcase our technology solutions, service capabilities, 
+            We&apos;re building a comprehensive page for our IT Services offerings.
+            This page will showcase our technology solutions, service capabilities,
             and how we help businesses transform their digital infrastructure.
           </p>
           <p className="text-base text-slate-500 dark:text-zinc-400 leading-relaxed">
-            In the meantime, please contact us to learn more about our IT services 
+            In the meantime, please contact us to learn more about our IT services
             and how we can help accelerate your digital transformation journey.
           </p>
         </motion.div>
       </section>
 
       {/* Placeholder Features Section */}
-      <section className="py-16 lg:py-20 bg-linear-to-br from-orange-50 to-yellow-50 dark:from-gray-800/50 dark:to-slate-800/50">
+      <section className="py-16 lg:py-20 bg-linear-to-br from-orange-50 to-yellow-50 dark:bg-linear-to-b dark:from-zinc-900 dark:to-zinc-950">
         <div className="container mx-auto px-6 max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -196,7 +174,7 @@ export default function ITServicesPage() {
             ].map((feature, index) => (
               <motion.div
                 key={index}
-                className="group relative bg-white dark:bg-white/5 rounded-2xl border border-orange-100 dark:border-white/10 shadow-lg p-6 hover:shadow-xl hover:border-orange-300 dark:hover:border-orange-500/30 transition-all duration-300"
+                className="group relative bg-white dark:bg-zinc-900/50 rounded-2xl border border-orange-100 dark:border-white/10 shadow-lg p-6 hover:shadow-xl hover:border-orange-300 dark:hover:bg-zinc-800/80 dark:hover:border-orange-500/30 transition-all duration-300"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
@@ -226,7 +204,7 @@ export default function ITServicesPage() {
               Ready to Transform Your Business?
             </h3>
             <p className="text-lg text-white/95 mb-8 max-w-2xl mx-auto">
-              Contact us today to learn more about our IT services and how we can 
+              Contact us today to learn more about our IT services and how we can
               help you achieve your digital transformation goals.
             </p>
             <Link

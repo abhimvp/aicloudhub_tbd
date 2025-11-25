@@ -168,7 +168,7 @@ export const SERVICES_DATA: ServiceDetail[] = [
       "Manufacturing & Supply Chain",
     ],
     whyChoose: {
-      title: "Why Choose aicloudhub",
+      title: "Why Choose aiCloudHub",
       reasons: [
         "Deep technical expertise across AI, MLOps, and computer vision",
         "Business-first approach ensuring measurable ROI",
@@ -309,7 +309,7 @@ export const SERVICES_DATA: ServiceDetail[] = [
       "Healthcare",
     ],
     whyChoose: {
-      title: "Why Trust aicloudhub for Cloud",
+      title: "Why Trust aiCloudHub for Cloud",
       reasons: [
         "Multi-cloud mastery across AWS, Azure, and Google Cloud",
         "Proven cloud-migration and modernization experience",
@@ -450,7 +450,7 @@ export const SERVICES_DATA: ServiceDetail[] = [
       "Logistics & Supply Chain",
     ],
     whyChoose: {
-      title: "Why Partner with aicloudhub",
+      title: "Why Partner with aiCloudHub",
       reasons: [
         "End-to-end engineering capability from UX to Cloud",
         "Proven track record in application modernization",
@@ -574,7 +574,7 @@ export const SERVICES_DATA: ServiceDetail[] = [
       "Manufacturing & Logistics",
     ],
     whyChoose: {
-      title: "Why Choose aicloudhub?",
+      title: "Why Choose aiCloudHub?",
       reasons: [
         "Certified Cloud & Data Experts with proven track record",
         "Modern Scalable Architectures that grow with your business",
@@ -704,7 +704,7 @@ export const SERVICES_DATA: ServiceDetail[] = [
       "Manufacturing & IoT",
     ],
     whyChoose: {
-      title: "Why Choose aicloudhub for IT Staffing?",
+      title: "Why Choose aiCloudHub for IT Staffing?",
       reasons: [
         "Extensive network of pre-vetted, certified technology professionals",
         "Deep expertise across emerging technologies (AI, Cloud, Data)",

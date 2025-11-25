@@ -1,8 +1,8 @@
 // lib/constants.ts
 export const navItems = [
-  { name: "Services", href: "/#technology-services" },
-  { name: "Trainings", href: "/courses" },
-  { name: "About", href: "/about" },
+  { name: "Services", href: "/#services" },
+  { name: "Trainings", href: "/services/corporate-training" },
+  { name: "About Us", href: "/about-us" },
   { name: "Resources", href: "/blogs" },
 ];
 
@@ -201,7 +201,7 @@ export const clientLogos = [
     logo: "/client logos/Abbott_Laboratories_logo.svg.png",
     scale: 1.0,
   },
-  { name: "Mindtree", logo: "/client logos/Mindtree_logo.webp", scale: 1.0 },
+  { name: "LTIMindtree", logo: "/client logos/Mindtree_logo.webp", scale: 1.0 },
   { name: "Altimetrik", logo: "/client logos/Altimetrik_logo.png", scale: 1.0 },
   { name: "Apexon", logo: "/client logos/Apexon_logo.avif", scale: 1.7 },
   { name: "Ariel Partners", logo: "/client logos/Ariel_partners_logo.png", scale: 1.0 },

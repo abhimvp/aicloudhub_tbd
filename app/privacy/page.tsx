@@ -6,7 +6,7 @@ import { ChevronRight, Shield } from "lucide-react";
 export async function generateMetadata() {
   return {
     title: "Privacy Policy",
-    description: "Privacy Policy for aiCloudhub - Learn about how we collect, use, and protect your personal information.",
+    description: "Privacy Policy for aiCloudHub - Learn about how we collect, use, and protect your personal information.",
   };
 }
 
@@ -75,7 +75,7 @@ export default function PrivacyPage() {
                 Privacy Policy
               </h1>
               <p className="text-base sm:text-lg md:text-xl text-slate-700 dark:text-gray-300 leading-relaxed">
-                At aiCloudhub, we respect your privacy and are committed to protecting your personal information.
+                At aiCloudHub, we respect your privacy and are committed to protecting your personal information.
               </p>
             </motion.div>
           </div>
@@ -91,7 +91,7 @@ export default function PrivacyPage() {
           className="prose prose-lg dark:prose-invert max-w-none"
         >
           <div className="bg-white dark:bg-white/5 rounded-2xl border border-orange-100 dark:border-white/10 shadow-lg p-4 sm:p-6 md:p-8 lg:p-12 space-y-8 sm:space-y-10">
-            
+
             {/* Section 1 */}
             <div>
               <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-slate-900 dark:text-white break-words">
@@ -211,7 +211,7 @@ export default function PrivacyPage() {
                 Disclaimer
               </h2>
               <p className="text-slate-600 dark:text-zinc-300 leading-relaxed">
-                The information, training programs, and services provided by aiCloudhub are for educational and professional development purposes only. While we strive for accuracy and quality, aiCloudhub makes no guarantees regarding outcomes or performance improvements.
+                The information, training programs, and services provided by aiCloudHub are for educational and professional development purposes only. While we strive for accuracy and quality, aiCloudHub makes no guarantees regarding outcomes or performance improvements.
               </p>
             </div>
 

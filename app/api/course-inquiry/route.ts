@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
         ${message || "No additional information provided"}
         
         ---
-        This inquiry was submitted from the AICloudHub website.
+        This inquiry was submitted from the aiCloudHub website.
       `,
     };
 
@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
     // TODO: Integrate with your email service provider
     // Example with Resend:
     // const { data, error } = await resend.emails.send({
-    //   from: 'noreply@aicloudhub.com',
+    //   from: 'noreply@aiCloudHub.com',
     //   to: 'info@acloudhub.com',
     //   subject: emailContent.subject,
     //   text: emailContent.body,

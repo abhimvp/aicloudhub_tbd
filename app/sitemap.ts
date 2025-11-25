@@ -6,11 +6,10 @@ const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
 
 const staticRoutes = [
   "",
-  "/about",
+  "/about-us",
   "/blogs",
   "/careers",
   "/contact",
-  "/courses",
   "/privacy",
   "/services/it-services",
   "/services/staffing",

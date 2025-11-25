@@ -37,7 +37,7 @@ export async function generateMetadata() {
   }
 
   return {
-    title: `${vertical.title} — aicloudhub`,
+    title: `${vertical.title} — aiCloudHub`,
     description: vertical.heroDescription,
   };
 }
@@ -52,51 +52,30 @@ export default async function CorporateTrainingPage() {
   const Icon = vertical.Icon;
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-white via-orange-50/40 to-yellow-50/50 dark:from-gray-900 dark:via-slate-900 dark:to-zinc-950">
+    <div className="min-h-screen bg-linear-to-br from-white via-orange-50/40 to-yellow-50/50 dark:bg-linear-to-r dark:from-gray-950 dark:via-slate-950 dark:to-zinc-950 transition-colors duration-300">
       {/* Hero Section with Floating Elements */}
-      <section className="relative bg-linear-to-b from-orange-50 via-white to-amber-50 text-slate-900 dark:from-gray-950 dark:via-slate-950 dark:to-zinc-950 dark:text-white overflow-hidden">
+      <section className="relative bg-linear-to-br from-orange-50 via-white to-yellow-50 dark:bg-linear-to-r dark:from-gray-950 dark:via-slate-950 dark:to-zinc-950 text-slate-900 dark:text-white overflow-hidden transition-colors duration-300">
+        {/* Tech Grid Background */}
+        <div className="absolute inset-0 z-0 opacity-[0.15] dark:opacity-[0.05]"
+          style={{
+            backgroundImage: `linear-gradient(#999 1px, transparent 1px), linear-gradient(90deg, #999 1px, transparent 1px)`,
+            backgroundSize: '50px 50px'
+          }}
+        />
+
         {/* Animated floating shapes */}
-        <div className="absolute inset-0 opacity-20 pointer-events-none">
-          <motion.div
-            className="absolute top-20 left-10 w-32 h-32 bg-orange-500 rounded-full blur-3xl"
-            animate={{
-              y: [0, -30, 0],
-              x: [0, 20, 0],
-              scale: [1, 1.2, 1],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-          <motion.div
-            className="absolute top-40 right-20 w-40 h-40 bg-yellow-500 rounded-full blur-3xl"
-            animate={{
-              y: [0, 40, 0],
-              x: [0, -30, 0],
-              scale: [1, 1.3, 1],
-            }}
-            transition={{
-              duration: 10,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 1,
-            }}
-          />
-          <motion.div
-            className="absolute bottom-20 left-1/3 w-36 h-36 bg-cyan-500 rounded-full blur-3xl"
-            animate={{
-              y: [0, -20, 0],
-              x: [0, 30, 0],
-              scale: [1, 1.1, 1],
-            }}
-            transition={{
-              duration: 9,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 2,
-            }}
+        <div className="absolute inset-0 opacity-20 pointer-events-none overflow-hidden">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-orange-500/30 rounded-full blur-[100px] animate-pulse" />
+          <div className="absolute top-40 right-20 w-96 h-96 bg-yellow-500/20 rounded-full blur-[120px] animate-pulse delay-700" />
+          <div className="absolute bottom-20 left-1/3 w-80 h-80 bg-cyan-500/20 rounded-full blur-[100px] animate-pulse delay-1000" />
+        </div>
+
+        {/* Animated gradient overlay for dark mode */}
+        <div className="absolute inset-0 opacity-0 dark:opacity-20 pointer-events-none transition-opacity duration-300 z-1">
+          <div className="absolute top-0 left-0 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl animate-pulse" />
+          <div
+            className="absolute bottom-0 right-0 w-96 h-96 bg-yellow-500/10 rounded-full blur-3xl animate-pulse"
+            style={{ animationDelay: "1s" }}
           />
         </div>
 
@@ -117,7 +96,7 @@ export default async function CorporateTrainingPage() {
                 </Link>
                 <ChevronRight className="w-4 h-4 text-slate-400 dark:text-white/50" />
                 <Link
-                  href="/?skipLanding=true#technology-services"
+                  href="/?skipLanding=true#services"
                   className="hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
                 >
                   Services
@@ -183,12 +162,12 @@ export default async function CorporateTrainingPage() {
           className="space-y-4 text-slate-600 dark:text-zinc-300 text-lg leading-relaxed"
         >
           {vertical.description.map((paragraph, index) => {
-            // Highlight "aicloudhub" with orange-yellow gradient
-            const parts = paragraph.split(/(aicloudhub)/i);
+            // Highlight "aiCloudHub" with orange-yellow gradient
+            const parts = paragraph.split(/(aiCloudHub)/i);
             return (
               <p key={index}>
                 {parts.map((part, partIndex) =>
-                  part.toLowerCase() === "aicloudhub" ? (
+                  part.toLowerCase() === "aiCloudHub" ? (
                     <span
                       key={partIndex}
                       className="font-semibold bg-linear-to-r from-orange-500 to-yellow-400 bg-clip-text text-transparent"
@@ -229,7 +208,7 @@ export default async function CorporateTrainingPage() {
       </section>
 
       {/* Why Choose Section */}
-      <section className="py-16 lg:py-20 bg-linear-to-br from-orange-50 to-yellow-50 dark:from-gray-800/50 dark:to-slate-800/50">
+      <section className="py-16 lg:py-20 bg-linear-to-br from-orange-50 to-yellow-50 dark:bg-linear-to-b dark:from-zinc-900 dark:to-zinc-950">
         <div className="container mx-auto px-6 max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -247,7 +226,7 @@ export default async function CorporateTrainingPage() {
             {vertical.whyChoose.reasons.map((reason, index) => (
               <motion.div
                 key={index}
-                className="group relative bg-white dark:bg-white/5 rounded-2xl border border-orange-100 dark:border-white/10 shadow-lg p-6 hover:shadow-xl hover:border-orange-300 dark:hover:border-orange-500/30 transition-all duration-300"
+                className="group relative bg-white dark:bg-zinc-900/50 rounded-2xl border border-orange-100 dark:border-white/10 shadow-lg p-6 hover:shadow-xl hover:border-orange-300 dark:hover:bg-zinc-800/80 dark:hover:border-orange-500/30 transition-all duration-300"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
@@ -282,7 +261,7 @@ export default async function CorporateTrainingPage() {
           {vertical.deliveryModels.map((model, index) => (
             <motion.div
               key={index}
-              className="group relative bg-white dark:bg-white/5 rounded-2xl border border-orange-100 dark:border-white/10 shadow-lg p-6 hover:shadow-xl hover:border-orange-300 dark:hover:border-orange-500/30 transition-all duration-300"
+              className="group relative bg-white dark:bg-zinc-900/50 rounded-2xl border border-orange-100 dark:border-white/10 shadow-lg p-6 hover:shadow-xl hover:border-orange-300 dark:hover:bg-zinc-800/80 dark:hover:border-orange-500/30 transition-all duration-300"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{
@@ -343,7 +322,7 @@ export default async function CorporateTrainingPage() {
                     <div className="hidden md:block absolute top-6 -right-6 w-6 h-0.5 bg-linear-to-r from-orange-400 to-yellow-400 dark:from-orange-500 dark:to-yellow-500" />
                   )}
 
-                  <div className="relative h-full bg-white dark:bg-white/5 rounded-2xl border-2 border-orange-100 dark:border-white/10 p-6 hover:border-orange-300 dark:hover:border-orange-500/50 transition-all duration-500 hover:shadow-2xl">
+                  <div className="relative h-full bg-white dark:bg-zinc-900/50 rounded-2xl border-2 border-orange-100 dark:border-white/10 p-6 hover:border-orange-300 dark:hover:bg-zinc-800/80 dark:hover:border-orange-500/50 transition-all duration-500 hover:shadow-2xl">
                     {/* Step number with gradient */}
                     <div className="mb-4 relative inline-flex items-center justify-center">
                       <div className="absolute inset-0 bg-linear-to-br from-orange-500 to-yellow-400 rounded-full blur-lg opacity-50" />

@@ -4,21 +4,26 @@ import Link from "next/link";
 import { getServiceBySlug, getAllServiceSlugs } from "@/lib/servicesData";
 import * as motion from "motion/react-client";
 import ScrollToTop from "@/components/layout/ScrollToTop";
-import { 
-  Sparkles, 
-  Zap, 
-  Target, 
-  Brain, 
-  Database, 
-  Eye, 
-  Cpu, 
-  Network, 
+import {
+  Sparkles,
+  Zap,
+  Target,
+  Brain,
+  Database,
+  Eye,
+  Cpu,
+  Network,
   GitBranch,
   Shield,
   Layers,
   BarChart3,
-  ChevronRight
+  ChevronRight,
+  ShoppingBag,
+  Stethoscope,
+  Factory,
+  Banknote
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 // Animation configurations - defined outside component to prevent re-renders
 const OFFERING_HOVER = { y: -8, scale: 1.01 };
@@ -84,6 +89,21 @@ const getWhyChooseImage = (serviceId: string) => {
   return imageMap[serviceId] || "/WhyChooseAICloudhubAIML.png";
 };
 
+const INDUSTRY_ICON_RULES: { match: RegExp; icon: LucideIcon }[] = [
+  { match: /(retail|commerce)/i, icon: ShoppingBag },
+  { match: /(healthcare|life sciences)/i, icon: Stethoscope },
+  { match: /(finance|financial)/i, icon: Banknote },
+  { match: /(manufacturing|supply chain|logistics|iot)/i, icon: Factory },
+  { match: /(technology|saas)/i, icon: Cpu },
+];
+
+const getIndustryIcon = (industry: string): LucideIcon => {
+  return (
+    INDUSTRY_ICON_RULES.find(({ match }) => match.test(industry))?.icon ||
+    Sparkles
+  );
+};
+
 export async function generateMetadata({
   params,
 }: {
@@ -104,10 +124,10 @@ export async function generateMetadata({
   };
 }
 
-export default async function ServicePage({ 
-  params 
-}: { 
-  params: Promise<{ slug: string }> 
+export default async function ServicePage({
+  params
+}: {
+  params: Promise<{ slug: string }>
 }) {
   const { slug } = await params;
   const service = getServiceBySlug(slug);
@@ -181,7 +201,7 @@ export default async function ServicePage({
                   Home
                 </Link>
                 <ChevronRight className="w-4 h-4 text-slate-400 dark:text-white/50" />
-                <Link href="/?skipLanding=true#technology-services" className="hover:text-orange-500 dark:hover:text-orange-400 transition-colors">
+                <Link href="/?skipLanding=true#services" className="hover:text-orange-500 dark:hover:text-orange-400 transition-colors">
                   Services
                 </Link>
                 <ChevronRight className="w-4 h-4 text-slate-400 dark:text-white/50" />
@@ -251,7 +271,7 @@ export default async function ServicePage({
             What We Offer
           </h2>
           <p className="text-center text-slate-600 dark:text-zinc-400 mb-12 max-w-3xl mx-auto">
-            {isAIML 
+            {isAIML
               ? "Comprehensive AI & ML solutions designed to transform your business operations"
               : `Everything you need for ${service.title.toLowerCase()}`
             }
@@ -259,19 +279,17 @@ export default async function ServicePage({
         </motion.div>
 
         <div
-          className={`grid gap-4 lg:gap-6 ${
-            isAIML ? "md:grid-cols-3" : "md:grid-cols-2 lg:grid-cols-3"
-          }`}
+          className={`grid gap-4 lg:gap-6 ${isAIML ? "md:grid-cols-3" : "md:grid-cols-2 lg:grid-cols-3"
+            }`}
         >
           {service.offerings.map((offering, index) => {
             const OfferingIcon = getOfferingIcon(index, service.id);
-            
+
             return (
               <motion.article
                 key={index}
-                className={`group relative bg-white dark:bg-white/5 rounded-3xl border border-orange-100 dark:border-white/10 shadow-lg dark:shadow-none p-6 lg:p-8 hover:shadow-2xl hover:border-orange-300 dark:hover:border-orange-500/50 transition-all duration-500 overflow-hidden ${
-                  getBentoGridClass(index, isAIML)
-                } flex flex-col`}
+                className={`group relative bg-white dark:bg-white/5 rounded-3xl border border-orange-100 dark:border-white/10 shadow-lg dark:shadow-none p-6 lg:p-8 hover:shadow-2xl hover:border-orange-300 dark:hover:border-orange-500/50 transition-all duration-500 overflow-hidden ${getBentoGridClass(index, isAIML)
+                  } flex flex-col`}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.08 }}
@@ -319,37 +337,37 @@ export default async function ServicePage({
             {service.capabilities.map((capability, index) => {
               const capability3DHover = getCapability3DHover(index);
               return (
-              <motion.div
-                key={index}
-                className="group relative bg-white/80 dark:bg-white/5 backdrop-blur-sm p-6 lg:p-8 rounded-2xl border border-orange-100 dark:border-white/10 shadow-xl hover:shadow-2xl transition-all duration-500"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
-                whileHover={capability3DHover}
-                style={CAPABILITY_3D_STYLE}
-              >
-                {/* Glassmorphism effect */}
-                <div className="absolute inset-0 bg-linear-to-br from-orange-400/10 via-transparent to-yellow-400/10 dark:from-orange-400/20 dark:to-yellow-400/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <motion.div
+                  key={index}
+                  className="group relative bg-white/80 dark:bg-white/5 backdrop-blur-sm p-6 lg:p-8 rounded-2xl border border-orange-100 dark:border-white/10 shadow-xl hover:shadow-2xl transition-all duration-500"
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
+                  whileHover={capability3DHover}
+                  style={CAPABILITY_3D_STYLE}
+                >
+                  {/* Glassmorphism effect */}
+                  <div className="absolute inset-0 bg-linear-to-br from-orange-400/10 via-transparent to-yellow-400/10 dark:from-orange-400/20 dark:to-yellow-400/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                {/* Animated glow effect */}
-                <div className="absolute -inset-1 bg-linear-to-r from-orange-500 to-yellow-400 rounded-2xl opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500" />
+                  {/* Animated glow effect */}
+                  <div className="absolute -inset-1 bg-linear-to-r from-orange-500 to-yellow-400 rounded-2xl opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500" />
 
-                {/* Number badge */}
-                <div className="relative mb-4 inline-flex items-center justify-center w-10 h-10 rounded-lg bg-linear-to-br from-orange-500/20 to-yellow-500/20 dark:from-orange-500/30 dark:to-yellow-500/30 border border-orange-300/50 dark:border-orange-400/30 font-bold text-orange-600 dark:text-orange-400">
-                  {index + 1}
-                </div>
+                  {/* Number badge */}
+                  <div className="relative mb-4 inline-flex items-center justify-center w-10 h-10 rounded-lg bg-linear-to-br from-orange-500/20 to-yellow-500/20 dark:from-orange-500/30 dark:to-yellow-500/30 border border-orange-300/50 dark:border-orange-400/30 font-bold text-orange-600 dark:text-orange-400">
+                    {index + 1}
+                  </div>
 
-                <h4 className="relative font-bold text-lg mb-3 text-slate-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors duration-300">
-                  {capability.title}
-                </h4>
-                <p className="relative text-slate-600 dark:text-zinc-300">
-                  {capability.description}
-                </p>
+                  <h4 className="relative font-bold text-lg mb-3 text-slate-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors duration-300">
+                    {capability.title}
+                  </h4>
+                  <p className="relative text-slate-600 dark:text-zinc-300">
+                    {capability.description}
+                  </p>
 
-                {/* Corner shine effect */}
-                <div className="absolute top-0 right-0 w-16 h-16 bg-linear-to-br from-white/40 to-transparent dark:from-white/20 rounded-tr-2xl rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              </motion.div>
-            );
+                  {/* Corner shine effect */}
+                  <div className="absolute top-0 right-0 w-16 h-16 bg-linear-to-br from-white/40 to-transparent dark:from-white/20 rounded-tr-2xl rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                </motion.div>
+              );
             })}
           </div>
         </div>
@@ -476,32 +494,43 @@ export default async function ServicePage({
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6">
             {service.industries.map((industry, index) => {
-              const industryTransition = { ...INDUSTRY_TRANSITION, delay: index * 0.1 };
+              const industryTransition = {
+                ...INDUSTRY_TRANSITION,
+                delay: index * 0.1,
+              };
+              const IndustryIcon = getIndustryIcon(industry);
+
               return (
-              <motion.div
-                key={index}
-                className="group relative"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ ...industryTransition, delay: 2.2 + index * 0.1 }}
-                whileHover={INDUSTRY_HOVER}
-              >
-                <div className="relative p-6 lg:p-8 bg-white dark:bg-white/5 rounded-2xl border-2 border-orange-100 dark:border-white/10 shadow-lg font-semibold text-center text-slate-900 dark:text-white hover:border-orange-400 dark:hover:border-orange-500 transition-all duration-300 overflow-hidden h-[120px] flex items-center justify-center">
-                  {/* Animated background gradient */}
-                  <div className="absolute inset-0 bg-linear-to-br from-orange-400/0 via-yellow-400/0 to-orange-400/0 group-hover:from-orange-400/10 group-hover:via-yellow-400/10 group-hover:to-orange-400/10 dark:group-hover:from-orange-400/20 dark:group-hover:via-yellow-400/20 dark:group-hover:to-orange-400/20 transition-all duration-300" />
+                <motion.div
+                  key={index}
+                  className="group relative"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ ...industryTransition, delay: 2.2 + index * 0.1 }}
+                  whileHover={INDUSTRY_HOVER}
+                >
+                  <div className="relative p-6 lg:p-8 bg-white dark:bg-white/5 rounded-2xl border-2 border-orange-100 dark:border-white/10 shadow-lg font-semibold text-center text-slate-900 dark:text-white hover:border-orange-400 dark:hover:border-orange-500 transition-all duration-300 overflow-hidden h-[150px] flex flex-col items-center justify-center gap-3">
+                    {/* Animated background gradient */}
+                    <div className="absolute inset-0 bg-linear-to-br from-orange-400/0 via-yellow-400/0 to-orange-400/0 group-hover:from-orange-400/10 group-hover:via-yellow-400/10 group-hover:to-orange-400/10 dark:group-hover:from-orange-400/20 dark:group-hover:via-yellow-400/20 dark:group-hover:to-orange-400/20 transition-all duration-300" />
 
-                  {/* Industry name */}
-                  <span className="relative z-10 block group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors duration-300 text-sm lg:text-base leading-tight">
-                    {industry}
-                  </span>
+                    <div className="relative z-10 flex flex-col items-center gap-3">
+                      <div className="w-12 h-12 rounded-2xl bg-orange-500/10 dark:bg-orange-500/20 border border-orange-200 dark:border-orange-500/30 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                        <IndustryIcon className="w-6 h-6 text-orange-500 dark:text-orange-300" />
+                      </div>
 
-                  {/* Sparkle effect on hover */}
-                  <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-400">
-                    <Sparkles className="w-4 h-4 text-orange-500 dark:text-yellow-400" />
+                      {/* Industry name */}
+                      <span className="relative z-10 block group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors duration-300 text-sm lg:text-base leading-tight">
+                        {industry}
+                      </span>
+                    </div>
+
+                    {/* Sparkle effect on hover */}
+                    <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-400">
+                      <Sparkles className="w-4 h-4 text-orange-500 dark:text-yellow-400" />
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            );
+                </motion.div>
+              );
             })}
           </div>
         </div>
@@ -582,7 +611,7 @@ export default async function ServicePage({
           </motion.div>
         </div>
       </section>
-      
+
       {/* Scroll to Top Button */}
       <ScrollToTop />
     </div>

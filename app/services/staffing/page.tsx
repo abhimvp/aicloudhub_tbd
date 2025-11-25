@@ -6,58 +6,37 @@ import { Users, ChevronRight, CheckCircle2 } from "lucide-react";
 
 export async function generateMetadata() {
   return {
-    title: "IT Staffing — aicloudhub",
+    title: "IT Staffing — aiCloudHub",
     description: "Connect with Top-Tier Tech Talent - Find the perfect talent to accelerate your digital transformation",
   };
 }
 
 export default function ITStaffingPage() {
   return (
-    <div className="min-h-screen bg-linear-to-br from-white via-orange-50/40 to-yellow-50/50 dark:from-gray-900 dark:via-slate-900 dark:to-zinc-950">
+    <div className="min-h-screen bg-linear-to-br from-white via-orange-50/40 to-yellow-50/50 dark:bg-linear-to-r dark:from-gray-950 dark:via-slate-950 dark:to-zinc-950 transition-colors duration-300">
       {/* Hero Section with Floating Elements */}
-      <section className="relative bg-linear-to-b from-orange-50 via-white to-amber-50 text-slate-900 dark:from-gray-950 dark:via-slate-950 dark:to-zinc-950 dark:text-white overflow-hidden">
+      <section className="relative bg-linear-to-br from-orange-50 via-white to-yellow-50 dark:bg-linear-to-r dark:from-gray-950 dark:via-slate-950 dark:to-zinc-950 text-slate-900 dark:text-white overflow-hidden transition-colors duration-300">
+        {/* Tech Grid Background */}
+        <div className="absolute inset-0 z-0 opacity-[0.15] dark:opacity-[0.05]"
+          style={{
+            backgroundImage: `linear-gradient(#999 1px, transparent 1px), linear-gradient(90deg, #999 1px, transparent 1px)`,
+            backgroundSize: '50px 50px'
+          }}
+        />
+
         {/* Animated floating shapes */}
-        <div className="absolute inset-0 opacity-20 pointer-events-none">
-          <motion.div
-            className="absolute top-20 left-10 w-32 h-32 bg-orange-500 rounded-full blur-3xl"
-            animate={{
-              y: [0, -30, 0],
-              x: [0, 20, 0],
-              scale: [1, 1.2, 1],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-          <motion.div
-            className="absolute top-40 right-20 w-40 h-40 bg-yellow-500 rounded-full blur-3xl"
-            animate={{
-              y: [0, 40, 0],
-              x: [0, -30, 0],
-              scale: [1, 1.3, 1],
-            }}
-            transition={{
-              duration: 10,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 1,
-            }}
-          />
-          <motion.div
-            className="absolute bottom-20 left-1/3 w-36 h-36 bg-cyan-500 rounded-full blur-3xl"
-            animate={{
-              y: [0, -20, 0],
-              x: [0, 30, 0],
-              scale: [1, 1.1, 1],
-            }}
-            transition={{
-              duration: 9,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 2,
-            }}
+        <div className="absolute inset-0 opacity-20 pointer-events-none overflow-hidden">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-orange-500/30 rounded-full blur-[100px] animate-pulse" />
+          <div className="absolute top-40 right-20 w-96 h-96 bg-yellow-500/20 rounded-full blur-[120px] animate-pulse delay-700" />
+          <div className="absolute bottom-20 left-1/3 w-80 h-80 bg-cyan-500/20 rounded-full blur-[100px] animate-pulse delay-1000" />
+        </div>
+
+        {/* Animated gradient overlay for dark mode */}
+        <div className="absolute inset-0 opacity-0 dark:opacity-20 pointer-events-none transition-opacity duration-300 z-1">
+          <div className="absolute top-0 left-0 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl animate-pulse" />
+          <div
+            className="absolute bottom-0 right-0 w-96 h-96 bg-yellow-500/10 rounded-full blur-3xl animate-pulse"
+            style={{ animationDelay: "1s" }}
           />
         </div>
 
@@ -78,7 +57,7 @@ export default function ITStaffingPage() {
                 </Link>
                 <ChevronRight className="w-4 h-4 text-slate-400 dark:text-white/50" />
                 <Link
-                  href="/?skipLanding=true#technology-services"
+                  href="/?skipLanding=true#services"
                   className="hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
                 >
                   Services
@@ -87,16 +66,16 @@ export default function ITStaffingPage() {
                 <span className="text-slate-900 dark:text-white font-medium">IT Staffing</span>
               </div>
 
-              <div className="inline-flex items-center gap-3 rounded-full border border-orange-500/30 bg-orange-100 text-orange-700 dark:bg-orange-500/10 dark:text-orange-300 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] mb-6">
+              <div className="inline-flex items-center gap-3 rounded-full border border-orange-500/30 bg-orange-100 text-orange-700 dark:bg-orange-500/10 dark:text-orange-300 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] mb-6 backdrop-blur-sm">
                 <Users className="h-4 w-4 text-orange-600 dark:text-orange-300" />
                 IT Staffing
               </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-6">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-6 tracking-tight">
                 Connect with Top-Tier Tech Talent
               </h1>
               <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-8 leading-relaxed">
-                Find the perfect talent to accelerate your digital transformation. 
-                Our IT staffing solutions connect you with skilled professionals who 
+                Find the perfect talent to accelerate your digital transformation.
+                Our IT staffing solutions connect you with skilled professionals who
                 drive innovation and deliver results.
               </p>
               <div className="flex flex-wrap gap-4">
@@ -156,19 +135,19 @@ export default function ITStaffingPage() {
             IT Staffing Services
           </h2>
           <p className="text-lg text-slate-600 dark:text-zinc-300 leading-relaxed mb-8">
-            We're building a comprehensive page for our IT Staffing services. 
-            This page will showcase our talent acquisition solutions, recruitment 
+            We&apos;re building a comprehensive page for our IT Staffing services.
+            This page will showcase our talent acquisition solutions, recruitment
             process, and how we help businesses find the right tech professionals.
           </p>
           <p className="text-base text-slate-500 dark:text-zinc-400 leading-relaxed">
-            In the meantime, please contact us to learn more about our IT staffing 
+            In the meantime, please contact us to learn more about our IT staffing
             solutions and how we can help you find the perfect talent for your team.
           </p>
         </motion.div>
       </section>
 
       {/* Placeholder Features Section */}
-      <section className="py-16 lg:py-20 bg-linear-to-br from-orange-50 to-yellow-50 dark:from-gray-800/50 dark:to-slate-800/50">
+      <section className="py-16 lg:py-20 bg-linear-to-br from-orange-50 to-yellow-50 dark:bg-linear-to-b dark:from-zinc-900 dark:to-zinc-950">
         <div className="container mx-auto px-6 max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -196,7 +175,7 @@ export default function ITStaffingPage() {
             ].map((feature, index) => (
               <motion.div
                 key={index}
-                className="group relative bg-white dark:bg-white/5 rounded-2xl border border-orange-100 dark:border-white/10 shadow-lg p-6 hover:shadow-xl hover:border-orange-300 dark:hover:border-orange-500/30 transition-all duration-300"
+                className="group relative bg-white dark:bg-zinc-900/50 rounded-2xl border border-orange-100 dark:border-white/10 shadow-lg p-6 hover:shadow-xl hover:border-orange-300 dark:hover:bg-zinc-800/80 dark:hover:border-orange-500/30 transition-all duration-300"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
@@ -226,7 +205,7 @@ export default function ITStaffingPage() {
               Ready to Find Your Next Tech Talent?
             </h3>
             <p className="text-lg text-white/95 mb-8 max-w-2xl mx-auto">
-              Contact us today to learn more about our IT staffing solutions 
+              Contact us today to learn more about our IT staffing solutions
               and how we can help you build your dream team.
             </p>
             <Link

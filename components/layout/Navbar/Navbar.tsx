@@ -36,10 +36,10 @@ const Navbar = () => {
 
   // 3. Create the scroll-to function
   const handleScrollTo = (e: React.MouseEvent, target: string) => {
-    // Handle "/#technology-services" or similar patterns
-    if (target.includes("#technology-services")) {
-      const sectionId = "#technology-services";
-      
+    // Handle "/#services" or similar patterns
+    if (target.includes("#services")) {
+      const sectionId = "#services";
+
       // If we're on homepage, scroll to section
       if (isHomePage) {
         e.preventDefault();
@@ -99,24 +99,22 @@ const Navbar = () => {
     
     // --- Mobile Styles (default) ---
     top-0 px-4 border-b backdrop-blur-xl
-    ${
-      actualTheme === "dark"
-        ? "bg-black/40 border-white/5"
-        : "bg-white/60 border-orange-100/50"
-    }
+    ${actualTheme === "dark"
+          ? "bg-black/40 border-white/5"
+          : "bg-white/60 border-orange-100/50"
+        }
 
     // --- Desktop Styles (md and up) ---
     md:top-6 md:mx-auto md:max-w-6xl md:px-8
     md:rounded-full md:border 
     
     // Desktop scroll logic
-    ${
-      isScrolled
-        ? actualTheme === "dark"
-          ? "md:bg-zinc-900/70 md:backdrop-blur-2xl md:border-white/10 md:shadow-2xl md:shadow-black/40"
-          : "md:bg-white/70 md:backdrop-blur-2xl md:border-white/40 md:shadow-xl md:shadow-orange-500/10"
-        : "md:bg-transparent md:border-transparent md:shadow-none md:backdrop-blur-none"
-    }`}
+    ${isScrolled
+          ? actualTheme === "dark"
+            ? "md:bg-zinc-900/70 md:backdrop-blur-2xl md:border-white/10 md:shadow-2xl md:shadow-black/40"
+            : "md:bg-white/70 md:backdrop-blur-2xl md:border-white/40 md:shadow-xl md:shadow-orange-500/10"
+          : "md:bg-transparent md:border-transparent md:shadow-none md:backdrop-blur-none"
+        }`}
     >
       <div className="flex justify-between items-center h-16 md:h-20 relative">
         {/* Logo Transition */}
@@ -134,8 +132,8 @@ const Navbar = () => {
             aria-label="Scroll to home"
           >
             <Image
-              src="/AiCloudHub.png"
-              alt="AICLOUDHUB Logo"
+              src="/aiCloudHub.png"
+              alt="aiCloudHub Logo"
               width={240}
               height={80}
               className="object-contain h-12 md:h-16 w-auto"
@@ -160,7 +158,7 @@ const Navbar = () => {
           >
             <Image
               src="/icon.png"
-              alt="AICloudHub Icon"
+              alt="aiCloudHub Icon"
               width={40}
               height={40}
               className="object-contain h-9 w-auto"
@@ -178,20 +176,19 @@ const Navbar = () => {
                 !isHomePage && item.name === "Home"
                   ? "/"
                   : item.href;
-              
-              // If navigating to technology-services from another page, add hash
-              if (!isHomePage && href.includes("#technology-services")) {
+
+              // If navigating to services from another page, add hash
+              if (!isHomePage && href.includes("#services")) {
                 const hash = href.includes("#") ? href.substring(href.indexOf("#")) : "";
                 href = `/${hash}`;
               }
 
               return (
                 <Link
-                  className={`relative px-5 py-2 text-sm font-medium tracking-wide transition-all duration-300 rounded-full group ${
-                    actualTheme === "dark"
+                  className={`relative px-5 py-2 text-sm font-medium tracking-wide transition-all duration-300 rounded-full group ${actualTheme === "dark"
                       ? "text-zinc-300 hover:text-white hover:bg-white/10"
                       : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/50"
-                  }`}
+                    }`}
                   key={item.name}
                   href={href}
                   onClick={(e) => handleScrollTo(e, href)}
@@ -201,11 +198,10 @@ const Navbar = () => {
               );
             })}
             <Link
-              className={`relative px-5 py-2 text-sm font-medium tracking-wide transition-all duration-300 rounded-full group ${
-                actualTheme === "dark"
+              className={`relative px-5 py-2 text-sm font-medium tracking-wide transition-all duration-300 rounded-full group ${actualTheme === "dark"
                   ? "text-zinc-300 hover:text-white hover:bg-white/10"
                   : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/50"
-              }`}
+                }`}
               href="/careers"
               onClick={(e) => handleScrollTo(e, "/careers")}
             >
@@ -218,13 +214,12 @@ const Navbar = () => {
         <div className="hidden md:flex items-center gap-3">
           <ThemeToggle />
           <Link href="/contact">
-            <Button 
+            <Button
               size="sm"
-              className={`rounded-full px-6 font-medium transition-all duration-300 ${
-                actualTheme === 'dark'
+              className={`rounded-full px-6 font-medium transition-all duration-300 ${actualTheme === 'dark'
                   ? 'bg-white text-black hover:bg-zinc-200'
                   : 'bg-slate-900 text-white hover:bg-slate-800'
-              }`}
+                }`}
             >
               Let's Talk
             </Button>
@@ -236,11 +231,10 @@ const Navbar = () => {
           <ThemeToggle />
           <button
             onClick={toggleMobileMenu}
-            className={`inline-flex items-center justify-center p-2 rounded-full transition-colors duration-200 ${
-              actualTheme === "dark"
+            className={`inline-flex items-center justify-center p-2 rounded-full transition-colors duration-200 ${actualTheme === "dark"
                 ? "text-white hover:bg-white/10"
                 : "text-gray-900 hover:bg-gray-100"
-            }`}
+              }`}
             aria-expanded={isMobileMenuOpen}
             type="button"
           >
@@ -289,11 +283,10 @@ const Navbar = () => {
           opacity: isMobileMenuOpen ? 1 : 0,
         }}
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-        className={`overflow-hidden md:hidden backdrop-blur-2xl rounded-3xl mt-4 border shadow-2xl ${
-          actualTheme === "dark"
+        className={`overflow-hidden md:hidden backdrop-blur-2xl rounded-3xl mt-4 border shadow-2xl ${actualTheme === "dark"
             ? `border-white/10 bg-zinc-900/90`
             : `border-white/40 bg-white/90`
-        }`}
+          }`}
       >
         <div className="flex flex-col items-stretch text-center p-2 space-y-1">
           {navItems.map((item) => {
@@ -302,9 +295,9 @@ const Navbar = () => {
               !isHomePage && item.name === "Home"
                 ? "/"
                 : item.href;
-            
-            // If navigating to technology-services from another page, add hash
-            if (!isHomePage && href.includes("#technology-services")) {
+
+            // If navigating to services from another page, add hash
+            if (!isHomePage && href.includes("#services")) {
               const hash = href.includes("#") ? href.substring(href.indexOf("#")) : "";
               href = `/${hash}`;
             }
@@ -314,11 +307,10 @@ const Navbar = () => {
                 key={item.name}
                 href={href}
                 onClick={(e) => handleScrollTo(e, href)}
-                className={`text-base font-medium tracking-wide transition-all duration-200 py-3 rounded-xl ${
-                  actualTheme === "dark"
+                className={`text-base font-medium tracking-wide transition-all duration-200 py-3 rounded-xl ${actualTheme === "dark"
                     ? "text-zinc-300 hover:text-white hover:bg-white/10"
                     : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
-                }`}
+                  }`}
               >
                 {item.name}
               </Link>
@@ -330,20 +322,18 @@ const Navbar = () => {
               handleScrollTo(e, "/careers");
               setIsMobileMenuOpen(false);
             }}
-            className={`text-base font-medium tracking-wide transition-all duration-200 py-3 rounded-xl ${
-              actualTheme === "dark"
+            className={`text-base font-medium tracking-wide transition-all duration-200 py-3 rounded-xl ${actualTheme === "dark"
                 ? "text-zinc-300 hover:text-white hover:bg-white/10"
                 : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
-            }`}
+              }`}
           >
             Careers
           </Link>
           <div className="pt-2 pb-1 px-2">
             <Link href="/contact" className="w-full block">
               <Button
-                className={`font-semibold w-full rounded-xl py-6 ${
-                  actualTheme === 'dark' ? 'bg-white text-black' : 'bg-slate-900 text-white'
-                }`}
+                className={`font-semibold w-full rounded-xl py-6 ${actualTheme === 'dark' ? 'bg-white text-black' : 'bg-slate-900 text-white'
+                  }`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Let's Talk

@@ -28,25 +28,47 @@ export default function BlogsPage() {
 
   return (
     <main
-      className={`min-h-screen transition-colors duration-300 ${
-        actualTheme === "dark"
-          ? "bg-linear-to-b from-[#0a0a0a] via-[#111] to-[#0a0a0a]"
-          : "bg-white"
-      }`}
+      className={`min-h-screen transition-colors duration-300 ${actualTheme === "dark"
+          ? "bg-linear-to-r from-gray-950 via-slate-950 to-zinc-950"
+          : "bg-linear-to-br from-white via-orange-50/40 to-yellow-50/50"
+        }`}
     >
       {/* Hero Section */}
       <section
-        className={`relative pt-32 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden transition-colors duration-300 ${
-          actualTheme === "dark"
-            ? "bg-zinc-950"
-            : "bg-gradient-to-br from-orange-50 via-yellow-50 to-white"
-        }`}
+        className={`relative pt-32 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden transition-colors duration-300 ${actualTheme === "dark"
+            ? "bg-linear-to-r from-gray-950 via-slate-950 to-zinc-950"
+            : "bg-linear-to-br from-orange-50 via-white to-yellow-50"
+          }`}
       >
-        {/* Background Effects */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl" />
-          <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
+        {/* Tech Grid Background */}
+        <div className="absolute inset-0 z-0 opacity-[0.15] dark:opacity-[0.05]"
+          style={{
+            backgroundImage: `linear-gradient(#999 1px, transparent 1px), linear-gradient(90deg, #999 1px, transparent 1px)`,
+            backgroundSize: '50px 50px'
+          }}
+        />
+
+        {/* Animated floating shapes */}
+        <div className="absolute inset-0 opacity-20 pointer-events-none overflow-hidden">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-orange-500/30 rounded-full blur-[100px] animate-pulse" />
+          <div className="absolute top-40 right-20 w-96 h-96 bg-yellow-500/20 rounded-full blur-[120px] animate-pulse delay-700" />
+          <div className="absolute bottom-20 left-1/3 w-80 h-80 bg-cyan-500/20 rounded-full blur-[100px] animate-pulse delay-1000" />
         </div>
+
+        {/* Animated gradient overlay for dark mode */}
+        {actualTheme === 'dark' && (
+          <div className="absolute inset-0 opacity-20 pointer-events-none transition-opacity duration-300 z-1">
+            <div className="absolute top-0 left-0 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl animate-pulse" />
+            <div
+              className="absolute bottom-0 right-0 w-96 h-96 bg-yellow-500/10 rounded-full blur-3xl animate-pulse"
+              style={{ animationDelay: "1s" }}
+            />
+            <div
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl animate-pulse"
+              style={{ animationDelay: "2s" }}
+            />
+          </div>
+        )}
 
         <div className="max-w-7xl mx-auto relative z-10">
           <motion.div
@@ -55,19 +77,37 @@ export default function BlogsPage() {
             transition={{ duration: 0.6 }}
             className="text-center mb-12"
           >
-            <h1
-              className={`text-5xl md:text-6xl lg:text-7xl font-black mb-6 ${
-                actualTheme === "dark"
-                  ? "bg-linear-to-r from-orange-400 via-yellow-200 to-white bg-clip-text text-transparent"
-                  : "bg-linear-to-r from-orange-600 via-amber-600 to-orange-500 bg-clip-text text-transparent"
-              }`}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full border bg-opacity-50 backdrop-blur-sm shadow-sm"
+              style={{
+                borderColor: actualTheme === "dark" ? "rgba(249, 115, 22, 0.3)" : "rgba(249, 115, 22, 0.2)",
+                backgroundColor: actualTheme === "dark" ? "rgba(249, 115, 22, 0.1)" : "rgba(255, 237, 213, 0.5)",
+              }}
             >
-              Explore Our Blog
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
+              </span>
+              <span className={`text-sm font-medium ${actualTheme === "dark" ? "text-orange-300" : "text-orange-700"}`}>
+                Latest Insights
+              </span>
+            </motion.div>
+
+            <h1
+              className={`text-5xl md:text-6xl lg:text-7xl font-black mb-6 tracking-tight ${actualTheme === "dark"
+                  ? "text-white"
+                  : "text-slate-900"
+                }`}
+            >
+              Explore Our <span className="bg-linear-to-r from-orange-500 via-amber-500 to-orange-600 bg-clip-text text-transparent">Blog</span>
             </h1>
             <p
-              className={`text-xl md:text-2xl max-w-3xl mx-auto transition-colors duration-300 ${
-                actualTheme === "dark" ? "text-gray-300" : "text-gray-600"
-              }`}
+              className={`text-xl md:text-2xl max-w-3xl mx-auto transition-colors duration-300 leading-relaxed ${actualTheme === "dark" ? "text-slate-400" : "text-slate-600"
+                }`}
             >
               Insights, tutorials, and thought leadership on AI, Cloud, DevOps,
               and Cybersecurity
@@ -81,23 +121,25 @@ export default function BlogsPage() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="max-w-2xl mx-auto mb-8"
           >
-            <div className="relative">
-              <Search
-                className={`absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 transition-colors duration-300 ${
-                  actualTheme === "dark" ? "text-gray-400" : "text-gray-500"
-                }`}
-              />
-              <input
-                type="text"
-                placeholder="Search articles, topics, tags..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className={`w-full pl-12 pr-4 py-4 rounded-2xl transition-all duration-300 ${
-                  actualTheme === "dark"
-                    ? "bg-white/5 border border-white/10 text-white placeholder-gray-400 focus:border-orange-400/50 focus:bg-white/10"
-                    : "bg-white border border-gray-200 text-gray-900 placeholder-gray-400 focus:border-orange-500 shadow-sm"
-                } focus:outline-none`}
-              />
+            <div className="relative group">
+              <div className={`absolute -inset-1 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200 ${actualTheme === 'dark' ? 'bg-gradient-to-r from-orange-600 to-amber-600' : 'bg-gradient-to-r from-orange-400 to-amber-400'
+                }`}></div>
+              <div className="relative">
+                <Search
+                  className={`absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 transition-colors duration-300 ${actualTheme === "dark" ? "text-gray-400" : "text-gray-500"
+                    }`}
+                />
+                <input
+                  type="text"
+                  placeholder="Search articles, topics, tags..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className={`w-full pl-12 pr-4 py-4 rounded-2xl transition-all duration-300 ${actualTheme === "dark"
+                      ? "bg-zinc-900/80 border border-white/10 text-white placeholder-gray-400 focus:border-orange-500/50 focus:bg-zinc-900 focus:ring-1 focus:ring-orange-500/20"
+                      : "bg-white border border-gray-200 text-gray-900 placeholder-gray-400 focus:border-orange-500 shadow-sm"
+                    } focus:outline-none`}
+                />
+              </div>
             </div>
           </motion.div>
         </div>
@@ -116,17 +158,15 @@ export default function BlogsPage() {
             >
               <div className="sticky top-24">
                 <Card
-                  className={`backdrop-blur-lg transition-colors duration-300 ${
-                    actualTheme === "dark"
+                  className={`backdrop-blur-lg transition-colors duration-300 ${actualTheme === "dark"
                       ? "bg-white/5 border-white/10"
                       : "bg-white border-gray-200 shadow-lg"
-                  }`}
+                    }`}
                 >
                   <CardContent className="p-6">
                     <h3
-                      className={`text-xl font-bold mb-4 transition-colors duration-300 ${
-                        actualTheme === "dark" ? "text-white" : "text-gray-900"
-                      }`}
+                      className={`text-xl font-bold mb-4 transition-colors duration-300 ${actualTheme === "dark" ? "text-white" : "text-gray-900"
+                        }`}
                     >
                       Categories
                     </h3>
@@ -135,13 +175,12 @@ export default function BlogsPage() {
                         <button
                           key={category}
                           onClick={() => setSelectedCategory(category)}
-                          className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 ${
-                            selectedCategory === category
+                          className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 ${selectedCategory === category
                               ? "bg-linear-to-r from-orange-500 to-yellow-400 text-black font-semibold shadow-lg shadow-orange-500/20"
                               : actualTheme === "dark"
-                              ? "text-gray-300 hover:bg-white/10 hover:text-white"
-                              : "text-gray-600 hover:bg-orange-50 hover:text-gray-900"
-                          }`}
+                                ? "text-gray-300 hover:bg-white/10 hover:text-white"
+                                : "text-gray-600 hover:bg-orange-50 hover:text-gray-900"
+                            }`}
                         >
                           {category}
                         </button>
@@ -150,40 +189,36 @@ export default function BlogsPage() {
 
                     {/* Stats */}
                     <div
-                      className={`mt-8 pt-6 transition-colors duration-300 ${
-                        actualTheme === "dark"
+                      className={`mt-8 pt-6 transition-colors duration-300 ${actualTheme === "dark"
                           ? "border-t border-white/10"
                           : "border-t border-gray-200"
-                      }`}
+                        }`}
                     >
                       <div className="space-y-3">
                         <div className="flex justify-between items-center">
                           <span
-                            className={`text-sm transition-colors duration-300 ${
-                              actualTheme === "dark"
+                            className={`text-sm transition-colors duration-300 ${actualTheme === "dark"
                                 ? "text-gray-400"
                                 : "text-gray-500"
-                            }`}
+                              }`}
                           >
                             Total Posts
                           </span>
                           <span
-                            className={`font-semibold transition-colors duration-300 ${
-                              actualTheme === "dark"
+                            className={`font-semibold transition-colors duration-300 ${actualTheme === "dark"
                                 ? "text-white"
                                 : "text-gray-900"
-                            }`}
+                              }`}
                           >
                             {blogPosts.length}
                           </span>
                         </div>
                         <div className="flex justify-between items-center">
                           <span
-                            className={`text-sm transition-colors duration-300 ${
-                              actualTheme === "dark"
+                            className={`text-sm transition-colors duration-300 ${actualTheme === "dark"
                                 ? "text-gray-400"
                                 : "text-gray-500"
-                            }`}
+                              }`}
                           >
                             Filtered
                           </span>
@@ -207,9 +242,8 @@ export default function BlogsPage() {
                   className="text-center py-20"
                 >
                   <p
-                    className={`text-xl transition-colors duration-300 ${
-                      actualTheme === "dark" ? "text-gray-400" : "text-gray-500"
-                    }`}
+                    className={`text-xl transition-colors duration-300 ${actualTheme === "dark" ? "text-gray-400" : "text-gray-500"
+                      }`}
                   >
                     No articles found matching your search.
                   </p>
@@ -225,11 +259,10 @@ export default function BlogsPage() {
                     >
                       <Link href={`/blogs/${blog.slug}`}>
                         <Card
-                          className={`group backdrop-blur-lg overflow-hidden transition-all duration-300 h-full cursor-pointer hover:scale-[1.02] hover:shadow-xl hover:shadow-orange-500/10 ${
-                            actualTheme === "dark"
+                          className={`group backdrop-blur-lg overflow-hidden transition-all duration-300 h-full cursor-pointer hover:scale-[1.02] hover:shadow-xl hover:shadow-orange-500/10 ${actualTheme === "dark"
                               ? "bg-white/5 border-white/10 hover:bg-white/10 hover:border-orange-400/50"
                               : "bg-white border-gray-200 hover:bg-orange-50/50 hover:border-orange-400 shadow-lg"
-                          }`}
+                            }`}
                         >
                           {/* Image */}
                           <div className="relative h-56 overflow-hidden">
@@ -261,33 +294,30 @@ export default function BlogsPage() {
                           <CardContent className="p-6">
                             {/* Title */}
                             <h3
-                              className={`text-xl font-bold mb-3 group-hover:text-orange-400 transition-colors line-clamp-2 ${
-                                actualTheme === "dark"
+                              className={`text-xl font-bold mb-3 group-hover:text-orange-400 transition-colors line-clamp-2 ${actualTheme === "dark"
                                   ? "text-white"
                                   : "text-gray-900"
-                              }`}
+                                }`}
                             >
                               {blog.title}
                             </h3>
 
                             {/* Excerpt */}
                             <p
-                              className={`mb-4 line-clamp-2 leading-relaxed transition-colors duration-300 ${
-                                actualTheme === "dark"
+                              className={`mb-4 line-clamp-2 leading-relaxed transition-colors duration-300 ${actualTheme === "dark"
                                   ? "text-gray-400"
                                   : "text-gray-600"
-                              }`}
+                                }`}
                             >
                               {blog.excerpt}
                             </p>
 
                             {/* Meta Info */}
                             <div
-                              className={`flex items-center gap-4 text-sm mb-4 transition-colors duration-300 ${
-                                actualTheme === "dark"
+                              className={`flex items-center gap-4 text-sm mb-4 transition-colors duration-300 ${actualTheme === "dark"
                                   ? "text-gray-500"
                                   : "text-gray-500"
-                              }`}
+                                }`}
                             >
                               <div className="flex items-center gap-1">
                                 <Calendar className="w-4 h-4" />
@@ -304,11 +334,10 @@ export default function BlogsPage() {
                               {blog.tags.slice(0, 3).map((tag) => (
                                 <span
                                   key={tag}
-                                  className={`px-2 py-1 text-xs rounded transition-colors duration-300 ${
-                                    actualTheme === "dark"
+                                  className={`px-2 py-1 text-xs rounded transition-colors duration-300 ${actualTheme === "dark"
                                       ? "bg-white/5 border border-white/10 text-gray-400"
                                       : "bg-orange-50 border border-orange-200 text-orange-600"
-                                  }`}
+                                    }`}
                                 >
                                   {tag}
                                 </span>
@@ -318,11 +347,10 @@ export default function BlogsPage() {
                             {/* Read More Button */}
                             <Button
                               variant="outline"
-                              className={`w-full font-semibold transition-all duration-300 ${
-                                actualTheme === "dark"
+                              className={`w-full font-semibold transition-all duration-300 ${actualTheme === "dark"
                                   ? "border-orange-400/60 text-orange-400 hover:bg-linear-to-r hover:from-orange-500 hover:to-yellow-400 hover:text-black group-hover:border-orange-400"
                                   : "border-orange-400 text-orange-500 hover:bg-linear-to-r hover:from-orange-500 hover:to-amber-500 hover:text-white hover:border-orange-500"
-                              }`}
+                                }`}
                             >
                               Read Article
                               <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />

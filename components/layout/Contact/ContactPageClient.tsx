@@ -55,11 +55,10 @@ const ContactPageClient = () => {
 
   return (
     <div
-      className={`min-h-screen pt-32 pb-16 px-4 sm:px-6 lg:px-8 ${
-        actualTheme === "dark"
+      className={`min-h-screen pt-32 pb-16 px-4 sm:px-6 lg:px-8 ${actualTheme === "dark"
           ? "bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900"
           : "bg-gradient-to-b from-gray-50 via-white to-gray-50"
-      }`}
+        }`}
     >
       <div className="max-w-7xl mx-auto">
         <motion.div
@@ -69,16 +68,14 @@ const ContactPageClient = () => {
           className="text-center mb-12"
         >
           <h1
-            className={`text-5xl md:text-6xl font-bold mb-4 ${
-              actualTheme === "dark" ? "text-white" : "text-gray-900"
-            }`}
+            className={`text-5xl md:text-6xl font-bold mb-4 ${actualTheme === "dark" ? "text-white" : "text-gray-900"
+              }`}
           >
             CONTACT <span className="text-orange-600">US</span>
           </h1>
           <p
-            className={`text-lg ${
-              actualTheme === "dark" ? "text-gray-300" : "text-gray-600"
-            }`}
+            className={`text-lg ${actualTheme === "dark" ? "text-gray-300" : "text-gray-600"
+              }`}
           >
             Let's discuss how we can help you achieve your goals
           </p>
@@ -89,11 +86,10 @@ const ContactPageClient = () => {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className={`p-8 rounded-3xl shadow-xl ${
-              actualTheme === "dark"
+            className={`p-8 rounded-3xl shadow-xl ${actualTheme === "dark"
                 ? "bg-white/5 backdrop-blur-lg border border-white/10"
                 : "bg-white border border-orange-100"
-            }`}
+              }`}
           >
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid sm:grid-cols-2 gap-4">
@@ -105,11 +101,10 @@ const ContactPageClient = () => {
                     required
                     value={formData.firstName}
                     onChange={handleChange}
-                    className={`w-full px-4 py-3 rounded-full border focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all ${
-                      actualTheme === "dark"
+                    className={`w-full px-4 py-3 rounded-full border focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all ${actualTheme === "dark"
                         ? "bg-white/5 border-white/20 text-white placeholder-gray-400"
                         : "bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-500"
-                    }`}
+                      }`}
                   />
                 </div>
                 <div>
@@ -120,11 +115,10 @@ const ContactPageClient = () => {
                     required
                     value={formData.lastName}
                     onChange={handleChange}
-                    className={`w-full px-4 py-3 rounded-full border focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all ${
-                      actualTheme === "dark"
+                    className={`w-full px-4 py-3 rounded-full border focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all ${actualTheme === "dark"
                         ? "bg-white/5 border-white/20 text-white placeholder-gray-400"
                         : "bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-500"
-                    }`}
+                      }`}
                   />
                 </div>
               </div>
@@ -138,11 +132,10 @@ const ContactPageClient = () => {
                     required
                     value={formData.email}
                     onChange={handleChange}
-                    className={`w-full px-4 py-3 rounded-full border focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all ${
-                      actualTheme === "dark"
+                    className={`w-full px-4 py-3 rounded-full border focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all ${actualTheme === "dark"
                         ? "bg-white/5 border-white/20 text-white placeholder-gray-400"
                         : "bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-500"
-                    }`}
+                      }`}
                   />
                 </div>
                 <div>
@@ -152,11 +145,10 @@ const ContactPageClient = () => {
                     placeholder="DIRECT PHONE NUMBER"
                     value={formData.phone}
                     onChange={handleChange}
-                    className={`w-full px-4 py-3 rounded-full border focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all ${
-                      actualTheme === "dark"
+                    className={`w-full px-4 py-3 rounded-full border focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all ${actualTheme === "dark"
                         ? "bg-white/5 border-white/20 text-white placeholder-gray-400"
                         : "bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-500"
-                    }`}
+                      }`}
                   />
                 </div>
               </div>
@@ -169,19 +161,17 @@ const ContactPageClient = () => {
                   required
                   value={formData.designation}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 rounded-full border focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all ${
-                    actualTheme === "dark"
+                  className={`w-full px-4 py-3 rounded-full border focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all ${actualTheme === "dark"
                       ? "bg-white/5 border-white/20 text-white placeholder-gray-400"
                       : "bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-500"
-                  }`}
+                    }`}
                 />
               </div>
 
               <div>
                 <label
-                  className={`block text-sm font-semibold mb-3 ${
-                    actualTheme === "dark" ? "text-gray-300" : "text-gray-700"
-                  }`}
+                  className={`block text-sm font-semibold mb-3 ${actualTheme === "dark" ? "text-gray-300" : "text-gray-700"
+                    }`}
                 >
                   How can we help you? *
                 </label>
@@ -194,30 +184,27 @@ const ContactPageClient = () => {
                   }
                 >
                   <SelectTrigger
-                    className={`w-full h-12 px-4 rounded-full border focus:ring-2 focus:ring-orange-500 transition-all ${
-                      actualTheme === "dark"
+                    className={`w-full h-12 px-4 rounded-full border focus:ring-2 focus:ring-orange-500 transition-all ${actualTheme === "dark"
                         ? "bg-white/5 border-white/20 text-white"
                         : "bg-gray-50 border-gray-200 text-gray-900"
-                    }`}
+                      }`}
                   >
                     <SelectValue placeholder="Select a category" />
                   </SelectTrigger>
                   <SelectContent
-                    className={`rounded-2xl ${
-                      actualTheme === "dark"
+                    className={`rounded-2xl ${actualTheme === "dark"
                         ? "bg-gray-800 border-white/20"
                         : "bg-white border-gray-200"
-                    }`}
+                      }`}
                   >
                     {categories.map((category) => (
                       <SelectItem
                         key={category}
                         value={category}
-                        className={`cursor-pointer ${
-                          actualTheme === "dark"
+                        className={`cursor-pointer ${actualTheme === "dark"
                             ? "text-gray-300 focus:bg-white/10 focus:text-white"
                             : "text-gray-700 focus:bg-gray-100"
-                        }`}
+                          }`}
                       >
                         {category}
                       </SelectItem>
@@ -228,9 +215,8 @@ const ContactPageClient = () => {
 
               <div>
                 <label
-                  className={`block text-sm font-semibold mb-2 ${
-                    actualTheme === "dark" ? "text-gray-300" : "text-gray-700"
-                  }`}
+                  className={`block text-sm font-semibold mb-2 ${actualTheme === "dark" ? "text-gray-300" : "text-gray-700"
+                    }`}
                 >
                   Please provide details about the specific subcategory or topic
                   you're interested in, along with any requirements. *
@@ -242,11 +228,10 @@ const ContactPageClient = () => {
                   rows={6}
                   value={formData.requirements}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 rounded-2xl border focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all resize-none ${
-                    actualTheme === "dark"
+                  className={`w-full px-4 py-3 rounded-2xl border focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all resize-none ${actualTheme === "dark"
                       ? "bg-white/5 border-white/20 text-white placeholder-gray-400"
                       : "bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-500"
-                  }`}
+                    }`}
                 />
               </div>
 
@@ -266,16 +251,14 @@ const ContactPageClient = () => {
             className="space-y-8"
           >
             <div
-              className={`p-8 rounded-3xl shadow-xl ${
-                actualTheme === "dark"
+              className={`p-8 rounded-3xl shadow-xl ${actualTheme === "dark"
                   ? "bg-white/5 backdrop-blur-lg border border-white/10"
                   : "bg-white border border-orange-100"
-              }`}
+                }`}
             >
               <h3
-                className={`text-xl font-bold mb-4 ${
-                  actualTheme === "dark" ? "text-white" : "text-gray-900"
-                }`}
+                className={`text-xl font-bold mb-4 ${actualTheme === "dark" ? "text-white" : "text-gray-900"
+                  }`}
               >
                 Get in Touch
               </h3>
@@ -284,19 +267,18 @@ const ContactPageClient = () => {
                   <span className="text-orange-600 text-xl">📧</span>
                   <div>
                     <p
-                      className={`font-semibold ${
-                        actualTheme === "dark"
+                      className={`font-semibold ${actualTheme === "dark"
                           ? "text-gray-300"
                           : "text-gray-700"
-                      }`}
+                        }`}
                     >
                       Email
                     </p>
                     <a
-                      href="mailto:info@aicloudhub.com"
+                      href="mailto:info@aiCloudHub.com"
                       className="text-orange-600 hover:text-orange-700"
                     >
-                      info@aicloudhub.com
+                      info@aiCloudHub.com
                     </a>
                   </div>
                 </div>
@@ -304,11 +286,10 @@ const ContactPageClient = () => {
                   <span className="text-orange-600 text-xl">📞</span>
                   <div>
                     <p
-                      className={`font-semibold ${
-                        actualTheme === "dark"
+                      className={`font-semibold ${actualTheme === "dark"
                           ? "text-gray-300"
                           : "text-gray-700"
-                      }`}
+                        }`}
                     >
                       Phone
                     </p>
@@ -324,23 +305,20 @@ const ContactPageClient = () => {
             </div>
 
             <div
-              className={`p-8 rounded-3xl shadow-xl ${
-                actualTheme === "dark"
+              className={`p-8 rounded-3xl shadow-xl ${actualTheme === "dark"
                   ? "bg-white/5 backdrop-blur-lg border border-white/10"
                   : "bg-white border border-orange-100"
-              }`}
+                }`}
             >
               <h3
-                className={`text-xl font-bold mb-4 ${
-                  actualTheme === "dark" ? "text-white" : "text-gray-900"
-                }`}
+                className={`text-xl font-bold mb-4 ${actualTheme === "dark" ? "text-white" : "text-gray-900"
+                  }`}
               >
                 Office Hours
               </h3>
               <div
-                className={`space-y-2 ${
-                  actualTheme === "dark" ? "text-gray-300" : "text-gray-700"
-                }`}
+                className={`space-y-2 ${actualTheme === "dark" ? "text-gray-300" : "text-gray-700"
+                  }`}
               >
                 <p>Mon-Fri: 9:30am – 6:30pm</p>
                 <p>Sat-Sun: Closed</p>
