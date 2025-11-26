@@ -81,10 +81,11 @@ export default function RootLayout({
         className={`${plusJakartaSans.variable} ${spaceGrotesk.variable} font-sans antialiased`}
       >
         <ThemeProvider>
-          <SmoothScrollProvider />
-          <Navbar />
-          {children}
-          <Footer />
+          <SmoothScrollProvider>
+            <Navbar />
+            {children}
+            <Footer />
+          </SmoothScrollProvider>
         </ThemeProvider>
       </body>
     </html>

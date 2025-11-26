@@ -8,18 +8,10 @@ import {
 import * as motion from "motion/react-client";
 import ScrollToTop from "@/components/layout/ScrollToTop";
 import CollapsibleCategories from "@/components/layout/CorporateTraining/CollapsibleCategories";
-import {
-  Sparkles,
-  ChevronRight,
-  CheckCircle2,
-  BookOpen,
-  Users,
-  Award,
-} from "lucide-react";
+import { ChevronRight, CheckCircle2, BookOpen } from "lucide-react";
 
 // Animation configurations
 const DELIVERY_HOVER = { scale: 1.05, rotate: 1 };
-const PROCESS_HOVER = { scale: 1.05 };
 
 export async function generateStaticParams() {
   return getAllBusinessVerticalSlugs().map((slug) => ({

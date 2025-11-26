@@ -216,7 +216,7 @@ const AboutUs = () => {
                 className={`text-base leading-relaxed ${actualTheme === "dark" ? "text-gray-300" : "text-gray-700"
                   }`}
               >
-                Whether you're migrating, modernizing, or managing — we ensure
+                Whether you&apos;re migrating, modernizing, or managing — we ensure
                 your cloud environment is optimized for cost, performance, and
                 security.
               </p>

@@ -17,7 +17,7 @@ export default function NotFound() {
         </h1>
         
         <p className="text-lg text-slate-600 dark:text-zinc-300 mb-8">
-          We couldn't find the service you're looking for. It may have been removed or the URL might be incorrect.
+          We couldn&apos;t find the service you&apos;re looking for. It may have been removed or the URL might be incorrect.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { servicesData } from "@/lib/constants";
@@ -155,9 +156,12 @@ const AnimatedServices = () => {
           </div>
           <div className="service-img-wrapper">
             <div className="service-img-container">
-              <img
+              <Image
                 src={serviceImages[index % serviceImages.length]}
                 alt={service.title}
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover"
               />
             </div>
           </div>

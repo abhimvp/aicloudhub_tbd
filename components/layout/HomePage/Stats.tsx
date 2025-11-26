@@ -3,7 +3,7 @@
 import React from "react";
 import * as motion from "motion/react-client";
 import { useTheme } from "@/components/theme/ThemeProvider";
-import { Briefcase, CheckCircle, DollarSign, Globe, Users } from "lucide-react";
+import { Briefcase, DollarSign, Globe, Users } from "lucide-react";
 
 const stats = [
   { label: "Years of Experience", value: "5+", icon: Briefcase },

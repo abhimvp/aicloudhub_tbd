@@ -1,20 +1,38 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
-import Lenis from "lenis";
+import { useEffect, useState, type ReactNode } from "react";
+import { ReactLenis, useLenis } from "lenis/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
 interface SmoothScrollProviderProps {
-  children?: ReactNode;
+  children: ReactNode;
+}
+
+// Component to sync GSAP ScrollTrigger with Lenis
+function GsapScrollSync() {
+  const lenis = useLenis(ScrollTrigger.update);
+
+  useEffect(() => {
+    if (!lenis) return;
+
+    // Sync GSAP's ticker with Lenis's animation frame
+    gsap.ticker.add(lenis.raf);
+    gsap.ticker.lagSmoothing(0);
+
+    return () => {
+      gsap.ticker.remove(lenis.raf);
+    };
+  }, [lenis]);
+
+  return null;
 }
 
 export default function SmoothScrollProvider({
   children,
 }: SmoothScrollProviderProps) {
-  const lenisRef = useRef<Lenis | null>(null);
   const [allowMotion, setAllowMotion] = useState(true);
 
   useEffect(() => {
@@ -32,40 +50,22 @@ export default function SmoothScrollProvider({
     };
   }, []);
 
-  useEffect(() => {
-    if (!allowMotion) {
-      if (lenisRef.current) {
-        lenisRef.current.destroy();
-        lenisRef.current = null;
-      }
-      return;
-    }
+  // If user prefers reduced motion, render children without smooth scroll
+  if (!allowMotion) {
+    return <>{children}</>;
+  }
 
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-    });
-
-    lenisRef.current = lenis;
-
-    const raf = (time: number) => {
-      lenis.raf(time * 1000);
-    };
-
-    // Connect Lenis to GSAP ScrollTrigger
-    lenis.on("scroll", ScrollTrigger.update);
-    gsap.ticker.add(raf);
-    gsap.ticker.lagSmoothing(0);
-
-    return () => {
-      lenis.destroy();
-      gsap.ticker.remove(raf);
-      if (lenisRef.current === lenis) {
-        lenisRef.current = null;
-      }
-    };
-  }, [allowMotion]);
-
-  return <>{children}</>;
+  return (
+    <ReactLenis
+      root
+      options={{
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+      }}
+    >
+      <GsapScrollSync />
+      {children}
+    </ReactLenis>
+  );
 }

@@ -1,14 +1,4 @@
-import {
-  GraduationCap,
-  Users,
-  Code2,
-  BrainCircuit,
-  CloudCog,
-  Shield,
-  GitBranch,
-  BookOpen,
-  LucideIcon,
-} from "lucide-react";
+import { GraduationCap, LucideIcon } from "lucide-react";
 
 export interface TrainingCategory {
   title: string;

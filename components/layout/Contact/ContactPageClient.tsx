@@ -80,7 +80,7 @@ const ContactPageClient = () => {
             className={`text-lg ${actualTheme === "dark" ? "text-gray-300" : "text-gray-600"
               }`}
           >
-            Let's discuss how we can help you achieve your goals
+            Let&apos;s discuss how we can help you achieve your goals
           </p>
         </motion.div>
 
@@ -222,7 +222,7 @@ const ContactPageClient = () => {
                     }`}
                 >
                   Please provide details about the specific subcategory or topic
-                  you're interested in, along with any requirements. *
+                  you&apos;re interested in, along with any requirements. *
                 </label>
                 <textarea
                   name="requirements"

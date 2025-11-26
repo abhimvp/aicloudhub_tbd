@@ -6,7 +6,6 @@ import * as motion from "motion/react-client";
 import ScrollToTop from "@/components/layout/ScrollToTop";
 import {
   Sparkles,
-  Zap,
   Target,
   Brain,
   Database,
@@ -43,7 +42,6 @@ const INDUSTRY_TRANSITION = {
   type: "spring" as const,
   stiffness: 200,
 };
-const PROCESS_HOVER = { scale: 1.05 };
 
 export async function generateStaticParams() {
   return getAllServiceSlugs().map((slug) => ({

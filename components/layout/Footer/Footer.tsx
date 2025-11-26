@@ -1,7 +1,6 @@
 // components/layout/Footer/Footer.tsx
 "use client";
 import React from "react";
-import * as motion from "motion/react-client";
 import Link from "next/link";
 import Image from "next/image";
 import { aiCloudHubLogo } from "@/lib/images";
@@ -28,7 +27,7 @@ const Footer = () => {
 
   const company = [
     { name: "About Us", href: "/about-us" },
-    { name: "Contact Us", href: "/contact-us" },
+    { name: "Contact Us", href: "/contact" },
     { name: "Leadership", href: "/about-us#leadership-team" },
     { name: "Privacy Policy", href: "/privacy" },
     { name: "Terms of Service", href: "/terms" },
@@ -79,7 +78,7 @@ const Footer = () => {
                 className={`leading-relaxed mb-6 text-sm ${actualTheme === "dark" ? "text-gray-400" : "text-gray-600"
                   }`}
               >
-                aiCloudHub is a global provider of IT services, products, and solutions across diverse industries. We are known as a "Cloud & Data" company involved in building and delivering managed services for technology projects.
+                aiCloudHub is a global provider of IT services, products, and solutions across diverse industries. We are known as a &quot;Cloud &amp; Data&quot; company involved in building and delivering managed services for technology projects.
               </p>
 
               {/* Social Media Icons */}

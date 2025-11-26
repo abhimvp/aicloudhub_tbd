@@ -1,7 +1,8 @@
 // components/layout/Blogs/Blogs.tsx
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
+import type { SwiperRef } from "swiper/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
@@ -22,8 +23,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const Blogs = () => {
   const { actualTheme } = useTheme();
-  const [activeIndex, setActiveIndex] = useState(0);
-  const swiperRef = useRef<any>(null);
+  const swiperRef = useRef<SwiperRef>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
 
@@ -189,7 +189,6 @@ const Blogs = () => {
           }}
           // --- END OF FIX ---
 
-          onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
           pagination={{ clickable: true }}
           navigation
           modules={[Pagination, Navigation]}

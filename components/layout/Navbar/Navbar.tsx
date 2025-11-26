@@ -225,7 +225,7 @@ const Navbar = () => {
                   : "bg-slate-900 text-white hover:bg-slate-800"
               }`}
             >
-              Let's Talk
+              Let&apos;s Talk
             </Button>
           </Link>
         </div>
@@ -346,7 +346,7 @@ const Navbar = () => {
                 }`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                Let's Talk
+                Let&apos;s Talk
               </Button>
             </Link>
           </div>

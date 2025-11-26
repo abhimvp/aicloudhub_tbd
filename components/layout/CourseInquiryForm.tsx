@@ -5,7 +5,6 @@ import React, { useState } from "react";
 import * as motion from "motion/react-client";
 import { AnimatePresence } from "motion/react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { X, Send, CheckCircle } from "lucide-react";
 import { useTheme } from "@/components/theme/ThemeProvider";
 
@@ -168,7 +167,7 @@ export default function CourseInquiryForm({
                       actualTheme === "dark" ? "text-gray-300" : "text-gray-600"
                     }`}
                   >
-                    We've received your inquiry and will get back to you
+                    We&apos;ve received your inquiry and will get back to you
                     shortly.
                   </p>
                 </motion.div>
