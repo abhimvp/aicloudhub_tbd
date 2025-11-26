@@ -169,7 +169,7 @@ export default function Hero() {
     >
       {/* Tech Grid Background */}
       <div
-        className="absolute inset-0 z-0 opacity-[0.15] dark:opacity-[0.05]"
+        className="absolute inset-0 z-1 pointer-events-none opacity-[0.15] dark:opacity-[0.2]"
         style={{
           backgroundImage: `linear-gradient(#999 1px, transparent 1px), linear-gradient(90deg, #999 1px, transparent 1px)`,
           backgroundSize: "50px 50px",
@@ -184,7 +184,7 @@ export default function Hero() {
       </div>
 
       {/* Animated gradient overlay for dark mode - reduced opacity */}
-      <div className="absolute inset-0 opacity-0 dark:opacity-20 pointer-events-none transition-opacity duration-300 z-1">
+      <div className="absolute inset-0 opacity-0 dark:opacity-20 pointer-events-none transition-opacity duration-300 z-0">
         <div className="absolute top-0 left-0 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl animate-pulse" />
         <div
           className="absolute bottom-0 right-0 w-96 h-96 bg-yellow-500/10 rounded-full blur-3xl animate-pulse"
@@ -271,11 +271,10 @@ export default function Hero() {
               return (
                 <div
                   key={index}
-                  className={`transition-all duration-700 ease-in-out ${
-                    isActive
-                      ? "opacity-100 relative"
-                      : "opacity-0 absolute inset-0 pointer-events-none"
-                  }`}
+                  className={`transition-all duration-700 ease-in-out ${isActive
+                    ? "opacity-100 relative"
+                    : "opacity-0 absolute inset-0 pointer-events-none"
+                    }`}
                 >
                   {/* Image Container - Larger with 4:3 Aspect Ratio */}
                   <div className="relative w-full aspect-4/3 overflow-hidden bg-slate-800">
@@ -326,11 +325,10 @@ export default function Hero() {
                               e.stopPropagation();
                               setActiveIndex(dotIndex);
                             }}
-                            className={`transition-all duration-300 rounded-full ${
-                              dotIndex === activeIndex
-                                ? "w-6 sm:w-8 h-2 bg-orange-500"
-                                : "w-2 h-2 bg-slate-300 dark:bg-white/40 hover:bg-orange-400"
-                            }`}
+                            className={`transition-all duration-300 rounded-full ${dotIndex === activeIndex
+                              ? "w-6 sm:w-8 h-2 bg-orange-500"
+                              : "w-2 h-2 bg-slate-300 dark:bg-white/40 hover:bg-orange-400"
+                              }`}
                             aria-label={`Go to slide ${dotIndex + 1}`}
                           />
                         ))}

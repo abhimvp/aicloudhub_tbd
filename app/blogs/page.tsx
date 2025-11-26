@@ -117,7 +117,7 @@ export default function BlogsPage() {
             >
               Explore Our{" "}
               <span className="bg-linear-to-r from-orange-500 via-amber-500 to-orange-600 bg-clip-text text-transparent">
-                Blog
+                Blogs
               </span>
             </h1>
             <p

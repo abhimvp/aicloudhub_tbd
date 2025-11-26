@@ -1,25 +1,106 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import * as motion from "motion/react-client";
 import ScrollToTop from "@/components/layout/ScrollToTop";
-import { Code2, ChevronRight, CheckCircle2 } from "lucide-react";
+import {
+  Code2,
+  ChevronRight,
+  CheckCircle2,
+  Cpu,
+  ShieldCheck,
+  Server,
+  Zap,
+  Globe,
+  ArrowRight,
+  ChevronDown,
+} from "lucide-react";
 
-export async function generateMetadata() {
-  return {
-    title: "IT Services — aiCloudHub",
+// Data from PDF
+const BUSINESS_UNITS = [
+  {
+    title: "Product & Digital Engineering",
     description:
-      "Innovative Technology Solutions for Modern Business - Transform your business with cutting-edge cloud, AI, and digital solutions",
-  };
-}
+      "Empowering customers to harness the transformative potential of digital by developing smart, secure, and connected products and platforms.",
+    icon: Code2,
+    offerings: [
+      "Digital Innovation",
+      "Accelerated Product Development",
+      "Platform Modernization & Engineering",
+      "IoT Device Integration",
+      "Quality Assurance",
+      "Consulting & Industry Specific Solutions",
+    ],
+    highlight:
+      "We leverage a cloud-first, mobile-friendly approach combined with an agile framework and test automation to help clients accelerate time-to-market.",
+  },
+  {
+    title: "Generative AI Business Services",
+    description:
+      "Integrating content, data, and AI to craft innovative solutions tailored to the evolving demands of modern businesses.",
+    icon: Cpu,
+    offerings: [
+      "Gen AI-Powered Applications",
+      "Custom Gen AI Model Development",
+      "End-to-End Generative AI Solutions",
+      "CoE for Generative AI",
+      "Gen AI Security & Compliance",
+    ],
+    highlight:
+      "Our Generative AI ecosystem combines key components that enable businesses to fully harness the transformative power of this groundbreaking technology.",
+  },
+  {
+    title: "Infrastructure Management & Security",
+    description:
+      "Comprehensive monitoring and management solutions, ensuring secure ring-fencing of customers' applications and infrastructure.",
+    icon: ShieldCheck,
+    offerings: [
+      "Cloud & DC Infrastructure",
+      "Digital Workspaces",
+      "Networks",
+      "ITSM, ITOM Tools & Platforms",
+      "Cyber, Infrastructure & Data Security",
+      "Data Privacy, Governance, Risk & Compliance",
+      "Identity & Access Management",
+    ],
+    highlight:
+      "We provide 24/7 support and managed security services tailored for mid-sized enterprises, leveraging automation through a DevSecOps approach.",
+  },
+];
+
+const WHY_CHOOSE_US = [
+  {
+    title: "Proven Expertise",
+    description:
+      "With 20+ successful projects and a track record of innovation, we empower businesses to achieve measurable success.",
+    icon: Zap,
+  },
+  {
+    title: "Comprehensive Portfolio",
+    description:
+      "From Cloud Computing and DevOps to AI/ML and Data Analytics, we provide end-to-end services to accelerate your digital journey.",
+    icon: Globe,
+  },
+  {
+    title: "Disruptive Technologies",
+    description:
+      "We pioneer innovation by leveraging an ecosystem of transformative technologies including Generative AI and Product Engineering.",
+    icon: Server,
+  },
+];
 
 export default function ITServicesPage() {
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(0);
+
   return (
     <div className="min-h-screen bg-linear-to-br from-white via-orange-50/40 to-yellow-50/50 dark:bg-linear-to-r dark:from-gray-950 dark:via-slate-950 dark:to-zinc-950 transition-colors duration-300">
-      {/* Hero Section with Floating Elements */}
+      {/* Hero Section */}
       <section className="relative bg-linear-to-br from-orange-50 via-white to-yellow-50 dark:bg-linear-to-r dark:from-gray-950 dark:via-slate-950 dark:to-zinc-950 text-slate-900 dark:text-white overflow-hidden transition-colors duration-300">
         {/* Tech Grid Background */}
         <div
-          className="absolute inset-0 z-0 opacity-[0.15] dark:opacity-[0.05]"
+          className="absolute inset-0 z-0 opacity-[0.15] dark:opacity-[0.2]"
           style={{
             backgroundImage: `linear-gradient(#999 1px, transparent 1px), linear-gradient(90deg, #999 1px, transparent 1px)`,
             backgroundSize: "50px 50px",
@@ -75,12 +156,16 @@ export default function ITServicesPage() {
                 IT Services
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-6 tracking-tight">
-                Innovative Technology Solutions for Modern Business
+                Empower Your Business with{" "}
+                <span className="bg-linear-to-r from-orange-600 to-yellow-500 dark:from-orange-400 dark:to-yellow-300 bg-clip-text text-transparent">
+                  AI-Driven Innovation
+                </span>
               </h1>
               <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-8 leading-relaxed">
                 Transform your business with cutting-edge cloud, AI, and digital
-                solutions. Our comprehensive IT services help you stay ahead in
-                the digital landscape and drive sustainable growth.
+                solutions. From ideation to launch, our intelligent solutions
+                accelerate innovation, strengthen security, and drive business
+                excellence.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link
@@ -90,10 +175,10 @@ export default function ITServicesPage() {
                   Get Started
                 </Link>
                 <a
-                  href="#overview"
+                  href="#offerings"
                   className="inline-flex px-8 py-4 border-2 border-slate-900/20 text-slate-900 dark:border-white/20 dark:text-white font-semibold rounded-lg hover:bg-slate-900/5 dark:hover:bg-white/10 transition"
                 >
-                  Learn More
+                  Explore Solutions
                 </a>
               </div>
             </motion.div>
@@ -120,79 +205,192 @@ export default function ITServicesPage() {
         </div>
       </section>
 
-      {/* Coming Soon / Overview Section */}
-      <section
-        id="overview"
-        className="container mx-auto px-6 py-16 lg:py-24 max-w-4xl"
-      >
+      {/* Introduction Section */}
+      <section className="container mx-auto px-6 py-16 lg:py-20 max-w-4xl text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-100 dark:bg-orange-500/20 border border-orange-300 dark:border-orange-500/30 text-orange-700 dark:text-orange-300 text-sm font-semibold mb-6">
-            <span>Page Under Development</span>
-          </div>
-          <h2 className="text-3xl lg:text-4xl font-black mb-6 text-slate-900 dark:text-white">
-            IT Services & Solutions
+          <h2 className="text-3xl font-bold mb-6 text-slate-900 dark:text-white">
+            Driving Innovation from Atlanta to the World
           </h2>
-          <p className="text-lg text-slate-600 dark:text-zinc-300 leading-relaxed mb-8">
-            We&apos;re building a comprehensive page for our IT Services
-            offerings. This page will showcase our technology solutions, service
-            capabilities, and how we help businesses transform their digital
-            infrastructure.
-          </p>
-          <p className="text-base text-slate-500 dark:text-zinc-400 leading-relaxed">
-            In the meantime, please contact us to learn more about our IT
-            services and how we can help accelerate your digital transformation
-            journey.
+          <p className="text-lg text-slate-600 dark:text-zinc-300 leading-relaxed">
+            Headquartered in Atlanta, GA,{" "}
+            <span className="font-semibold text-orange-600 dark:text-orange-400">
+              aiCloudHub
+            </span>{" "}
+            drives innovation with smart, secure, and connected solutions,
+            helping businesses unlock the full potential of digital
+            technologies. Our team of 50+ professionals delivers tailored
+            solutions that accelerate growth and ensure you stay ahead in the
+            digital era.
           </p>
         </motion.div>
       </section>
 
-      {/* Placeholder Features Section */}
-      <section className="py-16 lg:py-20 bg-linear-to-br from-orange-50 to-yellow-50 dark:bg-linear-to-b dark:from-zinc-900 dark:to-zinc-950">
+      {/* Business Units / Offerings Section */}
+      <section
+        id="offerings"
+        className="container mx-auto px-6 py-16 lg:py-24 max-w-7xl"
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-3xl lg:text-4xl font-black mb-4 text-slate-900 dark:text-white">
+            Our Business Units
+          </h2>
+          <p className="text-slate-600 dark:text-zinc-400 max-w-3xl mx-auto">
+            Specialized expertise across three core pillars of digital
+            transformation
+          </p>
+        </motion.div>
+
+        <div className="grid gap-8">
+          {BUSINESS_UNITS.map((unit, index) => {
+            const Icon = unit.icon;
+            const isExpanded = expandedIndex === index;
+
+            return (
+              <motion.div
+                key={index}
+                className="bg-white dark:bg-zinc-900/50 rounded-3xl border border-orange-100 dark:border-white/10 shadow-lg overflow-hidden"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <button
+                  onClick={() =>
+                    setExpandedIndex(isExpanded ? null : index)
+                  }
+                  className="w-full text-left p-6 lg:p-8 focus:outline-none"
+                >
+                  <div className="flex items-start gap-6">
+                    <div className="hidden sm:flex items-center justify-center w-16 h-16 rounded-2xl bg-linear-to-br from-orange-500 to-yellow-400 text-white shadow-lg shrink-0">
+                      <Icon className="w-8 h-8" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between gap-4 mb-2">
+                        <h3 className="text-2xl font-bold text-slate-900 dark:text-white">
+                          {unit.title}
+                        </h3>
+                        <ChevronDown
+                          className={`w-6 h-6 text-slate-400 transition-transform duration-300 ${isExpanded ? "rotate-180" : ""
+                            }`}
+                        />
+                      </div>
+                      <p className="text-slate-600 dark:text-zinc-300 text-lg mb-4">
+                        {unit.description}
+                      </p>
+
+                      {/* Mobile Icon (visible only on small screens) */}
+                      <div className="sm:hidden mb-4">
+                        <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-linear-to-br from-orange-500 to-yellow-400 text-white shadow-lg">
+                          <Icon className="w-6 h-6" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </button>
+
+                <motion.div
+                  initial={false}
+                  animate={{
+                    height: isExpanded ? "auto" : 0,
+                    opacity: isExpanded ? 1 : 0,
+                  }}
+                  transition={{ duration: 0.4 }}
+                  className="overflow-hidden bg-orange-50/50 dark:bg-white/5"
+                >
+                  <div className="p-6 lg:p-8 border-t border-orange-100 dark:border-white/10">
+                    <div className="grid md:grid-cols-2 gap-8">
+                      <div>
+                        <h4 className="font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                          <CheckCircle2 className="w-5 h-5 text-orange-500" />
+                          Key Offerings
+                        </h4>
+                        <ul className="space-y-3">
+                          {unit.offerings.map((offering, idx) => (
+                            <li
+                              key={idx}
+                              className="flex items-start gap-3 text-slate-600 dark:text-zinc-300 text-sm"
+                            >
+                              <span className="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 shrink-0" />
+                              {offering}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div className="bg-white dark:bg-zinc-900 rounded-xl p-6 border border-orange-100 dark:border-white/10 h-fit">
+                        <h4 className="font-bold text-slate-900 dark:text-white mb-3">
+                          Our Approach
+                        </h4>
+                        <p className="text-slate-600 dark:text-zinc-400 text-sm leading-relaxed">
+                          {unit.highlight}
+                        </p>
+                        <div className="mt-6 pt-6 border-t border-slate-100 dark:border-white/5">
+                          <Link href="/contact" className="text-orange-600 dark:text-orange-400 font-semibold text-sm flex items-center gap-2 hover:gap-3 transition-all">
+                            Discuss Your Project <ArrowRight className="w-4 h-4" />
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </motion.div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Why Choose Us Section */}
+      <section className="py-16 lg:py-24 bg-linear-to-br from-orange-50 to-yellow-50 dark:bg-linear-to-b dark:from-zinc-900 dark:to-zinc-950">
         <div className="container mx-auto px-6 max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
           >
-            <div className="text-center mb-12">
-              <h2 className="text-3xl lg:text-4xl font-black mb-4 text-slate-900 dark:text-white">
-                What We Offer
-              </h2>
-              <p className="text-slate-600 dark:text-zinc-400 max-w-3xl mx-auto">
-                Comprehensive IT services and solutions (details coming soon)
-              </p>
-            </div>
+            <h2 className="text-3xl lg:text-4xl font-black mb-4 text-slate-900 dark:text-white">
+              Why Partner with aiCloudHub?
+            </h2>
+            <p className="text-slate-600 dark:text-zinc-400 max-w-3xl mx-auto">
+              We combine deep industry expertise with next-gen technology to deliver tangible business outcomes.
+            </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              "Cloud Solutions",
-              "AI & Machine Learning",
-              "Application Development",
-              "Digital Transformation",
-              "DevOps & Automation",
-              "Cybersecurity",
-            ].map((feature, index) => (
-              <motion.div
-                key={index}
-                className="group relative bg-white dark:bg-zinc-900/50 rounded-2xl border border-orange-100 dark:border-white/10 shadow-lg p-6 hover:shadow-xl hover:border-orange-300 dark:hover:bg-zinc-800/80 dark:hover:border-orange-500/30 transition-all duration-300"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
-              >
-                <div className="flex items-start gap-3">
-                  <CheckCircle2 className="w-6 h-6 text-orange-500 dark:text-orange-400 flex-shrink-0 mt-0.5" />
-                  <p className="text-slate-700 dark:text-zinc-200 font-medium">
-                    {feature}
+          <div className="grid md:grid-cols-3 gap-8">
+            {WHY_CHOOSE_US.map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <motion.div
+                  key={index}
+                  className="bg-white dark:bg-zinc-900/50 p-8 rounded-2xl border border-orange-100 dark:border-white/10 shadow-lg hover:shadow-xl transition-all duration-300 group"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                >
+                  <div className="w-14 h-14 rounded-xl bg-orange-100 dark:bg-orange-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <Icon className="w-7 h-7 text-orange-600 dark:text-orange-400" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-3 text-slate-900 dark:text-white">
+                    {item.title}
+                  </h3>
+                  <p className="text-slate-600 dark:text-zinc-400 leading-relaxed">
+                    {item.description}
                   </p>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -207,17 +405,16 @@ export default function ITServicesPage() {
             transition={{ duration: 0.6 }}
           >
             <h3 className="text-3xl lg:text-4xl font-black mb-6">
-              Ready to Transform Your Business?
+              Ready to Accelerate Your Digital Transformation?
             </h3>
             <p className="text-lg text-white/95 mb-8 max-w-2xl mx-auto">
-              Contact us today to learn more about our IT services and how we
-              can help you achieve your digital transformation goals.
+              Let&apos;s discuss how our IT services can help you build, scale, and transform your business with smart, secure solutions.
             </p>
             <Link
               href="/contact"
               className="inline-flex px-10 py-4 bg-linear-to-r from-orange-500 to-yellow-400 text-black text-lg font-bold rounded-lg hover:opacity-90 transition shadow-xl shadow-orange-500/30"
             >
-              Get in Touch
+              Start Your Journey
             </Link>
           </motion.div>
         </div>
@@ -228,3 +425,4 @@ export default function ITServicesPage() {
     </div>
   );
 }
+
