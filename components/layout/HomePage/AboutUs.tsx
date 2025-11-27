@@ -5,7 +5,7 @@ import * as motion from "motion/react-client";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useTheme } from "@/components/theme/ThemeProvider";
-import { Award, Brain, CloudCog, Handshake, Shield } from "lucide-react";
+import { Award, Brain, CloudCog, Handshake, Shield, ArrowRight } from "lucide-react";
 
 const AboutUs = () => {
   const { actualTheme } = useTheme();
@@ -331,22 +331,10 @@ const AboutUs = () => {
             <Button
               size="lg"
               className="bg-linear-to-r from-orange-500 to-yellow-400 text-black font-bold text-lg px-10 py-6 rounded-full 
-              hover:shadow-[0_0_30px_rgba(255,140,0,0.6)] transition-all duration-300 hover:scale-105 group"
+              hover:shadow-[0_0_30px_rgba(255,140,0,0.6)] transition-all duration-300 hover:scale-105 group inline-flex items-center gap-2"
             >
-              Learn More About Us
-              <svg
-                className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
+              <span>Learn More About Us</span>
+              <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
             </Button>
           </Link>
         </motion.div>

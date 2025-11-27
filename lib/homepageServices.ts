@@ -38,7 +38,7 @@ export const HOMEPAGE_SERVICE_SUMMARIES: Record<
     Icon: BrainCircuit,
     image: "/HeroSectionAIML.webp",
     cta: {
-      label: "Explore AI Services →",
+      label: "Explore AI Services",
       href: "/services/ai-ml",
     },
   },
@@ -54,7 +54,7 @@ export const HOMEPAGE_SERVICE_SUMMARIES: Record<
     Icon: CloudCog,
     image: "/HeroSectionCloud.webp",
     cta: {
-      label: "See Cloud Capabilities →",
+      label: "See Cloud Capabilities",
       href: "/services/cloud",
     },
   },
@@ -70,7 +70,7 @@ export const HOMEPAGE_SERVICE_SUMMARIES: Record<
     Icon: AppWindow,
     image: "/HeroSectionApplications.webp",
     cta: {
-      label: "Modernize Apps →",
+      label: "Modernize Apps",
       href: "/services/applications",
     },
   },
@@ -86,7 +86,7 @@ export const HOMEPAGE_SERVICE_SUMMARIES: Record<
     Icon: BarChart3,
     image: "/HeroSectionDataAnalytics.webp",
     cta: {
-      label: "Unlock Insights →",
+      label: "Unlock Insights",
       href: "/services/data-analytics",
     },
   },
@@ -102,7 +102,7 @@ export const HOMEPAGE_SERVICE_SUMMARIES: Record<
     Icon: UserCheck,
     image: "/HeroSectionITStaffing.webp",
     cta: {
-      label: "Find Talent →",
+      label: "Explore IT Staffing",
       href: "/services/staffing",
     },
   },
@@ -117,7 +117,7 @@ export const HOMEPAGE_SERVICE_SUMMARIES: Record<
     Icon: GraduationCap,
     image: "/HeroSectionCorporateTraining.webp",
     cta: {
-      label: "Explore Trainings →",
+      label: "Explore Trainings",
       href: "/services/corporate-training",
     },
   },
@@ -126,13 +126,13 @@ export const HOMEPAGE_SERVICE_SUMMARIES: Record<
     title: "IT Services",
     subtitle: "Innovative Technology Solutions for Modern Business",
     description: [
-      "End-to-end modernization, application engineering, and managed services that align technology investments with measurable business outcomes.",
-      "From cloud-native platforms to secure operations, we deliver future-ready software, automation, and 24/7 support built for growth.",
+      "Transform your business with end-to-end technology solutions tailored to your goals.",
+      "From cloud modernization to AI integration, product engineering to enterprise automation — we deliver scalable, secure, and future-ready IT services that power innovation and accelerate growth.",
     ],
     Icon: BriefcaseBusiness,
     image: "/HeroSectionITServices.webp",
     cta: {
-      label: "Discover IT Services →",
+      label: "Explore IT Services",
       href: "/services/it-services",
     },
   },

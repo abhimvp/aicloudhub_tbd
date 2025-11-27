@@ -8,7 +8,7 @@ import {
 import * as motion from "motion/react-client";
 import ScrollToTop from "@/components/layout/ScrollToTop";
 import CollapsibleCategories from "@/components/layout/CorporateTraining/CollapsibleCategories";
-import { ChevronRight, CheckCircle2, BookOpen } from "lucide-react";
+import { ChevronRight, CheckCircle2, BookOpen, ArrowRight } from "lucide-react";
 
 // Animation configurations
 const DELIVERY_HOVER = { scale: 1.05, rotate: 1 };
@@ -49,7 +49,7 @@ export default async function CorporateTrainingPage() {
       <section className="relative bg-linear-to-br from-orange-50 via-white to-yellow-50 dark:bg-linear-to-r dark:from-gray-950 dark:via-slate-950 dark:to-zinc-950 text-slate-900 dark:text-white overflow-hidden transition-colors duration-300">
         {/* Tech Grid Background */}
         <div
-          className="absolute inset-0 z-0 opacity-[0.15] dark:opacity-[0.05]"
+          className="absolute inset-0 z-0 opacity-[0.15] dark:opacity-[0.2]"
           style={{
             backgroundImage: `linear-gradient(#999 1px, transparent 1px), linear-gradient(90deg, #999 1px, transparent 1px)`,
             backgroundSize: "50px 50px",
@@ -104,8 +104,8 @@ export default async function CorporateTrainingPage() {
                 <Icon className="h-4 w-4 text-orange-600 dark:text-orange-300" />
                 {vertical.title}
               </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-6">
-                {vertical.heroTitle}
+              <h1 className="text-3xl md:text-4xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-black leading-[1.1] mb-6 tracking-tight break-words" style={{ lineHeight: '1.1' }}>
+                <span className="whitespace-normal">{vertical.heroTitle}</span>
               </h1>
               <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-8 leading-relaxed">
                 {vertical.heroDescription}
@@ -132,16 +132,18 @@ export default async function CorporateTrainingPage() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <div className="relative w-full max-w-lg">
-                <div className="absolute inset-0 bg-linear-to-br from-orange-500/20 to-yellow-500/20 rounded-2xl blur-2xl" />
-                <Image
-                  src={vertical.heroImage}
-                  alt={vertical.title}
-                  width={600}
-                  height={400}
-                  className="relative rounded-2xl shadow-2xl w-full h-auto"
-                  priority
-                />
+              <div className="relative w-full max-w-3xl lg:max-w-4xl">
+                <div className="absolute inset-0 bg-linear-to-br from-orange-500/20 to-yellow-500/20 rounded-2xl blur-3xl opacity-60" />
+                <div className="relative rounded-2xl overflow-hidden shadow-2xl ring-4 ring-orange-500/10 dark:ring-orange-500/20">
+                  <Image
+                    src={vertical.heroImage}
+                    alt={vertical.title}
+                    width={800}
+                    height={600}
+                    className="w-full h-auto object-cover"
+                    priority
+                  />
+                </div>
               </div>
             </motion.div>
           </div>
@@ -375,9 +377,10 @@ export default async function CorporateTrainingPage() {
             </p>
             <Link
               href="/contact"
-              className="inline-flex px-10 py-4 bg-linear-to-r from-orange-500 to-yellow-400 text-black text-lg font-bold rounded-lg hover:opacity-90 transition shadow-xl shadow-orange-500/30"
+              className="group inline-flex items-center gap-2 px-10 py-4 bg-linear-to-r from-orange-500 to-yellow-400 text-black text-lg font-bold rounded-lg hover:opacity-90 transition shadow-xl shadow-orange-500/30"
             >
-              {vertical.finalCTA.buttonText}
+              <span>{vertical.finalCTA.buttonText}</span>
+              <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           </motion.div>
         </div>

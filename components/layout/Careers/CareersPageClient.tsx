@@ -244,10 +244,10 @@ const CareersPageClient = () => {
             {culturePillars.map((pillar, index) => (
               <motion.div
                 key={pillar.title}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ delay: 0.3 + index * 0.1, duration: 0.6, ease: "easeOut" }}
                 className={`p-8 rounded-3xl border transition-all duration-300 hover:scale-[1.02] ${
                   actualTheme === "dark"
                     ? "bg-zinc-900/50 border-white/10 hover:bg-zinc-800/80 hover:border-orange-500/30"
@@ -337,10 +337,10 @@ const CareersPageClient = () => {
             {filteredJobs.map((job, index) => (
               <motion.article
                 key={job.title}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ delay: 0.3 + index * 0.1, duration: 0.6, ease: "easeOut" }}
                 className={`group rounded-3xl border p-6 md:p-8 flex flex-col gap-5 transition-all duration-300 hover:scale-[1.01] ${
                   actualTheme === "dark"
                     ? "border-white/10 bg-zinc-900/50 hover:bg-zinc-800/80 hover:border-orange-500/30"

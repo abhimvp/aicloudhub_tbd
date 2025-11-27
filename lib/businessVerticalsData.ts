@@ -203,7 +203,7 @@ export const BUSINESS_VERTICALS_DATA: BusinessVerticalDetail[] = [
         "Empower your team. Accelerate transformation. Build tomorrow's capabilities today.",
       description:
         "Contact us to customize a training program for your organization.",
-      buttonText: "Request a Training Proposal →",
+      buttonText: "Request a Training Proposal",
     },
   },
 ];

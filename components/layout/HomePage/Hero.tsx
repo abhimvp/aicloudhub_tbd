@@ -221,7 +221,7 @@ export default function Hero() {
 
             <p
               ref={paraRef}
-              className="text-base md:text-lg mb-8 opacity-0 translate-y-5 leading-relaxed text-slate-500 dark:text-slate-400 max-w-full lg:max-w-xl mx-auto lg:mx-0"
+              className="text-base md:text-lg mb-8 opacity-0 translate-y-5 leading-relaxed text-slate-700 dark:text-slate-400 max-w-full lg:max-w-xl mx-auto lg:mx-0"
             >
               At aiCloudHub, we empower enterprises to thrive in the digital age
               through AI, Cloud, and Automation. From ideation to launch, our

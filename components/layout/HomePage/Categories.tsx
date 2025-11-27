@@ -10,6 +10,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useTheme } from "@/components/theme/ThemeProvider";
+import { ArrowRight } from "lucide-react";
 
 const Categories = () => {
   const { actualTheme } = useTheme();
@@ -159,9 +160,10 @@ hover:-translate-y-1 backdrop-blur-md border h-full flex flex-col ${
                         className="w-full border border-orange-400/60 text-orange-700 
         hover:bg-linear-to-r hover:from-orange-500 hover:to-yellow-400 
         hover:text-black font-semibold transition-all duration-300 
-        rounded-full shadow-[0_0_8px_rgba(255,165,0,0.4)]"
+        rounded-full shadow-[0_0_8px_rgba(255,165,0,0.4)] group inline-flex items-center justify-center gap-2"
                       >
-                        Explore Services
+                        <span>Explore Services</span>
+                        <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                       </Button>
                     </Link>
                   </div>

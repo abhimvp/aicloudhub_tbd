@@ -21,6 +21,7 @@ import {
   Stethoscope,
   Factory,
   Banknote,
+  ArrowRight,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -141,48 +142,28 @@ export default async function ServicePage({
     <div className="min-h-screen bg-linear-to-br from-white via-orange-50/40 to-yellow-50/50 dark:bg-linear-to-r dark:from-gray-950 dark:via-slate-950 dark:to-zinc-950 transition-colors duration-300">
       {/* Hero Section with Floating Elements */}
       <section className="relative bg-linear-to-br from-orange-50 via-white to-yellow-50 dark:bg-linear-to-r dark:from-gray-950 dark:via-slate-950 dark:to-zinc-950 text-slate-900 dark:text-white overflow-hidden transition-colors duration-300">
+        {/* Tech Grid Background */}
+        <div
+          className="absolute inset-0 z-0 opacity-[0.15] dark:opacity-[0.2]"
+          style={{
+            backgroundImage: `linear-gradient(#999 1px, transparent 1px), linear-gradient(90deg, #999 1px, transparent 1px)`,
+            backgroundSize: "50px 50px",
+          }}
+        />
+
         {/* Animated floating shapes */}
-        <div className="absolute inset-0 opacity-20 pointer-events-none">
-          <motion.div
-            className="absolute top-20 left-10 w-32 h-32 bg-orange-500 rounded-full blur-3xl"
-            animate={{
-              y: [0, -30, 0],
-              x: [0, 20, 0],
-              scale: [1, 1.2, 1],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-          <motion.div
-            className="absolute top-40 right-20 w-40 h-40 bg-yellow-500 rounded-full blur-3xl"
-            animate={{
-              y: [0, 40, 0],
-              x: [0, -30, 0],
-              scale: [1, 1.3, 1],
-            }}
-            transition={{
-              duration: 10,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 1,
-            }}
-          />
-          <motion.div
-            className="absolute bottom-20 left-1/3 w-36 h-36 bg-cyan-500 rounded-full blur-3xl"
-            animate={{
-              y: [0, -20, 0],
-              x: [0, 30, 0],
-              scale: [1, 1.1, 1],
-            }}
-            transition={{
-              duration: 9,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 2,
-            }}
+        <div className="absolute inset-0 opacity-20 pointer-events-none overflow-hidden">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-orange-500/30 rounded-full blur-[100px] animate-pulse" />
+          <div className="absolute top-40 right-20 w-96 h-96 bg-yellow-500/20 rounded-full blur-[120px] animate-pulse delay-700" />
+          <div className="absolute bottom-20 left-1/3 w-80 h-80 bg-cyan-500/20 rounded-full blur-[100px] animate-pulse delay-1000" />
+        </div>
+
+        {/* Animated gradient overlay for dark mode */}
+        <div className="absolute inset-0 opacity-0 dark:opacity-20 pointer-events-none transition-opacity duration-300 z-1">
+          <div className="absolute top-0 left-0 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl animate-pulse" />
+          <div
+            className="absolute bottom-0 right-0 w-96 h-96 bg-yellow-500/10 rounded-full blur-3xl animate-pulse"
+            style={{ animationDelay: "1s" }}
           />
         </div>
 
@@ -218,8 +199,8 @@ export default async function ServicePage({
                 <Icon className="h-4 w-4 text-orange-600 dark:text-orange-300" />
                 {service.title}
               </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-6">
-                {service.heroTitle}
+              <h1 className="text-3xl md:text-4xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-black leading-[1.1] mb-6 tracking-tight break-words" style={{ lineHeight: '1.1' }}>
+                <span className="whitespace-normal">{service.heroTitle}</span>
               </h1>
               <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-8 leading-relaxed">
                 {service.heroDescription}
@@ -246,17 +227,19 @@ export default async function ServicePage({
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <div className="relative w-full max-w-2xl">
-                <div className="absolute inset-0 bg-linear-to-br from-orange-500/20 to-yellow-500/20 rounded-2xl blur-2xl" />
-                <Image
-                  src={service.heroImage}
-                  alt={service.title}
-                  width={600}
-                  height={400}
-                  className="relative rounded-2xl shadow-2xl w-full h-auto"
-                  priority
-                  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 40vw"
-                />
+              <div className="relative w-full max-w-3xl lg:max-w-4xl">
+                <div className="absolute inset-0 bg-linear-to-br from-orange-500/20 to-yellow-500/20 rounded-2xl blur-3xl opacity-60" />
+                <div className="relative rounded-2xl overflow-hidden shadow-2xl ring-4 ring-orange-500/10 dark:ring-orange-500/20">
+                  <Image
+                    src={service.heroImage}
+                    alt={service.title}
+                    width={800}
+                    height={600}
+                    className="w-full h-auto object-cover"
+                    priority
+                    sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 45vw"
+                  />
+                </div>
               </div>
             </motion.div>
           </div>
@@ -270,8 +253,9 @@ export default async function ServicePage({
       >
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
         >
           <h2 className="text-3xl lg:text-4xl font-black text-center mb-4 text-slate-900 dark:text-white">
             What We Offer
@@ -293,13 +277,14 @@ export default async function ServicePage({
             return (
               <motion.article
                 key={index}
-                className={`group relative bg-white dark:bg-white/5 rounded-3xl border border-orange-100 dark:border-white/10 shadow-lg dark:shadow-none p-6 lg:p-8 hover:shadow-2xl hover:border-orange-300 dark:hover:border-orange-500/50 transition-all duration-500 overflow-hidden ${getBentoGridClass(
+                className={`group relative bg-white dark:bg-white/5 rounded-2xl border border-orange-100 dark:border-white/10 shadow-lg dark:shadow-none p-6 lg:p-8 hover:shadow-2xl hover:border-orange-300 dark:hover:border-orange-500/50 transition-all duration-500 overflow-hidden ${getBentoGridClass(
                   index,
                   isAIML
                 )} flex flex-col`}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.08 }}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 + index * 0.1, duration: 0.6, ease: "easeOut" }}
                 whileHover={OFFERING_HOVER}
               >
                 {/* Gradient overlay on hover */}
@@ -332,8 +317,9 @@ export default async function ServicePage({
         <div className="container mx-auto px-6 max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
           >
             <h2 className="text-3xl lg:text-4xl font-black text-center mb-12 text-slate-900 dark:text-white">
               {service.solutions
@@ -349,9 +335,10 @@ export default async function ServicePage({
                 <motion.div
                   key={index}
                   className="group relative bg-white/80 dark:bg-white/5 backdrop-blur-sm p-6 lg:p-8 rounded-2xl border border-orange-100 dark:border-white/10 shadow-xl hover:shadow-2xl transition-all duration-500"
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3 + index * 0.1, duration: 0.6, ease: "easeOut" }}
                   whileHover={capability3DHover}
                   style={CAPABILITY_3D_STYLE}
                 >
@@ -387,8 +374,9 @@ export default async function ServicePage({
         <section className="container mx-auto px-6 py-16 lg:py-24 max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
           >
             <h2 className="text-3xl lg:text-4xl font-black text-center mb-12 text-slate-900 dark:text-white">
               Tailored Solutions
@@ -400,9 +388,10 @@ export default async function ServicePage({
               <motion.div
                 key={index}
                 className="bg-white dark:bg-white/5 rounded-2xl border border-orange-100 dark:border-white/10 shadow-lg p-6 lg:p-8 hover:shadow-xl hover:border-orange-200 dark:hover:border-orange-500/30 transition-all duration-300"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 1.0 + index * 0.1 }}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 + index * 0.1, duration: 0.6, ease: "easeOut" }}
               >
                 <h3 className="font-bold text-lg mb-3 text-slate-900 dark:text-white">
                   {solution.title}
@@ -421,8 +410,9 @@ export default async function ServicePage({
         <div className="container mx-auto px-6 max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.3 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
           >
             <h2 className="text-3xl lg:text-4xl font-black text-center mb-4 text-slate-900 dark:text-white">
               How We Work
@@ -439,9 +429,10 @@ export default async function ServicePage({
                 <motion.div
                   key={index}
                   className="group relative min-w-[320px] md:min-w-[380px] snap-center"
-                  initial={{ opacity: 0, x: 50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: 1.5 + index * 0.1 }}
+                  initial={{ opacity: 0, x: 40 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3 + index * 0.1, duration: 0.6, ease: "easeOut" }}
                 >
                   {/* Connector line */}
                   {index < service.process.length - 1 && (
@@ -493,8 +484,9 @@ export default async function ServicePage({
         <div className="container mx-auto px-6 max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 2.0 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
           >
             <h2 className="text-3xl lg:text-4xl font-black text-center mb-12 text-slate-900 dark:text-white">
               Industries We Serve
@@ -513,15 +505,17 @@ export default async function ServicePage({
                 <motion.div
                   key={index}
                   className="group relative"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
                   transition={{
-                    ...industryTransition,
-                    delay: 2.2 + index * 0.1,
+                    delay: 0.3 + index * 0.1,
+                    duration: 0.6,
+                    ease: "easeOut",
                   }}
                   whileHover={INDUSTRY_HOVER}
                 >
-                  <div className="relative p-6 lg:p-8 bg-white dark:bg-white/5 rounded-2xl border-2 border-orange-100 dark:border-white/10 shadow-lg font-semibold text-center text-slate-900 dark:text-white hover:border-orange-400 dark:hover:border-orange-500 transition-all duration-300 overflow-hidden h-[150px] flex flex-col items-center justify-center gap-3">
+                  <div className="relative p-6 lg:p-8 bg-white dark:bg-zinc-900/50 rounded-2xl border border-orange-100 dark:border-white/10 shadow-lg font-semibold text-center text-slate-900 dark:text-white hover:border-orange-400 dark:hover:border-orange-500 transition-all duration-300 overflow-hidden h-[150px] flex flex-col items-center justify-center gap-3">
                     {/* Animated background gradient */}
                     <div className="absolute inset-0 bg-linear-to-br from-orange-400/0 via-yellow-400/0 to-orange-400/0 group-hover:from-orange-400/10 group-hover:via-yellow-400/10 group-hover:to-orange-400/10 dark:group-hover:from-orange-400/20 dark:group-hover:via-yellow-400/20 dark:group-hover:to-orange-400/20 transition-all duration-300" />
 
@@ -554,8 +548,9 @@ export default async function ServicePage({
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 2.5 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
             >
               <h2 className="text-3xl lg:text-4xl font-black mb-6">
                 {service.whyChoose.title}
@@ -566,9 +561,9 @@ export default async function ServicePage({
                     key={index}
                     className="flex items-start gap-3 text-white/95"
                     initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
+                    whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    transition={{ delay: 0.3 + index * 0.1, duration: 0.6, ease: "easeOut" }}
                   >
                     <span className="text-2xl leading-none">•</span>
                     <span className="text-lg">{reason}</span>
@@ -580,8 +575,9 @@ export default async function ServicePage({
             <motion.div
               className="flex justify-center lg:justify-end"
               initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 2.7 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
             >
               <div className="relative w-full max-w-md">
                 <div className="absolute inset-0 bg-cyan-500/20 rounded-2xl blur-3xl" />
@@ -616,9 +612,10 @@ export default async function ServicePage({
             </p>
             <Link
               href="/contact"
-              className="inline-flex px-10 py-4 bg-linear-to-r from-orange-500 to-yellow-400 text-black text-lg font-bold rounded-lg hover:opacity-90 transition shadow-xl shadow-orange-500/30"
+              className="group inline-flex items-center gap-2 px-10 py-4 bg-linear-to-r from-orange-500 to-yellow-400 text-black text-lg font-bold rounded-lg hover:opacity-90 transition shadow-xl shadow-orange-500/30"
             >
-              {service.finalCTA.buttonText}
+              <span>{service.finalCTA.buttonText}</span>
+              <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           </motion.div>
         </div>

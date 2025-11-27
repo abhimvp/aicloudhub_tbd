@@ -7,88 +7,131 @@ import Link from "next/link";
 import * as motion from "motion/react-client";
 import ScrollToTop from "@/components/layout/ScrollToTop";
 import {
-  Code2,
+  BriefcaseBusiness,
   ChevronRight,
   CheckCircle2,
-  Cpu,
-  ShieldCheck,
-  Server,
-  Zap,
-  Globe,
+  BrainCircuit,
+  CloudCog,
+  AppWindow,
+  BarChart3,
   ArrowRight,
   ChevronDown,
+  Check,
 } from "lucide-react";
 
-// Data from PDF
-const BUSINESS_UNITS = [
+// Core IT Service Offerings
+const CORE_SERVICES = [
   {
-    title: "Product & Digital Engineering",
+    title: "AI & Machine Learning Services",
     description:
-      "Empowering customers to harness the transformative potential of digital by developing smart, secure, and connected products and platforms.",
-    icon: Code2,
-    offerings: [
-      "Digital Innovation",
-      "Accelerated Product Development",
-      "Platform Modernization & Engineering",
-      "IoT Device Integration",
-      "Quality Assurance",
-      "Consulting & Industry Specific Solutions",
+      "Harness the power of artificial intelligence to automate processes, enhance decision-making, and build intelligent digital experiences.",
+    icon: BrainCircuit,
+    deliverables: [
+      "GenAI & LLM-based solutions",
+      "Custom machine learning models",
+      "Intelligent search, chatbots & virtual assistants",
+      "Predictive analytics & forecasting",
+      "NLP, computer vision & text processing",
+      "AI automation for business workflows",
     ],
-    highlight:
-      "We leverage a cloud-first, mobile-friendly approach combined with an agile framework and test automation to help clients accelerate time-to-market.",
+    businessImpact: [
+      "Better decision-making through data-driven intelligence",
+      "Reduced manual effort and increased productivity",
+      "Smarter customer experiences",
+    ],
   },
   {
-    title: "Generative AI Business Services",
+    title: "Cloud Services",
     description:
-      "Integrating content, data, and AI to craft innovative solutions tailored to the evolving demands of modern businesses.",
-    icon: Cpu,
-    offerings: [
-      "Gen AI-Powered Applications",
-      "Custom Gen AI Model Development",
-      "End-to-End Generative AI Solutions",
-      "CoE for Generative AI",
-      "Gen AI Security & Compliance",
+      "Modernize, scale, and secure your business with our comprehensive cloud offerings across AWS, Azure, and GCP.",
+    icon: CloudCog,
+    deliverables: [
+      "Cloud migration & modernization",
+      "Cloud-native application development",
+      "Infrastructure automation (IaC)",
+      "DevOps enablement & CI/CD pipelines",
+      "Cost optimization & cloud governance",
+      "Hybrid & multi-cloud solutions",
     ],
-    highlight:
-      "Our Generative AI ecosystem combines key components that enable businesses to fully harness the transformative power of this groundbreaking technology.",
+    businessImpact: [
+      "Agility and scalability",
+      "Reduced operational costs",
+      "Faster innovation cycles",
+    ],
   },
   {
-    title: "Infrastructure Management & Security",
+    title: "Application Services",
     description:
-      "Comprehensive monitoring and management solutions, ensuring secure ring-fencing of customers' applications and infrastructure.",
-    icon: ShieldCheck,
-    offerings: [
-      "Cloud & DC Infrastructure",
-      "Digital Workspaces",
-      "Networks",
-      "ITSM, ITOM Tools & Platforms",
-      "Cyber, Infrastructure & Data Security",
-      "Data Privacy, Governance, Risk & Compliance",
-      "Identity & Access Management",
+      "Design, build, modernize, and maintain enterprise-grade applications tailored to your business goals.",
+    icon: AppWindow,
+    deliverables: [
+      "Custom application development",
+      "Web, mobile & API engineering",
+      "Legacy modernization & re-platforming",
+      "Microservices & modular architecture",
+      "Enterprise application integration",
+      "UX/UI design & modernization",
     ],
-    highlight:
-      "We provide 24/7 support and managed security services tailored for mid-sized enterprises, leveraging automation through a DevSecOps approach.",
+    businessImpact: [
+      "High-performing digital products",
+      "Enhanced customer engagement",
+      "Reduced maintenance costs",
+    ],
   },
+  {
+    title: "Data & Analytics Services",
+    description:
+      "Turn your data into a competitive advantage with our end-to-end data engineering and analytics services.",
+    icon: BarChart3,
+    deliverables: [
+      "Data warehousing & data lakes",
+      "ETL/ELT development",
+      "BI dashboards & reporting",
+      "Big data engineering",
+      "Data governance & data quality",
+      "Real-time analytics",
+    ],
+    businessImpact: [
+      "Actionable insights for better decisions",
+      "Strong data foundation for AI initiatives",
+      "Improved business visibility",
+    ],
+  },
+];
+
+const INDUSTRIES = [
+  "Retail & E-Commerce",
+  "Telecom",
+  "Banking & FinTech",
+  "Supply Chain & Logistics",
+  "Healthcare",
+  "Technology & SaaS",
 ];
 
 const WHY_CHOOSE_US = [
   {
-    title: "Proven Expertise",
+    title: "Holistic Expertise Across AI, Cloud, Data & Applications",
     description:
-      "With 20+ successful projects and a track record of innovation, we empower businesses to achieve measurable success.",
-    icon: Zap,
+      "A unified partner for full-stack modernization and innovation.",
   },
   {
-    title: "Comprehensive Portfolio",
+    title: "Proven Engineering Excellence",
     description:
-      "From Cloud Computing and DevOps to AI/ML and Data Analytics, we provide end-to-end services to accelerate your digital journey.",
-    icon: Globe,
+      "Decades of combined experience delivering enterprise-grade solutions.",
   },
   {
-    title: "Disruptive Technologies",
+    title: "Flexible Engagement Models",
     description:
-      "We pioneer innovation by leveraging an ecosystem of transformative technologies including Generative AI and Product Engineering.",
-    icon: Server,
+      "On-demand experts, project-based delivery, or dedicated teams.",
+  },
+  {
+    title: "Faster, Value-Driven Delivery",
+    description: "Agile practices and automation-first execution.",
+  },
+  {
+    title: "Deep Domain Experience",
+    description:
+      "Understanding of business processes across critical industries.",
   },
 ];
 
@@ -132,7 +175,7 @@ export default function ITServicesContent() {
               transition={{ duration: 0.6 }}
             >
               {/* Breadcrumb Navigation */}
-              <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-white/70 mb-6">
+              <div className="flex items-center gap-2 text-sm text-slate-700 dark:text-white/70 mb-6">
                 <Link
                   href="/"
                   className="hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
@@ -153,33 +196,34 @@ export default function ITServicesContent() {
               </div>
 
               <div className="inline-flex items-center gap-3 rounded-full border border-orange-500/30 bg-orange-100 text-orange-700 dark:bg-orange-500/10 dark:text-orange-300 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] mb-6 backdrop-blur-sm">
-                <Code2 className="h-4 w-4 text-orange-600 dark:text-orange-300" />
+                <BriefcaseBusiness className="h-4 w-4 text-orange-600 dark:text-orange-300" />
                 IT Services
               </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-6 tracking-tight">
-                Empower Your Business with{" "}
-                <span className="bg-linear-to-r from-orange-600 to-yellow-500 dark:from-orange-400 dark:to-yellow-300 bg-clip-text text-transparent">
-                  AI-Driven Innovation
+              <h1 className="text-3xl md:text-4xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-black leading-[1.1] mb-6 tracking-tight break-words" style={{ lineHeight: '1.1' }}>
+                <span className="whitespace-normal">Transforming Businesses with </span>
+                <span className="bg-linear-to-r from-orange-600 to-yellow-500 dark:from-orange-400 dark:to-yellow-300 bg-clip-text text-transparent whitespace-normal">
+                  Modern and Intelligent IT Services
                 </span>
               </h1>
               <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-8 leading-relaxed">
-                Transform your business with cutting-edge cloud, AI, and digital
-                solutions. From ideation to launch, our intelligent solutions
-                accelerate innovation, strengthen security, and drive business
-                excellence.
+                Empowering organizations with AI-driven intelligence,
+                cloud-powered scalability, robust applications, and data-led
+                decision-making.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link
                   href="/contact"
-                  className="inline-flex px-8 py-4 bg-linear-to-r from-orange-500 to-yellow-400 text-black font-semibold rounded-lg hover:opacity-90 transition shadow-lg shadow-orange-500/30"
+                  className="group inline-flex items-center gap-2 px-8 py-4 bg-linear-to-r from-orange-500 to-yellow-400 text-black font-semibold rounded-lg hover:opacity-90 transition shadow-lg shadow-orange-500/30"
                 >
-                  Get Started
+                  <span>Get Started</span>
+                  <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                 </Link>
                 <a
                   href="#offerings"
-                  className="inline-flex px-8 py-4 border-2 border-slate-900/20 text-slate-900 dark:border-white/20 dark:text-white font-semibold rounded-lg hover:bg-slate-900/5 dark:hover:bg-white/10 transition"
+                  className="group inline-flex items-center gap-2 px-8 py-4 border-2 border-slate-900/20 text-slate-900 dark:border-white/20 dark:text-white font-semibold rounded-lg hover:bg-slate-900/5 dark:hover:bg-white/10 transition"
                 >
-                  Explore Solutions
+                  <span>Explore Solutions</span>
+                  <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                 </a>
               </div>
             </motion.div>
@@ -190,48 +234,58 @@ export default function ITServicesContent() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <div className="relative w-full max-w-2xl">
-                <div className="absolute inset-0 bg-linear-to-br from-orange-500/20 to-yellow-500/20 rounded-2xl blur-2xl" />
-                <Image
-                  src="/ServiceSectionImages/ServicePage_ITServices.webp"
-                  alt="IT Services"
-                  width={600}
-                  height={400}
-                  className="relative rounded-2xl shadow-2xl w-full h-auto"
-                  priority
-                />
+              <div className="relative w-full max-w-3xl lg:max-w-4xl">
+                <div className="absolute inset-0 bg-linear-to-br from-orange-500/20 to-yellow-500/20 rounded-2xl blur-3xl opacity-60" />
+                <div className="relative rounded-2xl overflow-hidden shadow-2xl ring-4 ring-orange-500/10 dark:ring-orange-500/20">
+                  <Image
+                    src="/ServiceSectionImages/ServicePage_ITServices.webp"
+                    alt="IT Services"
+                    width={800}
+                    height={600}
+                    className="w-full h-auto object-cover"
+                    priority
+                  />
+                </div>
               </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Introduction Section */}
-      <section className="container mx-auto px-6 py-16 lg:py-20 max-w-4xl text-center">
+      {/* Overview Section */}
+      <section className="container mx-auto px-6 py-16 lg:py-20 max-w-4xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-3xl font-bold mb-6 text-slate-900 dark:text-white">
-            Driving Innovation from Atlanta to the World
+          <h2 className="text-3xl font-bold mb-4 text-slate-900 dark:text-white">
+            IT Services — Overview
           </h2>
-          <p className="text-lg text-slate-600 dark:text-zinc-300 leading-relaxed">
-            Headquartered in Atlanta, GA,{" "}
-            <span className="font-semibold text-orange-600 dark:text-orange-400">
-              aiCloudHub
-            </span>{" "}
-            drives innovation with smart, secure, and connected solutions,
-            helping businesses unlock the full potential of digital
-            technologies. Our team of 50+ professionals delivers tailored
-            solutions that accelerate growth and ensure you stay ahead in the
-            digital era.
-          </p>
+          <div className="space-y-4 text-lg text-slate-700 dark:text-zinc-300 leading-relaxed">
+            <p>
+              At{" "}
+              <span className="font-semibold text-orange-600 dark:text-orange-400">
+                aicloudhub
+              </span>
+              , we deliver end-to-end IT services designed to meet the demands
+              of the digital-first world. Whether you're modernizing legacy
+              systems, migrating to the cloud, building intelligent
+              applications, or driving business insights from data — we bring
+              deep technical expertise, proven engineering excellence, and
+              industry experience to support your transformation.
+            </p>
+            <p>
+              Our four core service pillars enable businesses to innovate
+              faster, operate efficiently, and stay ahead of technology
+              disruption.
+            </p>
+          </div>
         </motion.div>
       </section>
 
-      {/* Business Units / Offerings Section */}
+      {/* Core IT Service Offerings Section */}
       <section
         id="offerings"
         className="container mx-auto px-6 py-16 lg:py-24 max-w-7xl"
@@ -244,27 +298,23 @@ export default function ITServicesContent() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl lg:text-4xl font-black mb-4 text-slate-900 dark:text-white">
-            Our Business Units
+            Our Core IT Service Offerings
           </h2>
-          <p className="text-slate-600 dark:text-zinc-400 max-w-3xl mx-auto">
-            Specialized expertise across three core pillars of digital
-            transformation
-          </p>
         </motion.div>
 
         <div className="grid gap-8">
-          {BUSINESS_UNITS.map((unit, index) => {
-            const Icon = unit.icon;
+          {CORE_SERVICES.map((service, index) => {
+            const Icon = service.icon;
             const isExpanded = expandedIndex === index;
 
             return (
               <motion.div
                 key={index}
-                className="bg-white dark:bg-zinc-900/50 rounded-3xl border border-orange-100 dark:border-white/10 shadow-lg overflow-hidden"
-                initial={{ opacity: 0, y: 30 }}
+                className="bg-white dark:bg-zinc-900/50 rounded-2xl border border-orange-100 dark:border-white/10 shadow-lg overflow-hidden"
+                initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ delay: 0.3 + index * 0.1, duration: 0.6, ease: "easeOut" }}
               >
                 <button
                   onClick={() => setExpandedIndex(isExpanded ? null : index)}
@@ -277,7 +327,7 @@ export default function ITServicesContent() {
                     <div className="flex-1">
                       <div className="flex items-center justify-between gap-4 mb-2">
                         <h3 className="text-2xl font-bold text-slate-900 dark:text-white">
-                          {unit.title}
+                          {index + 1}. {service.title}
                         </h3>
                         <ChevronDown
                           className={`w-6 h-6 text-slate-400 transition-transform duration-300 ${
@@ -285,8 +335,8 @@ export default function ITServicesContent() {
                           }`}
                         />
                       </div>
-                      <p className="text-slate-600 dark:text-zinc-300 text-lg mb-4">
-                        {unit.description}
+                      <p className="text-slate-700 dark:text-zinc-300 text-lg mb-4">
+                        {service.description}
                       </p>
 
                       {/* Mobile Icon (visible only on small screens) */}
@@ -313,27 +363,41 @@ export default function ITServicesContent() {
                       <div>
                         <h4 className="font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                           <CheckCircle2 className="w-5 h-5 text-orange-500" />
-                          Key Offerings
+                          {service.title.includes("AI")
+                            ? "What We Deliver"
+                            : service.title.includes("Cloud")
+                            ? "Our Cloud Capabilities"
+                            : service.title.includes("Application")
+                            ? "What We Offer"
+                            : "Our Expertise Includes"}
                         </h4>
                         <ul className="space-y-3">
-                          {unit.offerings.map((offering, idx) => (
+                          {service.deliverables.map((item, idx) => (
                             <li
                               key={idx}
-                              className="flex items-start gap-3 text-slate-600 dark:text-zinc-300 text-sm"
+                              className="flex items-start gap-3 text-slate-700 dark:text-zinc-300 text-sm"
                             >
                               <span className="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 shrink-0" />
-                              {offering}
+                              {item}
                             </li>
                           ))}
                         </ul>
                       </div>
                       <div className="bg-white dark:bg-zinc-900 rounded-xl p-6 border border-orange-100 dark:border-white/10 h-fit">
                         <h4 className="font-bold text-slate-900 dark:text-white mb-3">
-                          Our Approach
+                          Business Impact
                         </h4>
-                        <p className="text-slate-600 dark:text-zinc-400 text-sm leading-relaxed">
-                          {unit.highlight}
-                        </p>
+                        <ul className="space-y-3">
+                          {service.businessImpact.map((impact, idx) => (
+                            <li
+                              key={idx}
+                              className="flex items-start gap-3 text-slate-700 dark:text-zinc-400 text-sm"
+                            >
+                              <Check className="w-5 h-5 text-orange-500 shrink-0 mt-0.5" />
+                              <span>{impact}</span>
+                            </li>
+                          ))}
+                        </ul>
                         <div className="mt-6 pt-6 border-t border-slate-100 dark:border-white/5">
                           <Link
                             href="/contact"
@@ -353,8 +417,45 @@ export default function ITServicesContent() {
         </div>
       </section>
 
-      {/* Why Choose Us Section */}
+      {/* Industries We Support Section */}
       <section className="py-16 lg:py-24 bg-linear-to-br from-orange-50 to-yellow-50 dark:bg-linear-to-b dark:from-zinc-900 dark:to-zinc-950">
+        <div className="container mx-auto px-6 max-w-7xl">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl lg:text-4xl font-black mb-4 text-slate-900 dark:text-white">
+              Industries We Support
+            </h2>
+            <p className="text-slate-700 dark:text-zinc-400 max-w-3xl mx-auto mb-8">
+              We help clients across:
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {INDUSTRIES.map((industry, index) => (
+              <motion.div
+                key={index}
+                className="bg-white dark:bg-zinc-900/50 p-8 rounded-2xl border border-orange-100 dark:border-white/10 shadow-md hover:shadow-lg transition-all duration-300 text-center min-h-[120px] flex items-center justify-center"
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 + index * 0.1, duration: 0.6, ease: "easeOut" }}
+              >
+                <p className="text-slate-900 dark:text-white font-semibold text-base lg:text-lg">
+                  {industry}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Why Choose Us Section */}
+      <section className="py-16 lg:py-24">
         <div className="container mx-auto px-6 max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -364,38 +465,31 @@ export default function ITServicesContent() {
             className="text-center mb-16"
           >
             <h2 className="text-3xl lg:text-4xl font-black mb-4 text-slate-900 dark:text-white">
-              Why Partner with aiCloudHub?
+              Why Choose aicloudhub for IT Services?
             </h2>
-            <p className="text-slate-600 dark:text-zinc-400 max-w-3xl mx-auto">
-              We combine deep industry expertise with next-gen technology to
-              deliver tangible business outcomes.
-            </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {WHY_CHOOSE_US.map((item, index) => {
-              const Icon = item.icon;
-              return (
-                <motion.div
-                  key={index}
-                  className="bg-white dark:bg-zinc-900/50 p-8 rounded-2xl border border-orange-100 dark:border-white/10 shadow-lg hover:shadow-xl transition-all duration-300 group"
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                >
-                  <div className="w-14 h-14 rounded-xl bg-orange-100 dark:bg-orange-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                    <Icon className="w-7 h-7 text-orange-600 dark:text-orange-400" />
-                  </div>
-                  <h3 className="text-xl font-bold mb-3 text-slate-900 dark:text-white">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {WHY_CHOOSE_US.map((item, index) => (
+              <motion.div
+                key={index}
+                className="bg-white dark:bg-zinc-900/50 p-8 rounded-2xl border border-orange-100 dark:border-white/10 shadow-lg hover:shadow-xl transition-all duration-300"
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 + index * 0.1, duration: 0.6, ease: "easeOut" }}
+              >
+                <div className="flex items-start gap-4 mb-4">
+                  <Check className="w-7 h-7 text-orange-500 shrink-0 mt-1" />
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white leading-tight">
                     {item.title}
                   </h3>
-                  <p className="text-slate-600 dark:text-zinc-400 leading-relaxed">
-                    {item.description}
-                  </p>
-                </motion.div>
-              );
-            })}
+                </div>
+                <p className="text-slate-700 dark:text-zinc-400 leading-relaxed ml-11 text-base">
+                  {item.description}
+                </p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -418,9 +512,10 @@ export default function ITServicesContent() {
             </p>
             <Link
               href="/contact"
-              className="inline-flex px-10 py-4 bg-linear-to-r from-orange-500 to-yellow-400 text-black text-lg font-bold rounded-lg hover:opacity-90 transition shadow-xl shadow-orange-500/30"
+              className="group inline-flex items-center gap-2 px-10 py-4 bg-linear-to-r from-orange-500 to-yellow-400 text-black text-lg font-bold rounded-lg hover:opacity-90 transition shadow-xl shadow-orange-500/30"
             >
-              Start Your Journey
+              <span>Start Your Journey</span>
+              <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           </motion.div>
         </div>
@@ -431,4 +526,3 @@ export default function ITServicesContent() {
     </div>
   );
 }
-

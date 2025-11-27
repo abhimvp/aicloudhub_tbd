@@ -284,9 +284,10 @@ export default function BlogsPageContent() {
                   {filteredBlogs.map((blog, index) => (
                     <motion.div
                       key={blog.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                      initial={{ opacity: 0, y: 40 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.3 + index * 0.1, duration: 0.6, ease: "easeOut" }}
                     >
                       <Link href={`/blogs/${blog.slug}`}>
                         <Card

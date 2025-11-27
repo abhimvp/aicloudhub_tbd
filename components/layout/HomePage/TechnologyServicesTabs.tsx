@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useTheme } from "@/components/theme/ThemeProvider";
 import * as motion from "motion/react-client";
+import { ArrowRight } from "lucide-react";
 import {
   HOMEPAGE_SERVICE_SUMMARIES,
   type HomepageServiceSummary,
@@ -46,8 +47,8 @@ export default function TechnologyServicesTabs() {
   const sectionBg = isDark
     ? "bg-linear-to-br from-gray-900 via-slate-900 to-zinc-950"
     : "bg-gradient-to-br from-white via-orange-50/40 to-yellow-50/50";
-  const bodyText = isDark ? "text-zinc-200" : "text-slate-600";
-  const tabInactive = isDark ? "text-zinc-400" : "text-slate-500";
+  const bodyText = isDark ? "text-zinc-200" : "text-slate-700";
+  const tabInactive = isDark ? "text-zinc-400" : "text-slate-600";
   const tabUnderline = isDark ? "bg-orange-400" : "bg-orange-500";
   const headingColor = isDark ? "text-white" : "text-slate-900";
   const panelBadge = isDark
@@ -292,9 +293,10 @@ export default function TechnologyServicesTabs() {
               <div className="mt-6">
                 <Link
                   href={activeService.cta.href}
-                  className={`inline-flex w-fit items-center rounded-lg px-6 py-3 text-sm font-semibold transition ${ctaClasses}`}
+                  className={`group inline-flex w-fit items-center gap-2 rounded-lg px-6 py-3 text-sm font-semibold transition ${ctaClasses}`}
                 >
-                  {activeService.cta.label}
+                  <span>{activeService.cta.label}</span>
+                  <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                 </Link>
               </div>
             </div>

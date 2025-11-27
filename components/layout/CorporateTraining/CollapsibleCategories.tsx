@@ -83,7 +83,7 @@ export default function CollapsibleCategories({
                       <ChevronDown className="w-6 h-6 text-orange-500 dark:text-orange-400" />
                     </motion.div>
                   </div>
-                  <p className="text-slate-600 dark:text-zinc-300 leading-relaxed">
+                  <p className="text-slate-700 dark:text-zinc-300 leading-relaxed">
                     {category.description}
                   </p>
                 </div>

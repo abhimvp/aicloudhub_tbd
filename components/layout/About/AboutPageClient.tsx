@@ -20,85 +20,66 @@ import {
   BookOpen,
   Lightbulb,
   Star,
-  Award,
+  Quote,
+  ArrowRight,
 } from "lucide-react";
 
 const AboutPageClient = () => {
   const { actualTheme } = useTheme();
 
-  const leaders = [
-    {
-      name: "Roshi Jambula",
-      title: "Chief Executive Officer",
-      icon: <Users className="w-6 h-6" />,
-      description:
-        "A visionary leader with over 25 years of techno-functional expertise, Roshi drives aiCloudHub's mission to revolutionize IT services through innovation, agility, and customer-centric transformation. She leads digital initiatives across Retail, Telecom, and E-commerce, empowering clients with scalable, AI-powered solutions.",
-      image: "/clientProfileImages/RoshiReddy.png",
-      isTransparent: true,
-    },
-    {
-      name: "Rama Raju",
-      title: "Chief Technology Officer",
-      icon: <Brain className="w-6 h-6" />,
-      description:
-        "With more than 25 years of experience, Rama leads aiCloudHub's technology vision—architecting secure, scalable, and future-ready solutions across AI, Cloud, and IoT. His focus on innovation ensures clients stay ahead in an ever-evolving digital landscape.",
-      image: "/categories-cloud-computing.jpg",
-    },
-  ];
-
   const coreValues = [
     {
-      icon: <Zap className="w-8 h-8" />,
+      icon: Zap,
       title: "Agility",
-      description: "Quick adaptation to changing business needs",
+      description: "Adapting with speed.",
       color: "from-orange-500 to-yellow-400",
       bg: "bg-orange-500/10",
       text: "text-orange-500",
     },
     {
-      icon: <ShieldCheck className="w-8 h-8" />,
+      icon: ShieldCheck,
       title: "Integrity",
-      description: "Honesty and transparency in every interaction",
+      description: "Unwavering honesty.",
       color: "from-blue-500 to-cyan-400",
       bg: "bg-blue-500/10",
       text: "text-blue-500",
     },
     {
-      icon: <Handshake className="w-8 h-8" />,
+      icon: Handshake,
       title: "Collaboration",
-      description: "Teamwork across domains and disciplines",
+      description: "Shared vision.",
       color: "from-purple-500 to-pink-400",
       bg: "bg-purple-500/10",
       text: "text-purple-500",
     },
     {
-      icon: <BookOpen className="w-8 h-8" />,
+      icon: BookOpen,
       title: "Learning",
-      description: "Continuous growth and skill development",
+      description: "Continuous growth.",
       color: "from-green-500 to-emerald-400",
       bg: "bg-green-500/10",
       text: "text-green-500",
     },
     {
-      icon: <Lightbulb className="w-8 h-8" />,
-      title: "Outstanding Quality",
-      description: "Excellence in every solution we deliver",
+      icon: Lightbulb,
+      title: "Quality",
+      description: "Excellence standard.",
       color: "from-yellow-500 to-orange-400",
       bg: "bg-yellow-500/10",
       text: "text-yellow-500",
     },
     {
-      icon: <Star className="w-8 h-8" />,
-      title: "Uniqueness",
-      description: "Innovative approaches to complex challenges",
+      icon: Star,
+      title: "Innovation",
+      description: "Unique solutions.",
       color: "from-indigo-500 to-purple-400",
       bg: "bg-indigo-500/10",
       text: "text-indigo-500",
     },
     {
-      icon: <Heart className="w-8 h-8" />,
+      icon: Heart,
       title: "Dedication",
-      description: "Committed to client success and impact",
+      description: "Committed impact.",
       color: "from-red-500 to-pink-400",
       bg: "bg-red-500/10",
       text: "text-red-500",
@@ -107,85 +88,79 @@ const AboutPageClient = () => {
 
   const services = [
     {
-      title: "AI & Machine Learning",
-      description:
-        "Building intelligent systems that drive automation and innovation.",
-      icon: <Brain className="w-10 h-10" />,
+      title: "AI & ML",
+      description: "Intelligent automation.",
+      icon: Brain,
     },
     {
       title: "Cloud & DevOps",
-      description:
-        "Designing secure, scalable, and high-performance infrastructures.",
-      icon: <Cloud className="w-10 h-10" />,
+      description: "Scalable infra.",
+      icon: Cloud,
     },
     {
       title: "Cybersecurity",
-      description:
-        "Safeguarding data, applications, and operations across platforms.",
-      icon: <ShieldCheck className="w-10 h-10" />,
+      description: "Fortified protection.",
+      icon: ShieldCheck,
     },
     {
-      title: "Quality Engineering",
-      description: "Ensuring reliability and performance through automation.",
-      icon: <CheckCircle2 className="w-10 h-10" />,
+      title: "Quality Eng.",
+      description: "Reliability assured.",
+      icon: CheckCircle2,
     },
     {
       title: "Data & Analytics",
-      description:
-        "Turning information into actionable insights for strategic decisions.",
-      icon: <BarChart3 className="w-10 h-10" />,
+      description: "Actionable insights.",
+      icon: BarChart3,
     },
     {
-      title: "IT Staffing & Training",
-      description: "Empowering teams with future-ready digital skills.",
-      icon: <Users className="w-10 h-10" />,
+      title: "Staffing",
+      description: "Future-ready talent.",
+      icon: Users,
     },
   ];
 
   return (
     <main
-      className={`min-h-screen transition-colors duration-300 ${actualTheme === "dark"
-        ? "bg-linear-to-r from-gray-950 via-slate-950 to-zinc-950"
-        : "bg-linear-to-br from-white via-orange-50/40 to-yellow-50/50"
-        }`}
+      className={`min-h-screen transition-colors duration-500 ${
+        actualTheme === "dark"
+          ? "bg-black text-white"
+          : "bg-slate-50 text-slate-900"
+      }`}
     >
-      {/* Hero Section */}
-      <section
-        className={`relative pt-28 pb-16 overflow-hidden transition-colors duration-300 ${actualTheme === "dark"
-          ? "bg-linear-to-r from-gray-950 via-slate-950 to-zinc-950"
-          : "bg-linear-to-br from-orange-50 via-white to-yellow-50"
-          }`}
-      >
-        {/* Tech Grid Background */}
-        <div
-          className="absolute inset-0 z-0 opacity-[0.15] dark:opacity-[0.05]"
-          style={{
-            backgroundImage: `linear-gradient(#999 1px, transparent 1px), linear-gradient(90deg, #999 1px, transparent 1px)`,
-            backgroundSize: "50px 50px",
-          }}
-        />
-
-        {/* Animated floating shapes */}
-        <div className="absolute inset-0 opacity-20 pointer-events-none overflow-hidden">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-orange-500/30 rounded-full blur-[100px] animate-pulse" />
-          <div className="absolute top-40 right-20 w-96 h-96 bg-yellow-500/20 rounded-full blur-[120px] animate-pulse delay-700" />
-          <div className="absolute bottom-20 left-1/3 w-80 h-80 bg-cyan-500/20 rounded-full blur-[100px] animate-pulse delay-1000" />
+      {/* Hero Section - Premium & Architectural */}
+      <section className="relative pt-24 pb-16 md:pt-32 md:pb-20 overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute inset-0 z-0">
+          {actualTheme === "dark" ? (
+            <>
+              <div className="absolute top-0 inset-x-0 h-[500px] bg-linear-to-b from-zinc-900 to-black" />
+              <div className="absolute top-[-10%] left-[20%] w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-orange-500/10 rounded-full blur-[80px] md:blur-[120px]" />
+              <div className="absolute bottom-[10%] right-[10%] w-[250px] h-[250px] md:w-[400px] md:h-[400px] bg-blue-600/10 rounded-full blur-[60px] md:blur-[100px]" />
+              <div
+                className="absolute inset-0 opacity-[0.15]"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px)",
+                  backgroundSize: "40px 40px",
+                }}
+              />
+            </>
+          ) : (
+            <>
+              <div className="absolute top-0 inset-x-0 h-[500px] bg-linear-to-b from-white to-slate-50" />
+              <div className="absolute top-[-10%] right-[20%] w-[350px] h-[350px] md:w-[600px] md:h-[600px] bg-orange-100 rounded-full blur-[60px] md:blur-[100px]" />
+              <div className="absolute bottom-[10%] left-[10%] w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-blue-50 rounded-full blur-[50px] md:blur-[80px]" />
+              <div
+                className="absolute inset-0 opacity-[0.03]"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)",
+                  backgroundSize: "40px 40px",
+                }}
+              />
+            </>
+          )}
         </div>
-
-        {/* Animated gradient overlay for dark mode */}
-        {actualTheme === "dark" && (
-          <div className="absolute inset-0 opacity-20 pointer-events-none transition-opacity duration-300 z-1">
-            <div className="absolute top-0 left-0 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl animate-pulse" />
-            <div
-              className="absolute bottom-0 right-0 w-96 h-96 bg-yellow-500/10 rounded-full blur-3xl animate-pulse"
-              style={{ animationDelay: "1s" }}
-            />
-            <div
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl animate-pulse"
-              style={{ animationDelay: "2s" }}
-            />
-          </div>
-        )}
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
@@ -194,22 +169,36 @@ const AboutPageClient = () => {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="text-center max-w-4xl mx-auto"
           >
-            <h1
-              className={`text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-balance ${actualTheme === "dark" ? "text-white" : "text-zinc-900"
-                }`}
+            <div
+              className={`inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6 md:mb-8 border backdrop-blur-md ${
+                actualTheme === "dark"
+                  ? "bg-white/5 border-white/10 text-orange-400"
+                  : "bg-white/60 border-slate-200 text-orange-600"
+              }`}
             >
-              Driving Digital Transformation. <br className="hidden md:block" />
-              <span className="bg-gradient-to-r from-orange-500 via-amber-500 to-orange-600 bg-clip-text text-transparent">
-                Delivering Trusted Value.
+              <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" />
+              <span className="text-[10px] md:text-xs font-bold uppercase tracking-widest">
+                Global Impact
+              </span>
+            </div>
+            <h1
+              className={`text-4xl sm:text-5xl md:text-7xl font-black tracking-tight mb-6 md:mb-8 leading-[1.1] ${
+                actualTheme === "dark" ? "text-white" : "text-slate-900"
+              }`}
+            >
+              Driving Digital <br />
+              <span className="bg-linear-to-r from-orange-500 via-amber-500 to-orange-600 bg-clip-text text-transparent">
+                Transformation.
               </span>
             </h1>
 
             <p
-              className={`text-lg md:text-xl font-medium leading-relaxed text-balance max-w-2xl mx-auto ${actualTheme === "dark" ? "text-zinc-400" : "text-zinc-600"
-                }`}
+              className={`text-lg md:text-2xl font-light leading-relaxed max-w-2xl mx-auto ${
+                actualTheme === "dark" ? "text-zinc-400" : "text-slate-700"
+              }`}
             >
-              We partner with businesses worldwide to build smart, secure, and
-              scalable technologies that transform the future.
+              We partner with global enterprises to build smart, secure, and
+              scalable technologies that define the future.
             </p>
           </motion.div>
         </div>
@@ -223,23 +212,26 @@ const AboutPageClient = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className={`backdrop-blur-xl border rounded-3xl p-8 md:p-10 shadow-2xl ${actualTheme === "dark"
-              ? "bg-zinc-900/50 border-white/5 shadow-black/20"
-              : "bg-white/70 border-zinc-200 shadow-zinc-200/50"
-              }`}
+            className={`backdrop-blur-xl border rounded-3xl p-8 md:p-10 shadow-2xl ${
+              actualTheme === "dark"
+                ? "bg-zinc-900/50 border-white/5 shadow-black/20"
+                : "bg-white/70 border-zinc-200 shadow-zinc-200/50"
+            }`}
           >
             <div className="flex flex-col md:flex-row gap-8 items-start">
               <div className="flex-1">
                 <h2
-                  className={`text-2xl md:text-3xl font-bold mb-4 ${actualTheme === "dark" ? "text-white" : "text-zinc-900"
-                    }`}
+                  className={`text-2xl md:text-3xl font-bold mb-4 ${
+                    actualTheme === "dark" ? "text-white" : "text-zinc-900"
+                  }`}
                 >
                   <span className="text-orange-500">aiCloudHub</span>: Global
                   leader in IT services & corporate training
                 </h2>
                 <div
-                  className={`space-y-4 text-base leading-relaxed ${actualTheme === "dark" ? "text-zinc-400" : "text-zinc-600"
-                    }`}
+                  className={`space-y-4 text-base leading-relaxed ${
+                    actualTheme === "dark" ? "text-zinc-400" : "text-slate-700"
+                  }`}
                 >
                   <p>
                     Since 2018, we&apos;ve been helping enterprises accelerate
@@ -255,12 +247,14 @@ const AboutPageClient = () => {
                 </div>
               </div>
               <div
-                className={`md:w-1/3 p-6 rounded-2xl ${actualTheme === "dark" ? "bg-zinc-800/50" : "bg-orange-50"
-                  }`}
+                className={`md:w-1/3 p-6 rounded-2xl ${
+                  actualTheme === "dark" ? "bg-zinc-800/50" : "bg-orange-50"
+                }`}
               >
                 <p
-                  className={`font-semibold text-lg italic ${actualTheme === "dark" ? "text-zinc-200" : "text-zinc-800"
-                    }`}
+                  className={`font-semibold text-lg italic ${
+                    actualTheme === "dark" ? "text-zinc-200" : "text-zinc-800"
+                  }`}
                 >
                   &quot;We bridge innovation with enablement—helping
                   organizations adopt the right technologies and develop the
@@ -272,421 +266,322 @@ const AboutPageClient = () => {
         </div>
       </section>
 
-      {/* Mission & Vision */}
-      <section className="py-12 relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* CEO Message - Premium Layout */}
+      <section className="py-12 md:py-16 relative overflow-hidden">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid lg:grid-cols-12 gap-8 md:gap-12 items-center">
+            {/* Image Column */}
             <motion.div
-              initial={{ opacity: 0, x: -20 }}
+              initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="group relative"
+              transition={{ duration: 0.8 }}
+              className="lg:col-span-5 relative"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-transparent rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500 opacity-50" />
-              <div
-                className={`relative h-full backdrop-blur-md border rounded-3xl p-8 transition-all duration-300 hover:-translate-y-1 ${actualTheme === "dark"
-                  ? "bg-zinc-900/80 border-white/10 hover:border-orange-500/30"
-                  : "bg-white border-zinc-200 hover:border-orange-300 hover:shadow-lg hover:shadow-orange-100"
-                  }`}
-              >
-                <div className="flex items-center gap-4 mb-4">
-                  <div
-                    className={`p-3 rounded-xl ${actualTheme === "dark"
-                      ? "bg-orange-500/20 text-orange-400"
-                      : "bg-orange-100 text-orange-600"
-                      }`}
-                  >
-                    <Rocket className="w-8 h-8" />
-                  </div>
-                  <h2
-                    className={`text-2xl font-bold ${actualTheme === "dark" ? "text-white" : "text-zinc-900"
-                      }`}
-                  >
-                    Our Mission
-                  </h2>
-                </div>
-                <p
-                  className={`text-lg leading-relaxed ${actualTheme === "dark" ? "text-zinc-400" : "text-zinc-600"
-                    }`}
-                >
-                  To{" "}
-                  <span className="text-orange-500 font-semibold">
-                    empower organizations and individuals
-                  </span>{" "}
-                  through innovative technology solutions and hands-on
-                  learning—enabling faster growth, smarter decisions, and
-                  sustainable success.
-                </p>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="group relative"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-transparent rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500 opacity-50" />
-              <div
-                className={`relative h-full backdrop-blur-md border rounded-3xl p-8 transition-all duration-300 hover:-translate-y-1 ${actualTheme === "dark"
-                  ? "bg-zinc-900/80 border-white/10 hover:border-blue-500/30"
-                  : "bg-white border-zinc-200 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-100"
-                  }`}
-              >
-                <div className="flex items-center gap-4 mb-4">
-                  <div
-                    className={`p-3 rounded-xl ${actualTheme === "dark"
-                      ? "bg-blue-500/20 text-blue-400"
-                      : "bg-blue-100 text-blue-600"
-                      }`}
-                  >
-                    <Globe className="w-8 h-8" />
-                  </div>
-                  <h2
-                    className={`text-2xl font-bold ${actualTheme === "dark" ? "text-white" : "text-zinc-900"
-                      }`}
-                  >
-                    Our Vision
-                  </h2>
-                </div>
-                <p
-                  className={`text-lg leading-relaxed ${actualTheme === "dark" ? "text-zinc-400" : "text-zinc-600"
-                    }`}
-                >
-                  To be a{" "}
-                  <span className="text-blue-500 font-semibold">
-                    trusted global leader
-                  </span>{" "}
-                  in digital transformation, driving innovation and building
-                  capabilities that help businesses and communities succeed in a
-                  rapidly evolving world.
-                </p>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Services Section */}
-      <section
-        className={`py-16 relative transition-colors duration-300 ${actualTheme === "dark" ? "bg-zinc-950" : "bg-zinc-50/50"
-          }`}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-12"
-          >
-            <span
-              className={`text-sm font-bold tracking-wider uppercase mb-2 block ${actualTheme === "dark" ? "text-orange-400" : "text-orange-600"
-                }`}
-            >
-              What We Do
-            </span>
-            <h2
-              className={`text-3xl md:text-4xl font-bold mb-4 ${actualTheme === "dark" ? "text-white" : "text-zinc-900"
-                }`}
-            >
-              Technology Expertise & Human Enablement
-            </h2>
-            <p
-              className={`text-lg max-w-2xl mx-auto ${actualTheme === "dark" ? "text-zinc-400" : "text-zinc-600"
-                }`}
-            >
-              We deliver end-to-end IT services and upskilling programs designed
-              for the modern enterprise.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {services.map((service, index) => (
-              <motion.div
-                key={service.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.05, duration: 0.5 }}
-                whileHover={{ y: -5 }}
-                className={`group p-6 rounded-2xl border transition-all duration-300 h-full flex flex-col ${actualTheme === "dark"
-                  ? "bg-zinc-900 border-zinc-800 hover:border-orange-500/30 hover:bg-zinc-800/50"
-                  : "bg-white border-zinc-200 hover:border-orange-200 hover:shadow-xl hover:shadow-orange-500/5"
-                  }`}
-              >
-                <div className="mb-4 text-orange-500 group-hover:text-orange-400 transition-colors duration-300">
-                  {service.icon}
-                </div>
-                <h3
-                  className={`text-lg font-bold mb-2 ${actualTheme === "dark" ? "text-white" : "text-zinc-900"
-                    }`}
-                >
-                  {service.title}
-                </h3>
-                <p
-                  className={`text-sm leading-relaxed ${actualTheme === "dark" ? "text-zinc-400" : "text-zinc-600"
-                    }`}
-                >
-                  {service.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Leadership Team */}
-      <section id="leadership-team" className="py-16 relative overflow-hidden">
-        {/* Decorative background elements */}
-        {actualTheme === "dark" && (
-          <div className="absolute top-1/2 left-0 w-full h-full bg-gradient-to-t from-zinc-900 to-transparent opacity-50 pointer-events-none" />
-        )}
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-12"
-          >
-            <h2
-              className={`text-3xl md:text-4xl font-bold mb-3 ${actualTheme === "dark" ? "text-white" : "text-zinc-900"
-                }`}
-            >
-              Leadership Team
-            </h2>
-            <p
-              className={`text-lg ${actualTheme === "dark" ? "text-zinc-400" : "text-zinc-600"
-                }`}
-            >
-              Guided by experience. Driven by innovation.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {leaders.map((leader, index) => (
-              <motion.div
-                key={leader.name}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.2, duration: 0.6 }}
-                className="group relative h-full"
-              >
+              <div className="relative aspect-[3/4] md:aspect-[4/5] rounded-2xl overflow-hidden group mx-auto max-w-sm lg:max-w-sm xl:max-w-md">
                 <div
-                  className={`relative overflow-hidden rounded-3xl border transition-all duration-500 h-full flex flex-col ${actualTheme === "dark"
-                    ? "bg-zinc-900 border-zinc-800 hover:border-orange-500/30"
-                    : "bg-white border-zinc-200 hover:border-orange-200 hover:shadow-xl hover:shadow-orange-500/5"
-                    }`}
-                >
-                  <div className={`relative h-72 overflow-hidden ${leader.isTransparent ? "bg-gradient-to-b from-orange-100/50 to-orange-50/30 dark:from-orange-900/20 dark:to-zinc-900/50" : ""}`}>
-                    {leader.isTransparent && (
-                      <div className="absolute inset-0 flex items-end justify-center">
-                        <div className="w-64 h-64 bg-gradient-to-t from-orange-500/20 to-transparent rounded-full blur-2xl mb-[-2rem]" />
-                      </div>
-                    )}
-                    <Image
-                      src={leader.image}
-                      alt={leader.name}
-                      fill
-                      className={`transition-transform duration-700 group-hover:scale-105 ${leader.isTransparent ? "object-contain object-bottom scale-110" : "object-cover"
-                        }`}
-                    />
-                    <div
-                      className={`absolute inset-0 ${actualTheme === "dark"
-                        ? "bg-gradient-to-t from-zinc-900 via-zinc-900/20 to-transparent"
-                        : "bg-gradient-to-t from-white via-white/20 to-transparent"
-                        }`}
-                    />
+                  className={`absolute inset-0 z-10 opacity-20 transition-opacity duration-500 group-hover:opacity-10 ${
+                    actualTheme === "dark"
+                      ? "bg-linear-to-t from-black via-transparent to-transparent"
+                      : "bg-linear-to-t from-slate-900 via-transparent to-transparent"
+                  }`}
+                />
+                <Image
+                  src="/clientProfileImages/RoshiReddy.png"
+                  alt="Roshi Jambula"
+                  fill
+                  className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                />
+              </div>
+            </motion.div>
 
-                    <div className="absolute bottom-4 left-6">
-                      <div
-                        className={`inline-flex items-center justify-center p-2 rounded-full mb-2 backdrop-blur-md ${actualTheme === "dark"
-                          ? "bg-white/10 text-white"
-                          : "bg-black/10 text-white"
-                          }`}
+            {/* Content Column */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="lg:col-span-7 mt-4 lg:mt-0"
+            >
+              <div className="relative pt-8 md:pt-0">
+                <Quote
+                  className={`absolute -top-8 -left-0 md:-top-12 md:-left-4 w-12 h-12 md:w-16 md:h-16 opacity-10 ${
+                    actualTheme === "dark" ? "text-white" : "text-slate-900"
+                  }`}
+                />
+                <h2
+                  className={`relative text-2xl md:text-4xl font-bold mb-4 md:mb-6 leading-tight pl-2 md:pl-0 ${
+                    actualTheme === "dark" ? "text-white" : "text-slate-900"
+                  }`}
+                >
+                  Innovation is not just about technology. It&apos;s about{" "}
+                  <span className="text-orange-500">empowering people</span>.
+                </h2>
+                <div
+                  className={`space-y-4 md:space-y-6 text-base md:text-lg leading-relaxed ${
+                    actualTheme === "dark" ? "text-zinc-400" : "text-slate-700"
+                  }`}
+                >
+                  <p>
+                    &quot;With over 25 years in the industry, I&apos;ve seen
+                    technology evolve rapidly. But one thing remains constant:
+                    the need for authentic, human-centric leadership. At
+                    aiCloudHub, we don&apos;t just deliver IT services; we build
+                    partnerships rooted in trust and transparency.&quot;
+                  </p>
+                  <p>
+                    &quot;Our mission goes beyond code and cloud. We are deeply
+                    committed to diversity and inclusion, especially in
+                    empowering women in tech. We are building a future where
+                    innovation is inclusive, agility is the norm, and our
+                    clients&apos; success is our only metric.&quot;
+                  </p>
+                </div>
+
+                <div className="mt-8 md:mt-10 pt-6 md:pt-8 border-t border-dashed border-zinc-700/30">
+                  <div className="flex items-center gap-4">
+                    <div className="h-10 md:h-12 w-1 bg-orange-500 rounded-full"></div>
+                    <div>
+                      <p
+                        className={`font-serif text-xl md:text-2xl italic ${
+                          actualTheme === "dark"
+                            ? "text-zinc-300"
+                            : "text-slate-800"
+                        }`}
                       >
-                        {leader.icon}
-                      </div>
+                        Roshi Jambula
+                      </p>
+                      <p
+                        className={`text-xs md:text-sm font-medium uppercase tracking-wider ${
+                          actualTheme === "dark"
+                            ? "text-zinc-500"
+                            : "text-slate-600"
+                        }`}
+                      >
+                        Chief Executive Officer
+                      </p>
                     </div>
                   </div>
-
-                  <div className="p-8 pt-2 flex-1">
-                    <h3
-                      className={`text-2xl font-bold mb-1 ${actualTheme === "dark" ? "text-white" : "text-zinc-900"
-                        }`}
-                    >
-                      {leader.name}
-                    </h3>
-                    <p className="text-orange-500 font-medium mb-4 text-sm uppercase tracking-wide">
-                      {leader.title}
-                    </p>
-                    <p
-                      className={`text-sm leading-relaxed ${actualTheme === "dark"
-                        ? "text-zinc-400"
-                        : "text-zinc-600"
-                        }`}
-                    >
-                      {leader.description}
-                    </p>
-                  </div>
                 </div>
-              </motion.div>
-            ))}
+              </div>
+            </motion.div>
           </div>
+        </div>
+      </section>
 
-          {/* Women Empowerment Card */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-12 max-w-4xl mx-auto"
-          >
-            <div
-              className={`relative overflow-hidden rounded-3xl p-8 md:p-10 border text-center ${actualTheme === "dark"
-                ? "bg-gradient-to-br from-purple-900/20 to-zinc-900 border-purple-500/20"
-                : "bg-gradient-to-br from-purple-50 to-white border-purple-100"
-                }`}
+      {/* Mission & Vision - Bento Style */}
+      <section className="py-16 md:py-20 relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3, duration: 0.6, ease: "easeOut" }}
+              whileHover={{ y: -5 }}
+              className={`relative p-6 md:p-10 rounded-3xl border overflow-hidden group ${
+                actualTheme === "dark"
+                  ? "bg-zinc-900/50 border-white/10 hover:border-orange-500/30"
+                  : "bg-white border-slate-200 hover:border-orange-200 shadow-xl shadow-slate-200/50"
+              }`}
             >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl" />
-
+              <div className="absolute top-0 right-0 p-6 md:p-8 opacity-10 group-hover:opacity-20 transition-opacity">
+                <Rocket className="w-24 h-24 md:w-32 md:h-32 text-orange-500" />
+              </div>
               <div className="relative z-10">
-                <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-purple-100 text-purple-600 mb-4">
-                  <Award className="w-6 h-6" />
+                <div className="inline-flex p-3 rounded-xl bg-orange-500/10 text-orange-500 mb-4 md:mb-6">
+                  <Rocket className="w-6 h-6" />
                 </div>
-                <h3
-                  className={`text-2xl font-bold mb-3 ${actualTheme === "dark" ? "text-white" : "text-zinc-900"
-                    }`}
-                >
-                  Women-Empowered Organization
+                <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">
+                  Our Mission
                 </h3>
                 <p
-                  className={`text-lg leading-relaxed max-w-2xl mx-auto mb-6 ${actualTheme === "dark" ? "text-zinc-400" : "text-zinc-600"
-                    }`}
+                  className={`text-base md:text-lg leading-relaxed ${
+                    actualTheme === "dark" ? "text-zinc-400" : "text-slate-700"
+                  }`}
                 >
-                  At{" "}
-                  <span className="text-purple-500 font-bold">aiCloudHub</span>,
-                  we believe in the power of diverse leadership. Our CEO, Roshi
-                  Jambula, exemplifies our commitment to empowering women in
-                  technology.
+                  To empower organizations through innovative technology solutions
+                  and hands-on learning—enabling faster growth, smarter
+                  decisions, and sustainable success.
                 </p>
-
-                <span
-                  className={`inline-flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-full ${actualTheme === "dark"
-                    ? "bg-purple-500/10 text-purple-300"
-                    : "bg-purple-100 text-purple-700"
-                    }`}
-                >
-                  Building Tomorrow&apos;s Technology, Today
-                </span>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4, duration: 0.6, ease: "easeOut" }}
+              whileHover={{ y: -5 }}
+              className={`relative p-6 md:p-10 rounded-3xl border overflow-hidden group ${
+                actualTheme === "dark"
+                  ? "bg-zinc-900/50 border-white/10 hover:border-blue-500/30"
+                  : "bg-white border-slate-200 hover:border-blue-200 shadow-xl shadow-slate-200/50"
+              }`}
+            >
+              <div className="absolute top-0 right-0 p-6 md:p-8 opacity-10 group-hover:opacity-20 transition-opacity">
+                <Globe className="w-24 h-24 md:w-32 md:h-32 text-blue-500" />
+              </div>
+              <div className="relative z-10">
+                <div className="inline-flex p-3 rounded-xl bg-blue-500/10 text-blue-500 mb-4 md:mb-6">
+                  <Globe className="w-6 h-6" />
+                </div>
+                <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">
+                  Our Vision
+                </h3>
+                <p
+                  className={`text-base md:text-lg leading-relaxed ${
+                    actualTheme === "dark" ? "text-zinc-400" : "text-slate-700"
+                  }`}
+                >
+                  To be a trusted global leader in digital transformation, driving
+                  innovation and building capabilities that help businesses and
+                  communities succeed in a rapidly evolving world.
+                </p>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
       <ClientLogos />
 
-      {/* Core Values */}
+      {/* Core Values - Premium Grid */}
       <section
-        className={`py-16 relative transition-colors duration-300 ${actualTheme === "dark" ? "bg-zinc-950" : "bg-zinc-50/50"
-          }`}
+        className={`py-20 md:py-32 ${
+          actualTheme === "dark" ? "bg-zinc-900/30" : "bg-slate-50/50"
+        }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-12"
+            className="text-center mb-16 md:mb-20"
           >
-            <h2
-              className={`text-3xl md:text-4xl font-bold mb-4 ${actualTheme === "dark" ? "text-white" : "text-zinc-900"
-                }`}
-            >
-              Our Core Values
-            </h2>
+            <h2 className="text-3xl md:text-5xl font-bold mb-6">Core Values</h2>
             <p
-              className={`text-lg max-w-2xl mx-auto ${actualTheme === "dark" ? "text-zinc-400" : "text-zinc-600"
-                }`}
+              className={`text-lg md:text-xl max-w-3xl mx-auto leading-relaxed ${
+                actualTheme === "dark" ? "text-zinc-400" : "text-slate-700"
+              }`}
             >
-              At aiCloudHub, our values guide every decision, partnership, and
-              innovation.
+              The principles that guide our innovation, shape our culture, and
+              drive our partnerships.
             </p>
           </motion.div>
 
-          <div className="flex flex-wrap justify-center gap-4 max-w-5xl mx-auto">
-            {coreValues.slice(0, 4).map((value, index) => (
-              <motion.div
-                key={value.title}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.05, duration: 0.4 }}
-                whileHover={{ y: -5 }}
-                className={`p-5 rounded-2xl border text-center transition-all duration-300 flex flex-col w-[calc(25%-0.75rem)] min-w-[200px] ${actualTheme === "dark"
-                  ? "bg-zinc-900/50 border-zinc-800 hover:bg-zinc-800 hover:border-zinc-700"
-                  : "bg-white border-zinc-200 hover:border-zinc-300 hover:shadow-md"
+          <div className="flex flex-wrap justify-center gap-6 md:gap-8">
+            {coreValues.map((value, index) => {
+              const Icon = value.icon;
+              return (
+                <motion.div
+                  key={value.title}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3 + index * 0.1, duration: 0.6, ease: "easeOut" }}
+                  whileHover={{ y: -8 }}
+                  className={`p-8 rounded-3xl border text-center transition-all duration-300 group w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(25%-1.5rem)] ${
+                    actualTheme === "dark"
+                      ? "bg-zinc-900/50 border-white/5 hover:bg-zinc-900 hover:border-white/20"
+                      : "bg-white border-slate-100 hover:border-slate-300 hover:shadow-xl hover:shadow-slate-200/50"
                   }`}
-              >
-                <div
-                  className={`mx-auto w-12 h-12 flex items-center justify-center rounded-xl mb-3 ${value.bg} ${value.text}`}
                 >
-                  {value.icon}
-                </div>
-                <h3
-                  className={`text-base font-bold mb-1 ${actualTheme === "dark" ? "text-white" : "text-zinc-900"
+                  <div
+                    className={`mx-auto w-14 h-14 md:w-16 md:h-16 flex items-center justify-center rounded-2xl mb-6 transition-transform duration-300 group-hover:scale-110 ${value.bg} ${value.text}`}
+                  >
+                    <Icon className="w-7 h-7 md:w-8 md:h-8" />
+                  </div>
+                  <h3 className="text-lg md:text-xl font-bold mb-3">
+                    {value.title}
+                  </h3>
+                  <p
+                    className={`text-sm md:text-base leading-relaxed font-medium ${
+                      actualTheme === "dark"
+                        ? "text-zinc-400"
+                        : "text-slate-700"
                     }`}
-                >
-                  {value.title}
-                </h3>
-                <p
-                  className={`text-xs leading-relaxed ${actualTheme === "dark" ? "text-zinc-500" : "text-zinc-500"
-                    }`}
-                >
-                  {value.description}
-                </p>
-              </motion.div>
-            ))}
+                  >
+                    {value.description}
+                  </p>
+                </motion.div>
+              );
+            })}
           </div>
-          <div className="flex flex-wrap justify-center gap-4 max-w-4xl mx-auto mt-4">
-            {coreValues.slice(4).map((value, index) => (
-              <motion.div
-                key={value.title}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: (index + 4) * 0.05, duration: 0.4 }}
-                whileHover={{ y: -5 }}
-                className={`p-5 rounded-2xl border text-center transition-all duration-300 flex flex-col w-[calc(33.333%-0.75rem)] min-w-[200px] ${actualTheme === "dark"
-                  ? "bg-zinc-900/50 border-zinc-800 hover:bg-zinc-800 hover:border-zinc-700"
-                  : "bg-white border-zinc-200 hover:border-zinc-300 hover:shadow-md"
-                  }`}
+        </div>
+      </section>
+
+      {/* Services - Premium Layout */}
+      <section className="py-20 md:py-32 relative border-t border-dashed border-zinc-700/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row items-end justify-between mb-12 md:mb-16 gap-6">
+            <div className="max-w-2xl">
+              <h2 className="text-3xl md:text-5xl font-bold mb-6">
+                Our Expertise
+              </h2>
+              <p
+                className={`text-lg md:text-xl leading-relaxed ${
+                  actualTheme === "dark" ? "text-zinc-400" : "text-slate-700"
+                }`}
               >
-                <div
-                  className={`mx-auto w-12 h-12 flex items-center justify-center rounded-xl mb-3 ${value.bg} ${value.text}`}
+                Comprehensive, scalable, and future-ready solutions designed for
+                the digital age.
+              </p>
+            </div>
+            <a
+              href="/#services"
+              className="group hidden md:flex text-base font-bold text-orange-500 hover:text-orange-400 items-center gap-2 transition-colors px-6 py-3 rounded-full bg-orange-500/10 hover:bg-orange-500/20"
+            >
+              <span>View All Services</span>
+              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </a>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {services.map((service, index) => {
+              const Icon = service.icon;
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3 + index * 0.1, duration: 0.6, ease: "easeOut" }}
+                  whileHover={{ y: -5 }}
+                  className={`p-8 md:p-10 rounded-[2rem] border text-left group cursor-default transition-all duration-300 ${
+                    actualTheme === "dark"
+                      ? "bg-zinc-900/50 border-white/5 hover:bg-zinc-900 hover:border-orange-500/30"
+                      : "bg-white border-slate-100 hover:border-orange-200 hover:shadow-xl hover:shadow-orange-500/10"
+                  }`}
                 >
-                  {value.icon}
-                </div>
-                <h3
-                  className={`text-base font-bold mb-1 ${actualTheme === "dark" ? "text-white" : "text-zinc-900"
+                  <div className="mb-6 md:mb-8 w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-400 group-hover:text-white group-hover:bg-orange-500 transition-all duration-300">
+                    <Icon className="w-7 h-7 md:w-8 md:h-8" />
+                  </div>
+                  <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4 group-hover:text-orange-500 transition-colors">
+                    {service.title}
+                  </h3>
+                  <p
+                    className={`text-base leading-relaxed ${
+                      actualTheme === "dark"
+                        ? "text-zinc-400"
+                        : "text-slate-700"
                     }`}
-                >
-                  {value.title}
-                </h3>
-                <p
-                  className={`text-xs leading-relaxed ${actualTheme === "dark" ? "text-zinc-500" : "text-zinc-500"
-                    }`}
-                >
-                  {value.description}
-                </p>
-              </motion.div>
-            ))}
+                  >
+                    {service.description}
+                  </p>
+                </motion.div>
+              );
+            })}
+          </div>
+
+          <div className="mt-12 md:hidden text-center">
+            <a
+              href="/#services"
+              className="group inline-flex text-base font-bold text-orange-500 hover:text-orange-400 items-center gap-2 transition-colors px-6 py-3 rounded-full bg-orange-500/10"
+            >
+              <span>View All Services</span>
+              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </a>
           </div>
         </div>
       </section>

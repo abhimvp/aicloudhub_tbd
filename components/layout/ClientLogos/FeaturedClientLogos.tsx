@@ -6,9 +6,9 @@ import { useTheme } from "@/components/theme/ThemeProvider";
 
 const FEATURED_CLIENTS = [
   "Microsoft",
-  "Quadrant Technologies",
   "LTIMindtree",
   "Salesforce",
+  "Quadrant Technologies",
   "Altimetrik",
 ] as const;
 
@@ -83,13 +83,13 @@ const FeaturedClientLogos = () => {
             return (
               <div
                 key={client.name}
-                className={`flex flex-col items-center justify-center rounded-2xl border shadow-sm p-6 text-center transition-all duration-300 hover:-translate-y-1 ${
+                className={`flex items-center justify-center rounded-2xl border shadow-sm p-6 transition-all duration-300 hover:-translate-y-1 ${
                   actualTheme === "dark"
                     ? "bg-white/5 border-white/10 text-white"
                     : "bg-white border-gray-200 text-gray-900"
                 }`}
               >
-                <div className="relative w-full h-20 flex items-center justify-center mb-4">
+                <div className="relative w-full h-20 flex items-center justify-center">
                   {hasLogo ? (
                     <div
                       className="relative w-full h-full"
