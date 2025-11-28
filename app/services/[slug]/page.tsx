@@ -495,10 +495,6 @@ export default async function ServicePage({
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6">
             {service.industries.map((industry, index) => {
-              const industryTransition = {
-                ...INDUSTRY_TRANSITION,
-                delay: index * 0.1,
-              };
               const IndustryIcon = getIndustryIcon(industry);
 
               return (

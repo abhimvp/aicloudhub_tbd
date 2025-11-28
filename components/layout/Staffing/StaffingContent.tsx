@@ -8,7 +8,6 @@ import ScrollToTop from "@/components/layout/ScrollToTop";
 import {
   UserCheck,
   ChevronRight,
-  CheckCircle2,
   Check,
   Zap,
   Users,
@@ -16,9 +15,7 @@ import {
   BrainCircuit,
   CloudCog,
   Code,
-  Settings,
   BarChart3,
-  Shield,
   TestTube,
   Briefcase,
   ArrowRight,
@@ -312,7 +309,7 @@ export default function StaffingContent() {
               </span>
               , we help organizations accelerate their digital transformation
               by providing access to world-class technology professionals.
-              Whether you're scaling quickly, filling niche skill gaps, or
+              Whether you&apos;re scaling quickly, filling niche skill gaps, or
               building long-term strategic capabilities, our IT staffing services
               ensure you have the right talent at the right time.
             </p>
@@ -464,7 +461,6 @@ export default function StaffingContent() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {STAFFING_APPROACH.map((step, index) => {
-              const Icon = step.icon;
               return (
                 <motion.div
                   key={index}

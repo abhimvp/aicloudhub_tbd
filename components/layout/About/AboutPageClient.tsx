@@ -2,6 +2,7 @@
 
 import React from "react";
 import * as motion from "motion/react-client";
+import Link from "next/link";
 import ClientLogos from "@/components/layout/ClientLogos/ClientLogos";
 import Image from "next/image";
 import { useTheme } from "@/components/theme/ThemeProvider";
@@ -528,13 +529,13 @@ const AboutPageClient = () => {
                 the digital age.
               </p>
             </div>
-            <a
+            <Link
               href="/#services"
               className="group hidden md:flex text-base font-bold text-orange-500 hover:text-orange-400 items-center gap-2 transition-colors px-6 py-3 rounded-full bg-orange-500/10 hover:bg-orange-500/20"
             >
               <span>View All Services</span>
               <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-            </a>
+            </Link>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
@@ -575,13 +576,13 @@ const AboutPageClient = () => {
           </div>
 
           <div className="mt-12 md:hidden text-center">
-            <a
+            <Link
               href="/#services"
               className="group inline-flex text-base font-bold text-orange-500 hover:text-orange-400 items-center gap-2 transition-colors px-6 py-3 rounded-full bg-orange-500/10"
             >
               <span>View All Services</span>
               <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-            </a>
+            </Link>
           </div>
         </div>
       </section>
