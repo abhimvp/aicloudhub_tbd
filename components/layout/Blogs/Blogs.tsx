@@ -124,7 +124,9 @@ const Blogs = () => {
         }`}
         initial={{ y: 60, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
+        viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.8 }}
+        style={{ willChange: "opacity, transform" }}
       >
         Featured Blogs
       </motion.h2>
@@ -135,7 +137,9 @@ const Blogs = () => {
         }`}
         initial={{ y: 40, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
+        viewport={{ once: true, margin: "-100px" }}
         transition={{ delay: 0.2, duration: 0.8 }}
+        style={{ willChange: "opacity, transform" }}
       >
         Discover insights and best practices from industry experts
       </motion.p>
@@ -143,7 +147,9 @@ const Blogs = () => {
       <motion.div
         initial={{ y: 20, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
+        viewport={{ once: true, margin: "-100px" }}
         transition={{ delay: 0.3, duration: 0.8 }}
+        style={{ willChange: "opacity, transform" }}
         className="mb-12 relative z-10"
       >
         <Link href="/blogs">

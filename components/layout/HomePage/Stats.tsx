@@ -46,8 +46,9 @@ const Stats = () => {
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, margin: "-100px" }}
                 transition={{ delay: index * 0.1, duration: 0.5 }}
+                style={{ willChange: "opacity, transform" }}
                 className={`relative group p-8 rounded-2xl border transition-all duration-300 hover:-translate-y-1 text-center ${
                   actualTheme === "dark"
                     ? "bg-white/5 border-white/10 hover:bg-white/10 hover:border-orange-500/30"

@@ -38,11 +38,6 @@ const getCapability3DHover = (index: number) => ({
   scale: 1.02,
 });
 const INDUSTRY_HOVER = { scale: 1.05, rotate: 2 };
-const INDUSTRY_TRANSITION = {
-  duration: 0.5,
-  type: "spring" as const,
-  stiffness: 200,
-};
 
 export async function generateStaticParams() {
   return getAllServiceSlugs().map((slug) => ({

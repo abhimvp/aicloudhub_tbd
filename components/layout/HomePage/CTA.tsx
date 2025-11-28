@@ -30,7 +30,8 @@ const CTA = () => {
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-100px" }}
+          style={{ willChange: "opacity, transform" }}
           className={`text-4xl md:text-5xl font-black mb-6 ${
             actualTheme === "dark" ? "text-white" : "text-slate-900"
           }`}
@@ -42,7 +43,8 @@ const CTA = () => {
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-100px" }}
+          style={{ willChange: "opacity, transform" }}
           transition={{ delay: 0.1 }}
           className={`text-lg md:text-xl mb-10 max-w-2xl mx-auto ${
             actualTheme === "dark" ? "text-zinc-300" : "text-slate-600"
@@ -55,7 +57,8 @@ const CTA = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-100px" }}
+          style={{ willChange: "opacity, transform" }}
           transition={{ delay: 0.2 }}
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >

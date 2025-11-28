@@ -134,12 +134,19 @@ const Navbar = () => {
             aria-label="Scroll to home"
           >
             <Image
-              src="/aiCloudHub.png"
+              src="/AiCloudHub.png"
               alt="aiCloudHub Logo"
               width={240}
               height={80}
               className="object-contain h-12 md:h-16 w-auto"
               priority
+              onError={(e) => {
+                console.error('Logo failed to load, trying SVG fallback');
+                const target = e.target as HTMLImageElement;
+                if (target.src !== '/AICLOUDHUB.svg') {
+                  target.src = '/AICLOUDHUB.svg';
+                }
+              }}
             />
           </Link>
         </motion.div>

@@ -298,6 +298,40 @@ h1 {
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+/* Prevent flash of unstyled content during hydration */
+html {
+  visibility: visible;
+}
+
+/* Prevent animation flash - ensure smooth transitions */
+@media (prefers-reduced-motion: no-preference) {
+  /* Smooth animations for motion components */
+  [data-motion-component],
+  [data-framer-component] {
+    will-change: opacity, transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+  
+  /* Prevent flash during hydration */
+  body:not(.hydrated) [data-motion-component],
+  body:not(.hydrated) [data-framer-component] {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+}
+
+/* Ensure smooth transitions without flash */
+body {
+  opacity: 1;
+  transition: opacity 0.1s ease-in;
+}
+
+/* Mark body as hydrated after initial render */
+body.hydrated {
+  /* Remove flash prevention after hydration */
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

@@ -83,10 +83,11 @@ export default function BlogsPageContent() {
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.5 }}
               className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full border bg-opacity-50 backdrop-blur-sm shadow-sm"
               style={{
+                willChange: "opacity, transform",
                 borderColor:
                   actualTheme === "dark"
                     ? "rgba(249, 115, 22, 0.3)"
@@ -286,7 +287,8 @@ export default function BlogsPageContent() {
                       key={blog.id}
                       initial={{ opacity: 0, y: 40 }}
                       whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
+                      viewport={{ once: true, margin: "-100px" }}
+            style={{ willChange: "opacity, transform" }}
                       transition={{ delay: 0.3 + index * 0.1, duration: 0.6, ease: "easeOut" }}
                     >
                       <Link href={`/blogs/${blog.slug}`}>

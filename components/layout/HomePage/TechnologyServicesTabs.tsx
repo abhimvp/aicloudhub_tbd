@@ -89,8 +89,9 @@ export default function TechnologyServicesTabs() {
           className="text-center space-y-4"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-100px" }}
           transition={{ delay: 0.1, duration: 0.6, ease: "easeOut" }}
+          style={{ willChange: "opacity, transform" }}
         >
           <p
             className={`text-sm font-semibold uppercase tracking-[0.4em] ${
@@ -110,8 +111,9 @@ export default function TechnologyServicesTabs() {
           className="mt-12 md:hidden"
           initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-100px" }}
           transition={{ delay: 0.2, duration: 0.6, ease: "easeOut" }}
+          style={{ willChange: "opacity, transform" }}
         >
           <div className="relative">
             <Select
@@ -171,8 +173,9 @@ export default function TechnologyServicesTabs() {
           aria-label="Technology services"
           initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-100px" }}
           transition={{ delay: 0.2, duration: 0.6, ease: "easeOut" }}
+          style={{ willChange: "opacity, transform" }}
         >
           <div className="flex flex-col items-center gap-6 text-base font-semibold">
             {FILTERED_TAB_ROWS.map((row, rowIndex) => (
@@ -239,8 +242,9 @@ export default function TechnologyServicesTabs() {
           }`}
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-100px" }}
           transition={{ delay: 0.3, duration: 0.6, ease: "easeOut" }}
+          style={{ willChange: "opacity, transform" }}
         >
           <div className="flex flex-col gap-6 lg:flex-row lg:items-stretch">
             {/* Image Container - Fixed aspect ratio */}
@@ -256,6 +260,9 @@ export default function TechnologyServicesTabs() {
                   fill
                   className="rounded-2xl object-cover"
                   sizes="(max-width: 1024px) 100vw, 58vw"
+                  {...(activeId === DEFAULT_SERVICE_ID
+                    ? { priority: true }
+                    : { loading: "lazy" })}
                 />
               </div>
             </div>

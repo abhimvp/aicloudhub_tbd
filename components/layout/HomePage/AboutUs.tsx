@@ -38,7 +38,8 @@ const AboutUs = () => {
           {/* <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
+            style={{ willChange: "opacity, transform" }}
             transition={{ duration: 0.5, ease: "easeOut" }}
             className="inline-block mb-4"
           >
@@ -54,8 +55,9 @@ const AboutUs = () => {
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
             transition={{ delay: 0.1, duration: 0.6, ease: "easeOut" }}
+            style={{ willChange: "opacity, transform" }}
             className={`text-4xl md:text-5xl font-black font-heading mb-6 tracking-tight ${actualTheme === "dark"
                 ? "bg-linear-to-r from-orange-400 via-yellow-200 to-white bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(255,165,0,0.35)]"
                 : "bg-linear-to-r from-orange-600 via-orange-500 to-amber-600 bg-clip-text text-transparent"
@@ -67,8 +69,9 @@ const AboutUs = () => {
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
             transition={{ delay: 0.2, duration: 0.6, ease: "easeOut" }}
+            style={{ willChange: "opacity, transform" }}
             className={`text-lg md:text-xl max-w-4xl mx-auto leading-relaxed ${actualTheme === "dark" ? "text-gray-300" : "text-gray-700"
               }`}
           >
@@ -83,9 +86,10 @@ const AboutUs = () => {
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
             transition={{ delay: 0.3, duration: 0.6, ease: "easeOut" }}
             whileHover={{ scale: 1.02, y: -8 }}
+            style={{ willChange: "opacity, transform" }}
             className="relative group"
           >
             <div className="absolute inset-0 bg-linear-to-br from-orange-500/20 to-yellow-500/10 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500" />
@@ -133,7 +137,8 @@ const AboutUs = () => {
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
+            style={{ willChange: "opacity, transform" }}
             transition={{ delay: 0.4, duration: 0.6, ease: "easeOut" }}
             whileHover={{ scale: 1.02, y: -8 }}
             className="relative group"
@@ -182,7 +187,8 @@ const AboutUs = () => {
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
+            style={{ willChange: "opacity, transform" }}
             transition={{ delay: 0.5, duration: 0.6, ease: "easeOut" }}
             whileHover={{ scale: 1.02, y: -8 }}
             className="relative group"
@@ -227,7 +233,8 @@ const AboutUs = () => {
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
+            style={{ willChange: "opacity, transform" }}
             transition={{ delay: 0.6, duration: 0.6, ease: "easeOut" }}
             whileHover={{ scale: 1.02, y: -8 }}
             className="relative group"
@@ -274,7 +281,8 @@ const AboutUs = () => {
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
+            style={{ willChange: "opacity, transform" }}
             transition={{ delay: 0.7, duration: 0.6, ease: "easeOut" }}
             whileHover={{ scale: 1.02, y: -8 }}
             className="relative group md:col-span-2"
@@ -323,7 +331,8 @@ const AboutUs = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-100px" }}
+          style={{ willChange: "opacity, transform" }}
           transition={{ delay: 0.5, duration: 0.6, ease: "easeOut" }}
           className="text-center"
         >

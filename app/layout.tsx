@@ -68,7 +68,11 @@ export default function RootLayout({
     var root = document.documentElement;
     root.classList.remove('light', 'dark');
     root.classList.add(theme);
-  } catch (e) {}
+    // Mark body as hydrated to prevent animation flash
+    document.body.classList.add('hydrated');
+  } catch (e) {
+    document.body.classList.add('hydrated');
+  }
 })();
 `;
 
