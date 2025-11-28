@@ -1,81 +1,80 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
+import React, { useRef } from "react";
 import Image from "next/image";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import * as motion from "motion/react-client";
+import { useScroll, useTransform } from "motion/react";
 import { servicesData } from "@/lib/constants";
 import { Check } from "lucide-react";
 import { useTheme } from "@/components/theme/ThemeProvider";
 import "./AnimatedServices.css";
 
-gsap.registerPlugin(ScrollTrigger);
+// Individual service item component with scroll-based animation
+const AnimatedServiceItem = ({
+  service,
+  imageSrc,
+  index,
+}: {
+  service: (typeof servicesData)[0][0];
+  imageSrc: string;
+  index: number;
+}) => {
+  const serviceRef = useRef<HTMLDivElement>(null);
+  const imgContainerRef = useRef<HTMLDivElement>(null);
+
+  // Track scroll progress for this service item
+  const { scrollYProgress } = useScroll({
+    target: serviceRef,
+    offset: ["start 80%", "start 20%"], // Equivalent to GSAP's start: "top 80%", end: "top 20%"
+  });
+
+  // Transform scroll progress to width percentage (30% to 100%)
+  const width = useTransform(scrollYProgress, [0, 1], [30, 100]);
+
+  return (
+    <div ref={serviceRef} className="animated-service relative z-10">
+      <div className="service-info">
+        <h2>{service.title}</h2>
+        <p>{service.description}</p>
+
+        {/* All points with check marks */}
+        <ul className="service-points-list">
+          {service.points.map((point, i) => (
+            <li key={i} className="service-point-item">
+              <Check className="check-icon" />
+              <span>{point}</span>
+            </li>
+          ))}
+        </ul>
+
+        {/* Outcome in highlighted box */}
+        <div className="service-outcome-box">
+          <div className="outcome-label">Outcome</div>
+          <p className="outcome-text">{service.outcome}</p>
+        </div>
+      </div>
+      <div className="service-img-wrapper">
+        <motion.div
+          ref={imgContainerRef}
+          className="service-img-container"
+          style={{ width }}
+        >
+          <Image
+            src={imageSrc}
+            alt={service.title}
+            fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className="object-cover"
+          />
+        </motion.div>
+      </div>
+    </div>
+  );
+};
 
 const AnimatedServices = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { actualTheme } = useTheme();
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-
-    const services = gsap.utils.toArray<HTMLElement>(".animated-service");
-
-    // Intersection Observer for performance optimization
-    const observerOptions = {
-      root: null,
-      rootMargin: "0px",
-      threshold: 0.1,
-    };
-
-    const observerCallback = (
-      entries: IntersectionObserverEntry[],
-      observer: IntersectionObserver
-    ) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const service = entry.target as HTMLElement;
-          const imgContainer = service.querySelector(
-            ".service-img-container"
-          ) as HTMLElement;
-
-          // Image width expansion animation
-          ScrollTrigger.create({
-            trigger: service,
-            start: "top 80%",
-            end: "top 20%",
-            scrub: true,
-            onUpdate: (self) => {
-              const progress = self.progress;
-              const newWidth = 30 + 70 * progress;
-              gsap.to(imgContainer, {
-                width: newWidth + "%",
-                duration: 0.1,
-                ease: "none",
-              });
-            },
-          });
-
-          observer.unobserve(service);
-        }
-      });
-    };
-
-    const observer = new IntersectionObserver(
-      observerCallback,
-      observerOptions
-    );
-
-    services.forEach((service) => {
-      observer.observe(service);
-    });
-
-    return () => {
-      services.forEach((service) => {
-        observer.unobserve(service);
-      });
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    };
-  }, []);
 
   // Flatten servicesData for easier mapping
   const flatServices = servicesData.flat();
@@ -133,39 +132,12 @@ const AnimatedServices = () => {
       </div>
 
       {flatServices.map((service, index) => (
-        <div key={index} className="animated-service relative z-10">
-          <div className="service-info">
-            <h2>{service.title}</h2>
-            <p>{service.description}</p>
-
-            {/* All points with check marks */}
-            <ul className="service-points-list">
-              {service.points.map((point, i) => (
-                <li key={i} className="service-point-item">
-                  <Check className="check-icon" />
-                  <span>{point}</span>
-                </li>
-              ))}
-            </ul>
-
-            {/* Outcome in highlighted box */}
-            <div className="service-outcome-box">
-              <div className="outcome-label">Outcome</div>
-              <p className="outcome-text">{service.outcome}</p>
-            </div>
-          </div>
-          <div className="service-img-wrapper">
-            <div className="service-img-container">
-              <Image
-                src={serviceImages[index % serviceImages.length]}
-                alt={service.title}
-                fill
-                sizes="(max-width: 768px) 100vw, 50vw"
-                className="object-cover"
-              />
-            </div>
-          </div>
-        </div>
+        <AnimatedServiceItem
+          key={index}
+          service={service}
+          imageSrc={serviceImages[index % serviceImages.length]}
+          index={index}
+        />
       ))}
     </section>
   );

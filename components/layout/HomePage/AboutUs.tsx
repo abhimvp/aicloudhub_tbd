@@ -35,22 +35,6 @@ const AboutUs = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
-          {/* <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
-            style={{ willChange: "opacity, transform" }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-            className="inline-block mb-4"
-          >
-            <span className={`px-4 py-2 rounded-full text-sm font-semibold ${
-              actualTheme === "dark"
-                ? "bg-orange-500/10 border border-orange-500/30 text-orange-400"
-                : "bg-orange-100 border border-orange-300 text-orange-700"
-            }`}>
-              About Us
-            </span>
-          </motion.div> */}
 
           <motion.h2
             initial={{ opacity: 0, y: 20 }}

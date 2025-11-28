@@ -44,49 +44,60 @@ const Stats = () => {
             return (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
-                transition={{ delay: index * 0.1, duration: 0.5 }}
+                transition={{
+                  delay: 0.2 + index * 0.1,
+                  duration: 0.6,
+                  ease: "easeOut",
+                }}
+                whileHover={{ scale: 1.02, y: -8 }}
                 style={{ willChange: "opacity, transform" }}
-                className={`relative group p-8 rounded-2xl border transition-all duration-300 hover:-translate-y-1 text-center ${
-                  actualTheme === "dark"
-                    ? "bg-white/5 border-white/10 hover:bg-white/10 hover:border-orange-500/30"
-                    : "bg-white border-orange-100 hover:border-orange-200 hover:shadow-lg hover:shadow-orange-500/10"
-                }`}
+                className="h-full"
               >
                 <div
-                  className={`mb-6 inline-flex p-3 rounded-xl ${
+                  className={`relative group p-8 rounded-2xl border transition-all duration-300 text-center h-full ${
                     actualTheme === "dark"
-                      ? "bg-orange-500/10 text-orange-400"
-                      : "bg-orange-100 text-orange-600"
+                      ? "bg-white/5 border-white/10 hover:bg-white/10 hover:border-orange-500/30"
+                      : "bg-white border-orange-100 hover:border-orange-200 hover:shadow-lg hover:shadow-orange-500/10"
                   }`}
                 >
-                  <Icon className="w-6 h-6" />
-                </div>
+                  <div
+                    className={`mb-6 inline-flex p-3 rounded-xl ${
+                      actualTheme === "dark"
+                        ? "bg-orange-500/10 text-orange-400"
+                        : "bg-orange-100 text-orange-600"
+                    }`}
+                  >
+                    <Icon className="w-6 h-6" />
+                  </div>
 
-                <div
-                  className={`text-5xl md:text-6xl font-black mb-3 tracking-tight ${
-                    actualTheme === "dark"
-                      ? "bg-linear-to-r from-orange-400 to-yellow-200 bg-clip-text text-transparent"
-                      : "text-slate-900"
-                  }`}
-                >
-                  {stat.value}
-                </div>
-                <div
-                  className={`text-lg md:text-xl font-bold mb-2 ${
-                    actualTheme === "dark" ? "text-white" : "text-slate-900"
-                  }`}
-                >
-                  {stat.label}
-                </div>
-                <div
-                  className={`text-sm md:text-base ${
-                    actualTheme === "dark" ? "text-zinc-400" : "text-slate-600"
-                  }`}
-                >
-                  {stat.description}
+                  <div
+                    className={`text-5xl md:text-6xl font-black mb-3 tracking-tight ${
+                      actualTheme === "dark"
+                        ? "bg-linear-to-r from-orange-400 to-yellow-200 bg-clip-text text-transparent"
+                        : "text-slate-900"
+                    }`}
+                  >
+                    {stat.value}
+                  </div>
+                  <div
+                    className={`text-lg md:text-xl font-bold mb-2 ${
+                      actualTheme === "dark" ? "text-white" : "text-slate-900"
+                    }`}
+                  >
+                    {stat.label}
+                  </div>
+                  <div
+                    className={`text-sm md:text-base ${
+                      actualTheme === "dark"
+                        ? "text-zinc-400"
+                        : "text-slate-600"
+                    }`}
+                  >
+                    {stat.description}
+                  </div>
                 </div>
               </motion.div>
             );

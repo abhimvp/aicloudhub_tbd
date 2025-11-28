@@ -1,8 +1,8 @@
 // components/layout/HomePage/Hero.tsx
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
-import { gsap, useGSAP } from "@/utils/gsap";
+import React, { useEffect, useState } from "react";
+import * as motion from "motion/react-client";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
@@ -35,89 +35,8 @@ const BUSINESS_VERTICALS = [
 ];
 
 export default function Hero() {
-  const rootRef = useRef<HTMLElement | null>(null);
-  const scrollerRef = useRef<HTMLDivElement | null>(null);
-  const headlineRef = useRef<HTMLHeadingElement | null>(null);
-  const taglineRef = useRef<HTMLParagraphElement | null>(null);
-  const paraRef = useRef<HTMLParagraphElement | null>(null);
-  const ctaRef = useRef<HTMLDivElement | null>(null);
-  const tlRef = useRef<gsap.core.Timeline | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-
-  useGSAP(() => {
-    if (!rootRef.current) return;
-
-    const tl = gsap.timeline({
-      defaults: { ease: "power3.out" },
-    });
-    tlRef.current = tl;
-
-    tl.to(rootRef.current, { duration: 0.4, autoAlpha: 1 }, 0);
-
-    // Label to sync everything
-    tl.add("intro", "+=0.1");
-
-    // 🎨 Scroller animation
-    const scrollerEl = scrollerRef.current;
-    if (scrollerEl) {
-      tl.fromTo(
-        scrollerEl,
-        { opacity: 0, x: 100 },
-        {
-          opacity: 1,
-          x: 0,
-          duration: 0.8,
-          ease: "power3.out",
-        },
-        "intro"
-      );
-    }
-
-    // ✨ Text + CTA animations
-    if (headlineRef.current) {
-      tl.fromTo(
-        headlineRef.current,
-        { autoAlpha: 0, y: 36 },
-        { autoAlpha: 1, y: 0, duration: 0.8 },
-        "intro"
-      );
-    }
-    if (taglineRef.current) {
-      tl.fromTo(
-        taglineRef.current,
-        { autoAlpha: 0, y: 20 },
-        { autoAlpha: 1, y: 0, duration: 0.7 },
-        "intro+=0.15"
-      );
-    }
-    if (paraRef.current) {
-      tl.fromTo(
-        paraRef.current,
-        { autoAlpha: 0, y: 20 },
-        { autoAlpha: 1, y: 0, duration: 0.7 },
-        "intro+=0.3"
-      );
-    }
-    if (ctaRef.current) {
-      tl.fromTo(
-        ctaRef.current,
-        { autoAlpha: 0, y: 30 },
-        {
-          autoAlpha: 1,
-          y: 0,
-          duration: 0.8,
-          ease: "power3.out",
-        },
-        "intro+=0.25"
-      );
-    }
-
-    return () => {
-      tl.kill();
-      tlRef.current = null;
-    };
-  }, []);
 
   // Auto-rotate scroller every 7 seconds for better readability, pause on hover
   useEffect(() => {
@@ -130,30 +49,6 @@ export default function Hero() {
     return () => clearInterval(interval);
   }, [isPaused]);
 
-  // Fallback: Ensure text is visible even if GSAP doesn't animate
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (headlineRef.current && headlineRef.current.style.opacity === "0") {
-        headlineRef.current.style.opacity = "1";
-        headlineRef.current.style.transform = "translateY(0)";
-      }
-      if (taglineRef.current && taglineRef.current.style.opacity === "0") {
-        taglineRef.current.style.opacity = "1";
-        taglineRef.current.style.transform = "translateY(0)";
-      }
-      if (paraRef.current && paraRef.current.style.opacity === "0") {
-        paraRef.current.style.opacity = "1";
-        paraRef.current.style.transform = "translateY(0)";
-      }
-      if (ctaRef.current && ctaRef.current.style.opacity === "0") {
-        ctaRef.current.style.opacity = "1";
-        ctaRef.current.style.transform = "translateY(0)";
-      }
-    }, 2000); // Fallback after 2 seconds
-
-    return () => clearTimeout(timer);
-  }, []);
-
   const scrollToServices = () => {
     const section = document.querySelector("#services");
     if (section) {
@@ -162,10 +57,12 @@ export default function Hero() {
   };
 
   return (
-    <section
+    <motion.section
       id="home"
-      ref={rootRef}
-      className="relative z-0 min-h-screen pt-20 pb-8 lg:pt-0 lg:pb-0 opacity-0 transition-colors duration-300 bg-linear-to-br from-orange-50 via-white to-yellow-50 dark:bg-linear-to-r dark:from-gray-950 dark:via-slate-950 dark:to-zinc-950 overflow-hidden"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4, delay: 0.1 }}
+      className="relative z-0 min-h-screen pt-20 pb-8 lg:pt-0 lg:pb-0 transition-colors duration-300 bg-linear-to-br from-orange-50 via-white to-yellow-50 dark:bg-linear-to-r dark:from-gray-950 dark:via-slate-950 dark:to-zinc-950 overflow-hidden"
     >
       {/* Tech Grid Background */}
       <div
@@ -201,38 +98,50 @@ export default function Hero() {
         {/* Left Content */}
         <div className="relative z-20 w-full lg:w-[55%] xl:w-[52%] text-center lg:text-left shrink-0">
           <div>
-            <h1
-              ref={headlineRef}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl font-bold tracking-tight mb-6 opacity-0 translate-y-5 text-slate-900 dark:text-white leading-[1.15]"
+            <motion.h1
+              initial={{ opacity: 0, y: 36 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+              style={{ willChange: "opacity, transform" }}
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl font-bold tracking-tight mb-6 text-slate-900 dark:text-white leading-[1.15]"
             >
               Empower Your Business with{" "}
               <span className="bg-linear-to-r from-orange-600 to-yellow-500 dark:from-orange-400 dark:to-yellow-300 bg-clip-text text-transparent">
                 AI-Driven Innovation
               </span>
-            </h1>
+            </motion.h1>
 
-            <p
-              ref={taglineRef}
-              className="text-lg sm:text-xl md:text-2xl font-medium mb-6 opacity-0 translate-y-5 text-slate-600 dark:text-slate-300 leading-relaxed tracking-wide"
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              style={{ willChange: "opacity, transform" }}
+              className="text-lg sm:text-xl md:text-2xl font-medium mb-6 text-slate-600 dark:text-slate-300 leading-relaxed tracking-wide"
             >
               Build, Scale, and Transform with Smart, Secure, and Connected
               Solutions.
-            </p>
+            </motion.p>
 
-            <p
-              ref={paraRef}
-              className="text-base md:text-lg mb-8 opacity-0 translate-y-5 leading-relaxed text-slate-700 dark:text-slate-400 max-w-full lg:max-w-xl mx-auto lg:mx-0"
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              style={{ willChange: "opacity, transform" }}
+              className="text-base md:text-lg mb-8 leading-relaxed text-slate-700 dark:text-slate-400 max-w-full lg:max-w-xl mx-auto lg:mx-0"
             >
               At aiCloudHub, we empower enterprises to thrive in the digital age
               through AI, Cloud, and Automation. From ideation to launch, our
               intelligent solutions accelerate innovation, strengthen security,
               and drive business excellence.
-            </p>
+            </motion.p>
           </div>
 
-          <div
-            ref={ctaRef}
-            className="flex flex-col sm:flex-row gap-4 opacity-0 translate-y-8 justify-center lg:justify-start"
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            style={{ willChange: "opacity, transform" }}
+            className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
           >
             <Button
               size="lg"
@@ -254,13 +163,16 @@ export default function Hero() {
                 About Us
               </Button>
             </Link>
-          </div>
+          </motion.div>
         </div>
 
         {/* Right Visual Stage - Business Verticals Scroller */}
         <div className="relative z-20 w-full lg:w-[42%] xl:w-[40%] shrink-0 max-w-[440px] lg:max-w-[480px] xl:max-w-[520px]">
-          <div
-            ref={scrollerRef}
+          <motion.div
+            initial={{ opacity: 0, x: 100 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            style={{ willChange: "opacity, transform" }}
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
             className="relative w-full rounded-3xl overflow-hidden shadow-2xl mx-auto cursor-pointer group bg-white dark:bg-slate-900/80 backdrop-blur-sm border border-slate-200 dark:border-white/10"
@@ -292,22 +204,22 @@ export default function Hero() {
                   </div>
 
                   {/* Content Container - Compact with proper spacing */}
-                  <div className="px-5 sm:px-6 py-4 sm:py-5">
+                  <div className="px-5 sm:px-6 py-4 sm:py-5 flex flex-col min-h-[180px]">
                     {/* Text Content */}
-                    <div className="space-y-1.5 mb-4">
-                      <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
+                    <div className="space-y-1.5 mb-4 grow">
+                      <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight line-clamp-1">
                         {vertical.title}
                       </h2>
-                      <p className="text-sm sm:text-base font-medium text-orange-600 dark:text-orange-400">
+                      <p className="text-sm sm:text-base font-medium text-orange-600 dark:text-orange-400 line-clamp-2 min-h-[2.5rem]">
                         {vertical.tagline}
                       </p>
-                      <p className="text-slate-600 dark:text-slate-300 leading-relaxed text-sm pt-1">
+                      <p className="text-slate-600 dark:text-slate-300 leading-relaxed text-sm pt-1 line-clamp-2 min-h-[2.5rem]">
                         {vertical.description}
                       </p>
                     </div>
 
                     {/* Footer: Learn More + Navigation Dots */}
-                    <div className="flex items-center justify-between pt-3 border-t border-slate-100 dark:border-white/10">
+                    <div className="flex items-center justify-between pt-3 border-t border-slate-100 dark:border-white/10 mt-auto">
                       <Link
                         href={vertical.href}
                         className="inline-flex items-center text-slate-900 dark:text-white text-sm font-semibold hover:text-orange-600 dark:hover:text-orange-400 transition-colors group/link"
@@ -338,9 +250,9 @@ export default function Hero() {
                 </div>
               );
             })}
-          </div>
+          </motion.div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

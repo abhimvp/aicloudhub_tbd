@@ -1,11 +1,7 @@
 /* app/globals.css */
 /* Fonts are now loaded via Next.js font optimization in layout.tsx */
 
-@plugin "tailwindcss-animate";
-@import "tailwindcss";
-
-@custom-variant dark (&:is(.dark *));
-
+/* Critical CSS - Load first to prevent FOUC */
 /* color variables one for light and one for dark */
 :root {
   --light: #fff;
@@ -47,10 +43,18 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
-/* For Overall layout, the body uses Plus Jakarta Sans as the main font with a white background to contrast nicely with dark preloader*/
+/* Critical body styles - prevent FOUC */
 body {
   font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
   background-color: var(--light);
+  color: var(--foreground);
+  /* Prevent flash during hydration */
+  opacity: 0;
+  transition: opacity 0.1s ease-in;
+}
+
+body.hydrated {
+  opacity: 1;
 }
 
 /* for headings all h1 are uppercase , bold and tightly spaced to match the bold editorial aesthetic */
@@ -65,119 +69,7 @@ h1 {
   letter-spacing: 0.2rem;
 }
 
-/* preloader - it's fixed to fill the entire viewport & uses a dark background , we'll animate its shape later using a clip by transition to reveal the main content underneath */
-.preloader {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100svh;
-  background-color: var(--dark);
-  color: var(--light);
-  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
-  will-change: clip-path;
-  overflow: hidden;
-  z-index: 2;
-}
-
-/* progress-bar sitting at the top , this starts with zero-width & will animate the screen as a part of the loading sequence */
-.progress-bar {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 7px;
-  background-color: var(--light);
-  transform: scaleX(0);
-  transform-origin: left;
-  will-change: transform;
-}
-
-/* preloader-words - in the center of the screen */
-.preloader-words {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  height: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  will-change: transform, opacity;
-}
-
-/* AI Cloud Hub text styling */
-.ai-cloud-hub-text {
-  font-size: 7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: #ff6b35;
-  letter-spacing: 0.2rem;
-  text-align: center;
-  margin: 0;
-  padding: 0 0 1.5rem 0;
-  line-height: 1.2;
-  position: relative;
-  opacity: 0;
-}
-
-/* Animated underline for "AI Cloud Hub" */
-.ai-cloud-hub-text::after {
-  content: "";
-  position: absolute;
-  bottom: 0.5rem;
-  left: 0;
-  width: 100%;
-  height: 6px;
-  background: #ff6b35;
-  box-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
-  border-radius: 3px;
-  transform-origin: center;
-  transform: scaleX(0);
-  transition: transform 0.6s cubic-bezier(0.9, 0, 0.1, 1);
-}
-
-.ai-cloud-hub-text.show-underline::after {
-  transform: scaleX(1);
-}
-
-/* Tagline under AI Cloud Hub */
-.preloader .tagline {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, 6rem);
-  width: max-content;
-  text-align: center;
-  font-size: 1.1rem;
-  font-weight: 700;
-  letter-spacing: 0.3rem;
-  color: #ff6b35;
-  text-shadow: 0 0 20px rgba(255, 107, 53, 0.8);
-  opacity: 0;
-  clip-path: polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%);
-  margin: 0;
-  z-index: 10;
-}
-
-.preloader-copy-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80%;
-  max-width: 1200px;
-  color: var(--light);
-}
-
-.preloader-copy-text p {
-  font-size: 4rem;
-  font-weight: 700;
-  line-height: 1.4;
-  letter-spacing: 0.1rem;
-  text-align: center;
-}
+/* Removed unused preloader styles - not being used in the app */
 
 .hero {
   position: relative;
@@ -214,14 +106,10 @@ h1 {
   will-change: transform;
 }
 
-.preloader-header a .char,
-.preloader-copy-text p .line,
-.header-row h1 .line {
-  position: relative;
-  display: inline-block;
-  transform: translateY(0);
-  will-change: transform;
-}
+@plugin "tailwindcss-animate";
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --font-sans: var(--font-sans);
@@ -300,6 +188,11 @@ h1 {
 
 /* Prevent flash of unstyled content during hydration */
 html {
+  visibility: hidden;
+}
+
+html.hydrated,
+html.loaded {
   visibility: visible;
 }
 
@@ -313,23 +206,12 @@ html {
     -webkit-backface-visibility: hidden;
   }
   
-  /* Prevent flash during hydration */
+  /* Prevent flash during hydration - ensure elements are visible by default */
   body:not(.hydrated) [data-motion-component],
   body:not(.hydrated) [data-framer-component] {
     opacity: 1 !important;
     transform: translateY(0) !important;
   }
-}
-
-/* Ensure smooth transitions without flash */
-body {
-  opacity: 1;
-  transition: opacity 0.1s ease-in;
-}
-
-/* Mark body as hydrated after initial render */
-body.hydrated {
-  /* Remove flash prevention after hydration */
 }
 
 @layer base {

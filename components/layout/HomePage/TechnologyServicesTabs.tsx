@@ -254,16 +254,20 @@ export default function TechnologyServicesTabs() {
               } lg:w-7/12`}
             >
               <div className="relative aspect-video">
-                <Image
-                  src={activeService.image}
-                  alt={activeService.title}
-                  fill
-                  className="rounded-2xl object-cover"
-                  sizes="(max-width: 1024px) 100vw, 58vw"
-                  {...(activeId === DEFAULT_SERVICE_ID
-                    ? { priority: true }
-                    : { loading: "lazy" })}
-                />
+                {/* Render only the active image */}
+                {activeService.image && (
+                  <Image
+                    src={activeService.image}
+                    alt={activeService.title}
+                    fill
+                    className="rounded-2xl object-cover"
+                    sizes="(max-width: 1024px) 100vw, 58vw"
+                    key={activeId} // Force re-mount on change to trigger animation/loading
+                    {...(activeId === DEFAULT_SERVICE_ID
+                      ? { priority: true }
+                      : { loading: "lazy" })}
+                  />
+                )}
               </div>
             </div>
             {/* Content Container - Fixed height with flex layout */}

@@ -1,33 +1,10 @@
 "use client";
 
 import { useEffect, useState, type ReactNode } from "react";
-import { ReactLenis, useLenis } from "lenis/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
+import { ReactLenis } from "lenis/react";
 
 interface SmoothScrollProviderProps {
   children: ReactNode;
-}
-
-// Component to sync GSAP ScrollTrigger with Lenis
-function GsapScrollSync() {
-  const lenis = useLenis(ScrollTrigger.update);
-
-  useEffect(() => {
-    if (!lenis) return;
-
-    // Sync GSAP's ticker with Lenis's animation frame
-    gsap.ticker.add(lenis.raf);
-    gsap.ticker.lagSmoothing(0);
-
-    return () => {
-      gsap.ticker.remove(lenis.raf);
-    };
-  }, [lenis]);
-
-  return null;
 }
 
 export default function SmoothScrollProvider({
@@ -64,7 +41,6 @@ export default function SmoothScrollProvider({
         smoothWheel: true,
       }}
     >
-      <GsapScrollSync />
       {children}
     </ReactLenis>
   );

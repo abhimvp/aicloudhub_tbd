@@ -199,7 +199,7 @@ export default function ITServicesContent() {
                 <BriefcaseBusiness className="h-4 w-4 text-orange-600 dark:text-orange-300" />
                 IT Services
               </div>
-              <h1 className="text-3xl md:text-4xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-black leading-[1.1] mb-6 tracking-tight break-words" style={{ lineHeight: '1.1' }}>
+              <h1 className="text-3xl md:text-4xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-black leading-[1.1] mb-6 tracking-tight wrap-break-word" style={{ lineHeight: '1.1' }}>
                 <span className="whitespace-normal">Transforming Businesses with </span>
                 <span className="bg-linear-to-r from-orange-600 to-yellow-500 dark:from-orange-400 dark:to-yellow-300 bg-clip-text text-transparent whitespace-normal">
                   Modern and Intelligent IT Services
@@ -310,12 +310,13 @@ export default function ITServicesContent() {
             return (
               <motion.div
                 key={index}
-                className="bg-white dark:bg-zinc-900/50 rounded-2xl border border-orange-100 dark:border-white/10 shadow-lg overflow-hidden"
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3 + index * 0.1, duration: 0.6, ease: "easeOut" }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ delay: 0.2 + index * 0.1, duration: 0.6, ease: "easeOut" }}
+                style={{ willChange: "opacity, transform" }}
               >
+                <div className="bg-white dark:bg-zinc-900/50 rounded-2xl border border-orange-100 dark:border-white/10 shadow-lg overflow-hidden">
                 <button
                   onClick={() => setExpandedIndex(isExpanded ? null : index)}
                   className="w-full text-left p-6 lg:p-8 focus:outline-none"
@@ -411,6 +412,7 @@ export default function ITServicesContent() {
                     </div>
                   </div>
                 </motion.div>
+                </div>
               </motion.div>
             );
           })}
@@ -439,15 +441,17 @@ export default function ITServicesContent() {
             {INDUSTRIES.map((industry, index) => (
               <motion.div
                 key={index}
-                className="bg-white dark:bg-zinc-900/50 p-8 rounded-2xl border border-orange-100 dark:border-white/10 shadow-md hover:shadow-lg transition-all duration-300 text-center min-h-[120px] flex items-center justify-center"
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3 + index * 0.1, duration: 0.6, ease: "easeOut" }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ delay: 0.2 + index * 0.1, duration: 0.6, ease: "easeOut" }}
+                style={{ willChange: "opacity, transform" }}
               >
-                <p className="text-slate-900 dark:text-white font-semibold text-base lg:text-lg">
-                  {industry}
-                </p>
+                <div className="bg-white dark:bg-zinc-900/50 p-8 rounded-2xl border border-orange-100 dark:border-white/10 shadow-md hover:shadow-lg transition-all duration-300 text-center min-h-[120px] flex items-center justify-center h-full">
+                  <p className="text-slate-900 dark:text-white font-semibold text-base lg:text-lg">
+                    {industry}
+                  </p>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -460,7 +464,7 @@ export default function ITServicesContent() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
@@ -473,21 +477,23 @@ export default function ITServicesContent() {
             {WHY_CHOOSE_US.map((item, index) => (
               <motion.div
                 key={index}
-                className="bg-white dark:bg-zinc-900/50 p-8 rounded-2xl border border-orange-100 dark:border-white/10 shadow-lg hover:shadow-xl transition-all duration-300"
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3 + index * 0.1, duration: 0.6, ease: "easeOut" }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ delay: 0.2 + index * 0.1, duration: 0.6, ease: "easeOut" }}
+                style={{ willChange: "opacity, transform" }}
               >
-                <div className="flex items-start gap-4 mb-4">
-                  <Check className="w-7 h-7 text-orange-500 shrink-0 mt-1" />
-                  <h3 className="text-xl font-bold text-slate-900 dark:text-white leading-tight">
-                    {item.title}
-                  </h3>
+                <div className="bg-white dark:bg-zinc-900/50 p-8 rounded-2xl border border-orange-100 dark:border-white/10 shadow-lg hover:shadow-xl transition-all duration-300 h-full">
+                  <div className="flex items-start gap-4 mb-4">
+                    <Check className="w-7 h-7 text-orange-500 shrink-0 mt-1" />
+                    <h3 className="text-xl font-bold text-slate-900 dark:text-white leading-tight">
+                      {item.title}
+                    </h3>
+                  </div>
+                  <p className="text-slate-700 dark:text-zinc-400 leading-relaxed ml-11 text-base">
+                    {item.description}
+                  </p>
                 </div>
-                <p className="text-slate-700 dark:text-zinc-400 leading-relaxed ml-11 text-base">
-                  {item.description}
-                </p>
               </motion.div>
             ))}
           </div>

@@ -211,56 +211,57 @@ const AboutPageClient = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
-            className={`backdrop-blur-xl border rounded-3xl p-8 md:p-10 shadow-2xl ${
+          >
+            <div className={`backdrop-blur-xl border rounded-3xl p-8 md:p-10 shadow-2xl ${
               actualTheme === "dark"
                 ? "bg-zinc-900/50 border-white/5 shadow-black/20"
                 : "bg-white/70 border-zinc-200 shadow-zinc-200/50"
-            }`}
-          >
-            <div className="flex flex-col md:flex-row gap-8 items-start">
-              <div className="flex-1">
-                <h2
-                  className={`text-2xl md:text-3xl font-bold mb-4 ${
-                    actualTheme === "dark" ? "text-white" : "text-zinc-900"
-                  }`}
-                >
-                  <span className="text-orange-500">aiCloudHub</span>: Global
-                  leader in IT services & corporate training
-                </h2>
+            }`}>
+              <div className="flex flex-col md:flex-row gap-8 items-start">
+                <div className="flex-1">
+                  <h2
+                    className={`text-2xl md:text-3xl font-bold mb-4 ${
+                      actualTheme === "dark" ? "text-white" : "text-zinc-900"
+                    }`}
+                  >
+                    <span className="text-orange-500">aiCloudHub</span>: Global
+                    leader in IT services & corporate training
+                  </h2>
+                  <div
+                    className={`space-y-4 text-base leading-relaxed ${
+                      actualTheme === "dark" ? "text-zinc-400" : "text-slate-700"
+                    }`}
+                  >
+                    <p>
+                      Since 2018, we&apos;ve been helping enterprises accelerate
+                      digital transformation while strengthening IT capabilities
+                      through practical, hands-on learning experiences.
+                      Headquartered in{" "}
+                      <span className="text-orange-500 font-semibold">
+                        Atlanta, GA
+                      </span>
+                      , we specialize in AI/ML, Cloud, Cybersecurity, DevSecOps,
+                      Quality Engineering, and IT Staffing.
+                    </p>
+                  </div>
+                </div>
                 <div
-                  className={`space-y-4 text-base leading-relaxed ${
-                    actualTheme === "dark" ? "text-zinc-400" : "text-slate-700"
+                  className={`md:w-1/3 p-6 rounded-2xl ${
+                    actualTheme === "dark" ? "bg-zinc-800/50" : "bg-orange-50"
                   }`}
                 >
-                  <p>
-                    Since 2018, we&apos;ve been helping enterprises accelerate
-                    digital transformation while strengthening IT capabilities
-                    through practical, hands-on learning experiences.
-                    Headquartered in{" "}
-                    <span className="text-orange-500 font-semibold">
-                      Atlanta, GA
-                    </span>
-                    , we specialize in AI/ML, Cloud, Cybersecurity, DevSecOps,
-                    Quality Engineering, and IT Staffing.
+                  <p
+                    className={`font-semibold text-lg italic ${
+                      actualTheme === "dark" ? "text-zinc-200" : "text-zinc-800"
+                    }`}
+                  >
+                    &quot;We bridge innovation with enablement—helping
+                    organizations adopt the right technologies and develop the
+                    right talent.&quot;
                   </p>
                 </div>
-              </div>
-              <div
-                className={`md:w-1/3 p-6 rounded-2xl ${
-                  actualTheme === "dark" ? "bg-zinc-800/50" : "bg-orange-50"
-                }`}
-              >
-                <p
-                  className={`font-semibold text-lg italic ${
-                    actualTheme === "dark" ? "text-zinc-200" : "text-zinc-800"
-                  }`}
-                >
-                  &quot;We bridge innovation with enablement—helping
-                  organizations adopt the right technologies and develop the
-                  right talent.&quot;
-                </p>
               </div>
             </div>
           </motion.div>
@@ -275,11 +276,11 @@ const AboutPageClient = () => {
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8 }}
               className="lg:col-span-5 relative"
             >
-              <div className="relative aspect-[3/4] md:aspect-[4/5] rounded-2xl overflow-hidden group mx-auto max-w-sm lg:max-w-sm xl:max-w-md">
+              <div className="relative aspect-3/4 md:aspect-4/5 rounded-2xl overflow-hidden group mx-auto max-w-sm lg:max-w-sm xl:max-w-md">
                 <div
                   className={`absolute inset-0 z-10 opacity-20 transition-opacity duration-500 group-hover:opacity-10 ${
                     actualTheme === "dark"
@@ -300,13 +301,13 @@ const AboutPageClient = () => {
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8, delay: 0.2 }}
               className="lg:col-span-7 mt-4 lg:mt-0"
             >
               <div className="relative pt-8 md:pt-0">
                 <Quote
-                  className={`absolute -top-8 -left-0 md:-top-12 md:-left-4 w-12 h-12 md:w-16 md:h-16 opacity-10 ${
+                  className={`absolute -top-8 left-0 md:-top-12 md:-left-4 w-12 h-12 md:w-16 md:h-16 opacity-10 ${
                     actualTheme === "dark" ? "text-white" : "text-slate-900"
                   }`}
                 />
@@ -377,68 +378,70 @@ const AboutPageClient = () => {
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-100px" }}
               transition={{ delay: 0.3, duration: 0.6, ease: "easeOut" }}
               whileHover={{ y: -5 }}
-              className={`relative p-6 md:p-10 rounded-3xl border overflow-hidden group ${
+            >
+              <div className={`relative p-6 md:p-10 rounded-3xl border overflow-hidden group h-full ${
                 actualTheme === "dark"
                   ? "bg-zinc-900/50 border-white/10 hover:border-orange-500/30"
                   : "bg-white border-slate-200 hover:border-orange-200 shadow-xl shadow-slate-200/50"
-              }`}
-            >
-              <div className="absolute top-0 right-0 p-6 md:p-8 opacity-10 group-hover:opacity-20 transition-opacity">
-                <Rocket className="w-24 h-24 md:w-32 md:h-32 text-orange-500" />
-              </div>
-              <div className="relative z-10">
-                <div className="inline-flex p-3 rounded-xl bg-orange-500/10 text-orange-500 mb-4 md:mb-6">
-                  <Rocket className="w-6 h-6" />
+              }`}>
+                <div className="absolute top-0 right-0 p-6 md:p-8 opacity-10 group-hover:opacity-20 transition-opacity">
+                  <Rocket className="w-24 h-24 md:w-32 md:h-32 text-orange-500" />
                 </div>
-                <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">
-                  Our Mission
-                </h3>
-                <p
-                  className={`text-base md:text-lg leading-relaxed ${
-                    actualTheme === "dark" ? "text-zinc-400" : "text-slate-700"
-                  }`}
-                >
-                  To empower organizations through innovative technology solutions
-                  and hands-on learning—enabling faster growth, smarter
-                  decisions, and sustainable success.
-                </p>
+                <div className="relative z-10">
+                  <div className="inline-flex p-3 rounded-xl bg-orange-500/10 text-orange-500 mb-4 md:mb-6">
+                    <Rocket className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">
+                    Our Mission
+                  </h3>
+                  <p
+                    className={`text-base md:text-lg leading-relaxed ${
+                      actualTheme === "dark" ? "text-zinc-400" : "text-slate-700"
+                    }`}
+                  >
+                    To empower organizations through innovative technology solutions
+                    and hands-on learning—enabling faster growth, smarter
+                    decisions, and sustainable success.
+                  </p>
+                </div>
               </div>
             </motion.div>
 
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-100px" }}
               transition={{ delay: 0.4, duration: 0.6, ease: "easeOut" }}
               whileHover={{ y: -5 }}
-              className={`relative p-6 md:p-10 rounded-3xl border overflow-hidden group ${
+            >
+              <div className={`relative p-6 md:p-10 rounded-3xl border overflow-hidden group h-full ${
                 actualTheme === "dark"
                   ? "bg-zinc-900/50 border-white/10 hover:border-blue-500/30"
                   : "bg-white border-slate-200 hover:border-blue-200 shadow-xl shadow-slate-200/50"
-              }`}
-            >
-              <div className="absolute top-0 right-0 p-6 md:p-8 opacity-10 group-hover:opacity-20 transition-opacity">
-                <Globe className="w-24 h-24 md:w-32 md:h-32 text-blue-500" />
-              </div>
-              <div className="relative z-10">
-                <div className="inline-flex p-3 rounded-xl bg-blue-500/10 text-blue-500 mb-4 md:mb-6">
-                  <Globe className="w-6 h-6" />
+              }`}>
+                <div className="absolute top-0 right-0 p-6 md:p-8 opacity-10 group-hover:opacity-20 transition-opacity">
+                  <Globe className="w-24 h-24 md:w-32 md:h-32 text-blue-500" />
                 </div>
-                <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">
-                  Our Vision
-                </h3>
-                <p
-                  className={`text-base md:text-lg leading-relaxed ${
-                    actualTheme === "dark" ? "text-zinc-400" : "text-slate-700"
-                  }`}
-                >
-                  To be a trusted global leader in digital transformation, driving
-                  innovation and building capabilities that help businesses and
-                  communities succeed in a rapidly evolving world.
-                </p>
+                <div className="relative z-10">
+                  <div className="inline-flex p-3 rounded-xl bg-blue-500/10 text-blue-500 mb-4 md:mb-6">
+                    <Globe className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">
+                    Our Vision
+                  </h3>
+                  <p
+                    className={`text-base md:text-lg leading-relaxed ${
+                      actualTheme === "dark" ? "text-zinc-400" : "text-slate-700"
+                    }`}
+                  >
+                    To be a trusted global leader in digital transformation, driving
+                    innovation and building capabilities that help businesses and
+                    communities succeed in a rapidly evolving world.
+                  </p>
+                </div>
               </div>
             </motion.div>
           </div>
@@ -479,32 +482,34 @@ const AboutPageClient = () => {
                   key={value.title}
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: true, margin: "-100px" }}
                   transition={{ delay: 0.3 + index * 0.1, duration: 0.6, ease: "easeOut" }}
                   whileHover={{ y: -8 }}
-                  className={`p-8 rounded-3xl border text-center transition-all duration-300 group w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(25%-1.5rem)] ${
+                  className="w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(25%-1.5rem)]"
+                >
+                  <div className={`p-8 rounded-3xl border text-center transition-all duration-300 group h-full ${
                     actualTheme === "dark"
                       ? "bg-zinc-900/50 border-white/5 hover:bg-zinc-900 hover:border-white/20"
                       : "bg-white border-slate-100 hover:border-slate-300 hover:shadow-xl hover:shadow-slate-200/50"
-                  }`}
-                >
-                  <div
-                    className={`mx-auto w-14 h-14 md:w-16 md:h-16 flex items-center justify-center rounded-2xl mb-6 transition-transform duration-300 group-hover:scale-110 ${value.bg} ${value.text}`}
-                  >
-                    <Icon className="w-7 h-7 md:w-8 md:h-8" />
+                  }`}>
+                    <div
+                      className={`mx-auto w-14 h-14 md:w-16 md:h-16 flex items-center justify-center rounded-2xl mb-6 transition-transform duration-300 group-hover:scale-110 ${value.bg} ${value.text}`}
+                    >
+                      <Icon className="w-7 h-7 md:w-8 md:h-8" />
+                    </div>
+                    <h3 className="text-lg md:text-xl font-bold mb-3">
+                      {value.title}
+                    </h3>
+                    <p
+                      className={`text-sm md:text-base leading-relaxed font-medium ${
+                        actualTheme === "dark"
+                          ? "text-zinc-400"
+                          : "text-slate-700"
+                      }`}
+                    >
+                      {value.description}
+                    </p>
                   </div>
-                  <h3 className="text-lg md:text-xl font-bold mb-3">
-                    {value.title}
-                  </h3>
-                  <p
-                    className={`text-sm md:text-base leading-relaxed font-medium ${
-                      actualTheme === "dark"
-                        ? "text-zinc-400"
-                        : "text-slate-700"
-                    }`}
-                  >
-                    {value.description}
-                  </p>
                 </motion.div>
               );
             })}
@@ -546,30 +551,31 @@ const AboutPageClient = () => {
                   key={index}
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: true, margin: "-100px" }}
                   transition={{ delay: 0.3 + index * 0.1, duration: 0.6, ease: "easeOut" }}
                   whileHover={{ y: -5 }}
-                  className={`p-8 md:p-10 rounded-[2rem] border text-left group cursor-default transition-all duration-300 ${
+                >
+                  <div className={`p-8 md:p-10 rounded-[2rem] border text-left group cursor-default transition-all duration-300 h-full ${
                     actualTheme === "dark"
                       ? "bg-zinc-900/50 border-white/5 hover:bg-zinc-900 hover:border-orange-500/30"
                       : "bg-white border-slate-100 hover:border-orange-200 hover:shadow-xl hover:shadow-orange-500/10"
-                  }`}
-                >
-                  <div className="mb-6 md:mb-8 w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-400 group-hover:text-white group-hover:bg-orange-500 transition-all duration-300">
-                    <Icon className="w-7 h-7 md:w-8 md:h-8" />
+                  }`}>
+                    <div className="mb-6 md:mb-8 w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-400 group-hover:text-white group-hover:bg-orange-500 transition-all duration-300">
+                      <Icon className="w-7 h-7 md:w-8 md:h-8" />
+                    </div>
+                    <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4 group-hover:text-orange-500 transition-colors">
+                      {service.title}
+                    </h3>
+                    <p
+                      className={`text-base leading-relaxed ${
+                        actualTheme === "dark"
+                          ? "text-zinc-400"
+                          : "text-slate-700"
+                      }`}
+                    >
+                      {service.description}
+                    </p>
                   </div>
-                  <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4 group-hover:text-orange-500 transition-colors">
-                    {service.title}
-                  </h3>
-                  <p
-                    className={`text-base leading-relaxed ${
-                      actualTheme === "dark"
-                        ? "text-zinc-400"
-                        : "text-slate-700"
-                    }`}
-                  >
-                    {service.description}
-                  </p>
                 </motion.div>
               );
             })}

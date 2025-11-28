@@ -155,6 +155,7 @@ const CareersPageClient = () => {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
+            style={{ willChange: "opacity, transform" }}
             className="text-center space-y-6"
           >
             <motion.div
@@ -217,10 +218,11 @@ const CareersPageClient = () => {
       <section className="py-20 relative">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
+            style={{ willChange: "opacity, transform" }}
             className="text-center mb-16"
           >
             <h2
@@ -246,29 +248,33 @@ const CareersPageClient = () => {
                 key={pillar.title}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, margin: "-100px" }}
                 transition={{ delay: 0.3 + index * 0.1, duration: 0.6, ease: "easeOut" }}
-                className={`p-8 rounded-3xl border transition-all duration-300 hover:scale-[1.02] ${
-                  actualTheme === "dark"
-                    ? "bg-zinc-900/50 border-white/10 hover:bg-zinc-800/80 hover:border-orange-500/30"
-                    : "bg-white border-gray-200 shadow-lg hover:shadow-xl hover:border-orange-200"
-                }`}
+                style={{ willChange: "opacity, transform" }}
               >
-                <div className="text-4xl mb-4">{pillar.emoji}</div>
-                <h3
-                  className={`text-xl font-bold mb-3 ${
-                    actualTheme === "dark" ? "text-white" : "text-slate-900"
+                <div
+                  className={`h-full p-8 rounded-3xl border transition-all duration-300 hover:scale-[1.02] ${
+                    actualTheme === "dark"
+                      ? "bg-zinc-900/50 border-white/10 hover:bg-zinc-800/80 hover:border-orange-500/30"
+                      : "bg-white border-gray-200 shadow-lg hover:shadow-xl hover:border-orange-200"
                   }`}
                 >
-                  {pillar.title}
-                </h3>
-                <p
-                  className={`leading-relaxed ${
-                    actualTheme === "dark" ? "text-slate-400" : "text-slate-600"
-                  }`}
-                >
-                  {pillar.description}
-                </p>
+                  <div className="text-4xl mb-4">{pillar.emoji}</div>
+                  <h3
+                    className={`text-xl font-bold mb-3 ${
+                      actualTheme === "dark" ? "text-white" : "text-slate-900"
+                    }`}
+                  >
+                    {pillar.title}
+                  </h3>
+                  <p
+                    className={`leading-relaxed ${
+                      actualTheme === "dark" ? "text-slate-400" : "text-slate-600"
+                    }`}
+                  >
+                    {pillar.description}
+                  </p>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -283,10 +289,11 @@ const CareersPageClient = () => {
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
+            style={{ willChange: "opacity, transform" }}
             className="flex flex-col gap-4 text-center"
           >
             <p className="text-sm font-bold uppercase tracking-[0.35em] text-orange-500">
@@ -335,134 +342,141 @@ const CareersPageClient = () => {
               </div>
             )}
             {filteredJobs.map((job, index) => (
-              <motion.article
+              <motion.div
                 key={job.title}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, margin: "-100px" }}
                 transition={{ delay: 0.3 + index * 0.1, duration: 0.6, ease: "easeOut" }}
-                className={`group rounded-3xl border p-6 md:p-8 flex flex-col gap-5 transition-all duration-300 hover:scale-[1.01] ${
-                  actualTheme === "dark"
-                    ? "border-white/10 bg-zinc-900/50 hover:bg-zinc-800/80 hover:border-orange-500/30"
-                    : "border-gray-200 bg-white shadow-sm hover:shadow-xl hover:shadow-orange-500/5 hover:border-orange-200"
-                }`}
+                style={{ willChange: "opacity, transform" }}
               >
-                <div className="flex flex-wrap gap-3 items-center justify-between">
-                  <div>
-                    <h3
-                      className={`text-2xl font-bold mb-1 ${
-                        actualTheme === "dark" ? "text-white" : "text-slate-900"
-                      }`}
-                    >
-                      {job.title}
-                    </h3>
-                    <p
-                      className={`text-sm font-bold uppercase tracking-wide ${
+                <article
+                  className={`h-full group rounded-3xl border p-6 md:p-8 flex flex-col gap-5 transition-all duration-300 hover:scale-[1.01] ${
+                    actualTheme === "dark"
+                      ? "border-white/10 bg-zinc-900/50 hover:bg-zinc-800/80 hover:border-orange-500/30"
+                      : "border-gray-200 bg-white shadow-sm hover:shadow-xl hover:shadow-orange-500/5 hover:border-orange-200"
+                  }`}
+                >
+                  <div className="flex flex-wrap gap-3 items-center justify-between">
+                    <div>
+                      <h3
+                        className={`text-2xl font-bold mb-1 ${
+                          actualTheme === "dark" ? "text-white" : "text-slate-900"
+                        }`}
+                      >
+                        {job.title}
+                      </h3>
+                      <p
+                        className={`text-sm font-bold uppercase tracking-wide ${
+                          actualTheme === "dark"
+                            ? "text-orange-300"
+                            : "text-orange-600"
+                        }`}
+                      >
+                        {job.team}
+                      </p>
+                    </div>
+                    <Button
+                      variant="secondary"
+                      className={`rounded-full px-6 py-2 text-sm font-bold transition-colors ${
                         actualTheme === "dark"
-                          ? "text-orange-300"
-                          : "text-orange-600"
+                          ? "bg-white/10 text-white hover:bg-white/20"
+                          : "bg-orange-50 text-orange-700 hover:bg-orange-100"
                       }`}
                     >
-                      {job.team}
-                    </p>
+                      Mock apply
+                    </Button>
                   </div>
-                  <Button
-                    variant="secondary"
-                    className={`rounded-full px-6 py-2 text-sm font-bold transition-colors ${
-                      actualTheme === "dark"
-                        ? "bg-white/10 text-white hover:bg-white/20"
-                        : "bg-orange-50 text-orange-700 hover:bg-orange-100"
+                  <p
+                    className={`text-base leading-relaxed ${
+                      actualTheme === "dark" ? "text-slate-400" : "text-slate-600"
                     }`}
                   >
-                    Mock apply
-                  </Button>
-                </div>
-                <p
-                  className={`text-base leading-relaxed ${
-                    actualTheme === "dark" ? "text-slate-400" : "text-slate-600"
-                  }`}
-                >
-                  {job.snippet}
-                </p>
-                <div
-                  className={`flex flex-wrap gap-3 text-sm font-medium ${
-                    actualTheme === "dark" ? "text-slate-400" : "text-slate-500"
-                  }`}
-                >
-                  <span
-                    className={`px-3 py-1 rounded-full border ${
-                      actualTheme === "dark"
-                        ? "border-white/10 bg-white/5"
-                        : "border-slate-200 bg-slate-50"
+                    {job.snippet}
+                  </p>
+                  <div
+                    className={`flex flex-wrap gap-3 text-sm font-medium ${
+                      actualTheme === "dark" ? "text-slate-400" : "text-slate-500"
                     }`}
                   >
-                    {job.location}
-                  </span>
-                  <span
-                    className={`px-3 py-1 rounded-full border ${
-                      actualTheme === "dark"
-                        ? "border-white/10 bg-white/5"
-                        : "border-slate-200 bg-slate-50"
-                    }`}
-                  >
-                    {job.type}
-                  </span>
-                  <span
-                    className={`px-3 py-1 rounded-full border ${
-                      actualTheme === "dark"
-                        ? "border-white/10 bg-white/5"
-                        : "border-slate-200 bg-slate-50"
-                    }`}
-                  >
-                    {job.experience}
-                  </span>
-                </div>
-              </motion.article>
+                    <span
+                      className={`px-3 py-1 rounded-full border ${
+                        actualTheme === "dark"
+                          ? "border-white/10 bg-white/5"
+                          : "border-slate-200 bg-slate-50"
+                      }`}
+                    >
+                      {job.location}
+                    </span>
+                    <span
+                      className={`px-3 py-1 rounded-full border ${
+                        actualTheme === "dark"
+                          ? "border-white/10 bg-white/5"
+                          : "border-slate-200 bg-slate-50"
+                      }`}
+                    >
+                      {job.type}
+                    </span>
+                    <span
+                      className={`px-3 py-1 rounded-full border ${
+                        actualTheme === "dark"
+                          ? "border-white/10 bg-white/5"
+                          : "border-slate-200 bg-slate-50"
+                      }`}
+                    >
+                      {job.experience}
+                    </span>
+                  </div>
+                </article>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
       <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
-        <motion.form
-          initial={{ opacity: 0, x: 20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          onSubmit={handleMockSubmit}
-          className={`rounded-4xl border p-8 space-y-6 backdrop-blur-xl ${
-            actualTheme === "dark"
-              ? "border-white/10 bg-zinc-900/80 shadow-2xl shadow-black/50"
-              : "border-orange-100 bg-white/80 shadow-2xl shadow-orange-500/10"
-          }`}
+          style={{ willChange: "opacity, transform" }}
         >
-          <div className="space-y-2">
-            <p className="text-sm font-bold uppercase tracking-[0.35em] text-orange-500">
-              Mock application
-            </p>
-            <h2
-              className={`text-3xl font-black ${
-                actualTheme === "dark" ? "text-white" : "text-slate-900"
-              }`}
-            >
-              Drop your resume
-            </h2>
-            <p
-              className={`text-base ${
-                actualTheme === "dark" ? "text-slate-400" : "text-slate-600"
-              }`}
-            >
-              This is a preview of the experience. Files are not stored yet, and
-              clicking submit simply simulates the confirmation state.
-            </p>
-          </div>
-
-          <label
-            htmlFor="fullName"
-            className="text-sm font-bold uppercase tracking-wide text-orange-500"
+          <form
+            onSubmit={handleMockSubmit}
+            className={`rounded-4xl border p-8 space-y-6 backdrop-blur-xl ${
+              actualTheme === "dark"
+                ? "border-white/10 bg-zinc-900/80 shadow-2xl shadow-black/50"
+                : "border-orange-100 bg-white/80 shadow-2xl shadow-orange-500/10"
+            }`}
           >
-            Your name
-          </label>
+            <div className="space-y-2">
+              <p className="text-sm font-bold uppercase tracking-[0.35em] text-orange-500">
+                Mock application
+              </p>
+              <h2
+                className={`text-3xl font-black ${
+                  actualTheme === "dark" ? "text-white" : "text-slate-900"
+                }`}
+              >
+                Drop your resume
+              </h2>
+              <p
+                className={`text-base ${
+                  actualTheme === "dark" ? "text-slate-400" : "text-slate-600"
+                }`}
+              >
+                This is a preview of the experience. Files are not stored yet, and
+                clicking submit simply simulates the confirmation state.
+              </p>
+            </div>
+
+            <label
+              htmlFor="fullName"
+              className="text-sm font-bold uppercase tracking-wide text-orange-500"
+            >
+              Your name
+            </label>
           <input
             id="fullName"
             name="fullName"
@@ -558,7 +572,8 @@ const CareersPageClient = () => {
             Nothing is stored yet—we’ll wire integrations once the team
             finalizes the workflow.
           </p>
-        </motion.form>
+          </form>
+        </motion.div>
       </section>
       <ScrollToTop />
     </main>

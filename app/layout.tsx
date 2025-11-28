@@ -60,18 +60,34 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Enhanced theme initialization script that runs synchronously before first paint
+  // Respects prefers-color-scheme and prevents FOUC
   const themeInitScript = `
 (function() {
   try {
     var stored = window.localStorage.getItem('theme');
-    var theme = (stored === 'light' || stored === 'dark') ? stored : 'dark';
+    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var theme = (stored === 'light' || stored === 'dark') 
+      ? stored 
+      : (prefersDark ? 'dark' : 'light');
     var root = document.documentElement;
     root.classList.remove('light', 'dark');
     root.classList.add(theme);
+    // Set initial opacity to prevent flash
+    root.style.visibility = 'visible';
     // Mark body as hydrated to prevent animation flash
-    document.body.classList.add('hydrated');
+    if (document.body) {
+      document.body.classList.add('hydrated');
+    } else {
+      document.addEventListener('DOMContentLoaded', function() {
+        document.body.classList.add('hydrated');
+      });
+    }
   } catch (e) {
-    document.body.classList.add('hydrated');
+    // Fallback: ensure body is marked as hydrated
+    if (document.body) {
+      document.body.classList.add('hydrated');
+    }
   }
 })();
 `;
@@ -79,10 +95,34 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        {/* Theme initialization script - must run before first paint */}
+        <script
+          dangerouslySetInnerHTML={{ __html: themeInitScript }}
+          suppressHydrationWarning
+        />
+        {/* Prevent FOUC by setting initial styles */}
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
+              html { visibility: hidden; }
+              html.hydrated, html.loaded { visibility: visible; }
+              body { opacity: 0; transition: opacity 0.1s ease-in; }
+              body.hydrated { opacity: 1; }
+            `,
+          }}
+        />
+        <noscript>
+          <style>
+            {`
+              html { visibility: visible; opacity: 1; }
+              body { opacity: 1; }
+            `}
+          </style>
+        </noscript>
       </head>
       <body
         className={`${plusJakartaSans.variable} ${spaceGrotesk.variable} font-sans antialiased`}
+        suppressHydrationWarning
       >
         <ThemeProvider>
           <SmoothScrollProvider>
@@ -91,6 +131,19 @@ export default function RootLayout({
             <Footer />
           </SmoothScrollProvider>
         </ThemeProvider>
+        {/* Mark HTML as loaded after React hydration */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                document.documentElement.classList.add('loaded');
+                if (!document.body.classList.contains('hydrated')) {
+                  document.body.classList.add('hydrated');
+                }
+              })();
+            `,
+          }}
+        />
       </body>
     </html>
   );

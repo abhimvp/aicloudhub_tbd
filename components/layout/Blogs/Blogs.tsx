@@ -1,10 +1,8 @@
 // components/layout/Blogs/Blogs.tsx
 "use client";
 
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import type { SwiperRef } from "swiper/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -19,50 +17,95 @@ import { ArrowRight } from "lucide-react";
 import "./Blogs.css";
 import { useTheme } from "@/components/theme/ThemeProvider";
 
-gsap.registerPlugin(ScrollTrigger);
+// Blog card component with Motion animations
+const BlogCard = ({
+  post,
+  isActive,
+  actualTheme,
+}: {
+  post: ReturnType<typeof getFeaturedBlogs>[0];
+  isActive: boolean;
+  actualTheme: string;
+}) => {
+  return (
+    <motion.div
+      animate={{
+        scale: isActive ? 1 : 0.9,
+        opacity: isActive ? 1 : 0.5,
+        y: isActive ? 0 : 30,
+        z: isActive ? 0 : -40,
+      }}
+      transition={{
+        duration: isActive ? 0.4 : 0.35,
+        ease: isActive ? [0.22, 1, 0.36, 1] : [0.25, 0.46, 0.45, 0.94],
+      }}
+      style={{ willChange: "opacity, transform" }}
+      className={`relative w-full rounded-3xl overflow-hidden shadow-xl cursor-pointer transition-all duration-700 hover:shadow-2xl ${
+        actualTheme === "dark"
+          ? "bg-neutral-900 hover:shadow-orange-500/20"
+          : "bg-white hover:shadow-orange-500/30 border border-orange-100"
+      }`}
+    >
+      <div className="relative w-full h-[260px] overflow-hidden rounded-t-3xl">
+        <Image
+          src={post.cover}
+          alt={post.title}
+          fill
+          priority
+          sizes="(max-width: 768px) 90vw, (max-width: 1024px) 45vw, 30vw"
+          className="object-cover object-center transition-transform duration-700 ease-out hover:scale-105"
+        />
+        <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
+
+        {/* Category Badge */}
+        <div className="absolute top-4 left-4">
+          <span className="px-3 py-1 bg-orange-500 text-white text-xs font-semibold rounded-full">
+            {post.category}
+          </span>
+        </div>
+      </div>
+      <div
+        className={`p-6 text-left ${
+          actualTheme === "dark" ? "text-white" : "text-slate-900"
+        }`}
+      >
+        <h3
+          className={`text-xl font-semibold mb-2 line-clamp-2 hover:text-orange-400 transition-colors`}
+        >
+          {post.title}
+        </h3>
+        <p
+          className={`text-sm mb-3 line-clamp-2 ${
+            actualTheme === "dark" ? "text-gray-400" : "text-slate-600"
+          }`}
+        >
+          {post.excerpt}
+        </p>
+        <div className="flex items-center justify-between">
+          <p
+            className={`text-xs ${
+              actualTheme === "dark" ? "text-gray-500" : "text-slate-500"
+            }`}
+          >
+            {post.date}
+          </p>
+          <span className="text-orange-500 text-xs font-semibold">
+            {post.readTime}
+          </span>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
 
 const Blogs = () => {
   const { actualTheme } = useTheme();
   const swiperRef = useRef<SwiperRef>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const featuredBlogs = getFeaturedBlogs();
-
-  // Swiper GSAP Animation
-  useEffect(() => {
-    if (!swiperRef.current) return;
-    const swiper = swiperRef.current.swiper;
-
-    const animateSlides = () => {
-      swiper.slides.forEach((slide: HTMLElement, i: number) => {
-        if (i === swiper.activeIndex) {
-          gsap.to(slide, {
-            scale: 1,
-            opacity: 1,
-            y: 0,
-            z: 0,
-            duration: 0.4, // <-- FASTER
-            ease: "power3.out",
-          });
-        } else {
-          gsap.to(slide, {
-            scale: 0.9,
-            opacity: 0.5,
-            y: 30,
-            z: -40,
-            duration: 0.35, // <-- FASTER
-            ease: "power2.out",
-          });
-        }
-      });
-    };
-
-    animateSlides();
-    swiper.on("slideChangeTransitionStart", animateSlides);
-
-    return () => swiper.off("slideChangeTransitionStart", animateSlides);
-  }, []);
 
   // Background Parallax Effect - Disabled to prevent cut-off issues
   // useEffect(() => {
@@ -170,12 +213,6 @@ const Blogs = () => {
           ref={swiperRef}
           grabCursor
           centeredSlides
-          // --- THIS IS THE FIX ---
-          // We let breakpoints control all the settings.
-          // On desktop (1024px) we set slidesPerView to 3.
-          // Your GSAP animation will now correctly
-          // scale the center (active) slide to 1
-          // and the two side slides to 0.9.
           breakpoints={{
             // Mobile: Show main slide + a peek of the next
             0: {
@@ -193,76 +230,21 @@ const Blogs = () => {
               spaceBetween: 40,
             },
           }}
-          // --- END OF FIX ---
-
           pagination={{ clickable: true }}
           navigation
           modules={[Pagination, Navigation]}
           className="blogSwiper"
+          onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
+          onInit={(swiper) => setActiveIndex(swiper.activeIndex)}
         >
-          {featuredBlogs.map((post) => (
+          {featuredBlogs.map((post, index) => (
             <SwiperSlide key={post.id}>
               <Link href={`/blogs/${post.slug}`}>
-                <div
-                  className={`relative w-full rounded-3xl overflow-hidden shadow-xl cursor-pointer transition-all duration-700 hover:shadow-2xl ${
-                    actualTheme === "dark"
-                      ? "bg-neutral-900 hover:shadow-orange-500/20"
-                      : "bg-white hover:shadow-orange-500/30 border border-orange-100"
-                  }`}
-                >
-                  <div className="relative w-full h-[260px] overflow-hidden rounded-t-3xl">
-                    <Image
-                      src={post.cover}
-                      alt={post.title}
-                      fill
-                      priority
-                      sizes="(max-width: 768px) 90vw, (max-width: 1024px) 45vw, 30vw"
-                      className="object-cover object-center transition-transform duration-700 ease-out hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
-
-                    {/* Category Badge */}
-                    <div className="absolute top-4 left-4">
-                      <span className="px-3 py-1 bg-orange-500 text-white text-xs font-semibold rounded-full">
-                        {post.category}
-                      </span>
-                    </div>
-                  </div>
-                  <div
-                    className={`p-6 text-left ${
-                      actualTheme === "dark" ? "text-white" : "text-slate-900"
-                    }`}
-                  >
-                    <h3
-                      className={`text-xl font-semibold mb-2 line-clamp-2 hover:text-orange-400 transition-colors`}
-                    >
-                      {post.title}
-                    </h3>
-                    <p
-                      className={`text-sm mb-3 line-clamp-2 ${
-                        actualTheme === "dark"
-                          ? "text-gray-400"
-                          : "text-slate-600"
-                      }`}
-                    >
-                      {post.excerpt}
-                    </p>
-                    <div className="flex items-center justify-between">
-                      <p
-                        className={`text-xs ${
-                          actualTheme === "dark"
-                            ? "text-gray-500"
-                            : "text-slate-500"
-                        }`}
-                      >
-                        {post.date}
-                      </p>
-                      <span className="text-orange-500 text-xs font-semibold">
-                        {post.readTime}
-                      </span>
-                    </div>
-                  </div>
-                </div>
+                <BlogCard
+                  post={post}
+                  isActive={index === activeIndex}
+                  actualTheme={actualTheme}
+                />
               </Link>
             </SwiperSlide>
           ))}

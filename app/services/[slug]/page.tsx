@@ -194,7 +194,7 @@ export default async function ServicePage({
                 <Icon className="h-4 w-4 text-orange-600 dark:text-orange-300" />
                 {service.title}
               </div>
-              <h1 className="text-3xl md:text-4xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-black leading-[1.1] mb-6 tracking-tight break-words" style={{ lineHeight: '1.1' }}>
+              <h1 className="text-3xl md:text-4xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-black leading-[1.1] mb-6 tracking-tight wrap-break-word" style={{ lineHeight: '1.1' }}>
                 <span className="whitespace-normal">{service.heroTitle}</span>
               </h1>
               <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-8 leading-relaxed">
@@ -272,35 +272,38 @@ export default async function ServicePage({
             return (
               <motion.article
                 key={index}
-                className={`group relative bg-white dark:bg-white/5 rounded-2xl border border-orange-100 dark:border-white/10 shadow-lg dark:shadow-none p-6 lg:p-8 hover:shadow-2xl hover:border-orange-300 dark:hover:border-orange-500/50 transition-all duration-500 overflow-hidden ${getBentoGridClass(
+                className={`flex flex-col h-full ${getBentoGridClass(
                   index,
                   isAIML
-                )} flex flex-col`}
+                )}`}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3 + index * 0.1, duration: 0.6, ease: "easeOut" }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ delay: 0.2 + index * 0.1, duration: 0.6, ease: "easeOut" }}
                 whileHover={OFFERING_HOVER}
+                style={{ willChange: "opacity, transform" }}
               >
-                {/* Gradient overlay on hover */}
-                <div className="absolute inset-0 bg-linear-to-br from-orange-500/0 via-yellow-500/0 to-orange-500/0 group-hover:from-orange-500/5 group-hover:via-yellow-500/5 group-hover:to-orange-500/5 dark:group-hover:from-orange-500/10 dark:group-hover:via-yellow-500/10 dark:group-hover:to-orange-500/10 transition-all duration-500" />
+                <div className="group relative bg-white dark:bg-white/5 rounded-2xl border border-orange-100 dark:border-white/10 shadow-lg dark:shadow-none p-6 lg:p-8 hover:shadow-2xl hover:border-orange-300 dark:hover:border-orange-500/50 transition-all duration-500 overflow-hidden h-full flex flex-col">
+                  {/* Gradient overlay on hover */}
+                  <div className="absolute inset-0 bg-linear-to-br from-orange-500/0 via-yellow-500/0 to-orange-500/0 group-hover:from-orange-500/5 group-hover:via-yellow-500/5 group-hover:to-orange-500/5 dark:group-hover:from-orange-500/10 dark:group-hover:via-yellow-500/10 dark:group-hover:to-orange-500/10 transition-all duration-500" />
 
-                {/* Icon - unique for each offering */}
-                <div className="relative mb-4 inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-linear-to-br from-orange-500 to-yellow-400 text-white shadow-xl group-hover:scale-110 transition-transform duration-300">
-                  <OfferingIcon className="w-7 h-7" />
+                  {/* Icon - unique for each offering */}
+                  <div className="relative mb-4 inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-linear-to-br from-orange-500 to-yellow-400 text-white shadow-xl group-hover:scale-110 transition-transform duration-300">
+                    <OfferingIcon className="w-7 h-7" />
+                  </div>
+
+                  <div className="relative flex-1">
+                    <h3 className="text-xl font-bold mb-3 text-slate-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors duration-300">
+                      {offering.title}
+                    </h3>
+                    <p className="text-slate-600 dark:text-zinc-300 leading-relaxed text-sm lg:text-base">
+                      {offering.description}
+                    </p>
+                  </div>
+
+                  {/* Subtle gradient accent */}
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-linear-to-r from-transparent via-orange-400/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
-
-                <div className="relative flex-1">
-                  <h3 className="text-xl font-bold mb-3 text-slate-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors duration-300">
-                    {offering.title}
-                  </h3>
-                  <p className="text-slate-600 dark:text-zinc-300 leading-relaxed text-sm lg:text-base">
-                    {offering.description}
-                  </p>
-                </div>
-
-                {/* Subtle gradient accent */}
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-linear-to-r from-transparent via-orange-400/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </motion.article>
             );
           })}
@@ -313,7 +316,7 @@ export default async function ServicePage({
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
             <h2 className="text-3xl lg:text-4xl font-black text-center mb-12 text-slate-900 dark:text-white">
@@ -329,34 +332,36 @@ export default async function ServicePage({
               return (
                 <motion.div
                   key={index}
-                  className="group relative bg-white/80 dark:bg-white/5 backdrop-blur-sm p-6 lg:p-8 rounded-2xl border border-orange-100 dark:border-white/10 shadow-xl hover:shadow-2xl transition-all duration-500"
+                  className="h-full"
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3 + index * 0.1, duration: 0.6, ease: "easeOut" }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ delay: 0.2 + index * 0.1, duration: 0.6, ease: "easeOut" }}
                   whileHover={capability3DHover}
                   style={CAPABILITY_3D_STYLE}
                 >
-                  {/* Glassmorphism effect */}
-                  <div className="absolute inset-0 bg-linear-to-br from-orange-400/10 via-transparent to-yellow-400/10 dark:from-orange-400/20 dark:to-yellow-400/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="group relative bg-white/80 dark:bg-white/5 backdrop-blur-sm p-6 lg:p-8 rounded-2xl border border-orange-100 dark:border-white/10 shadow-xl hover:shadow-2xl transition-all duration-500 h-full">
+                    {/* Glassmorphism effect */}
+                    <div className="absolute inset-0 bg-linear-to-br from-orange-400/10 via-transparent to-yellow-400/10 dark:from-orange-400/20 dark:to-yellow-400/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                  {/* Animated glow effect */}
-                  <div className="absolute -inset-1 bg-linear-to-r from-orange-500 to-yellow-400 rounded-2xl opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500" />
+                    {/* Animated glow effect */}
+                    <div className="absolute -inset-1 bg-linear-to-r from-orange-500 to-yellow-400 rounded-2xl opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500" />
 
-                  {/* Number badge */}
-                  <div className="relative mb-4 inline-flex items-center justify-center w-10 h-10 rounded-lg bg-linear-to-br from-orange-500/20 to-yellow-500/20 dark:from-orange-500/30 dark:to-yellow-500/30 border border-orange-300/50 dark:border-orange-400/30 font-bold text-orange-600 dark:text-orange-400">
-                    {index + 1}
+                    {/* Number badge */}
+                    <div className="relative mb-4 inline-flex items-center justify-center w-10 h-10 rounded-lg bg-linear-to-br from-orange-500/20 to-yellow-500/20 dark:from-orange-500/30 dark:to-yellow-500/30 border border-orange-300/50 dark:border-orange-400/30 font-bold text-orange-600 dark:text-orange-400">
+                      {index + 1}
+                    </div>
+
+                    <h4 className="relative font-bold text-lg mb-3 text-slate-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors duration-300">
+                      {capability.title}
+                    </h4>
+                    <p className="relative text-slate-600 dark:text-zinc-300">
+                      {capability.description}
+                    </p>
+
+                    {/* Corner shine effect */}
+                    <div className="absolute top-0 right-0 w-16 h-16 bg-linear-to-br from-white/40 to-transparent dark:from-white/20 rounded-tr-2xl rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   </div>
-
-                  <h4 className="relative font-bold text-lg mb-3 text-slate-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors duration-300">
-                    {capability.title}
-                  </h4>
-                  <p className="relative text-slate-600 dark:text-zinc-300">
-                    {capability.description}
-                  </p>
-
-                  {/* Corner shine effect */}
-                  <div className="absolute top-0 right-0 w-16 h-16 bg-linear-to-br from-white/40 to-transparent dark:from-white/20 rounded-tr-2xl rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </motion.div>
               );
             })}
@@ -370,7 +375,7 @@ export default async function ServicePage({
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
             <h2 className="text-3xl lg:text-4xl font-black text-center mb-12 text-slate-900 dark:text-white">
@@ -382,18 +387,21 @@ export default async function ServicePage({
             {service.solutions.map((solution, index) => (
               <motion.div
                 key={index}
-                className="bg-white dark:bg-white/5 rounded-2xl border border-orange-100 dark:border-white/10 shadow-lg p-6 lg:p-8 hover:shadow-xl hover:border-orange-200 dark:hover:border-orange-500/30 transition-all duration-300"
+                className="h-full"
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3 + index * 0.1, duration: 0.6, ease: "easeOut" }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ delay: 0.2 + index * 0.1, duration: 0.6, ease: "easeOut" }}
+                style={{ willChange: "opacity, transform" }}
               >
-                <h3 className="font-bold text-lg mb-3 text-slate-900 dark:text-white">
-                  {solution.title}
-                </h3>
-                <p className="text-slate-600 dark:text-zinc-300 mb-4">
-                  {solution.description}
-                </p>
+                <div className="bg-white dark:bg-white/5 rounded-2xl border border-orange-100 dark:border-white/10 shadow-lg p-6 lg:p-8 hover:shadow-xl hover:border-orange-200 dark:hover:border-orange-500/30 transition-all duration-300 h-full">
+                  <h3 className="font-bold text-lg mb-3 text-slate-900 dark:text-white">
+                    {solution.title}
+                  </h3>
+                  <p className="text-slate-600 dark:text-zinc-300 mb-4">
+                    {solution.description}
+                  </p>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -406,7 +414,7 @@ export default async function ServicePage({
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
             <h2 className="text-3xl lg:text-4xl font-black text-center mb-4 text-slate-900 dark:text-white">
@@ -426,8 +434,9 @@ export default async function ServicePage({
                   className="group relative min-w-[320px] md:min-w-[380px] snap-center"
                   initial={{ opacity: 0, x: 40 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3 + index * 0.1, duration: 0.6, ease: "easeOut" }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ delay: 0.2 + index * 0.1, duration: 0.6, ease: "easeOut" }}
+                  style={{ willChange: "opacity, transform" }}
                 >
                   {/* Connector line */}
                   {index < service.process.length - 1 && (
@@ -448,8 +457,9 @@ export default async function ServicePage({
                       <motion.div
                         className="h-full bg-linear-to-r from-orange-500 to-yellow-400"
                         initial={{ width: 0 }}
-                        animate={{ width: "100%" }}
-                        transition={{ duration: 1, delay: 1.7 + index * 0.2 }}
+                        whileInView={{ width: "100%" }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1, delay: 0.5 + index * 0.2 }}
                       />
                     </div>
 
@@ -480,7 +490,7 @@ export default async function ServicePage({
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
             <h2 className="text-3xl lg:text-4xl font-black text-center mb-12 text-slate-900 dark:text-white">
@@ -495,18 +505,19 @@ export default async function ServicePage({
               return (
                 <motion.div
                   key={index}
-                  className="group relative"
+                  className="h-full"
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: true, margin: "-100px" }}
                   transition={{
-                    delay: 0.3 + index * 0.1,
+                    delay: 0.2 + index * 0.1,
                     duration: 0.6,
                     ease: "easeOut",
                   }}
                   whileHover={INDUSTRY_HOVER}
+                  style={{ willChange: "opacity, transform" }}
                 >
-                  <div className="relative p-6 lg:p-8 bg-white dark:bg-zinc-900/50 rounded-2xl border border-orange-100 dark:border-white/10 shadow-lg font-semibold text-center text-slate-900 dark:text-white hover:border-orange-400 dark:hover:border-orange-500 transition-all duration-300 overflow-hidden h-[150px] flex flex-col items-center justify-center gap-3">
+                  <div className="relative p-6 lg:p-8 bg-white dark:bg-zinc-900/50 rounded-2xl border border-orange-100 dark:border-white/10 shadow-lg font-semibold text-center text-slate-900 dark:text-white hover:border-orange-400 dark:hover:border-orange-500 transition-all duration-300 overflow-hidden h-[150px] flex flex-col items-center justify-center gap-3 group">
                     {/* Animated background gradient */}
                     <div className="absolute inset-0 bg-linear-to-br from-orange-400/0 via-yellow-400/0 to-orange-400/0 group-hover:from-orange-400/10 group-hover:via-yellow-400/10 group-hover:to-orange-400/10 dark:group-hover:from-orange-400/20 dark:group-hover:via-yellow-400/20 dark:group-hover:to-orange-400/20 transition-all duration-300" />
 

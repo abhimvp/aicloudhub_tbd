@@ -237,7 +237,7 @@ export default function StaffingContent() {
                 <UserCheck className="h-4 w-4 text-orange-600 dark:text-orange-300" />
                 IT Staffing
               </div>
-              <h1 className="text-3xl md:text-4xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-black leading-[1.1] mb-6 tracking-tight break-words" style={{ lineHeight: '1.1' }}>
+              <h1 className="text-3xl md:text-4xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-black leading-[1.1] mb-6 tracking-tight wrap-break-word" style={{ lineHeight: '1.1' }}>
                 <span className="whitespace-normal">Build High-Performing Tech Teams with </span>
                 <span className="bg-linear-to-r from-orange-600 to-yellow-500 dark:from-orange-400 dark:to-yellow-300 bg-clip-text text-transparent whitespace-normal">
                   Confidence
@@ -345,21 +345,23 @@ export default function StaffingContent() {
               return (
                 <motion.div
                   key={index}
-                  className="bg-white dark:bg-zinc-900/50 p-8 rounded-2xl border border-orange-100 dark:border-white/10 shadow-lg hover:shadow-xl transition-all duration-300"
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.6, delay: 0.2 + index * 0.1, ease: "easeOut" }}
+                  style={{ willChange: "opacity, transform" }}
                 >
-                  <div className="w-14 h-14 rounded-2xl bg-orange-100 dark:bg-orange-500/10 flex items-center justify-center mb-6">
-                    <Icon className="w-7 h-7 text-orange-600 dark:text-orange-400" />
+                  <div className="bg-white dark:bg-zinc-900/50 p-8 rounded-2xl border border-orange-100 dark:border-white/10 shadow-lg hover:shadow-xl transition-all duration-300 h-full">
+                    <div className="w-14 h-14 rounded-2xl bg-orange-100 dark:bg-orange-500/10 flex items-center justify-center mb-6">
+                      <Icon className="w-7 h-7 text-orange-600 dark:text-orange-400" />
+                    </div>
+                    <h3 className="text-xl font-bold mb-3 text-slate-900 dark:text-white">
+                      {item.title}
+                    </h3>
+                    <p className="text-slate-700 dark:text-zinc-400 leading-relaxed">
+                      {item.description}
+                    </p>
                   </div>
-                  <h3 className="text-xl font-bold mb-3 text-slate-900 dark:text-white">
-                    {item.title}
-                  </h3>
-                  <p className="text-slate-700 dark:text-zinc-400 leading-relaxed">
-                    {item.description}
-                  </p>
                 </motion.div>
               );
             })}
@@ -373,7 +375,7 @@ export default function StaffingContent() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
             className="text-center mb-12"
           >
@@ -389,17 +391,19 @@ export default function StaffingContent() {
             {TECHNOLOGY_DOMAINS.map((domain, index) => (
               <motion.div
                 key={index}
-                className="bg-white dark:bg-zinc-900/50 p-8 rounded-2xl border border-orange-100 dark:border-white/10 shadow-md hover:shadow-lg transition-all duration-300 min-h-[100px] flex items-center"
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3 + index * 0.1, duration: 0.6, ease: "easeOut" }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ delay: 0.2 + index * 0.1, duration: 0.6, ease: "easeOut" }}
+                style={{ willChange: "opacity, transform" }}
               >
-                <div className="flex items-start gap-3">
-                  <span className="w-2 h-2 rounded-full bg-orange-400 mt-2 shrink-0" />
-                  <p className="text-slate-900 dark:text-white font-medium text-base">
-                    {domain}
-                  </p>
+                <div className="bg-white dark:bg-zinc-900/50 p-8 rounded-2xl border border-orange-100 dark:border-white/10 shadow-md hover:shadow-lg transition-all duration-300 min-h-[100px] flex items-center h-full">
+                  <div className="flex items-start gap-3">
+                    <span className="w-2 h-2 rounded-full bg-orange-400 mt-2 shrink-0" />
+                    <p className="text-slate-900 dark:text-white font-medium text-base">
+                      {domain}
+                    </p>
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -429,15 +433,17 @@ export default function StaffingContent() {
             {ENGAGEMENT_MODELS.map((model, index) => (
               <motion.div
                 key={index}
-                className="bg-white dark:bg-zinc-900/50 p-8 rounded-2xl border border-orange-100 dark:border-white/10 shadow-md hover:shadow-lg transition-all duration-300 text-center min-h-[120px] flex items-center justify-center"
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3 + index * 0.1, duration: 0.6, ease: "easeOut" }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ delay: 0.2 + index * 0.1, duration: 0.6, ease: "easeOut" }}
+                style={{ willChange: "opacity, transform" }}
               >
-                <p className="text-slate-900 dark:text-white font-semibold text-base lg:text-lg">
-                  {model}
-                </p>
+                <div className="bg-white dark:bg-zinc-900/50 p-8 rounded-2xl border border-orange-100 dark:border-white/10 shadow-md hover:shadow-lg transition-all duration-300 text-center min-h-[120px] flex items-center justify-center h-full">
+                  <p className="text-slate-900 dark:text-white font-semibold text-base lg:text-lg">
+                    {model}
+                  </p>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -450,7 +456,7 @@ export default function StaffingContent() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
@@ -464,26 +470,28 @@ export default function StaffingContent() {
               return (
                 <motion.div
                   key={index}
-                  className="bg-white dark:bg-zinc-900/50 p-8 rounded-2xl border border-orange-100 dark:border-white/10 shadow-lg hover:shadow-xl transition-all duration-300"
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3 + index * 0.1, duration: 0.6, ease: "easeOut" }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ delay: 0.2 + index * 0.1, duration: 0.6, ease: "easeOut" }}
+                  style={{ willChange: "opacity, transform" }}
                 >
-                  <div className="mb-5">
-                    <div className="relative inline-flex items-center justify-center">
-                      <div className="absolute inset-0 bg-linear-to-br from-orange-500 to-yellow-400 rounded-2xl blur-lg opacity-40" />
-                      <div className="relative w-16 h-16 rounded-2xl bg-linear-to-br from-orange-500 to-yellow-400 text-white flex items-center justify-center font-black text-2xl shadow-lg">
-                        {step.step}
+                  <div className="bg-white dark:bg-zinc-900/50 p-8 rounded-2xl border border-orange-100 dark:border-white/10 shadow-lg hover:shadow-xl transition-all duration-300 h-full">
+                    <div className="mb-5">
+                      <div className="relative inline-flex items-center justify-center">
+                        <div className="absolute inset-0 bg-linear-to-br from-orange-500 to-yellow-400 rounded-2xl blur-lg opacity-40" />
+                        <div className="relative w-16 h-16 rounded-2xl bg-linear-to-br from-orange-500 to-yellow-400 text-white flex items-center justify-center font-black text-2xl shadow-lg">
+                          {step.step}
+                        </div>
                       </div>
                     </div>
+                    <h3 className="text-xl font-bold mb-3 text-slate-900 dark:text-white">
+                      {step.title}
+                    </h3>
+                    <p className="text-slate-700 dark:text-zinc-400 leading-relaxed">
+                      {step.description}
+                    </p>
                   </div>
-                  <h3 className="text-xl font-bold mb-3 text-slate-900 dark:text-white">
-                    {step.title}
-                  </h3>
-                  <p className="text-slate-700 dark:text-zinc-400 leading-relaxed">
-                    {step.description}
-                  </p>
                 </motion.div>
               );
             })}
@@ -497,7 +505,7 @@ export default function StaffingContent() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
@@ -512,31 +520,33 @@ export default function StaffingContent() {
               return (
                 <motion.div
                   key={index}
-                  className="bg-white dark:bg-zinc-900/50 p-8 rounded-2xl border border-orange-100 dark:border-white/10 shadow-lg hover:shadow-xl transition-all duration-300"
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3 + index * 0.1, duration: 0.6, ease: "easeOut" }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ delay: 0.2 + index * 0.1, duration: 0.6, ease: "easeOut" }}
+                  style={{ willChange: "opacity, transform" }}
                 >
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="w-14 h-14 rounded-2xl bg-orange-100 dark:bg-orange-500/10 flex items-center justify-center">
-                      <Icon className="w-7 h-7 text-orange-600 dark:text-orange-400" />
+                  <div className="bg-white dark:bg-zinc-900/50 p-8 rounded-2xl border border-orange-100 dark:border-white/10 shadow-lg hover:shadow-xl transition-all duration-300 h-full">
+                    <div className="flex items-center gap-4 mb-6">
+                      <div className="w-14 h-14 rounded-2xl bg-orange-100 dark:bg-orange-500/10 flex items-center justify-center">
+                        <Icon className="w-7 h-7 text-orange-600 dark:text-orange-400" />
+                      </div>
+                      <h3 className="text-xl lg:text-2xl font-bold text-slate-900 dark:text-white">
+                        {category.category}
+                      </h3>
                     </div>
-                    <h3 className="text-xl lg:text-2xl font-bold text-slate-900 dark:text-white">
-                      {category.category}
-                    </h3>
+                    <ul className="space-y-3">
+                      {category.roles.map((role, idx) => (
+                        <li
+                          key={idx}
+                          className="flex items-start gap-3 text-slate-700 dark:text-zinc-300 text-base"
+                        >
+                          <span className="w-2 h-2 rounded-full bg-orange-400 mt-2 shrink-0" />
+                          {role}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                  <ul className="space-y-3">
-                    {category.roles.map((role, idx) => (
-                      <li
-                        key={idx}
-                        className="flex items-start gap-3 text-slate-700 dark:text-zinc-300 text-base"
-                      >
-                        <span className="w-2 h-2 rounded-full bg-orange-400 mt-2 shrink-0" />
-                        {role}
-                      </li>
-                    ))}
-                  </ul>
                 </motion.div>
               );
             })}
@@ -563,15 +573,17 @@ export default function StaffingContent() {
             {INDUSTRIES.map((industry, index) => (
               <motion.div
                 key={index}
-                className="bg-white dark:bg-zinc-900/50 p-8 rounded-2xl border border-orange-100 dark:border-white/10 shadow-md hover:shadow-lg transition-all duration-300 text-center min-h-[120px] flex items-center justify-center"
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3 + index * 0.1, duration: 0.6, ease: "easeOut" }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ delay: 0.2 + index * 0.1, duration: 0.6, ease: "easeOut" }}
+                style={{ willChange: "opacity, transform" }}
               >
-                <p className="text-slate-900 dark:text-white font-semibold text-base lg:text-lg">
-                  {industry}
-                </p>
+                <div className="bg-white dark:bg-zinc-900/50 p-8 rounded-2xl border border-orange-100 dark:border-white/10 shadow-md hover:shadow-lg transition-all duration-300 text-center min-h-[120px] flex items-center justify-center h-full">
+                  <p className="text-slate-900 dark:text-white font-semibold text-base lg:text-lg">
+                    {industry}
+                  </p>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -584,7 +596,7 @@ export default function StaffingContent() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
             className="text-center mb-12"
           >
@@ -597,17 +609,19 @@ export default function StaffingContent() {
             {VALUE_PROPOSITION.map((value, index) => (
               <motion.div
                 key={index}
-                className="bg-white dark:bg-zinc-900/50 p-8 rounded-2xl border border-orange-100 dark:border-white/10 shadow-md hover:shadow-lg transition-all duration-300"
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3 + index * 0.1, duration: 0.6, ease: "easeOut" }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ delay: 0.2 + index * 0.1, duration: 0.6, ease: "easeOut" }}
+                style={{ willChange: "opacity, transform" }}
               >
-                <div className="flex items-start gap-4">
-                  <Check className="w-7 h-7 text-orange-500 shrink-0 mt-0.5" />
-                  <p className="text-slate-900 dark:text-white font-semibold text-base lg:text-lg">
-                    {value}
-                  </p>
+                <div className="bg-white dark:bg-zinc-900/50 p-8 rounded-2xl border border-orange-100 dark:border-white/10 shadow-md hover:shadow-lg transition-all duration-300 h-full">
+                  <div className="flex items-start gap-4">
+                    <Check className="w-7 h-7 text-orange-500 shrink-0 mt-0.5" />
+                    <p className="text-slate-900 dark:text-white font-semibold text-base lg:text-lg">
+                      {value}
+                    </p>
+                  </div>
                 </div>
               </motion.div>
             ))}
