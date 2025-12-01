@@ -2,7 +2,17 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { client } from "@/sanity/lib/client";
+import { createClient } from 'next-sanity';
+import { apiVersion, dataset, projectId } from "@/sanity/env";
 import { urlFor } from "@/sanity/lib/image";
+
+// Create a client without CDN for fresh data on dynamic routes
+const freshClient = createClient({
+  projectId,
+  dataset,
+  apiVersion,
+  useCdn: false, // Disable CDN for fresh data on dynamic routes
+});
 import * as motion from "motion/react-client";
 import ScrollToTop from "@/components/layout/ScrollToTop";
 import {
@@ -202,9 +212,20 @@ export default async function ServicePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const service = await client.fetch(SERVICE_OFFERING_QUERY, { slug });
+  
+  let service;
+  try {
+    // Use fresh client (no CDN) for dynamic routes to get latest data
+    service = await freshClient.fetch(SERVICE_OFFERING_QUERY, { slug });
+  } catch (error) {
+    console.error(`Error fetching service with slug "${slug}":`, error);
+    notFound();
+  }
 
   if (!service) {
+    console.warn(`Service with slug "${slug}" not found in Sanity. Available services:`, 
+      await freshClient.fetch(`*[_type == "serviceOffering"]{ "id": id.current, title }`).catch(() => [])
+    );
     notFound();
   }
 
