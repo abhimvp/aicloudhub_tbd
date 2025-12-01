@@ -13,11 +13,9 @@ import "./AnimatedServices.css";
 const AnimatedServiceItem = ({
   service,
   imageSrc,
-  index,
 }: {
   service: (typeof servicesData)[0][0];
   imageSrc: string;
-  index: number;
 }) => {
   const serviceRef = useRef<HTMLDivElement>(null);
   const imgContainerRef = useRef<HTMLDivElement>(null);
@@ -136,7 +134,6 @@ const AnimatedServices = () => {
           key={index}
           service={service}
           imageSrc={serviceImages[index % serviceImages.length]}
-          index={index}
         />
       ))}
     </section>

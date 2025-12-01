@@ -11,12 +11,12 @@ const staticRoutes = [
   "/about-us",
   "/blogs",
   "/careers",
-  "/contact",
+  "/contact-us",
   "/privacy",
   "/terms",
 ];
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const lastModified = new Date();
 
   // Static pages
@@ -27,8 +27,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: path === "" ? 1 : 0.6,
   }));
 
-  // Service pages (dynamic)
-  const servicePages = getAllServiceSlugs().map((slug) => ({
+  // Service pages (dynamic, from hardcoded service definitions)
+  const serviceSlugs = await getAllServiceSlugs();
+  const servicePages = serviceSlugs.map((slug) => ({
     url: `${baseUrl}/services/${slug}`,
     lastModified,
     changeFrequency: "monthly" as const,

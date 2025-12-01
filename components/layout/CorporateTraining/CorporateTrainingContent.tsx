@@ -1,24 +1,175 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import * as motion from "motion/react-client";
 import ScrollToTop from "@/components/layout/ScrollToTop";
 import CollapsibleCategories from "@/components/layout/CorporateTraining/CollapsibleCategories";
-import { ChevronRight, CheckCircle2, BookOpen, ArrowRight, GraduationCap } from "lucide-react";
-import { BusinessVerticalDetail } from "@/lib/businessVerticalsData";
+import {
+  ChevronRight,
+  CheckCircle2,
+  BookOpen,
+  ArrowRight,
+  GraduationCap,
+} from "lucide-react";
+import { client } from "@/sanity/lib/client";
+import { urlFor } from "@/sanity/lib/image";
+import type { TrainingCategory } from "@/lib/businessVerticalsData";
+import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
 
 // Animation configurations
 const DELIVERY_HOVER = { scale: 1.05, rotate: 1 };
 
-interface CorporateTrainingContentProps {
-  vertical: Omit<BusinessVerticalDetail, "Icon">;
-}
+type DeliveryModel = {
+  title: string;
+  description?: string;
+};
 
-export default function CorporateTrainingContent({
-  vertical,
-}: CorporateTrainingContentProps) {
+type ProcessStep = {
+  step: number;
+  title: string;
+  description: string;
+};
+
+type FinalCTA = {
+  title: string;
+  description: string;
+  buttonText: string;
+  buttonHref: string;
+};
+
+type CorporateTrainingDoc = {
+  title?: string;
+  tagline?: string;
+  description?: string[];
+  heroTitle?: string;
+  heroDescription?: string;
+  heroImage?: SanityImageSource;
+  heroCTA?: {
+    primary?: string;
+    primaryHref?: string;
+    secondary?: string;
+    secondaryHref?: string;
+  };
+  categories?: TrainingCategory[];
+  whyChoose?: {
+    title?: string;
+    reasons?: string[];
+  };
+  deliveryModels?: DeliveryModel[];
+  process?: ProcessStep[];
+  finalCTA?: {
+    title?: string;
+    description?: string;
+    buttonText?: string;
+    buttonHref?: string;
+  };
+};
+
+const CORPORATE_TRAINING_QUERY = `*[_type == "corporateTrainingService"][0]{
+  title,
+  tagline,
+  description,
+  heroTitle,
+  heroDescription,
+  heroImage,
+  heroCTA,
+  categories,
+  whyChoose,
+  deliveryModels,
+  process,
+  finalCTA
+}`;
+
+export default function CorporateTrainingContent() {
   const Icon = GraduationCap;
+
+  const [title, setTitle] = useState("");
+  const [introDescription, setIntroDescription] = useState<string[]>([]);
+  const [heroTitle, setHeroTitle] = useState("");
+  const [heroDescription, setHeroDescription] = useState("");
+  const [heroImage, setHeroImage] = useState<string>("");
+  const [heroCtaPrimary, setHeroCtaPrimary] = useState("");
+  const [heroCtaPrimaryHref, setHeroCtaPrimaryHref] =
+    useState("/contact-us");
+  const [heroCtaSecondary, setHeroCtaSecondary] = useState("");
+  const [heroCtaSecondaryHref, setHeroCtaSecondaryHref] =
+    useState("#categories");
+  const [categories, setCategories] =
+    useState<TrainingCategory[]>([]);
+  const [whyChooseTitle, setWhyChooseTitle] = useState("");
+  const [whyChooseReasons, setWhyChooseReasons] = useState<string[]>([]);
+  const [deliveryModels, setDeliveryModels] =
+    useState<DeliveryModel[]>([]);
+  const [processSteps, setProcessSteps] =
+    useState<ProcessStep[]>([]);
+  const [finalCTA, setFinalCTA] = useState<FinalCTA | null>(null);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    client
+      .fetch<CorporateTrainingDoc>(CORPORATE_TRAINING_QUERY)
+      .then((data) => {
+        if (!isMounted || !data) return;
+
+        if (data.title) setTitle(data.title);
+        if (data.description && data.description.length) {
+          setIntroDescription(data.description);
+        }
+        if (data.heroTitle) setHeroTitle(data.heroTitle);
+        if (data.heroDescription) setHeroDescription(data.heroDescription);
+        if (data.heroImage) {
+          setHeroImage(
+            urlFor(data.heroImage).width(800).height(600).url()
+          );
+        }
+        if (data.heroCTA) {
+          if (data.heroCTA.primary) setHeroCtaPrimary(data.heroCTA.primary);
+          if (data.heroCTA.primaryHref)
+            setHeroCtaPrimaryHref(data.heroCTA.primaryHref);
+          if (data.heroCTA.secondary)
+            setHeroCtaSecondary(data.heroCTA.secondary);
+          if (data.heroCTA.secondaryHref)
+            setHeroCtaSecondaryHref(data.heroCTA.secondaryHref);
+        }
+        if (data.categories) {
+          setCategories(data.categories);
+        }
+        if (data.whyChoose) {
+          if (data.whyChoose.title) setWhyChooseTitle(data.whyChoose.title);
+          if (data.whyChoose.reasons) {
+            setWhyChooseReasons(data.whyChoose.reasons);
+          }
+        }
+        if (data.deliveryModels) {
+          setDeliveryModels(data.deliveryModels);
+        }
+        if (data.process) {
+          setProcessSteps(data.process);
+        }
+        if (data.finalCTA) {
+          setFinalCTA({
+            title: data.finalCTA.title ?? "",
+            description: data.finalCTA.description ?? "",
+            buttonText: data.finalCTA.buttonText ?? "",
+            buttonHref: data.finalCTA.buttonHref ?? "/contact-us",
+          });
+        }
+      })
+      .catch(() => {
+        // keep fallbacks on error
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  if (!heroImage || !finalCTA) {
+    return null;
+  }
 
   return (
     <div className="min-h-screen bg-linear-to-br from-white via-orange-50/40 to-yellow-50/50 dark:bg-linear-to-r dark:from-gray-950 dark:via-slate-950 dark:to-zinc-950 transition-colors duration-300">
@@ -73,35 +224,35 @@ export default function CorporateTrainingContent({
                 </Link>
                 <ChevronRight className="w-4 h-4 text-slate-400 dark:text-white/50" />
                 <span className="text-slate-900 dark:text-white font-medium">
-                  {vertical.title}
+                  {title}
                 </span>
               </div>
 
               <div className="inline-flex items-center gap-3 rounded-full border border-orange-500/30 bg-orange-100 text-orange-700 dark:bg-orange-500/10 dark:text-orange-300 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] mb-6">
                 <Icon className="h-4 w-4 text-orange-600 dark:text-orange-300" />
-                {vertical.title}
+                {title}
               </div>
               <h1
                 className="text-3xl md:text-4xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-black leading-[1.1] mb-6 tracking-tight wrap-break-word"
                 style={{ lineHeight: "1.1" }}
               >
-                <span className="whitespace-normal">{vertical.heroTitle}</span>
+                <span className="whitespace-normal">{heroTitle}</span>
               </h1>
               <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-8 leading-relaxed">
-                {vertical.heroDescription}
+                {heroDescription}
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link
-                  href="/contact"
+                  href={heroCtaPrimaryHref}
                   className="inline-flex px-8 py-4 bg-linear-to-r from-orange-500 to-yellow-400 text-black font-semibold rounded-lg hover:opacity-90 transition shadow-lg shadow-orange-500/30"
                 >
-                  {vertical.heroCTA.primary}
+                  {heroCtaPrimary}
                 </Link>
                 <a
-                  href="#categories"
+                  href={heroCtaSecondaryHref}
                   className="inline-flex px-8 py-4 border-2 border-slate-900/20 text-slate-900 dark:border-white/20 dark:text-white font-semibold rounded-lg hover:bg-slate-900/5 dark:hover:bg-white/10 transition"
                 >
-                  {vertical.heroCTA.secondary}
+                  {heroCtaSecondary}
                 </a>
               </div>
             </motion.div>
@@ -116,8 +267,8 @@ export default function CorporateTrainingContent({
                 <div className="absolute inset-0 bg-linear-to-br from-orange-500/20 to-yellow-500/20 rounded-2xl blur-3xl opacity-60" />
                 <div className="relative rounded-2xl overflow-hidden shadow-2xl ring-4 ring-orange-500/10 dark:ring-orange-500/20">
                   <Image
-                    src={vertical.heroImage}
-                    alt={vertical.title}
+                    src={heroImage}
+                    alt={title}
                     width={800}
                     height={600}
                     className="w-full h-auto object-cover"
@@ -139,7 +290,7 @@ export default function CorporateTrainingContent({
           transition={{ duration: 0.6 }}
           className="space-y-4 text-slate-600 dark:text-zinc-300 text-lg leading-relaxed"
         >
-          {vertical.description.map((paragraph, index) => {
+          {introDescription.map((paragraph, index) => {
             // Highlight "aiCloudHub" with orange-yellow gradient
             const parts = paragraph.split(/(aiCloudHub)/i);
             return (
@@ -184,7 +335,7 @@ export default function CorporateTrainingContent({
           </div>
         </motion.div>
 
-        <CollapsibleCategories categories={vertical.categories} />
+        <CollapsibleCategories categories={categories} />
       </section>
 
       {/* Why Choose Section */}
@@ -198,13 +349,13 @@ export default function CorporateTrainingContent({
           >
             <div className="text-center mb-12">
               <h2 className="text-3xl lg:text-4xl font-black mb-4 text-slate-900 dark:text-white">
-                {vertical.whyChoose.title}
+                {whyChooseTitle}
               </h2>
             </div>
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {vertical.whyChoose.reasons.map((reason, index) => (
+            {whyChooseReasons.map((reason, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 40 }}
@@ -243,7 +394,7 @@ export default function CorporateTrainingContent({
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {vertical.deliveryModels.map((model, index) => (
+          {deliveryModels.map((model, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 40 }}
@@ -293,7 +444,7 @@ export default function CorporateTrainingContent({
           {/* Horizontal scroll container */}
           <div className="relative">
             <div className="flex gap-6 overflow-x-auto pb-8 snap-x snap-mandatory scrollbar-thin scrollbar-thumb-orange-500 scrollbar-track-orange-100 dark:scrollbar-track-gray-800">
-              {vertical.process.map((step, index) => (
+              {processSteps.map((step, index) => (
                 <motion.div
                   key={index}
                   className="group relative min-w-[320px] md:min-w-[380px] snap-center"
@@ -303,7 +454,7 @@ export default function CorporateTrainingContent({
                   transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
                 >
                   {/* Connector line */}
-                  {index < vertical.process.length - 1 && (
+                  {index < processSteps.length - 1 && (
                     <div className="hidden md:block absolute top-6 -right-6 w-6 h-0.5 bg-linear-to-r from-orange-400 to-yellow-400 dark:from-orange-500 dark:to-yellow-500" />
                   )}
 
@@ -358,16 +509,16 @@ export default function CorporateTrainingContent({
             transition={{ duration: 0.6 }}
           >
             <h3 className="text-3xl lg:text-4xl font-black mb-6">
-              {vertical.finalCTA.title}
+              {finalCTA.title}
             </h3>
             <p className="text-lg text-white/95 mb-8 max-w-2xl mx-auto">
-              {vertical.finalCTA.description}
+              {finalCTA.description}
             </p>
             <Link
-              href="/contact"
+              href={finalCTA.buttonHref}
               className="group inline-flex items-center gap-2 px-10 py-4 bg-linear-to-r from-orange-500 to-yellow-400 text-black text-lg font-bold rounded-lg hover:opacity-90 transition shadow-xl shadow-orange-500/30"
             >
-              <span>{vertical.finalCTA.buttonText}</span>
+              <span>{finalCTA.buttonText}</span>
               <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           </motion.div>

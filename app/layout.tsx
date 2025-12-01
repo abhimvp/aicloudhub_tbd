@@ -3,9 +3,8 @@ import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
-import Navbar from "@/components/layout/Navbar/Navbar";
-import Footer from "@/components/layout/Footer/Footer";
 import SmoothScrollProvider from "@/components/layout/SmoothScrollProvider";
+import ConditionalLayout from "@/components/layout/ConditionalLayout";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-sans",
@@ -126,9 +125,7 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <SmoothScrollProvider>
-            <Navbar />
-            {children}
-            <Footer />
+            <ConditionalLayout>{children}</ConditionalLayout>
           </SmoothScrollProvider>
         </ThemeProvider>
         {/* Mark HTML as loaded after React hydration */}

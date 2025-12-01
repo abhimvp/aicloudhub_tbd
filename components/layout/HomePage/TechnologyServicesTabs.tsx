@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useTheme } from "@/components/theme/ThemeProvider";
@@ -17,29 +17,152 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { client } from "@/sanity/lib/client";
+import { urlFor } from "@/sanity/lib/image";
+import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
 
-const SERVICE_SUMMARIES: Record<string, HomepageServiceSummary> =
+type SanityTechService = {
+  _key: string;
+  serviceId: string;
+  title: string;
+  subtitle: string;
+  description: string[];
+  image?: SanityImageSource;
+  ctaLabel: string;
+  ctaHref: string;
+};
+
+type SanityTechnologySettings = {
+  businessVerticals?: SanityTechService[];
+  offerings?: SanityTechService[];
+};
+
+const FALLBACK_SERVICE_SUMMARIES: Record<string, HomepageServiceSummary> =
   HOMEPAGE_SERVICE_SUMMARIES;
 
-const TAB_ROWS = [
+const FALLBACK_TAB_ROWS = [
   ["staffing", "corporate-training", "it-services"],
   ["ai-ml", "cloud", "applications", "data-analytics"],
 ];
 
-const FILTERED_TAB_ROWS = TAB_ROWS.map((row) =>
-  row.filter((id) => SERVICE_SUMMARIES[id])
+const FALLBACK_FILTERED_TAB_ROWS = FALLBACK_TAB_ROWS.map((row) =>
+  row.filter((id) => FALLBACK_SERVICE_SUMMARIES[id])
 ).filter((row) => row.length > 0);
 
-const ORDERED_SERVICE_IDS = FILTERED_TAB_ROWS.flat();
-const DEFAULT_SERVICE_ID =
-  ORDERED_SERVICE_IDS[0] ?? Object.keys(SERVICE_SUMMARIES)[0] ?? "";
+const TECHNOLOGY_TABS_QUERY = `*[_type == "technologyServicesSettings"][0]{
+  "businessVerticals": businessVerticals[isActive == true]|order(order asc){
+    _key,
+    serviceId,
+    title,
+    subtitle,
+    description,
+    image,
+    ctaLabel,
+    ctaHref
+  },
+  "offerings": offerings[isActive == true]|order(order asc){
+    _key,
+    serviceId,
+    title,
+    subtitle,
+    description,
+    image,
+    ctaLabel,
+    ctaHref
+  }
+}`;
 
 export default function TechnologyServicesTabs() {
-  const [activeId, setActiveId] = useState<string>(DEFAULT_SERVICE_ID);
+  const [serviceSummaries, setServiceSummaries] = useState<
+    Record<string, HomepageServiceSummary>
+  >(FALLBACK_SERVICE_SUMMARIES);
+  const [tabRows, setTabRows] = useState<string[][]>(FALLBACK_FILTERED_TAB_ROWS);
+
+  const orderedServiceIds = tabRows.flat();
+  const defaultServiceId =
+    orderedServiceIds[0] ?? Object.keys(serviceSummaries)[0] ?? "";
+
+  const [activeId, setActiveId] = useState<string>(defaultServiceId);
   const { actualTheme } = useTheme();
   const isDark = actualTheme === "dark";
   const activeService =
-    SERVICE_SUMMARIES[activeId] ?? SERVICE_SUMMARIES[DEFAULT_SERVICE_ID];
+    serviceSummaries[activeId] ?? serviceSummaries[defaultServiceId];
+
+  useEffect(() => {
+    let isMounted = true;
+
+    client
+      .fetch<SanityTechnologySettings>(TECHNOLOGY_TABS_QUERY)
+      .then((data) => {
+        if (!isMounted || !data) return;
+
+        const docs = [
+          ...(data.businessVerticals ?? []),
+          ...(data.offerings ?? []),
+        ];
+
+        if (!docs.length) return;
+
+        const nextSummaries: Record<string, HomepageServiceSummary> = {};
+
+        docs.forEach((doc) => {
+          if (!doc.serviceId) return;
+
+          const fallback = FALLBACK_SERVICE_SUMMARIES[doc.serviceId];
+
+          nextSummaries[doc.serviceId] = {
+            id: doc.serviceId,
+            title: doc.title,
+            subtitle: doc.subtitle,
+            description: doc.description,
+            Icon: fallback?.Icon ?? FALLBACK_SERVICE_SUMMARIES["ai-ml"].Icon,
+            image: doc.image
+              ? urlFor(doc.image).width(1200).height(675).url()
+              : fallback?.image ?? "",
+            cta: {
+              label: doc.ctaLabel,
+              href: doc.ctaHref,
+            },
+          };
+        });
+
+        const businessIds =
+          data.businessVerticals
+            ?.map((d) => d.serviceId)
+            .filter((id) => nextSummaries[id]) ?? [];
+
+        const offeringIds =
+          data.offerings
+            ?.map((d) => d.serviceId)
+            .filter((id) => nextSummaries[id]) ?? [];
+
+        const nextRows: string[][] = [];
+        if (businessIds.length) nextRows.push(businessIds);
+        if (offeringIds.length) nextRows.push(offeringIds);
+
+        if (!Object.keys(nextSummaries).length || !nextRows.length) return;
+
+        setServiceSummaries(nextSummaries);
+        setTabRows(nextRows);
+      })
+      .catch(() => {
+        // keep fallback data on error
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    const orderedIds = tabRows.flat();
+    const nextDefault =
+      orderedIds[0] ?? Object.keys(serviceSummaries)[0] ?? "";
+
+    setActiveId((prev) =>
+      prev && serviceSummaries[prev] ? prev : nextDefault
+    );
+  }, [tabRows, serviceSummaries]);
 
   if (!activeService) {
     return null;
@@ -137,8 +260,8 @@ export default function TechnologyServicesTabs() {
                     : "bg-white border-orange-200 shadow-xl"
                 }`}
               >
-                {ORDERED_SERVICE_IDS.map((id) => {
-                  const service = SERVICE_SUMMARIES[id];
+                {orderedServiceIds.map((id) => {
+                  const service = serviceSummaries[id];
                   if (!service) return null;
                   return (
                     <SelectItem
@@ -178,13 +301,13 @@ export default function TechnologyServicesTabs() {
           style={{ willChange: "opacity, transform" }}
         >
           <div className="flex flex-col items-center gap-6 text-base font-semibold">
-            {FILTERED_TAB_ROWS.map((row, rowIndex) => (
+            {tabRows.map((row, rowIndex) => (
               <div
                 key={`service-row-${rowIndex}`}
                 className="flex flex-wrap justify-center gap-x-12 gap-y-4"
               >
                 {row.map((id) => {
-                  const service = SERVICE_SUMMARIES[id];
+                  const service = serviceSummaries[id];
                   if (!service) return null;
                   const isActive = activeId === id;
                   const Icon = service.Icon;
@@ -263,7 +386,7 @@ export default function TechnologyServicesTabs() {
                     className="rounded-2xl object-cover"
                     sizes="(max-width: 1024px) 100vw, 58vw"
                     key={activeId} // Force re-mount on change to trigger animation/loading
-                    {...(activeId === DEFAULT_SERVICE_ID
+                    {...(activeId === defaultServiceId
                       ? { priority: true }
                       : { loading: "lazy" })}
                   />

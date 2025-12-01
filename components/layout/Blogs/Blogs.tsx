@@ -1,7 +1,7 @@
 // components/layout/Blogs/Blogs.tsx
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import type { SwiperRef } from "swiper/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,7 +11,12 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
 import * as motion from "motion/react-client";
-import { getFeaturedBlogs } from "@/lib/blogData";
+import type { BlogPost } from "@/lib/sanity/blogQueries";
+import {
+  getFeaturedBlogPosts,
+  getAllBlogPosts,
+} from "@/lib/sanity/blogQueries";
+import { urlFor } from "@/sanity/lib/image";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import "./Blogs.css";
@@ -22,10 +27,12 @@ const BlogCard = ({
   post,
   isActive,
   actualTheme,
+  coverImageUrl,
 }: {
-  post: ReturnType<typeof getFeaturedBlogs>[0];
+  post: BlogPost;
   isActive: boolean;
   actualTheme: string;
+  coverImageUrl: string;
 }) => {
   return (
     <motion.div
@@ -46,24 +53,26 @@ const BlogCard = ({
           : "bg-white hover:shadow-orange-500/30 border border-orange-100"
       }`}
     >
-      <div className="relative w-full h-[260px] overflow-hidden rounded-t-3xl">
-        <Image
-          src={post.cover}
-          alt={post.title}
-          fill
-          priority
-          sizes="(max-width: 768px) 90vw, (max-width: 1024px) 45vw, 30vw"
-          className="object-cover object-center transition-transform duration-700 ease-out hover:scale-105"
-        />
-        <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
+      {coverImageUrl && (
+        <div className="relative w-full h-[260px] overflow-hidden rounded-t-3xl">
+          <Image
+            src={coverImageUrl}
+            alt={post.title}
+            fill
+            priority
+            sizes="(max-width: 768px) 90vw, (max-width: 1024px) 45vw, 30vw"
+            className="object-cover object-center transition-transform duration-700 ease-out hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
 
-        {/* Category Badge */}
-        <div className="absolute top-4 left-4">
-          <span className="px-3 py-1 bg-orange-500 text-white text-xs font-semibold rounded-full">
-            {post.category}
-          </span>
+          {/* Category Badge */}
+          <div className="absolute top-4 left-4">
+            <span className="px-3 py-1 bg-orange-500 text-white text-xs font-semibold rounded-full">
+              {post.category?.name || "Uncategorized"}
+            </span>
+          </div>
         </div>
-      </div>
+      )}
       <div
         className={`p-6 text-left ${
           actualTheme === "dark" ? "text-white" : "text-slate-900"
@@ -104,24 +113,28 @@ const Blogs = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [featuredBlogs, setFeaturedBlogs] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const featuredBlogs = getFeaturedBlogs();
+  useEffect(() => {
+    async function fetchBlogs() {
+      try {
+        // First, try to get featured blogs
+        const featured = await getFeaturedBlogPosts();
 
-  // Background Parallax Effect - Disabled to prevent cut-off issues
-  // useEffect(() => {
-  //   if (!sectionRef.current || !bgRef.current) return;
-
-  //   gsap.to(bgRef.current, {
-  //     yPercent: -20, // moves upward as user scrolls
-  //     ease: "none",
-  //     scrollTrigger: {
-  //       trigger: sectionRef.current,
-  //       start: "top bottom", // when section enters viewport
-  //       end: "bottom top", // until it leaves
-  //       scrub: 1.5, // smooth follow
-  //     },
-  //   });
-  // }, []);
+        // If no featured blogs, get the latest blogs instead (limit to 6 for carousel)
+        if (featured.length === 0) {
+          const allBlogs = await getAllBlogPosts();
+          setFeaturedBlogs(allBlogs.slice(0, 6)); // Get latest 6 blogs
+        } else {
+          setFeaturedBlogs(featured);
+        }
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchBlogs();
+  }, []);
 
   return (
     <section
@@ -130,7 +143,7 @@ const Blogs = () => {
       className={`blogs-section flex flex-col items-center justify-center relative transition-colors duration-300 py-24 -mb-px ${
         actualTheme === "dark"
           ? "bg-linear-to-br from-gray-900 via-slate-900 to-zinc-950"
-          : "bg-gradient-to-br from-yellow-50 via-orange-50 to-gray-100"
+          : "bg-linear-to-br from-yellow-50 via-orange-50 to-gray-100"
       }`}
     >
       {/* Background container with overflow-hidden for glows */}
@@ -209,46 +222,67 @@ const Blogs = () => {
 
       {/* Swiper */}
       <div className="w-full max-w-7xl mx-auto relative z-10 px-4 sm:px-6 lg:px-8">
-        <Swiper
-          ref={swiperRef}
-          grabCursor
-          centeredSlides
-          breakpoints={{
-            // Mobile: Show main slide + a peek of the next
-            0: {
-              slidesPerView: 1.3,
-              spaceBetween: 20,
-            },
-            // Tablet: Show main slide + two peeking slides
-            768: {
-              slidesPerView: 2.2,
-              spaceBetween: 30,
-            },
-            // Desktop: Show 3 slides
-            1024: {
-              slidesPerView: 3,
-              spaceBetween: 40,
-            },
-          }}
-          pagination={{ clickable: true }}
-          navigation
-          modules={[Pagination, Navigation]}
-          className="blogSwiper"
-          onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
-          onInit={(swiper) => setActiveIndex(swiper.activeIndex)}
-        >
-          {featuredBlogs.map((post, index) => (
-            <SwiperSlide key={post.id}>
-              <Link href={`/blogs/${post.slug}`}>
-                <BlogCard
-                  post={post}
-                  isActive={index === activeIndex}
-                  actualTheme={actualTheme}
-                />
-              </Link>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+        {loading ? (
+          <div className="flex justify-center items-center py-20">
+            <div className="text-gray-500 dark:text-gray-400">
+              Loading featured blogs...
+            </div>
+          </div>
+        ) : featuredBlogs.length === 0 ? (
+          <div className="flex justify-center items-center py-20">
+            <div className="text-gray-500 dark:text-gray-400">
+              No blogs available
+            </div>
+          </div>
+        ) : (
+          <Swiper
+            ref={swiperRef}
+            grabCursor
+            centeredSlides
+            breakpoints={{
+              // Mobile: Show main slide + a peek of the next
+              0: {
+                slidesPerView: 1.3,
+                spaceBetween: 20,
+              },
+              // Tablet: Show main slide + two peeking slides
+              768: {
+                slidesPerView: 2.2,
+                spaceBetween: 30,
+              },
+              // Desktop: Show 3 slides
+              1024: {
+                slidesPerView: 3,
+                spaceBetween: 40,
+              },
+            }}
+            pagination={{ clickable: true }}
+            navigation
+            modules={[Pagination, Navigation]}
+            className="blogSwiper"
+            onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
+            onInit={(swiper) => setActiveIndex(swiper.activeIndex)}
+          >
+            {featuredBlogs.map((post, index) => {
+              const coverImageUrl = post.cover?.asset
+                ? urlFor(post.cover).url()
+                : "";
+
+              return (
+                <SwiperSlide key={post._id}>
+                  <Link href={`/blogs/${post.slug.current}`}>
+                    <BlogCard
+                      post={post}
+                      isActive={index === activeIndex}
+                      actualTheme={actualTheme}
+                      coverImageUrl={coverImageUrl}
+                    />
+                  </Link>
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
+        )}
       </div>
     </section>
   );

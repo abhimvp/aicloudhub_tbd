@@ -11,7 +11,7 @@ const Footer = () => {
   const { actualTheme } = useTheme();
 
   const services = [
-    { name: "IT Staffing", href: "/services/staffing" },
+    { name: "IT Staffing", href: "/services/it-staffing" },
     { name: "Corporate Training", href: "/services/corporate-training" },
     { name: "IT Services", href: "/services/it-services" },
     { name: "AI & Machine Learning", href: "/services/ai-ml" },
@@ -27,7 +27,7 @@ const Footer = () => {
 
   const company = [
     { name: "About Us", href: "/about-us" },
-    { name: "Contact Us", href: "/contact" },
+    { name: "Contact Us", href: "/contact-us" },
     { name: "Leadership", href: "/about-us#leadership-team" },
     { name: "Privacy Policy", href: "/privacy" },
     { name: "Terms of Service", href: "/terms" },

@@ -1,113 +1,81 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as motion from "motion/react-client";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/components/theme/ThemeProvider";
 import Link from "next/link";
 import ScrollToTop from "@/components/layout/ScrollToTop";
+import {
+  getAllJobPostings,
+  getFilterOptions,
+  type JobPosting,
+} from "@/lib/sanity/jobQueries";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const CareersPageClient = () => {
   const { actualTheme } = useTheme();
-  const [selectedFileName, setSelectedFileName] = useState<string | null>(null);
-  const [formStatus, setFormStatus] = useState<
-    "idle" | "processing" | "success"
-  >("idle");
   const [searchQuery, setSearchQuery] = useState("");
+  const [jobPostings, setJobPostings] = useState<JobPosting[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [filterOptions, setFilterOptions] = useState<{
+    locations: string[];
+    experienceLevels: string[];
+    jobTypes: string[];
+  }>({
+    locations: [],
+    experienceLevels: [],
+    jobTypes: [],
+  });
+  const [selectedLocation, setSelectedLocation] = useState<string>("all");
+  const [selectedExperience, setSelectedExperience] = useState<string>("all");
+  const [selectedJobType, setSelectedJobType] = useState<string>("all");
 
-  const culturePillars = [
-    {
-      title: "People over process",
-      description:
-        "We design policies around people’s lives, not the other way around.",
-      emoji: "🧡",
-    },
-    {
-      title: "Prototype mindset",
-      description:
-        "Launch, learn, and iterate—every teammate ships meaningful work.",
-      emoji: "🛠️",
-    },
-    {
-      title: "Playful rigor",
-      description:
-        "We mix experimentation with accountability to keep momentum high.",
-      emoji: "🎯",
-    },
-    {
-      title: "Coaching culture",
-      description:
-        "Mentors, guilds, and lightning talks keep curiosity on the roadmap.",
-      emoji: "📚",
-    },
-  ];
-
-  const jobOpenings = [
-    {
-      title: "AI Experience Designer",
-      team: "Humanized AI Studio",
-      location: "Remote (North America / India overlap)",
-      type: "Full-time",
-      experience: "5+ years",
-      snippet:
-        "Blend interaction design and prompt craft to ship adaptive AI copilots.",
-    },
-    {
-      title: "Cloud FinOps Strategist",
-      team: "Platform Economics",
-      location: "Austin, TX or Hyderabad",
-      type: "Hybrid",
-      experience: "7+ years",
-      snippet:
-        "Architect cost-aware, performance-first cloud topologies across Azure and AWS.",
-    },
-    {
-      title: "Data Reliability Engineer",
-      team: "Observability Guild",
-      location: "Bangalore",
-      type: "Full-time",
-      experience: "4+ years",
-      snippet:
-        "Instrument pipelines with lineage, contracts, and delightful developer tooling.",
-    },
-    {
-      title: "Enterprise Solutions Partner",
-      team: "Client Acceleration",
-      location: "Atlanta, GA",
-      type: "On-site",
-      experience: "8+ years",
-      snippet:
-        "Translate boardroom goals into pragmatic digital roadmaps with measurable ROI.",
-    },
-  ];
-
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    setSelectedFileName(file ? file.name : null);
-    setFormStatus("idle");
-  };
-
-  const handleMockSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setFormStatus("processing");
-    setTimeout(() => {
-      setFormStatus("success");
-    }, 800);
-  };
+  useEffect(() => {
+    async function fetchJobs() {
+      try {
+        setLoading(true);
+        const [jobs, options] = await Promise.all([
+          getAllJobPostings(),
+          getFilterOptions(),
+        ]);
+        setJobPostings(jobs);
+        setFilterOptions(options);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchJobs();
+  }, []);
 
   const bgClass =
     actualTheme === "dark"
       ? "bg-linear-to-r from-gray-950 via-slate-950 to-zinc-950 text-white"
       : "bg-linear-to-br from-white via-orange-50/40 to-yellow-50/50 text-gray-900";
 
-  const filteredJobs = jobOpenings.filter((job) => {
+  const filteredJobs = jobPostings.filter((job) => {
     const query = searchQuery.toLowerCase();
-    return (
+    const locationNames = (job.locations || []).map((loc) => loc.name || "");
+    const matchesSearch =
       job.title.toLowerCase().includes(query) ||
-      job.team.toLowerCase().includes(query) ||
-      job.location.toLowerCase().includes(query) ||
-      job.snippet.toLowerCase().includes(query)
-    );
+      locationNames.some((name) => name.toLowerCase().includes(query)) ||
+      job.snippet.toLowerCase().includes(query);
+
+    const matchesLocation =
+      selectedLocation === "all" ||
+      locationNames.includes(selectedLocation);
+    const matchesExperience =
+      selectedExperience === "all" || job.experienceLevel === selectedExperience;
+    const matchesJobType =
+      selectedJobType === "all" || job.jobType === selectedJobType;
+
+    return matchesSearch && matchesLocation && matchesExperience && matchesJobType;
   });
 
   return (
@@ -214,73 +182,6 @@ const CareersPageClient = () => {
         </div>
       </section>
 
-      {/* Culture Section */}
-      <section className="py-20 relative">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6 }}
-            style={{ willChange: "opacity, transform" }}
-            className="text-center mb-16"
-          >
-            <h2
-              className={`text-3xl md:text-5xl font-black mb-6 ${
-                actualTheme === "dark" ? "text-white" : "text-slate-900"
-              }`}
-            >
-              The <span className="text-orange-500">values</span> that drive us
-            </h2>
-            <p
-              className={`text-xl max-w-2xl mx-auto ${
-                actualTheme === "dark" ? "text-slate-400" : "text-slate-600"
-              }`}
-            >
-              We&apos;re building a company where you can do the best work of
-              your life.
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            {culturePillars.map((pillar, index) => (
-              <motion.div
-                key={pillar.title}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ delay: 0.3 + index * 0.1, duration: 0.6, ease: "easeOut" }}
-                style={{ willChange: "opacity, transform" }}
-              >
-                <div
-                  className={`h-full p-8 rounded-3xl border transition-all duration-300 hover:scale-[1.02] ${
-                    actualTheme === "dark"
-                      ? "bg-zinc-900/50 border-white/10 hover:bg-zinc-800/80 hover:border-orange-500/30"
-                      : "bg-white border-gray-200 shadow-lg hover:shadow-xl hover:border-orange-200"
-                  }`}
-                >
-                  <div className="text-4xl mb-4">{pillar.emoji}</div>
-                  <h3
-                    className={`text-xl font-bold mb-3 ${
-                      actualTheme === "dark" ? "text-white" : "text-slate-900"
-                    }`}
-                  >
-                    {pillar.title}
-                  </h3>
-                  <p
-                    className={`leading-relaxed ${
-                      actualTheme === "dark" ? "text-slate-400" : "text-slate-600"
-                    }`}
-                  >
-                    {pillar.description}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section
         id="open-roles"
         className={`py-20 relative ${
@@ -326,254 +227,222 @@ const CareersPageClient = () => {
                 }`}
               />
             </div>
+
+            {/* Filters */}
+            <div className="flex flex-wrap gap-4 justify-center items-center">
+              <Select
+                value={selectedLocation}
+                onValueChange={setSelectedLocation}
+              >
+                <SelectTrigger
+                  className={`w-[180px] ${
+                    actualTheme === "dark"
+                      ? "bg-white/5 border-white/10 text-white"
+                      : "bg-white border-gray-200 text-gray-900"
+                  }`}
+                >
+                  <SelectValue placeholder="All Locations" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Locations</SelectItem>
+                  {filterOptions.locations.map((location) => (
+                    <SelectItem key={location} value={location}>
+                      {location}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              <Select
+                value={selectedExperience}
+                onValueChange={setSelectedExperience}
+              >
+                <SelectTrigger
+                  className={`w-[180px] ${
+                    actualTheme === "dark"
+                      ? "bg-white/5 border-white/10 text-white"
+                      : "bg-white border-gray-200 text-gray-900"
+                  }`}
+                >
+                  <SelectValue placeholder="All Experience Levels" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Experience Levels</SelectItem>
+                  {filterOptions.experienceLevels.map((level) => (
+                    <SelectItem key={level} value={level}>
+                      {level}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              <Select value={selectedJobType} onValueChange={setSelectedJobType}>
+                <SelectTrigger
+                  className={`w-[180px] ${
+                    actualTheme === "dark"
+                      ? "bg-white/5 border-white/10 text-white"
+                      : "bg-white border-gray-200 text-gray-900"
+                  }`}
+                >
+                  <SelectValue placeholder="All Job Types" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Job Types</SelectItem>
+                  {filterOptions.jobTypes.map((type) => (
+                    <SelectItem key={type} value={type}>
+                      {type}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           </motion.div>
 
-          <div className="grid grid-cols-1 gap-6">
-            {filteredJobs.length === 0 && (
+          {loading ? (
+            <div className="flex justify-center items-center py-20">
               <div
-                className={`rounded-3xl border p-10 text-center text-lg font-semibold ${
-                  actualTheme === "dark"
-                    ? "border-white/10 bg-white/5 text-gray-300"
-                    : "border-gray-200 bg-white text-gray-600"
+                className={`text-lg ${
+                  actualTheme === "dark" ? "text-gray-400" : "text-gray-600"
                 }`}
               >
-                No roles match “{searchQuery}”. Try another keyword or pitch us
-                a role.
+                Loading job openings...
               </div>
-            )}
-            {filteredJobs.map((job, index) => (
-              <motion.div
-                key={job.title}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ delay: 0.3 + index * 0.1, duration: 0.6, ease: "easeOut" }}
-                style={{ willChange: "opacity, transform" }}
-              >
-                <article
-                  className={`h-full group rounded-3xl border p-6 md:p-8 flex flex-col gap-5 transition-all duration-300 hover:scale-[1.01] ${
-                    actualTheme === "dark"
-                      ? "border-white/10 bg-zinc-900/50 hover:bg-zinc-800/80 hover:border-orange-500/30"
-                      : "border-gray-200 bg-white shadow-sm hover:shadow-xl hover:shadow-orange-500/5 hover:border-orange-200"
-                  }`}
-                >
-                  <div className="flex flex-wrap gap-3 items-center justify-between">
-                    <div>
-                      <h3
-                        className={`text-2xl font-bold mb-1 ${
-                          actualTheme === "dark" ? "text-white" : "text-slate-900"
-                        }`}
-                      >
-                        {job.title}
-                      </h3>
-                      <p
-                        className={`text-sm font-bold uppercase tracking-wide ${
-                          actualTheme === "dark"
-                            ? "text-orange-300"
-                            : "text-orange-600"
-                        }`}
-                      >
-                        {job.team}
-                      </p>
-                    </div>
-                    <Button
-                      variant="secondary"
-                      className={`rounded-full px-6 py-2 text-sm font-bold transition-colors ${
-                        actualTheme === "dark"
-                          ? "bg-white/10 text-white hover:bg-white/20"
-                          : "bg-orange-50 text-orange-700 hover:bg-orange-100"
-                      }`}
-                    >
-                      Mock apply
-                    </Button>
-                  </div>
-                  <p
-                    className={`text-base leading-relaxed ${
-                      actualTheme === "dark" ? "text-slate-400" : "text-slate-600"
-                    }`}
-                  >
-                    {job.snippet}
-                  </p>
-                  <div
-                    className={`flex flex-wrap gap-3 text-sm font-medium ${
-                      actualTheme === "dark" ? "text-slate-400" : "text-slate-500"
-                    }`}
-                  >
-                    <span
-                      className={`px-3 py-1 rounded-full border ${
-                        actualTheme === "dark"
-                          ? "border-white/10 bg-white/5"
-                          : "border-slate-200 bg-slate-50"
-                      }`}
-                    >
-                      {job.location}
-                    </span>
-                    <span
-                      className={`px-3 py-1 rounded-full border ${
-                        actualTheme === "dark"
-                          ? "border-white/10 bg-white/5"
-                          : "border-slate-200 bg-slate-50"
-                      }`}
-                    >
-                      {job.type}
-                    </span>
-                    <span
-                      className={`px-3 py-1 rounded-full border ${
-                        actualTheme === "dark"
-                          ? "border-white/10 bg-white/5"
-                          : "border-slate-200 bg-slate-50"
-                      }`}
-                    >
-                      {job.experience}
-                    </span>
-                  </div>
-                </article>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-          style={{ willChange: "opacity, transform" }}
-        >
-          <form
-            onSubmit={handleMockSubmit}
-            className={`rounded-4xl border p-8 space-y-6 backdrop-blur-xl ${
-              actualTheme === "dark"
-                ? "border-white/10 bg-zinc-900/80 shadow-2xl shadow-black/50"
-                : "border-orange-100 bg-white/80 shadow-2xl shadow-orange-500/10"
-            }`}
-          >
-            <div className="space-y-2">
-              <p className="text-sm font-bold uppercase tracking-[0.35em] text-orange-500">
-                Mock application
-              </p>
-              <h2
-                className={`text-3xl font-black ${
-                  actualTheme === "dark" ? "text-white" : "text-slate-900"
-                }`}
-              >
-                Drop your resume
-              </h2>
-              <p
-                className={`text-base ${
-                  actualTheme === "dark" ? "text-slate-400" : "text-slate-600"
-                }`}
-              >
-                This is a preview of the experience. Files are not stored yet, and
-                clicking submit simply simulates the confirmation state.
-              </p>
             </div>
-
-            <label
-              htmlFor="fullName"
-              className="text-sm font-bold uppercase tracking-wide text-orange-500"
-            >
-              Your name
-            </label>
-          <input
-            id="fullName"
-            name="fullName"
-            required
-            placeholder="Alex Rivera"
-            className={`w-full rounded-2xl px-4 py-3 border focus:outline-none focus:ring-2 transition-all ${
-              actualTheme === "dark"
-                ? "bg-zinc-800/50 border-white/10 focus:ring-orange-500/50 text-white placeholder-zinc-500"
-                : "bg-white border-slate-200 focus:ring-orange-400 focus:border-orange-400"
-            }`}
-          />
-
-          <label
-            htmlFor="email"
-            className="text-sm font-bold uppercase tracking-wide text-orange-500"
-          >
-            Email
-          </label>
-          <input
-            id="email"
-            type="email"
-            name="email"
-            required
-            placeholder="you@email.com"
-            className={`w-full rounded-2xl px-4 py-3 border focus:outline-none focus:ring-2 transition-all ${
-              actualTheme === "dark"
-                ? "bg-zinc-800/50 border-white/10 focus:ring-orange-500/50 text-white placeholder-zinc-500"
-                : "bg-white border-slate-200 focus:ring-orange-400 focus:border-orange-400"
-            }`}
-          />
-
-          <div className="space-y-2">
-            <label
-              htmlFor="resume"
-              className="text-sm font-bold uppercase tracking-wide text-orange-500"
-            >
-              Resume upload (mock)
-            </label>
-            <div
-              className={`rounded-2xl border border-dashed p-5 flex flex-col gap-3 transition-colors ${
-                actualTheme === "dark"
-                  ? "border-white/20 bg-zinc-800/30 hover:bg-zinc-800/50"
-                  : "border-orange-200 bg-orange-50/50 hover:bg-orange-50"
-              }`}
-            >
-              <input
-                id="resume"
-                type="file"
-                accept=".pdf,.doc,.docx"
-                onChange={handleFileChange}
-                className={`text-sm ${
-                  actualTheme === "dark" ? "text-slate-300" : "text-slate-600"
-                }`}
-              />
-              <p
-                className={`text-xs ${
-                  actualTheme === "dark" ? "text-slate-500" : "text-slate-500"
-                }`}
-              >
-                Files stay on your device during this mock experience.
-              </p>
-              {selectedFileName && (
-                <p
-                  className={`text-sm font-semibold ${
+          ) : (
+            <div className="grid grid-cols-1 gap-6">
+              {filteredJobs.length === 0 && (
+                <div
+                  className={`rounded-3xl border p-10 text-center text-lg font-semibold ${
                     actualTheme === "dark"
-                      ? "text-orange-300"
-                      : "text-orange-600"
+                      ? "border-white/10 bg-white/5 text-gray-300"
+                      : "border-gray-200 bg-white text-gray-600"
                   }`}
                 >
-                  Selected: {selectedFileName}
-                </p>
+                  {searchQuery || selectedLocation !== "all" || selectedExperience !== "all" || selectedJobType !== "all"
+                    ? "No roles match your filters. Try adjusting your search or filters."
+                    : "No job openings available at the moment. Check back soon!"}
+                </div>
               )}
+              {filteredJobs.map((job, index) => (
+                <motion.div
+                  key={job._id}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ delay: 0.3 + index * 0.1, duration: 0.6, ease: "easeOut" }}
+                  style={{ willChange: "opacity, transform" }}
+                >
+                  <Link href={`/careers/${job.slug.current}`}>
+                    <article
+                      className={`h-full group rounded-3xl border p-6 md:p-8 flex flex-col gap-5 transition-all duration-300 hover:scale-[1.01] cursor-pointer ${
+                        actualTheme === "dark"
+                          ? "border-white/10 bg-zinc-900/50 hover:bg-zinc-800/80 hover:border-orange-500/30"
+                          : "border-gray-200 bg-white shadow-sm hover:shadow-xl hover:shadow-orange-500/5 hover:border-orange-200"
+                      }`}
+                    >
+                      <div className="flex flex-wrap gap-3 items-center justify-between">
+                        <div>
+                          <h3
+                            className={`text-2xl font-bold mb-1 ${
+                              actualTheme === "dark" ? "text-white" : "text-slate-900"
+                            }`}
+                          >
+                            {job.title}
+                          </h3>
+                          <p
+                            className={`text-sm font-semibold ${
+                              actualTheme === "dark"
+                                ? "text-slate-400"
+                                : "text-slate-600"
+                            }`}
+                          >
+                            {(job.locations || []).length > 0
+                              ? (job.locations || [])
+                                  .map((loc) => loc.name)
+                                  .filter(Boolean)
+                                  .join(" • ")
+                              : "Location to be announced"}
+                          </p>
+                          {job.publishedAt && (
+                            <p
+                              className={`text-xs mt-1 ${
+                                actualTheme === "dark"
+                                  ? "text-slate-500"
+                                  : "text-slate-500"
+                              }`}
+                            >
+                              Posted on{" "}
+                              {new Date(job.publishedAt)
+                                .toISOString()
+                                .slice(0, 10)}
+                            </p>
+                          )}
+                        </div>
+                        <Button
+                          variant="secondary"
+                          className={`rounded-full px-6 py-2 text-sm font-bold transition-colors ${
+                            actualTheme === "dark"
+                              ? "bg-white/10 text-white hover:bg-white/20"
+                              : "bg-orange-50 text-orange-700 hover:bg-orange-100"
+                          }`}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            window.location.href = `/careers/${job.slug.current}`;
+                          }}
+                        >
+                          View Details
+                        </Button>
+                      </div>
+                      <p
+                        className={`text-base leading-relaxed ${
+                          actualTheme === "dark" ? "text-slate-400" : "text-slate-600"
+                        }`}
+                      >
+                        {job.snippet}
+                      </p>
+                      <div
+                        className={`flex flex-wrap gap-3 text-sm font-medium ${
+                          actualTheme === "dark" ? "text-slate-400" : "text-slate-500"
+                        }`}
+                      >
+                        {(job.locations || []).map((loc) => (
+                          <span
+                            key={loc._id}
+                            className={`px-3 py-1 rounded-full border ${
+                              actualTheme === "dark"
+                                ? "border-white/10 bg-white/5"
+                                : "border-slate-200 bg-slate-50"
+                            }`}
+                          >
+                            {loc.name}
+                          </span>
+                        ))}
+                        <span
+                          className={`px-3 py-1 rounded-full border ${
+                            actualTheme === "dark"
+                              ? "border-white/10 bg-white/5"
+                              : "border-slate-200 bg-slate-50"
+                          }`}
+                        >
+                          {job.jobType}
+                        </span>
+                        <span
+                          className={`px-3 py-1 rounded-full border ${
+                            actualTheme === "dark"
+                              ? "border-white/10 bg-white/5"
+                              : "border-slate-200 bg-slate-50"
+                          }`}
+                        >
+                          {job.experienceLevel}
+                        </span>
+                      </div>
+                    </article>
+                  </Link>
+                </motion.div>
+              ))}
             </div>
-          </div>
-
-          <Button
-            type="submit"
-            disabled={formStatus === "processing"}
-            className="w-full rounded-2xl py-6 text-lg font-bold bg-linear-to-r from-orange-600 to-amber-500 hover:from-orange-500 hover:to-amber-400 border-0 shadow-lg shadow-orange-500/20"
-          >
-            {formStatus === "processing"
-              ? "Simulating..."
-              : formStatus === "success"
-              ? "Received! (mock)"
-              : "Submit for preview"}
-          </Button>
-
-          <p
-            className={`text-sm italic ${
-              actualTheme === "dark" ? "text-slate-500" : "text-slate-500"
-            }`}
-          >
-            Nothing is stored yet—we’ll wire integrations once the team
-            finalizes the workflow.
-          </p>
-          </form>
-        </motion.div>
+          )}
+        </div>
       </section>
       <ScrollToTop />
     </main>

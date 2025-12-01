@@ -1,8 +1,14 @@
 // app/blogs/[slug]/page.tsx
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getBlogBySlug, getRelatedBlogs, blogPosts } from "@/lib/blogData";
+import {
+  getBlogPostBySlug,
+  getRelatedBlogPosts,
+  getAllBlogPostSlugs,
+} from "@/lib/sanity/blogQueries";
 import BlogPostContent from "@/components/layout/Blogs/BlogPostContent";
+import { urlFor } from "@/sanity/lib/image";
+import { renderMarkdownToHtml } from "@/lib/markdown";
 
 interface BlogPostPageProps {
   params: Promise<{
@@ -12,8 +18,9 @@ interface BlogPostPageProps {
 
 // Generate static params for all blog posts
 export async function generateStaticParams() {
-  return blogPosts.map((post) => ({
-    slug: post.slug,
+  const slugs = await getAllBlogPostSlugs();
+  return slugs.map((slug) => ({
+    slug,
   }));
 }
 
@@ -22,13 +29,15 @@ export async function generateMetadata({
   params,
 }: BlogPostPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const blog = getBlogBySlug(slug);
+  const blog = await getBlogPostBySlug(slug);
 
   if (!blog) {
     return {
       title: "Blog Not Found",
     };
   }
+
+  const coverImageUrl = blog.cover?.asset ? urlFor(blog.cover).url() : "";
 
   return {
     title: blog.title,
@@ -38,27 +47,49 @@ export async function generateMetadata({
       description: blog.excerpt,
       type: "article",
       publishedTime: blog.date,
-      authors: [blog.author.name],
-      images: [blog.cover],
+      images: coverImageUrl ? [coverImageUrl] : [],
     },
     twitter: {
       card: "summary_large_image",
       title: blog.title,
       description: blog.excerpt,
-      images: [blog.cover],
+      images: coverImageUrl ? [coverImageUrl] : [],
     },
   };
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
-  const blog = getBlogBySlug(slug);
+  const blog = await getBlogPostBySlug(slug);
 
   if (!blog) {
     notFound();
   }
 
-  const relatedBlogs = getRelatedBlogs(slug);
+  const relatedBlogs = await getRelatedBlogPosts(
+    blog.category._id,
+    blog._id,
+    3
+  );
 
-  return <BlogPostContent blog={blog} relatedBlogs={relatedBlogs} />;
+  // Pre-process image URLs on the server
+  const blogWithImageUrl = {
+    ...blog,
+    coverImageUrl: blog.cover?.asset ? urlFor(blog.cover).url() : "",
+    bodyHtml: renderMarkdownToHtml(blog.bodyMarkdown),
+  };
+
+  const relatedBlogsWithImageUrls = relatedBlogs.map((relatedBlog) => ({
+    ...relatedBlog,
+    coverImageUrl: relatedBlog.cover?.asset
+      ? urlFor(relatedBlog.cover).url()
+      : "",
+  }));
+
+  return (
+    <BlogPostContent
+      blog={blogWithImageUrl}
+      relatedBlogs={relatedBlogsWithImageUrls}
+    />
+  );
 }

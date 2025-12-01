@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { getServiceBySlug, getAllServiceSlugs } from "@/lib/servicesData";
+import { client } from "@/sanity/lib/client";
+import { urlFor } from "@/sanity/lib/image";
 import * as motion from "motion/react-client";
 import ScrollToTop from "@/components/layout/ScrollToTop";
 import {
@@ -22,8 +23,33 @@ import {
   Factory,
   Banknote,
   ArrowRight,
+  BrainCircuit,
+  CloudCog,
+  AppWindow,
+  UserCheck,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+
+type ServiceOffering = {
+  title: string;
+  description: string;
+};
+
+type ServiceCapability = {
+  title: string;
+  description: string;
+};
+
+type ServiceSolution = {
+  title: string;
+  description: string;
+};
+
+type ProcessStep = {
+  step: number;
+  title: string;
+  description: string;
+};
 
 // Animation configurations - defined outside component to prevent re-renders
 const OFFERING_HOVER = { y: -8, scale: 1.01 };
@@ -39,9 +65,50 @@ const getCapability3DHover = (index: number) => ({
 });
 const INDUSTRY_HOVER = { scale: 1.05, rotate: 2 };
 
+// Icon mapping function
+const getIconByName = (iconName: string): LucideIcon => {
+  const iconMap: Record<string, LucideIcon> = {
+    BrainCircuit,
+    CloudCog,
+    AppWindow,
+    BarChart3,
+    UserCheck,
+  };
+  return iconMap[iconName] || BrainCircuit;
+};
+
+// GROQ query for service offering
+const SERVICE_OFFERING_QUERY = `*[_type == "serviceOffering" && id.current == $slug][0]{
+  _id,
+  "id": id.current,
+  title,
+  subtitle,
+  description,
+  iconName,
+  image,
+  heroTitle,
+  heroDescription,
+  heroImage,
+  heroCTA,
+  offerings,
+  capabilities,
+  solutions,
+  process,
+  industries,
+  whyChoose{
+    title,
+    reasons,
+    image
+  },
+  finalCTA
+}`;
+
 export async function generateStaticParams() {
-  return getAllServiceSlugs().map((slug) => ({
-    slug: slug,
+  const slugs = await client.fetch<{ id: { current: string } }[]>(
+    `*[_type == "serviceOffering"]{ "id": id }`
+  );
+  return slugs.map((item) => ({
+    slug: item.id?.current || '',
   }));
 }
 
@@ -104,7 +171,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const service = getServiceBySlug(slug);
+  const service = await client.fetch(SERVICE_OFFERING_QUERY, { slug });
 
   if (!service) {
     return {
@@ -124,14 +191,28 @@ export default async function ServicePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const service = getServiceBySlug(slug);
+  const service = await client.fetch(SERVICE_OFFERING_QUERY, { slug });
 
   if (!service) {
     notFound();
   }
 
-  const Icon = service.Icon;
-  const isAIML = service.id === "ai-ml";
+  const Icon = getIconByName(service.iconName);
+  const serviceId = service.id || '';
+  const isAIML = serviceId === "ai-ml";
+  
+  // Handle image URLs - use urlFor for Sanity images, fallback to direct URL
+  const heroImageUrl = service.heroImage?.asset
+    ? urlFor(service.heroImage).width(800).height(600).url()
+    : typeof service.heroImage === 'string' && service.heroImage.startsWith('http')
+    ? service.heroImage
+    : '';
+  
+  const whyChooseImageUrl = service.whyChoose?.image?.asset
+    ? urlFor(service.whyChoose.image).width(500).height(500).url()
+    : typeof service.whyChoose?.image === 'string' && service.whyChoose.image.startsWith('http')
+    ? service.whyChoose.image
+    : getWhyChooseImage(serviceId);
 
   return (
     <div className="min-h-screen bg-linear-to-br from-white via-orange-50/40 to-yellow-50/50 dark:bg-linear-to-r dark:from-gray-950 dark:via-slate-950 dark:to-zinc-950 transition-colors duration-300">
@@ -202,7 +283,7 @@ export default async function ServicePage({
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link
-                  href="/contact"
+                  href="/contact-us"
                   className="inline-flex px-8 py-4 bg-linear-to-r from-orange-500 to-yellow-400 text-black font-semibold rounded-lg hover:opacity-90 transition shadow-lg shadow-orange-500/30"
                 >
                   {service.heroCTA.primary}
@@ -225,15 +306,17 @@ export default async function ServicePage({
               <div className="relative w-full max-w-3xl lg:max-w-4xl">
                 <div className="absolute inset-0 bg-linear-to-br from-orange-500/20 to-yellow-500/20 rounded-2xl blur-3xl opacity-60" />
                 <div className="relative rounded-2xl overflow-hidden shadow-2xl ring-4 ring-orange-500/10 dark:ring-orange-500/20">
-                  <Image
-                    src={service.heroImage}
-                    alt={service.title}
-                    width={800}
-                    height={600}
-                    className="w-full h-auto object-cover"
-                    priority
-                    sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 45vw"
-                  />
+                  {heroImageUrl && (
+                    <Image
+                      src={heroImageUrl}
+                      alt={service.title}
+                      width={800}
+                      height={600}
+                      className="w-full h-auto object-cover"
+                      priority
+                      sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 45vw"
+                    />
+                  )}
                 </div>
               </div>
             </motion.div>
@@ -258,7 +341,7 @@ export default async function ServicePage({
           <p className="text-center text-slate-600 dark:text-zinc-400 mb-12 max-w-3xl mx-auto">
             {isAIML
               ? "Comprehensive AI & ML solutions designed to transform your business operations"
-              : `Everything you need for ${service.title.toLowerCase()}`}
+              : `Everything you need for ${service.title?.toLowerCase() || ''}`}
           </p>
         </motion.div>
 
@@ -266,8 +349,8 @@ export default async function ServicePage({
           className={`grid gap-4 lg:gap-6 ${isAIML ? "md:grid-cols-3" : "md:grid-cols-2 lg:grid-cols-3"
             }`}
         >
-          {service.offerings.map((offering, index) => {
-            const OfferingIcon = getOfferingIcon(index, service.id);
+          {service.offerings?.map((offering: ServiceOffering, index: number) => {
+            const OfferingIcon = getOfferingIcon(index, serviceId);
 
             return (
               <motion.article
@@ -327,7 +410,7 @@ export default async function ServicePage({
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
-            {service.capabilities.map((capability, index) => {
+            {service.capabilities?.map((capability: ServiceCapability, index: number) => {
               const capability3DHover = getCapability3DHover(index);
               return (
                 <motion.div
@@ -384,7 +467,7 @@ export default async function ServicePage({
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
-            {service.solutions.map((solution, index) => (
+            {service.solutions?.map((solution: ServiceSolution, index: number) => (
               <motion.div
                 key={index}
                 className="h-full"
@@ -428,7 +511,7 @@ export default async function ServicePage({
           {/* Horizontal scroll container */}
           <div className="relative">
             <div className="flex gap-6 overflow-x-auto pb-8 snap-x snap-mandatory scrollbar-thin scrollbar-thumb-orange-500 scrollbar-track-orange-100 dark:scrollbar-track-gray-800">
-              {service.process.map((step, index) => (
+              {service.process?.map((step: ProcessStep, index: number) => (
                 <motion.div
                   key={index}
                   className="group relative min-w-[320px] md:min-w-[380px] snap-center"
@@ -439,7 +522,7 @@ export default async function ServicePage({
                   style={{ willChange: "opacity, transform" }}
                 >
                   {/* Connector line */}
-                  {index < service.process.length - 1 && (
+                  {index < (service.process?.length || 0) - 1 && (
                     <div className="hidden md:block absolute top-6 -right-6 w-6 h-0.5 bg-linear-to-r from-orange-400 to-yellow-400 dark:from-orange-500 dark:to-yellow-500" />
                   )}
 
@@ -499,7 +582,7 @@ export default async function ServicePage({
           </motion.div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6">
-            {service.industries.map((industry, index) => {
+            {service.industries?.map((industry: string, index: number) => {
               const IndustryIcon = getIndustryIcon(industry);
 
               return (
@@ -558,7 +641,7 @@ export default async function ServicePage({
                 {service.whyChoose.title}
               </h2>
               <ul className="space-y-4">
-                {service.whyChoose.reasons.map((reason, index) => (
+                {service.whyChoose?.reasons?.map((reason: string, index: number) => (
                   <motion.li
                     key={index}
                     className="flex items-start gap-3 text-white/95"
@@ -583,14 +666,16 @@ export default async function ServicePage({
             >
               <div className="relative w-full max-w-md">
                 <div className="absolute inset-0 bg-cyan-500/20 rounded-2xl blur-3xl" />
-                <Image
-                  src={getWhyChooseImage(service.id)}
-                  alt={`Why Choose aiCloudHub - ${service.title}`}
-                  width={500}
-                  height={500}
-                  className="relative rounded-2xl w-full h-auto"
-                  sizes="(max-width: 768px) 100vw, 40vw"
-                />
+                {whyChooseImageUrl && (
+                  <Image
+                    src={whyChooseImageUrl}
+                    alt={`Why Choose aiCloudHub - ${service.title}`}
+                    width={500}
+                    height={500}
+                    className="relative rounded-2xl w-full h-auto"
+                    sizes="(max-width: 768px) 100vw, 40vw"
+                  />
+                )}
               </div>
             </motion.div>
           </div>
@@ -613,7 +698,7 @@ export default async function ServicePage({
               {service.finalCTA.description}
             </p>
             <Link
-              href="/contact"
+              href="/contact-us"
               className="group inline-flex items-center gap-2 px-10 py-4 bg-linear-to-r from-orange-500 to-yellow-400 text-black text-lg font-bold rounded-lg hover:opacity-90 transition shadow-xl shadow-orange-500/30"
             >
               <span>{service.finalCTA.buttonText}</span>

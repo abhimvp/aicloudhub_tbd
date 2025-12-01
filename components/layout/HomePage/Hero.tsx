@@ -7,47 +7,92 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { client } from "@/sanity/lib/client";
+import { urlFor } from "@/sanity/lib/image";
+import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
 
-const BUSINESS_VERTICALS = [
+type HeroBusinessVertical = {
+  _id: string;
+  title: string;
+  tagline: string;
+  description: string;
+  href: string;
+  image?: SanityImageSource | string;
+};
+
+const FALLBACK_BUSINESS_VERTICALS: HeroBusinessVertical[] = [
   {
+    _id: "fallback-it-staffing",
     title: "IT Staffing",
     tagline: "Connect with Top-Tier Tech Talent",
     description:
       "Find the perfect talent to accelerate your digital transformation",
-    image: "/HeroSectionITStaffing.webp",
     href: "/services/staffing",
+    image: "/HeroSectionITStaffing.webp",
   },
   {
+    _id: "fallback-it-services",
     title: "IT Services",
     tagline: "Innovative Technology Solutions for Modern Business",
     description:
       "Transform your business with cutting-edge cloud, AI, and digital solutions",
-    image: "/HeroSectionITServices.webp",
     href: "/services/it-services",
+    image: "/HeroSectionITServices.webp",
   },
   {
+    _id: "fallback-corporate-training",
     title: "Corporate Training",
     tagline: "Empower Your Workforce with Future-Ready Skills",
     description: "Upskill your teams with industry-leading training programs",
-    image: "/HeroSectionCorporateTraining.webp",
     href: "/services/corporate-training",
+    image: "/HeroSectionCorporateTraining.webp",
   },
 ];
 
+const HERO_VERTICALS_QUERY = `*[_type == "servicesSettings"][0].heroSectionBusinessVerticals[isActive == true]|order(order asc){
+  _id,
+  title,
+  tagline,
+  description,
+  href,
+  image
+}`;
+
 export default function Hero() {
+  const [businessVerticals, setBusinessVerticals] = useState<
+    HeroBusinessVertical[]
+  >(FALLBACK_BUSINESS_VERTICALS);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
   // Auto-rotate scroller every 7 seconds for better readability, pause on hover
   useEffect(() => {
     const interval = setInterval(() => {
-      if (!isPaused) {
-        setActiveIndex((prev) => (prev + 1) % BUSINESS_VERTICALS.length);
+      if (!isPaused && businessVerticals.length > 0) {
+        setActiveIndex((prev) => (prev + 1) % businessVerticals.length);
       }
     }, 7000);
-
     return () => clearInterval(interval);
-  }, [isPaused]);
+  }, [isPaused, businessVerticals.length]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    client
+      .fetch<HeroBusinessVertical[]>(HERO_VERTICALS_QUERY)
+      .then((data) => {
+        if (!isMounted || !data || data.length === 0) return;
+        setBusinessVerticals(data);
+        setActiveIndex(0);
+      })
+      .catch(() => {
+        // Fail silently and keep fallback data
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const scrollToServices = () => {
     const section = document.querySelector("#services");
@@ -177,7 +222,7 @@ export default function Hero() {
             onMouseLeave={() => setIsPaused(false)}
             className="relative w-full rounded-3xl overflow-hidden shadow-2xl mx-auto cursor-pointer group bg-white dark:bg-slate-900/80 backdrop-blur-sm border border-slate-200 dark:border-white/10"
           >
-            {BUSINESS_VERTICALS.map((vertical, index) => {
+            {businessVerticals.map((vertical, index) => {
               const isActive = index === activeIndex;
 
               return (
@@ -190,15 +235,27 @@ export default function Hero() {
                 >
                   {/* Image Container - Larger with 4:3 Aspect Ratio */}
                   <div className="relative w-full aspect-4/3 overflow-hidden bg-slate-800">
-                    <Image
-                      src={vertical.image}
-                      alt={vertical.title}
-                      fill
-                      className="object-cover transition-transform duration-[8s] ease-linear group-hover:scale-105"
-                      priority={index === 0}
-                      quality={95}
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 45vw"
-                    />
+                    {typeof vertical.image === "string" ? (
+                      <Image
+                        src={vertical.image}
+                        alt={vertical.title}
+                        fill
+                        className="object-cover transition-transform duration-[8s] ease-linear group-hover:scale-105"
+                        priority={index === 0}
+                        quality={95}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 45vw"
+                      />
+                    ) : vertical.image ? (
+                      <Image
+                        src={urlFor(vertical.image).width(1000).height(750).url()}
+                        alt={vertical.title}
+                        fill
+                        className="object-cover transition-transform duration-[8s] ease-linear group-hover:scale-105"
+                        priority={index === 0}
+                        quality={95}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 45vw"
+                      />
+                    ) : null}
                     {/* Gradient overlay at bottom for smooth transition */}
                     <div className="absolute bottom-0 left-0 right-0 h-16 bg-linear-to-t from-white dark:from-slate-900/90 to-transparent" />
                   </div>
@@ -230,7 +287,7 @@ export default function Hero() {
 
                       {/* Navigation Dots */}
                       <div className="flex gap-2">
-                        {BUSINESS_VERTICALS.map((_, dotIndex) => (
+                        {businessVerticals.map((_, dotIndex) => (
                           <button
                             key={dotIndex}
                             onClick={(e) => {

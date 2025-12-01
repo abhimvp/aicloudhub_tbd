@@ -1,6 +1,7 @@
 // components/layout/Staffing/StaffingContent.tsx
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import * as motion from "motion/react-client";
@@ -24,158 +25,205 @@ import {
   TrendingUp,
   Award,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+import { client } from "@/sanity/lib/client";
+import { urlFor } from "@/sanity/lib/image";
+import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
 
-const WHY_CHOOSE_US = [
-  {
-    title: "Top-Tier, Vetted Talent",
-    description:
-      "We rigorously evaluate each candidate for technical excellence, communication skills, and real-world problem-solving capabilities. Only the top performers make it into our talent pool.",
-    icon: Award,
-  },
-  {
-    title: "Fast & Scalable Deployment",
-    description:
-      "Ramp up teams quickly — from a single resource to full project squads — without compromising quality.",
-    icon: Zap,
-  },
-  {
-    title: "Expertise Across Key Technology Domains",
-    description:
-      "We specialize in staffing roles across AI & Machine Learning, Cloud Architecture & Engineering, Full-Stack & Backend Development, DevOps & Automation, Data Engineering & Analytics, Cybersecurity, QA & Test Engineering, and Product & Project Management.",
-    icon: BrainCircuit,
-  },
-  {
-    title: "Flexible Engagement Models",
-    description:
-      "Choose the model that suits your goals: Contract Staffing, Contract-to-Hire, Dedicated Team / Pod-Based Model, or Full-Time Hiring Support (Permanent Recruitment).",
-    icon: Users,
-  },
-  {
-    title: "Aligned with Your Delivery Goals",
-    description:
-      "We ensure talent fits your business context, delivery processes, and culture — not just the job description.",
-    icon: Target,
-  },
-];
+type WhyChooseCard = {
+  title: string;
+  description: string;
+  iconName?: string;
+};
 
-const TECHNOLOGY_DOMAINS = [
-  "AI & Machine Learning",
-  "Cloud Architecture & Engineering (AWS, Azure, GCP)",
-  "Full-Stack & Backend Development",
-  "DevOps & Automation",
-  "Data Engineering & Analytics",
-  "Cybersecurity",
-  "QA & Test Engineering",
-  "Product & Project Management",
-];
+type StaffingApproachStep = {
+  step: string;
+  title: string;
+  description: string;
+};
 
-const ENGAGEMENT_MODELS = [
-  "Contract Staffing",
-  "Contract-to-Hire",
-  "Dedicated Team / Pod-Based Model",
-  "Full-Time Hiring Support (Permanent Recruitment)",
-];
+type RolesCategory = {
+  category: string;
+  iconName?: string;
+  roles: string[];
+};
 
-const STAFFING_APPROACH = [
-  {
-    step: "1",
-    title: "Requirement Discovery",
-    description:
-      "We analyze your project needs, skill requirements, delivery timelines, and team dynamics.",
-    icon: Search,
-  },
-  {
-    step: "2",
-    title: "Curated Talent Selection",
-    description:
-      "Only the most suitable and pre-vetted candidates are shortlisted.",
-    icon: UserCheck,
-  },
-  {
-    step: "3",
-    title: "Rapid Onboarding",
-    description:
-      "We ensure smooth onboarding with minimal ramp-up time.",
-    icon: UserPlus,
-  },
-  {
-    step: "4",
-    title: "Performance Monitoring",
-    description:
-      "We consistently track performance and provide support to ensure your teams deliver value.",
-    icon: TrendingUp,
-  },
-];
+type HeroContent = {
+  badgeLabel: string;
+  title: string;
+  description: string;
+  image?: string;
+  primaryCtaLabel: string;
+  primaryCtaHref: string;
+  secondaryCtaLabel: string;
+  secondaryCtaHref: string;
+};
 
-const ROLES_BY_CATEGORY = [
-  {
-    category: "Engineering & Development",
-    icon: Code,
-    roles: [
-      "Full-Stack Developer",
-      "Java/Python/.NET Developer",
-      "Frontend Developer (React/Angular/Vue)",
-      "Mobile Developer (iOS/Android/Flutter)",
-    ],
-  },
-  {
-    category: "Cloud & DevOps",
-    icon: CloudCog,
-    roles: [
-      "Cloud Architect / Engineer",
-      "DevOps Engineer",
-      "Site Reliability Engineer (SRE)",
-    ],
-  },
-  {
-    category: "AI, Data & Analytics",
-    icon: BarChart3,
-    roles: [
-      "Data Engineer",
-      "ML Engineer",
-      "Data Scientist",
-      "BI Analyst / Tableau Developer",
-    ],
-  },
-  {
-    category: "Testing & Quality",
-    icon: TestTube,
-    roles: [
-      "Manual / Automation Tester",
-      "Performance Tester",
-      "QA Lead / Test Manager",
-    ],
-  },
-  {
-    category: "Leadership & Management",
-    icon: Briefcase,
-    roles: [
-      "Technical Program Manager",
-      "Product Owner",
-      "Scrum Master",
-      "Project Manager",
-    ],
-  },
-];
+type FinalCtaContent = {
+  title: string;
+  description: string;
+  buttonText: string;
+  buttonHref: string;
+};
 
-const INDUSTRIES = [
-  "Retail & E-Commerce",
-  "Telecom",
-  "Banking & Insurance",
-  "Healthcare",
-  "Logistics & Supply Chain",
-  "Technology & SaaS",
-];
+type ItStaffingDocument = {
+  hero?: {
+    badgeLabel?: string;
+    title?: string;
+    description?: string;
+    image?: SanityImageSource;
+    primaryCtaLabel?: string;
+    primaryCtaHref?: string;
+    secondaryCtaLabel?: string;
+    secondaryCtaHref?: string;
+  };
+  overviewTitle?: string;
+  overviewBody?: string[];
+  whyChooseCards?: WhyChooseCard[];
+  technologyDomains?: string[];
+  engagementModels?: string[];
+  staffingApproach?: StaffingApproachStep[];
+  rolesByCategory?: RolesCategory[];
+  industries?: string[];
+  valueProposition?: string[];
+  finalCta?: FinalCtaContent;
+};
 
-const VALUE_PROPOSITION = [
-  "Reduce time-to-hire",
-  "Lower hiring overhead",
-  "Access specialized, hard-to-find skills",
-  "Scale teams based on business demand",
-  "Trusted partner with deep Tech + Domain expertise",
-];
+const IT_STAFFING_QUERY = `*[_type == "itStaffingService"][0]{
+  hero,
+  overviewTitle,
+  overviewBody,
+  whyChooseCards,
+  technologyDomains,
+  engagementModels,
+  staffingApproach,
+  rolesByCategory,
+  industries,
+  valueProposition,
+  finalCta
+}`;
+
+const iconMap: Record<string, LucideIcon> = {
+  Award,
+  Zap,
+  Users,
+  Target,
+  BrainCircuit,
+  CloudCog,
+  Code,
+  BarChart3,
+  TestTube,
+  Briefcase,
+  UserCheck,
+  Search,
+  UserPlus,
+  TrendingUp,
+};
+
+function getIconByName(name?: string): LucideIcon | undefined {
+  if (!name) return undefined;
+  return iconMap[name] ?? undefined;
+}
 
 export default function StaffingContent() {
+  const [hero, setHero] = useState<HeroContent | null>(null);
+  const [overviewTitle, setOverviewTitle] = useState("");
+  const [overviewBody, setOverviewBody] = useState<string[]>([]);
+  const [whyChooseCards, setWhyChooseCards] = useState<
+    (WhyChooseCard & { icon?: LucideIcon })[]
+  >([]);
+  const [technologyDomains, setTechnologyDomains] = useState<string[]>([]);
+  const [engagementModels, setEngagementModels] = useState<string[]>([]);
+  const [staffingApproach, setStaffingApproach] = useState<
+    StaffingApproachStep[]
+  >([]);
+  const [rolesByCategory, setRolesByCategory] = useState<
+    (RolesCategory & { icon?: LucideIcon })[]
+  >([]);
+  const [industries, setIndustries] = useState<string[]>([]);
+  const [valueProposition, setValueProposition] = useState<string[]>([]);
+  const [finalCta, setFinalCta] = useState<FinalCtaContent | null>(null);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    client
+      .fetch<ItStaffingDocument>(IT_STAFFING_QUERY)
+      .then((data) => {
+        if (!isMounted || !data) return;
+
+        if (data.hero) {
+          setHero({
+            badgeLabel: data.hero.badgeLabel ?? "IT Staffing",
+            title: data.hero.title ?? "",
+            description: data.hero.description ?? "",
+            image: data.hero.image
+              ? urlFor(data.hero.image).width(800).height(600).url()
+              : undefined,
+            primaryCtaLabel: data.hero.primaryCtaLabel ?? "",
+            primaryCtaHref: data.hero.primaryCtaHref ?? "/contact-us",
+            secondaryCtaLabel: data.hero.secondaryCtaLabel ?? "",
+            secondaryCtaHref: data.hero.secondaryCtaHref ?? "#why-choose",
+          });
+        }
+
+        if (data.overviewTitle) setOverviewTitle(data.overviewTitle);
+        if (data.overviewBody) setOverviewBody(data.overviewBody);
+
+        if (data.whyChooseCards) {
+          setWhyChooseCards(
+            data.whyChooseCards.map((card) => ({
+              ...card,
+              icon: getIconByName(card.iconName) ?? Award,
+            }))
+          );
+        }
+
+        if (data.technologyDomains)
+          setTechnologyDomains(data.technologyDomains);
+
+        if (data.engagementModels)
+          setEngagementModels(data.engagementModels);
+
+        if (data.staffingApproach)
+          setStaffingApproach(data.staffingApproach);
+
+        if (data.rolesByCategory) {
+          setRolesByCategory(
+            data.rolesByCategory.map((cat) => ({
+              ...cat,
+              icon: getIconByName(cat.iconName),
+            }))
+          );
+        }
+
+        if (data.industries) setIndustries(data.industries);
+
+        if (data.valueProposition)
+          setValueProposition(data.valueProposition);
+
+        if (data.finalCta) {
+          setFinalCta({
+            title: data.finalCta.title ?? "",
+            description: data.finalCta.description ?? "",
+            buttonText: data.finalCta.buttonText ?? "",
+            buttonHref: data.finalCta.buttonHref ?? "/contact-us",
+          });
+        }
+      })
+      .catch(() => {
+        // Keep fallbacks on error
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  if (!hero || !finalCta) {
+    return null;
+  }
+
   return (
     <div className="min-h-screen bg-linear-to-br from-white via-orange-50/40 to-yellow-50/50 dark:bg-linear-to-r dark:from-gray-950 dark:via-slate-950 dark:to-zinc-950 transition-colors duration-300">
       {/* Hero Section */}
@@ -235,32 +283,27 @@ export default function StaffingContent() {
 
               <div className="inline-flex items-center gap-3 rounded-full border border-orange-500/30 bg-orange-100 text-orange-700 dark:bg-orange-500/10 dark:text-orange-300 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] mb-6 backdrop-blur-sm">
                 <UserCheck className="h-4 w-4 text-orange-600 dark:text-orange-300" />
-                IT Staffing
+                {hero.badgeLabel}
               </div>
               <h1 className="text-3xl md:text-4xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-black leading-[1.1] mb-6 tracking-tight wrap-break-word" style={{ lineHeight: '1.1' }}>
-                <span className="whitespace-normal">Build High-Performing Tech Teams with </span>
-                <span className="bg-linear-to-r from-orange-600 to-yellow-500 dark:from-orange-400 dark:to-yellow-300 bg-clip-text text-transparent whitespace-normal">
-                  Confidence
-                </span>
+                <span className="whitespace-normal">{hero.title}</span>
               </h1>
               <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-8 leading-relaxed">
-                Flexible, scalable, and expertly vetted IT talent across AI,
-                Cloud, Development, Data, and Emerging Technologies — delivered
-                when you need them.
+                {hero.description}
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link
-                  href="/contact"
+                  href={hero.primaryCtaHref}
                   className="group inline-flex items-center gap-2 px-8 py-4 bg-linear-to-r from-orange-500 to-yellow-400 text-black font-semibold rounded-lg hover:opacity-90 transition shadow-lg shadow-orange-500/30"
                 >
-                  <span>Get Started</span>
+                  <span>{hero.primaryCtaLabel}</span>
                   <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                 </Link>
                 <a
-                  href="#why-choose"
+                  href={hero.secondaryCtaHref}
                   className="group inline-flex items-center gap-2 px-8 py-4 border-2 border-slate-900/20 text-slate-900 dark:border-white/20 dark:text-white font-semibold rounded-lg hover:bg-slate-900/5 dark:hover:bg-white/10 transition"
                 >
-                  <span>Learn More</span>
+                  <span>{hero.secondaryCtaLabel}</span>
                   <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                 </a>
               </div>
@@ -275,14 +318,16 @@ export default function StaffingContent() {
               <div className="relative w-full max-w-3xl lg:max-w-4xl">
                 <div className="absolute inset-0 bg-linear-to-br from-orange-500/20 to-yellow-500/20 rounded-2xl blur-3xl opacity-60" />
                 <div className="relative rounded-2xl overflow-hidden shadow-2xl ring-4 ring-orange-500/10 dark:ring-orange-500/20">
-                  <Image
-                    src="/ServiceSectionImages/ServicePage_Staffing.webp"
-                    alt="IT Staffing"
-                    width={800}
-                    height={600}
-                    className="w-full h-auto object-cover"
-                    priority
-                  />
+                  {hero.image && (
+                    <Image
+                      src={hero.image}
+                      alt={hero.title}
+                      width={800}
+                      height={600}
+                      className="w-full h-auto object-cover"
+                      priority
+                    />
+                  )}
                 </div>
               </div>
             </motion.div>
@@ -299,24 +344,12 @@ export default function StaffingContent() {
           transition={{ duration: 0.6 }}
         >
           <h2 className="text-3xl font-bold mb-4 text-slate-900 dark:text-white">
-            Overview
+            {overviewTitle}
           </h2>
           <div className="space-y-4 text-lg text-slate-700 dark:text-zinc-300 leading-relaxed">
-            <p>
-              At{" "}
-              <span className="font-semibold text-orange-600 dark:text-orange-400">
-                aicloudhub
-              </span>
-              , we help organizations accelerate their digital transformation
-              by providing access to world-class technology professionals.
-              Whether you&apos;re scaling quickly, filling niche skill gaps, or
-              building long-term strategic capabilities, our IT staffing services
-              ensure you have the right talent at the right time.
-            </p>
-            <p>
-              Our goal is simple: Empower your delivery with top-tier expertise
-              that fits your business needs.
-            </p>
+            {overviewBody.map((paragraph, index) => (
+              <p key={index}>{paragraph}</p>
+            ))}
           </div>
         </motion.div>
       </section>
@@ -340,8 +373,8 @@ export default function StaffingContent() {
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {WHY_CHOOSE_US.map((item, index) => {
-              const Icon = item.icon;
+            {whyChooseCards.map((item, index) => {
+              const Icon = item.icon ?? Award;
               return (
                 <motion.div
                   key={index}
@@ -388,7 +421,7 @@ export default function StaffingContent() {
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-            {TECHNOLOGY_DOMAINS.map((domain, index) => (
+            {technologyDomains.map((domain, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 40 }}
@@ -430,7 +463,7 @@ export default function StaffingContent() {
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-            {ENGAGEMENT_MODELS.map((model, index) => (
+            {engagementModels.map((model, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 40 }}
@@ -466,7 +499,7 @@ export default function StaffingContent() {
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {STAFFING_APPROACH.map((step, index) => {
+            {staffingApproach.map((step, index) => {
               return (
                 <motion.div
                   key={index}
@@ -515,8 +548,8 @@ export default function StaffingContent() {
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {ROLES_BY_CATEGORY.map((category, index) => {
-              const Icon = category.icon;
+            {rolesByCategory.map((category, index) => {
+              const Icon = category.icon ?? Briefcase;
               return (
                 <motion.div
                   key={index}
@@ -570,7 +603,7 @@ export default function StaffingContent() {
           </motion.div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {INDUSTRIES.map((industry, index) => (
+            {industries.map((industry, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 40 }}
@@ -606,7 +639,7 @@ export default function StaffingContent() {
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {VALUE_PROPOSITION.map((value, index) => (
+            {valueProposition.map((value, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 40 }}
@@ -639,17 +672,16 @@ export default function StaffingContent() {
             transition={{ duration: 0.6 }}
           >
             <h3 className="text-3xl lg:text-4xl font-black mb-6">
-              Ready to Build Your Dream Team?
+              {finalCta.title}
             </h3>
             <p className="text-lg text-white/95 mb-8 max-w-2xl mx-auto">
-              Contact us today to discuss your staffing needs and let us help
-              you find the talent that drives your business forward.
+              {finalCta.description}
             </p>
             <Link
-              href="/contact"
+              href={finalCta.buttonHref}
               className="group inline-flex items-center gap-2 px-10 py-4 bg-linear-to-r from-orange-500 to-yellow-400 text-black text-lg font-bold rounded-lg hover:opacity-90 transition shadow-xl shadow-orange-500/30"
             >
-              <span>Get in Touch</span>
+              <span>{finalCta.buttonText}</span>
               <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           </motion.div>

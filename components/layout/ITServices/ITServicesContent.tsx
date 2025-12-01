@@ -1,7 +1,7 @@
 // components/layout/ITServices/ITServicesContent.tsx
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import * as motion from "motion/react-client";
@@ -18,125 +18,173 @@ import {
   ChevronDown,
   Check,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+import { client } from "@/sanity/lib/client";
+import { urlFor } from "@/sanity/lib/image";
+import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
 
-// Core IT Service Offerings
-const CORE_SERVICES = [
-  {
-    title: "AI & Machine Learning Services",
-    description:
-      "Harness the power of artificial intelligence to automate processes, enhance decision-making, and build intelligent digital experiences.",
-    icon: BrainCircuit,
-    deliverables: [
-      "GenAI & LLM-based solutions",
-      "Custom machine learning models",
-      "Intelligent search, chatbots & virtual assistants",
-      "Predictive analytics & forecasting",
-      "NLP, computer vision & text processing",
-      "AI automation for business workflows",
-    ],
-    businessImpact: [
-      "Better decision-making through data-driven intelligence",
-      "Reduced manual effort and increased productivity",
-      "Smarter customer experiences",
-    ],
-  },
-  {
-    title: "Cloud Services",
-    description:
-      "Modernize, scale, and secure your business with our comprehensive cloud offerings across AWS, Azure, and GCP.",
-    icon: CloudCog,
-    deliverables: [
-      "Cloud migration & modernization",
-      "Cloud-native application development",
-      "Infrastructure automation (IaC)",
-      "DevOps enablement & CI/CD pipelines",
-      "Cost optimization & cloud governance",
-      "Hybrid & multi-cloud solutions",
-    ],
-    businessImpact: [
-      "Agility and scalability",
-      "Reduced operational costs",
-      "Faster innovation cycles",
-    ],
-  },
-  {
-    title: "Application Services",
-    description:
-      "Design, build, modernize, and maintain enterprise-grade applications tailored to your business goals.",
-    icon: AppWindow,
-    deliverables: [
-      "Custom application development",
-      "Web, mobile & API engineering",
-      "Legacy modernization & re-platforming",
-      "Microservices & modular architecture",
-      "Enterprise application integration",
-      "UX/UI design & modernization",
-    ],
-    businessImpact: [
-      "High-performing digital products",
-      "Enhanced customer engagement",
-      "Reduced maintenance costs",
-    ],
-  },
-  {
-    title: "Data & Analytics Services",
-    description:
-      "Turn your data into a competitive advantage with our end-to-end data engineering and analytics services.",
-    icon: BarChart3,
-    deliverables: [
-      "Data warehousing & data lakes",
-      "ETL/ELT development",
-      "BI dashboards & reporting",
-      "Big data engineering",
-      "Data governance & data quality",
-      "Real-time analytics",
-    ],
-    businessImpact: [
-      "Actionable insights for better decisions",
-      "Strong data foundation for AI initiatives",
-      "Improved business visibility",
-    ],
-  },
-];
+type CoreService = {
+  title: string;
+  description: string;
+  iconName?: string;
+  deliverables: string[];
+  businessImpact: string[];
+};
 
-const INDUSTRIES = [
-  "Retail & E-Commerce",
-  "Telecom",
-  "Banking & FinTech",
-  "Supply Chain & Logistics",
-  "Healthcare",
-  "Technology & SaaS",
-];
+type WhyChooseReason = {
+  title: string;
+  description: string;
+};
 
-const WHY_CHOOSE_US = [
-  {
-    title: "Holistic Expertise Across AI, Cloud, Data & Applications",
-    description:
-      "A unified partner for full-stack modernization and innovation.",
-  },
-  {
-    title: "Proven Engineering Excellence",
-    description:
-      "Decades of combined experience delivering enterprise-grade solutions.",
-  },
-  {
-    title: "Flexible Engagement Models",
-    description:
-      "On-demand experts, project-based delivery, or dedicated teams.",
-  },
-  {
-    title: "Faster, Value-Driven Delivery",
-    description: "Agile practices and automation-first execution.",
-  },
-  {
-    title: "Deep Domain Experience",
-    description:
-      "Understanding of business processes across critical industries.",
-  },
-];
+type ItServicesDoc = {
+  hero?: {
+    badgeLabel?: string;
+    titlePrefix?: string;
+    titleHighlight?: string;
+    description?: string;
+    image?: SanityImageSource;
+    primaryCtaLabel?: string;
+    primaryCtaHref?: string;
+    secondaryCtaLabel?: string;
+    secondaryCtaHref?: string;
+  };
+  overviewTitle?: string;
+  overviewBody?: string[];
+  coreServices?: CoreService[];
+  industries?: string[];
+  whyChoose?: {
+    title?: string;
+    reasons?: WhyChooseReason[];
+  };
+  finalCta?: {
+    title?: string;
+    description?: string;
+    buttonText?: string;
+    buttonHref?: string;
+  };
+};
+
+const IT_SERVICES_QUERY = `*[_type == "itServicesService"][0]{
+  hero,
+  overviewTitle,
+  overviewBody,
+  coreServices,
+  industries,
+  whyChoose,
+  finalCta
+}`;
+
+const coreServiceIconMap: Record<string, LucideIcon> = {
+  BrainCircuit,
+  CloudCog,
+  AppWindow,
+  BarChart3,
+};
+
+function getCoreIcon(name?: string): LucideIcon {
+  if (!name) return BrainCircuit;
+  return coreServiceIconMap[name] ?? BrainCircuit;
+}
 
 export default function ITServicesContent() {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(0);
+
+  const [hero, setHero] = useState({
+    badgeLabel: "",
+    titlePrefix: "",
+    titleHighlight: "",
+    description: "",
+    image: "",
+    primaryCtaLabel: "",
+    primaryCtaHref: "/contact-us",
+    secondaryCtaLabel: "",
+    secondaryCtaHref: "#offerings",
+  });
+  const [overviewTitle, setOverviewTitle] = useState("");
+  const [overviewBody, setOverviewBody] = useState<string[]>([]);
+  const [coreServices, setCoreServices] = useState<CoreService[]>([]);
+  const [industries, setIndustries] = useState<string[]>([]);
+  const [whyChooseTitle, setWhyChooseTitle] = useState("");
+  const [whyChooseReasons, setWhyChooseReasons] = useState<
+    WhyChooseReason[]
+  >([]);
+  const [finalCta, setFinalCta] = useState({
+    title: "",
+    description: "",
+    buttonText: "",
+    buttonHref: "/contact-us",
+  });
+
+  useEffect(() => {
+    let isMounted = true;
+
+    client
+      .fetch<ItServicesDoc>(IT_SERVICES_QUERY)
+      .then((data) => {
+        if (!isMounted || !data) return;
+
+        if (data.hero) {
+          setHero((prev) => ({
+            badgeLabel: data.hero?.badgeLabel ?? prev.badgeLabel,
+            titlePrefix: data.hero?.titlePrefix ?? prev.titlePrefix,
+            titleHighlight:
+              data.hero?.titleHighlight ?? prev.titleHighlight,
+            description: data.hero?.description ?? prev.description,
+            image: data.hero?.image
+              ? urlFor(data.hero.image).width(800).height(600).url()
+              : prev.image,
+            primaryCtaLabel:
+              data.hero?.primaryCtaLabel ?? prev.primaryCtaLabel,
+            primaryCtaHref:
+              data.hero?.primaryCtaHref ?? prev.primaryCtaHref,
+            secondaryCtaLabel:
+              data.hero?.secondaryCtaLabel ?? prev.secondaryCtaLabel,
+            secondaryCtaHref:
+              data.hero?.secondaryCtaHref ?? prev.secondaryCtaHref,
+          }));
+        }
+
+        if (data.overviewTitle) {
+          setOverviewTitle(data.overviewTitle);
+        }
+        if (data.overviewBody && data.overviewBody.length) {
+          setOverviewBody(data.overviewBody);
+        }
+
+        if (data.coreServices && data.coreServices.length) {
+          setCoreServices(data.coreServices);
+        }
+
+        if (data.industries && data.industries.length) {
+          setIndustries(data.industries);
+        }
+
+        if (data.whyChoose) {
+          if (data.whyChoose.title) {
+            setWhyChooseTitle(data.whyChoose.title);
+          }
+          if (data.whyChoose.reasons && data.whyChoose.reasons.length) {
+            setWhyChooseReasons(data.whyChoose.reasons);
+          }
+        }
+
+        if (data.finalCta) {
+          setFinalCta({
+            title: data.finalCta.title ?? "",
+            description: data.finalCta.description ?? "",
+            buttonText: data.finalCta.buttonText ?? "",
+            buttonHref: data.finalCta.buttonHref ?? "/contact-us",
+          });
+        }
+      })
+      .catch(() => {
+        // keep fallbacks
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-linear-to-br from-white via-orange-50/40 to-yellow-50/50 dark:bg-linear-to-r dark:from-gray-950 dark:via-slate-950 dark:to-zinc-950 transition-colors duration-300">
@@ -197,57 +245,57 @@ export default function ITServicesContent() {
 
               <div className="inline-flex items-center gap-3 rounded-full border border-orange-500/30 bg-orange-100 text-orange-700 dark:bg-orange-500/10 dark:text-orange-300 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] mb-6 backdrop-blur-sm">
                 <BriefcaseBusiness className="h-4 w-4 text-orange-600 dark:text-orange-300" />
-                IT Services
+                {hero.badgeLabel}
               </div>
               <h1 className="text-3xl md:text-4xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-black leading-[1.1] mb-6 tracking-tight wrap-break-word" style={{ lineHeight: '1.1' }}>
-                <span className="whitespace-normal">Transforming Businesses with </span>
+                <span className="whitespace-normal">{hero.titlePrefix}</span>
                 <span className="bg-linear-to-r from-orange-600 to-yellow-500 dark:from-orange-400 dark:to-yellow-300 bg-clip-text text-transparent whitespace-normal">
-                  Modern and Intelligent IT Services
+                  {hero.titleHighlight}
                 </span>
               </h1>
               <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-8 leading-relaxed">
-                Empowering organizations with AI-driven intelligence,
-                cloud-powered scalability, robust applications, and data-led
-                decision-making.
+                {hero.description}
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link
-                  href="/contact"
+                  href={hero.primaryCtaHref}
                   className="group inline-flex items-center gap-2 px-8 py-4 bg-linear-to-r from-orange-500 to-yellow-400 text-black font-semibold rounded-lg hover:opacity-90 transition shadow-lg shadow-orange-500/30"
                 >
-                  <span>Get Started</span>
+                  <span>{hero.primaryCtaLabel}</span>
                   <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                 </Link>
                 <a
-                  href="#offerings"
+                  href={hero.secondaryCtaHref}
                   className="group inline-flex items-center gap-2 px-8 py-4 border-2 border-slate-900/20 text-slate-900 dark:border-white/20 dark:text-white font-semibold rounded-lg hover:bg-slate-900/5 dark:hover:bg-white/10 transition"
                 >
-                  <span>Explore Solutions</span>
+                  <span>{hero.secondaryCtaLabel}</span>
                   <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                 </a>
               </div>
             </motion.div>
 
-            <motion.div
-              className="flex justify-center lg:justify-end"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <div className="relative w-full max-w-3xl lg:max-w-4xl">
-                <div className="absolute inset-0 bg-linear-to-br from-orange-500/20 to-yellow-500/20 rounded-2xl blur-3xl opacity-60" />
-                <div className="relative rounded-2xl overflow-hidden shadow-2xl ring-4 ring-orange-500/10 dark:ring-orange-500/20">
-                  <Image
-                    src="/ServiceSectionImages/ServicePage_ITServices.webp"
-                    alt="IT Services"
-                    width={800}
-                    height={600}
-                    className="w-full h-auto object-cover"
-                    priority
-                  />
+            {hero.image && (
+              <motion.div
+                className="flex justify-center lg:justify-end"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
+                <div className="relative w-full max-w-3xl lg:max-w-4xl">
+                  <div className="absolute inset-0 bg-linear-to-br from-orange-500/20 to-yellow-500/20 rounded-2xl blur-3xl opacity-60" />
+                  <div className="relative rounded-2xl overflow-hidden shadow-2xl ring-4 ring-orange-500/10 dark:ring-orange-500/20">
+                    <Image
+                      src={hero.image}
+                      alt="IT Services"
+                      width={800}
+                      height={600}
+                      className="w-full h-auto object-cover"
+                      priority
+                    />
+                  </div>
                 </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            )}
           </div>
         </div>
       </section>
@@ -261,26 +309,12 @@ export default function ITServicesContent() {
           transition={{ duration: 0.6 }}
         >
           <h2 className="text-3xl font-bold mb-4 text-slate-900 dark:text-white">
-            IT Services — Overview
+            {overviewTitle}
           </h2>
           <div className="space-y-4 text-lg text-slate-700 dark:text-zinc-300 leading-relaxed">
-            <p>
-              At{" "}
-              <span className="font-semibold text-orange-600 dark:text-orange-400">
-                aicloudhub
-              </span>
-              , we deliver end-to-end IT services designed to meet the demands
-              of the digital-first world. Whether you&apos;re modernizing legacy
-              systems, migrating to the cloud, building intelligent
-              applications, or driving business insights from data — we bring
-              deep technical expertise, proven engineering excellence, and
-              industry experience to support your transformation.
-            </p>
-            <p>
-              Our four core service pillars enable businesses to innovate
-              faster, operate efficiently, and stay ahead of technology
-              disruption.
-            </p>
+            {overviewBody.map((paragraph, index) => (
+              <p key={index}>{paragraph}</p>
+            ))}
           </div>
         </motion.div>
       </section>
@@ -302,9 +336,9 @@ export default function ITServicesContent() {
           </h2>
         </motion.div>
 
-        <div className="grid gap-8">
-          {CORE_SERVICES.map((service, index) => {
-            const Icon = service.icon;
+          <div className="grid gap-8">
+          {coreServices.map((service, index) => {
+            const Icon = getCoreIcon(service.iconName);
             const isExpanded = expandedIndex === index;
 
             return (
@@ -401,7 +435,7 @@ export default function ITServicesContent() {
                         </ul>
                         <div className="mt-6 pt-6 border-t border-slate-100 dark:border-white/5">
                           <Link
-                            href="/contact"
+                            href="/contact-us"
                             className="text-orange-600 dark:text-orange-400 font-semibold text-sm flex items-center gap-2 hover:gap-3 transition-all"
                           >
                             Discuss Your Project{" "}
@@ -438,7 +472,7 @@ export default function ITServicesContent() {
           </motion.div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {INDUSTRIES.map((industry, index) => (
+            {industries.map((industry, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 40 }}
@@ -469,12 +503,12 @@ export default function ITServicesContent() {
             className="text-center mb-16"
           >
             <h2 className="text-3xl lg:text-4xl font-black mb-4 text-slate-900 dark:text-white">
-              Why Choose aicloudhub for IT Services?
+              {whyChooseTitle}
             </h2>
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {WHY_CHOOSE_US.map((item, index) => (
+            {whyChooseReasons.map((item, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 40 }}
@@ -510,17 +544,16 @@ export default function ITServicesContent() {
             transition={{ duration: 0.6 }}
           >
             <h3 className="text-3xl lg:text-4xl font-black mb-6">
-              Ready to Accelerate Your Digital Transformation?
+              {finalCta.title}
             </h3>
             <p className="text-lg text-white/95 mb-8 max-w-2xl mx-auto">
-              Let&apos;s discuss how our IT services can help you build, scale,
-              and transform your business with smart, secure solutions.
+              {finalCta.description}
             </p>
             <Link
-              href="/contact"
+              href={finalCta.buttonHref}
               className="group inline-flex items-center gap-2 px-10 py-4 bg-linear-to-r from-orange-500 to-yellow-400 text-black text-lg font-bold rounded-lg hover:opacity-90 transition shadow-xl shadow-orange-500/30"
             >
-              <span>Start Your Journey</span>
+              <span>{finalCta.buttonText}</span>
               <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           </motion.div>

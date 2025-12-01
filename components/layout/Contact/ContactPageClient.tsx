@@ -34,13 +34,54 @@ const ContactPageClient = () => {
     designation: "",
     category: "",
     requirements: "",
-    agreeToSMS: false,
   });
+  const [submitting, setSubmitting] = useState(false);
+  const [statusMessage, setStatusMessage] = useState<string | null>(null);
+  const [statusType, setStatusType] = useState<"success" | "error" | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    alert("Thank you for contacting us! We'll get back to you soon.");
+
+    setSubmitting(true);
+    setStatusMessage(null);
+    setStatusType(null);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setStatusType("success");
+        setStatusMessage(
+          "Thank you for contacting us! We'll get back to you soon."
+        );
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          phone: "",
+          designation: "",
+          category: "",
+          requirements: "",
+        });
+      } else {
+        setStatusType("error");
+        setStatusMessage(result.error || "Failed to submit the form. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error submitting contact form:", error);
+      setStatusType("error");
+      setStatusMessage("An unexpected error occurred. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const handleChange = (
@@ -238,11 +279,23 @@ const ContactPageClient = () => {
                 />
               </div>
 
+              {statusMessage && (
+                <div
+                  className={`text-sm mb-2 ${
+                    statusType === "success"
+                      ? "text-green-600 dark:text-green-400"
+                      : "text-red-600 dark:text-red-400"
+                  }`}
+                >
+                  {statusMessage}
+                </div>
+              )}
               <Button
                 type="submit"
-                className="w-full py-6 text-lg font-semibold rounded-full"
+                disabled={submitting}
+                className="w-full py-6 text-lg font-semibold rounded-full disabled:opacity-60"
               >
-                Submit
+                {submitting ? "Submitting..." : "Submit"}
               </Button>
             </form>
           </motion.div>

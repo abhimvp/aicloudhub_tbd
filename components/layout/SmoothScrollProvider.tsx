@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, type ReactNode } from "react";
+import { usePathname } from "next/navigation";
 import { ReactLenis } from "lenis/react";
 
 interface SmoothScrollProviderProps {
@@ -11,6 +12,8 @@ export default function SmoothScrollProvider({
   children,
 }: SmoothScrollProviderProps) {
   const [allowMotion, setAllowMotion] = useState(true);
+  const pathname = usePathname();
+  const isStudioRoute = pathname?.startsWith("/studio");
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -26,6 +29,11 @@ export default function SmoothScrollProvider({
       mediaQuery.removeEventListener("change", handleChange);
     };
   }, []);
+
+  // Don't apply Lenis on studio routes - it interferes with Sanity Studio's scrolling
+  if (isStudioRoute) {
+    return <>{children}</>;
+  }
 
   // If user prefers reduced motion, render children without smooth scroll
   if (!allowMotion) {

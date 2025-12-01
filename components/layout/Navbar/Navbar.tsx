@@ -141,7 +141,6 @@ const Navbar = () => {
               className="object-contain h-12 md:h-16 w-auto"
               priority
               onError={(e) => {
-                console.error('Logo failed to load, trying SVG fallback');
                 const target = e.target as HTMLImageElement;
                 if (target.src !== '/AICLOUDHUB.svg') {
                   target.src = '/AICLOUDHUB.svg';
@@ -223,7 +222,7 @@ const Navbar = () => {
         {/* CTA */}
         <div className="hidden md:flex items-center gap-3">
           <ThemeToggle />
-          <Link href="/contact">
+          <Link href="/contact-us">
             <Button
               size="sm"
               className={`rounded-full px-6 font-medium transition-all duration-300 ${
@@ -344,7 +343,7 @@ const Navbar = () => {
             Careers
           </Link>
           <div className="pt-2 pb-1 px-2">
-            <Link href="/contact" className="w-full block">
+            <Link href="/contact-us" className="w-full block">
               <Button
                 className={`font-semibold w-full rounded-xl py-6 ${
                   actualTheme === "dark"

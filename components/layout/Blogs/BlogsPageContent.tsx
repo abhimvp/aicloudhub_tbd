@@ -1,9 +1,13 @@
 // components/layout/Blogs/BlogsPageContent.tsx
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as motion from "motion/react-client";
-import { blogPosts, blogCategories, getBlogsByCategory } from "@/lib/blogData";
+import type { BlogPost, BlogCategory } from "@/lib/sanity/blogQueries";
+import {
+  getAllBlogPosts,
+  getBlogCategories,
+} from "@/lib/sanity/blogQueries";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -11,20 +15,61 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Search, Calendar, Clock, ArrowRight } from "lucide-react";
 import { useTheme } from "@/components/theme/ThemeProvider";
 import ScrollToTop from "@/components/layout/ScrollToTop";
+import { urlFor } from "@/sanity/lib/image";
 
 export default function BlogsPageContent() {
   const { actualTheme } = useTheme();
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [blogCategories, setBlogCategories] = useState<BlogCategory[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const filteredBlogs = getBlogsByCategory(selectedCategory).filter(
-    (blog) =>
-      blog.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      blog.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      blog.tags.some((tag) =>
-        tag.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-  );
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const [posts, categories] = await Promise.all([
+          getAllBlogPosts(),
+          getBlogCategories(),
+        ]);
+        setBlogPosts(posts);
+        setBlogCategories(categories);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchData();
+  }, []);
+
+  // Get filtered blogs based on category and search query
+  const filteredBlogs = React.useMemo(() => {
+    let blogs = blogPosts;
+
+    // Filter by category
+    if (selectedCategory !== "All") {
+      blogs = blogs.filter(
+        (blog) => blog.category?.slug?.current === selectedCategory
+      );
+    }
+
+    // Filter by search query
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      blogs = blogs.filter(
+        (blog) =>
+          blog.title.toLowerCase().includes(query) ||
+          blog.excerpt.toLowerCase().includes(query)
+      );
+    }
+
+    return blogs;
+  }, [blogPosts, selectedCategory, searchQuery]);
+
+  // Get category names for display
+  const categoryNames = React.useMemo(() => {
+    const names = ["All", ...blogCategories.map((cat) => cat.name)];
+    return names;
+  }, [blogCategories]);
 
   return (
     <main
@@ -142,8 +187,8 @@ export default function BlogsPageContent() {
               <div
                 className={`absolute -inset-1 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200 ${
                   actualTheme === "dark"
-                    ? "bg-gradient-to-r from-orange-600 to-amber-600"
-                    : "bg-gradient-to-r from-orange-400 to-amber-400"
+                    ? "bg-linear-to-r from-orange-600 to-amber-600"
+                    : "bg-linear-to-r from-orange-400 to-amber-400"
                 }`}
               ></div>
               <div className="relative">
@@ -154,7 +199,7 @@ export default function BlogsPageContent() {
                 />
                 <input
                   type="text"
-                  placeholder="Search articles, topics, tags..."
+                  placeholder="Search articles, topics..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className={`w-full pl-12 pr-4 py-4 rounded-2xl transition-all duration-300 ${
@@ -196,23 +241,48 @@ export default function BlogsPageContent() {
                     >
                       Categories
                     </h3>
-                    <div className="space-y-2">
-                      {blogCategories.map((category) => (
-                        <button
-                          key={category}
-                          onClick={() => setSelectedCategory(category)}
-                          className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 ${
-                            selectedCategory === category
-                              ? "bg-linear-to-r from-orange-500 to-yellow-400 text-black font-semibold shadow-lg shadow-orange-500/20"
-                              : actualTheme === "dark"
-                              ? "text-gray-300 hover:bg-white/10 hover:text-white"
-                              : "text-gray-600 hover:bg-orange-50 hover:text-gray-900"
-                          }`}
-                        >
-                          {category}
-                        </button>
-                      ))}
-                    </div>
+                    {loading ? (
+                      <div className="space-y-2">
+                        {[1, 2, 3].map((i) => (
+                          <div
+                            key={i}
+                            className="h-12 bg-gray-200 dark:bg-gray-800 rounded-lg animate-pulse"
+                          />
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="space-y-2">
+                        {categoryNames.map((categoryName) => (
+                          <button
+                            key={categoryName}
+                            onClick={() =>
+                              setSelectedCategory(
+                                categoryName === "All"
+                                  ? "All"
+                                  : blogCategories.find(
+                                      (cat) => cat.name === categoryName
+                                    )?.slug?.current || "All"
+                              )
+                            }
+                            className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 ${
+                              (selectedCategory === "All" &&
+                                categoryName === "All") ||
+                              (selectedCategory !== "All" &&
+                                blogCategories.find(
+                                  (cat) =>
+                                    cat.slug?.current === selectedCategory
+                                )?.name === categoryName)
+                                ? "bg-linear-to-r from-orange-500 to-yellow-400 text-black font-semibold shadow-lg shadow-orange-500/20"
+                                : actualTheme === "dark"
+                                ? "text-gray-300 hover:bg-white/10 hover:text-white"
+                                : "text-gray-600 hover:bg-orange-50 hover:text-gray-900"
+                            }`}
+                          >
+                            {categoryName}
+                          </button>
+                        ))}
+                      </div>
+                    )}
 
                     {/* Stats */}
                     <div
@@ -266,7 +336,16 @@ export default function BlogsPageContent() {
 
             {/* Blog Grid */}
             <div className="flex-1">
-              {filteredBlogs.length === 0 ? (
+              {loading ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  {[1, 2, 3, 4].map((i) => (
+                    <div
+                      key={i}
+                      className="bg-gray-200 dark:bg-gray-800 rounded-lg h-96 animate-pulse"
+                    />
+                  ))}
+                </div>
+              ) : filteredBlogs.length === 0 ? (
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -282,124 +361,133 @@ export default function BlogsPageContent() {
                 </motion.div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  {filteredBlogs.map((blog, index) => (
-                    <motion.div
-                      key={blog.id}
-                      initial={{ opacity: 0, y: 40 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, margin: "-100px" }}
-            style={{ willChange: "opacity, transform" }}
-                      transition={{ delay: 0.3 + index * 0.1, duration: 0.6, ease: "easeOut" }}
-                    >
-                      <Link href={`/blogs/${blog.slug}`}>
-                        <Card
-                          className={`group backdrop-blur-lg overflow-hidden transition-all duration-300 h-full cursor-pointer hover:scale-[1.02] hover:shadow-xl hover:shadow-orange-500/10 ${
-                            actualTheme === "dark"
-                              ? "bg-white/5 border-white/10 hover:bg-white/10 hover:border-orange-400/50"
-                              : "bg-white border-gray-200 hover:bg-orange-50/50 hover:border-orange-400 shadow-lg"
-                          }`}
-                        >
-                          {/* Image */}
-                          <div className="relative h-56 overflow-hidden">
-                            <Image
-                              src={blog.cover}
-                              alt={blog.title}
-                              fill
-                              className="object-cover transition-transform duration-500 group-hover:scale-110"
-                            />
-                            <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
+                  {filteredBlogs.map((blog, index) => {
+                    const coverImageUrl = blog.cover?.asset
+                      ? urlFor(blog.cover).url()
+                      : "";
 
-                            {/* Category Badge */}
-                            <div className="absolute top-4 left-4">
-                              <span className="px-3 py-1 bg-orange-500 text-white text-xs font-semibold rounded-full">
-                                {blog.category}
-                              </span>
-                            </div>
+                    return (
+                      <motion.div
+                        key={blog._id}
+                        initial={{ opacity: 0, y: 40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: "-100px" }}
+                        style={{ willChange: "opacity, transform" }}
+                        transition={{
+                          delay: 0.3 + index * 0.1,
+                          duration: 0.6,
+                          ease: "easeOut",
+                        }}
+                      >
+                        <Link href={`/blogs/${blog.slug.current}`}>
+                          <Card
+                            className={`group backdrop-blur-lg overflow-hidden transition-all duration-300 h-[380px] cursor-pointer hover:translate-y-[-4px] hover:shadow-2xl hover:shadow-orange-500/15 flex flex-col rounded-3xl ${
+                              actualTheme === "dark"
+                                ? "bg-zinc-950/60 border-white/10 hover:bg-zinc-900/80 hover:border-orange-400/60"
+                                : "bg-white border-gray-200 hover:bg-orange-50/60 hover:border-orange-400/70 shadow-lg"
+                            }`}
+                          >
+                            {/* Image / Placeholder area (16:9 aspect for all cards) */}
+                            <div className="relative aspect-video overflow-hidden">
+                              {coverImageUrl ? (
+                                <>
+                                  <Image
+                                    src={coverImageUrl}
+                                    alt={blog.title}
+                                    fill
+                                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                                  />
+                                  <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
+                                </>
+                              ) : (
+                                <div
+                                  className={`w-full h-full ${
+                                    actualTheme === "dark"
+                                      ? "bg-zinc-900"
+                                      : "bg-gray-100"
+                                  }`}
+                                />
+                              )}
 
-                            {/* Featured Badge */}
-                            {blog.featured && (
-                              <div className="absolute top-4 right-4">
-                                <span className="px-3 py-1 bg-linear-to-r from-yellow-400 to-orange-500 text-black text-xs font-bold rounded-full">
-                                  Featured
+                              {/* Category Badge */}
+                              <div className="absolute top-4 left-4">
+                                <span className="px-3 py-1 bg-orange-500 text-white text-xs font-semibold rounded-full shadow-sm">
+                                  {blog.category?.name || "Uncategorized"}
                                 </span>
                               </div>
-                            )}
-                          </div>
 
-                          <CardContent className="p-6">
-                            {/* Title */}
-                            <h3
-                              className={`text-xl font-bold mb-3 group-hover:text-orange-400 transition-colors line-clamp-2 ${
-                                actualTheme === "dark"
-                                  ? "text-white"
-                                  : "text-gray-900"
-                              }`}
-                            >
-                              {blog.title}
-                            </h3>
-
-                            {/* Excerpt */}
-                            <p
-                              className={`mb-4 line-clamp-2 leading-relaxed transition-colors duration-300 ${
-                                actualTheme === "dark"
-                                  ? "text-gray-400"
-                                  : "text-gray-600"
-                              }`}
-                            >
-                              {blog.excerpt}
-                            </p>
-
-                            {/* Meta Info */}
-                            <div
-                              className={`flex items-center gap-4 text-sm mb-4 transition-colors duration-300 ${
-                                actualTheme === "dark"
-                                  ? "text-gray-500"
-                                  : "text-gray-500"
-                              }`}
-                            >
-                              <div className="flex items-center gap-1">
-                                <Calendar className="w-4 h-4" />
-                                <span>{blog.date}</span>
-                              </div>
-                              <div className="flex items-center gap-1">
-                                <Clock className="w-4 h-4" />
-                                <span>{blog.readTime}</span>
-                              </div>
+                              {/* Featured Badge */}
+                              {blog.featured && (
+                                <div className="absolute top-4 right-4">
+                                  <span className="px-3 py-1 bg-linear-to-r from-yellow-400 to-orange-500 text-black text-xs font-bold rounded-full shadow-sm">
+                                    Featured
+                                  </span>
+                                </div>
+                              )}
                             </div>
 
-                            {/* Tags */}
-                            <div className="flex flex-wrap gap-2 mb-4">
-                              {blog.tags.slice(0, 3).map((tag) => (
-                                <span
-                                  key={tag}
-                                  className={`px-2 py-1 text-xs rounded transition-colors duration-300 ${
+                            <CardContent className="p-4 flex flex-col h-full gap-1">
+                              {/* Title */}
+                              <h3
+                                className={`text-lg md:text-xl font-semibold mb-1.5 group-hover:text-orange-400 transition-colors line-clamp-2 tracking-tight ${
+                                  actualTheme === "dark"
+                                    ? "text-white"
+                                    : "text-gray-900"
+                                }`}
+                              >
+                                {blog.title}
+                              </h3>
+
+                              {/* Excerpt */}
+                              <p
+                                className={`line-clamp-2 leading-relaxed text-sm transition-colors duration-300 ${
+                                  actualTheme === "dark"
+                                    ? "text-gray-400"
+                                    : "text-gray-600"
+                                }`}
+                              >
+                                {blog.excerpt}
+                              </p>
+
+                              {/* Meta + CTA pinned to bottom */}
+                              <div className="mt-auto space-y-4">
+                                {/* Meta Info */}
+                                <div
+                                  className={`flex items-center gap-4 text-xs md:text-sm transition-colors duration-300 ${
                                     actualTheme === "dark"
-                                      ? "bg-white/5 border border-white/10 text-gray-400"
-                                      : "bg-orange-50 border border-orange-200 text-orange-600"
+                                      ? "text-gray-500"
+                                      : "text-gray-500"
                                   }`}
                                 >
-                                  {tag}
-                                </span>
-                              ))}
-                            </div>
+                                  <div className="flex items-center gap-1">
+                                    <Calendar className="w-4 h-4" />
+                                    <span>{blog.date}</span>
+                                  </div>
+                                  <div className="flex items-center gap-1">
+                                    <Clock className="w-4 h-4" />
+                                    <span>{blog.readTime}</span>
+                                  </div>
+                                </div>
 
-                            {/* Read More Button */}
-                            <Button
-                              variant="outline"
-                              className={`w-full font-semibold transition-all duration-300 ${
-                                actualTheme === "dark"
-                                  ? "border-orange-400/60 text-orange-400 hover:bg-linear-to-r hover:from-orange-500 hover:to-yellow-400 hover:text-black group-hover:border-orange-400"
-                                  : "border-orange-400 text-orange-500 hover:bg-linear-to-r hover:from-orange-500 hover:to-amber-500 hover:text-white hover:border-orange-500"
-                              }`}
-                            >
-                              Read Article
-                              <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
-                            </Button>
-                          </CardContent>
-                        </Card>
-                      </Link>
-                    </motion.div>
-                  ))}
+                                {/* Read More Button */}
+                                <Button
+                                  variant="outline"
+                                  className={`w-full font-semibold transition-all duration-300 rounded-2xl ${
+                                    actualTheme === "dark"
+                                      ? "border-orange-400/60 text-orange-400 hover:bg-linear-to-r hover:from-orange-500 hover:to-yellow-400 hover:text-black group-hover:border-orange-400"
+                                      : "border-orange-400 text-orange-500 hover:bg-linear-to-r hover:from-orange-500 hover:to-amber-500 hover:text-white hover:border-orange-500"
+                                  }`}
+                                >
+                                  Read Article
+                                  <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
+                                </Button>
+                              </div>
+                            </CardContent>
+                          </Card>
+                        </Link>
+                      </motion.div>
+                    );
+                  })}
                 </div>
               )}
             </div>

@@ -202,7 +202,7 @@ export default function TermsPage() {
                 contact us.
               </p>
               <Link
-                href="/contact"
+                href="/contact-us"
                 className="inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base bg-linear-to-r from-orange-500 to-yellow-400 text-black font-semibold rounded-lg hover:opacity-90 transition shadow-lg shadow-orange-500/30"
               >
                 Contact Us
