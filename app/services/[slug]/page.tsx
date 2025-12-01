@@ -103,13 +103,24 @@ const SERVICE_OFFERING_QUERY = `*[_type == "serviceOffering" && id.current == $s
   finalCTA
 }`;
 
+// Enable ISR (Incremental Static Regeneration) and allow dynamic params
+export const revalidate = 3600; // Revalidate every hour
+export const dynamicParams = true; // Allow dynamic params not in generateStaticParams
+
 export async function generateStaticParams() {
-  const slugs = await client.fetch<{ id: { current: string } }[]>(
-    `*[_type == "serviceOffering"]{ "id": id }`
-  );
-  return slugs.map((item) => ({
-    slug: item.id?.current || '',
-  }));
+  try {
+    const slugs = await client.fetch<{ id: { current: string } }[]>(
+      `*[_type == "serviceOffering" && defined(id.current)]{ "id": id }`
+    );
+    return slugs
+      .map((item) => ({
+        slug: item.id?.current || '',
+      }))
+      .filter((item) => item.slug !== ''); // Filter out empty slugs
+  } catch (error) {
+    console.error('Error fetching service offerings for static params:', error);
+    return [];
+  }
 }
 
 // Icon mapping for each offering - moved outside component to prevent re-renders
