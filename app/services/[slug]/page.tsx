@@ -192,7 +192,8 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const service = await client.fetch(SERVICE_OFFERING_QUERY, { slug });
+  // Use fresh client (no CDN) for dynamic routes to get latest data
+  const service = await freshClient.fetch(SERVICE_OFFERING_QUERY, { slug });
 
   if (!service) {
     return {

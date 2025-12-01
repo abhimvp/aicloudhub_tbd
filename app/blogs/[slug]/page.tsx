@@ -16,12 +16,21 @@ interface BlogPostPageProps {
   }>;
 }
 
+// Enable ISR (Incremental Static Regeneration) and allow dynamic params
+export const revalidate = 3600; // Revalidate every hour
+export const dynamicParams = true; // Allow dynamic params not in generateStaticParams
+
 // Generate static params for all blog posts
 export async function generateStaticParams() {
-  const slugs = await getAllBlogPostSlugs();
-  return slugs.map((slug) => ({
-    slug,
-  }));
+  try {
+    const slugs = await getAllBlogPostSlugs();
+    return slugs.map((slug) => ({
+      slug,
+    }));
+  } catch (error) {
+    console.error('Error fetching blog post slugs for static params:', error);
+    return [];
+  }
 }
 
 // Generate metadata for each blog post
