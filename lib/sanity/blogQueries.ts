@@ -1,5 +1,6 @@
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
+import { PortableTextBlock } from "@portabletext/types";
 
 export interface BlogCategory {
   _id: string;
@@ -20,6 +21,7 @@ export interface BlogPost {
   };
   excerpt: string;
   bodyMarkdown?: string;
+  content?: PortableTextBlock[]; // Portable Text
   cover: {
     asset: {
       _ref: string;
@@ -46,14 +48,18 @@ const BLOG_CATEGORIES_QUERY = `*[_type == "blogCategory" && isActive == true] | 
 }`;
 
 /**
- * GROQ query to fetch all blog posts
+ * GROQ query to fetch blog posts with filtering
  */
-const ALL_BLOG_POSTS_QUERY = `*[_type == "blogPost"] | order(date desc) {
+const BLOG_POSTS_QUERY = `*[_type == "blogPost" && 
+  ($category == "All" || $category == null || category->slug.current == $category) &&
+  ($search == "" || $search == null || title match $search + "*" || excerpt match $search + "*")
+] | order(date desc) [($page - 1) * $limit...$page * $limit] {
   _id,
   title,
   slug,
   excerpt,
   bodyMarkdown,
+  content,
   cover,
   category->{
     _id,
@@ -67,6 +73,14 @@ const ALL_BLOG_POSTS_QUERY = `*[_type == "blogPost"] | order(date desc) {
   readTime,
   featured
 }`;
+
+/**
+ * GROQ query to count total blog posts for pagination
+ */
+const BLOG_POSTS_COUNT_QUERY = `count(*[_type == "blogPost" && 
+  ($category == "All" || $category == null || category->slug.current == $category) &&
+  ($search == "" || $search == null || title match $search + "*" || excerpt match $search + "*")
+])`;
 
 /**
  * GROQ query to fetch featured blog posts
@@ -77,29 +91,7 @@ const FEATURED_BLOG_POSTS_QUERY = `*[_type == "blogPost" && featured == true] | 
   slug,
   excerpt,
   bodyMarkdown,
-  cover,
-  category->{
-    _id,
-    name,
-    slug,
-    description,
-    displayOrder,
-    isActive
-  },
-  date,
-  readTime,
-  featured
-}`;
-
-/**
- * GROQ query to fetch blog posts by category
- */
-const BLOG_POSTS_BY_CATEGORY_QUERY = `*[_type == "blogPost" && category->slug.current == $category] | order(date desc) {
-  _id,
-  title,
-  slug,
-  excerpt,
-  bodyMarkdown,
+  content,
   cover,
   category->{
     _id,
@@ -123,6 +115,7 @@ const BLOG_POST_BY_SLUG_QUERY = `*[_type == "blogPost" && slug.current == $slug]
   slug,
   excerpt,
   bodyMarkdown,
+  content,
   cover,
   category->{
     _id,
@@ -146,6 +139,7 @@ const RELATED_BLOG_POSTS_QUERY = `*[_type == "blogPost" && category._ref == $cat
   slug,
   excerpt,
   bodyMarkdown,
+  content,
   cover,
   category->{
     _id,
@@ -160,16 +154,7 @@ const RELATED_BLOG_POSTS_QUERY = `*[_type == "blogPost" && category._ref == $cat
   featured
 }`;
 
-/**
- * Get image URL from Sanity image reference
- */
-function getImageUrl(image: BlogPost["cover"]): string {
-  if (!image?.asset) {
-    return "";
-  }
-  const imageUrl = urlFor(image).url();
-  return imageUrl || "";
-}
+
 
 /**
  * Fetch all active blog categories
@@ -180,11 +165,19 @@ export async function getBlogCategories(): Promise<BlogCategory[]> {
 }
 
 /**
- * Fetch all blog posts
+ * Fetch blog posts with filtering and pagination
  */
-export async function getAllBlogPosts(): Promise<BlogPost[]> {
-  const posts = await client.fetch<BlogPost[]>(ALL_BLOG_POSTS_QUERY);
-  return posts || [];
+export async function getBlogPosts(
+  category: string = "All",
+  search: string = "",
+  page: number = 1,
+  limit: number = 100 // High limit for now, can implement real pagination UI later
+): Promise<{ posts: BlogPost[]; total: number }> {
+  const [posts, total] = await Promise.all([
+    client.fetch<BlogPost[]>(BLOG_POSTS_QUERY, { category, search, page, limit }),
+    client.fetch<number>(BLOG_POSTS_COUNT_QUERY, { category, search }),
+  ]);
+  return { posts: posts || [], total: total || 0 };
 }
 
 /**
@@ -192,18 +185,6 @@ export async function getAllBlogPosts(): Promise<BlogPost[]> {
  */
 export async function getFeaturedBlogPosts(): Promise<BlogPost[]> {
   const posts = await client.fetch<BlogPost[]>(FEATURED_BLOG_POSTS_QUERY);
-  return posts || [];
-}
-
-/**
- * Fetch blog posts by category
- */
-export async function getBlogPostsByCategory(
-  categorySlug: string
-): Promise<BlogPost[]> {
-  const posts = await client.fetch<BlogPost[]>(BLOG_POSTS_BY_CATEGORY_QUERY, {
-    category: categorySlug === "All" ? "*" : categorySlug,
-  });
   return posts || [];
 }
 
@@ -243,31 +224,5 @@ export async function getAllBlogPostSlugs(): Promise<string[]> {
   return posts
     .map((post) => post.slug?.current)
     .filter((slug): slug is string => Boolean(slug));
-}
-
-/**
- * Convert BlogPost to format compatible with existing components
- * This is a helper function to maintain backward compatibility
- */
-export function formatBlogPostForComponent(post: BlogPost) {
-  return {
-    id: post._id,
-    slug: post.slug.current,
-    title: post.title,
-    excerpt: post.excerpt,
-    // Legacy components expect a "content" string field; use bodyMarkdown for compatibility
-    content: post.bodyMarkdown || "",
-    cover: getImageUrl(post.cover),
-    category: post.category.name,
-    tags: [], // Tags removed as per requirements
-    author: {
-      name: "",
-      avatar: "",
-      role: "",
-    },
-    date: post.date,
-    readTime: post.readTime,
-    featured: post.featured || false,
-  };
 }
 

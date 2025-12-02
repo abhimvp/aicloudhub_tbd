@@ -7,18 +7,31 @@ import { aiCloudHubLogo } from "@/lib/images";
 import { useTheme } from "@/components/theme/ThemeProvider";
 import { LinkedinIcon, FacebookIcon, TwitterIcon, InstagramIcon, YoutubeIcon, MailIcon } from "lucide-react";
 
+import { client } from "@/sanity/lib/client";
+import { useState, useEffect } from "react";
+
 const Footer = () => {
   const { actualTheme } = useTheme();
+  const [services, setServices] = useState<{ name: string; href: string }[]>([]);
 
-  const services = [
-    { name: "IT Staffing", href: "/services/it-staffing" },
-    { name: "Corporate Training", href: "/services/corporate-training" },
-    { name: "IT Services", href: "/services/it-services" },
-    { name: "AI & Machine Learning", href: "/services/ai-ml" },
-    { name: "Cloud Services", href: "/services/cloud" },
-    { name: "Application Services", href: "/services/applications" },
-    { name: "Data & Analytics", href: "/services/data-analytics" },
-  ];
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const query = `*[_type == "service"]{ title, "slug": slug.current }`;
+        interface ServiceResult { title: string; slug: string }
+        const data = await client.fetch<ServiceResult[]>(query);
+        const formattedServices = data.map((service) => ({
+          name: service.title,
+          href: `/services/${service.slug}`,
+        }));
+        setServices(formattedServices);
+      } catch (error) {
+        console.error("Failed to fetch services for footer:", error);
+      }
+    };
+
+    fetchServices();
+  }, []);
 
   const resources = [
     { name: "Blogs", href: "/blogs" },
@@ -35,11 +48,10 @@ const Footer = () => {
 
   return (
     <footer
-      className={`relative overflow-hidden transition-colors duration-300 -mt-px ${
-        actualTheme === "dark"
-          ? "bg-linear-to-br from-gray-950 via-slate-950 to-zinc-950"
-          : "bg-linear-to-b from-gray-50 to-orange-50"
-      }`}
+      className={`relative overflow-hidden transition-colors duration-300 -mt-px ${actualTheme === "dark"
+        ? "bg-linear-to-br from-gray-950 via-slate-950 to-zinc-950"
+        : "bg-linear-to-b from-gray-50 to-orange-50"
+        }`}
     >
       {/* Animated gradient overlay for dark mode */}
       {actualTheme === "dark" && (
@@ -58,9 +70,8 @@ const Footer = () => {
 
       {/* Main Footer Content */}
       <div
-        className={`border-t transition-colors duration-300 relative z-10 ${
-          actualTheme === "dark" ? "border-white/10" : "border-gray-300"
-        }`}
+        className={`border-t transition-colors duration-300 relative z-10 ${actualTheme === "dark" ? "border-white/10" : "border-gray-300"
+          }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
@@ -77,9 +88,8 @@ const Footer = () => {
               </Link>
 
               <p
-                className={`leading-relaxed text-sm ${
-                  actualTheme === "dark" ? "text-gray-400" : "text-gray-600"
-                }`}
+                className={`leading-relaxed text-sm ${actualTheme === "dark" ? "text-gray-400" : "text-gray-600"
+                  }`}
               >
                 aiCloudHub is a global provider of IT services, products, and
                 solutions across diverse industries. We are known as a &quot;Cloud
@@ -113,9 +123,8 @@ const Footer = () => {
             {/* Services Column */}
             <div className="lg:col-span-1">
               <h3
-                className={`font-bold text-base mb-5 ${
-                  actualTheme === "dark" ? "text-white" : "text-gray-900"
-                }`}
+                className={`font-bold text-base mb-5 ${actualTheme === "dark" ? "text-white" : "text-gray-900"
+                  }`}
               >
                 Services
               </h3>
@@ -124,11 +133,10 @@ const Footer = () => {
                   <li key={item.name}>
                     <Link
                       href={item.href}
-                      className={`text-sm transition-colors block ${
-                        actualTheme === "dark"
-                          ? "text-gray-400 hover:text-orange-400"
-                          : "text-gray-600 hover:text-orange-600"
-                      }`}
+                      className={`text-sm transition-colors block ${actualTheme === "dark"
+                        ? "text-gray-400 hover:text-orange-400"
+                        : "text-gray-600 hover:text-orange-600"
+                        }`}
                     >
                       {item.name}
                     </Link>
@@ -140,9 +148,8 @@ const Footer = () => {
             {/* Company & Resources Column */}
             <div className="lg:col-span-1">
               <h3
-                className={`font-bold text-base mb-5 ${
-                  actualTheme === "dark" ? "text-white" : "text-gray-900"
-                }`}
+                className={`font-bold text-base mb-5 ${actualTheme === "dark" ? "text-white" : "text-gray-900"
+                  }`}
               >
                 Company
               </h3>
@@ -151,11 +158,10 @@ const Footer = () => {
                   <li key={item.name}>
                     <Link
                       href={item.href}
-                      className={`text-sm transition-colors block ${
-                        actualTheme === "dark"
-                          ? "text-gray-400 hover:text-orange-400"
-                          : "text-gray-600 hover:text-orange-600"
-                      }`}
+                      className={`text-sm transition-colors block ${actualTheme === "dark"
+                        ? "text-gray-400 hover:text-orange-400"
+                        : "text-gray-600 hover:text-orange-600"
+                        }`}
                     >
                       {item.name}
                     </Link>
@@ -164,9 +170,8 @@ const Footer = () => {
               </ul>
 
               <h3
-                className={`font-bold text-base mb-5 ${
-                  actualTheme === "dark" ? "text-white" : "text-gray-900"
-                }`}
+                className={`font-bold text-base mb-5 ${actualTheme === "dark" ? "text-white" : "text-gray-900"
+                  }`}
               >
                 Resources
               </h3>
@@ -175,11 +180,10 @@ const Footer = () => {
                   <li key={item.name}>
                     <Link
                       href={item.href}
-                      className={`text-sm transition-colors block ${
-                        actualTheme === "dark"
-                          ? "text-gray-400 hover:text-orange-400"
-                          : "text-gray-600 hover:text-orange-600"
-                      }`}
+                      className={`text-sm transition-colors block ${actualTheme === "dark"
+                        ? "text-gray-400 hover:text-orange-400"
+                        : "text-gray-600 hover:text-orange-600"
+                        }`}
                     >
                       {item.name}
                     </Link>
@@ -191,14 +195,13 @@ const Footer = () => {
             {/* Contact Info Column */}
             <div className="lg:col-span-1">
               <h3
-                className={`font-bold text-base mb-5 ${
-                  actualTheme === "dark" ? "text-white" : "text-gray-900"
-                }`}
+                className={`font-bold text-base mb-5 ${actualTheme === "dark" ? "text-white" : "text-gray-900"
+                  }`}
               >
                 Contact Us
               </h3>
               <div className="space-y-4">
-                 <div className="flex items-start gap-3">
+                <div className="flex items-start gap-3">
                   <div className="mt-1 w-8 h-8 rounded-full bg-orange-500/10 flex items-center justify-center shrink-0">
                     <svg
                       className="w-4 h-4 text-orange-500"
@@ -245,11 +248,10 @@ const Footer = () => {
                     <p className="font-medium text-sm text-orange-500 mb-1">Email Us</p>
                     <a
                       href="mailto:info@aicloudhub.com"
-                      className={`text-sm transition-colors block ${
-                        actualTheme === "dark"
-                          ? "text-gray-400 hover:text-orange-400"
-                          : "text-gray-600 hover:text-orange-600"
-                      }`}
+                      className={`text-sm transition-colors block ${actualTheme === "dark"
+                        ? "text-gray-400 hover:text-orange-400"
+                        : "text-gray-600 hover:text-orange-600"
+                        }`}
                     >
                       info@aicloudhub.com
                     </a>
@@ -276,11 +278,10 @@ const Footer = () => {
                     <p className="font-medium text-sm text-orange-500 mb-1">Call Us</p>
                     <a
                       href="tel:+16789357600"
-                      className={`text-sm transition-colors block ${
-                        actualTheme === "dark"
-                          ? "text-gray-400 hover:text-orange-400"
-                          : "text-gray-600 hover:text-orange-600"
-                      }`}
+                      className={`text-sm transition-colors block ${actualTheme === "dark"
+                        ? "text-gray-400 hover:text-orange-400"
+                        : "text-gray-600 hover:text-orange-600"
+                        }`}
                     >
                       +1 (678) 935 7600
                     </a>
@@ -294,15 +295,13 @@ const Footer = () => {
 
       {/* Legal Footer */}
       <div
-        className={`border-t transition-colors duration-300 relative z-10 ${
-          actualTheme === "dark" ? "border-white/10" : "border-gray-300"
-        }`}
+        className={`border-t transition-colors duration-300 relative z-10 ${actualTheme === "dark" ? "border-white/10" : "border-gray-300"
+          }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 relative z-10">
           <div
-            className={`flex flex-col md:flex-row justify-between items-center gap-4 text-sm ${
-              actualTheme === "dark" ? "text-gray-500" : "text-gray-600"
-            }`}
+            className={`flex flex-col md:flex-row justify-between items-center gap-4 text-sm ${actualTheme === "dark" ? "text-gray-500" : "text-gray-600"
+              }`}
           >
             <p>© {new Date().getFullYear()} aiCloudHub Technologies. All rights reserved.</p>
             <div className="flex gap-6">

@@ -3,14 +3,7 @@ import blogCategory from './blogCategory'
 import blogPost from './blogPost'
 import jobLocation from './jobLocation'
 import jobPosting from './jobPosting'
-import heroBusinessVertical from './heroBusinessVertical'
-import servicesSettings from './servicesSettings'
-import homepageTechnologyService from './homepageTechnologyService'
-import technologyServicesSettings from './technologyServicesSettings'
-import itStaffingService from './itStaffingService'
-import corporateTrainingService from './corporateTrainingService'
-import itServicesService from './itServicesService'
-import serviceOffering from './serviceOffering'
+import service from './service'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -18,14 +11,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     blogPost,
     jobLocation,
     jobPosting,
-    heroBusinessVertical,
-    servicesSettings,
-    homepageTechnologyService,
-    technologyServicesSettings,
-    itStaffingService,
-    corporateTrainingService,
-    itServicesService,
-    serviceOffering,
+    service,
   ],
 }
 

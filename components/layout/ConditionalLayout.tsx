@@ -4,6 +4,8 @@ import { usePathname } from "next/navigation";
 import Navbar from "@/components/layout/Navbar/Navbar";
 import Footer from "@/components/layout/Footer/Footer";
 
+import ScrollToTop from "@/components/layout/ScrollToTop";
+
 export default function ConditionalLayout({
   children,
 }: {
@@ -17,6 +19,7 @@ export default function ConditionalLayout({
       {!isStudioRoute && <Navbar />}
       {children}
       {!isStudioRoute && <Footer />}
+      {!isStudioRoute && <ScrollToTop />}
     </>
   );
 }

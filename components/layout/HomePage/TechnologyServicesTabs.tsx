@@ -21,22 +21,6 @@ import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
 
-type SanityTechService = {
-  _key: string;
-  serviceId: string;
-  title: string;
-  subtitle: string;
-  description: string[];
-  image?: SanityImageSource;
-  ctaLabel: string;
-  ctaHref: string;
-};
-
-type SanityTechnologySettings = {
-  businessVerticals?: SanityTechService[];
-  offerings?: SanityTechService[];
-};
-
 const FALLBACK_SERVICE_SUMMARIES: Record<string, HomepageServiceSummary> =
   HOMEPAGE_SERVICE_SUMMARIES;
 
@@ -49,26 +33,21 @@ const FALLBACK_FILTERED_TAB_ROWS = FALLBACK_TAB_ROWS.map((row) =>
   row.filter((id) => FALLBACK_SERVICE_SUMMARIES[id])
 ).filter((row) => row.length > 0);
 
-const TECHNOLOGY_TABS_QUERY = `*[_type == "technologyServicesSettings"][0]{
-  "businessVerticals": businessVerticals[isActive == true]|order(order asc){
-    _key,
-    serviceId,
-    title,
-    subtitle,
-    description,
-    image,
-    ctaLabel,
-    ctaHref
-  },
-  "offerings": offerings[isActive == true]|order(order asc){
-    _key,
-    serviceId,
-    title,
-    subtitle,
-    description,
-    image,
-    ctaLabel,
-    ctaHref
+const TECHNOLOGY_TABS_QUERY = `*[_type == "service"]|order(title asc){
+  _id,
+  title,
+  "slug": slug.current,
+  category,
+  "subtitle": homepageInfo.tagline,
+  "description": homepageInfo.summary,
+  "image": homepageInfo.previewImage,
+  "tabsInfo": technologyTabsInfo {
+    tabLabel,
+    tabHeading,
+    tabDescription,
+    tabHighlight,
+    tabButtonLabel,
+    tabImage
   }
 }`;
 
@@ -91,50 +70,78 @@ export default function TechnologyServicesTabs() {
   useEffect(() => {
     let isMounted = true;
 
+    interface SanityServiceDoc {
+      _id: string
+      title: string
+      slug: string
+      category: string
+      subtitle?: string
+      description?: string
+      image?: SanityImageSource
+      tabsInfo?: {
+        tabLabel?: string
+        tabHeading?: string
+        tabDescription?: string
+        tabHighlight?: string
+        tabButtonLabel?: string
+        tabImage?: SanityImageSource
+      }
+    }
+
     client
-      .fetch<SanityTechnologySettings>(TECHNOLOGY_TABS_QUERY)
+      .fetch<SanityServiceDoc[]>(TECHNOLOGY_TABS_QUERY)
       .then((data) => {
-        if (!isMounted || !data) return;
-
-        const docs = [
-          ...(data.businessVerticals ?? []),
-          ...(data.offerings ?? []),
-        ];
-
-        if (!docs.length) return;
+        if (!isMounted || !data || !data.length) return;
 
         const nextSummaries: Record<string, HomepageServiceSummary> = {};
+        const businessIds: string[] = [];
+        const offeringIds: string[] = [];
 
-        docs.forEach((doc) => {
-          if (!doc.serviceId) return;
+        data.forEach((doc) => {
+          const id = doc.slug;
+          const fallback = FALLBACK_SERVICE_SUMMARIES[id] || FALLBACK_SERVICE_SUMMARIES["ai-ml"];
 
-          const fallback = FALLBACK_SERVICE_SUMMARIES[doc.serviceId];
+          // Prioritize tabsInfo, fallback to homepageInfo, then fallback data
+          const label = doc.tabsInfo?.tabLabel || doc.title;
+          const heading = doc.tabsInfo?.tabHeading || doc.subtitle || doc.title;
+          const description = doc.tabsInfo?.tabDescription
+            ? [doc.tabsInfo.tabDescription]
+            : (doc.description ? [doc.description] : []);
 
-          nextSummaries[doc.serviceId] = {
-            id: doc.serviceId,
-            title: doc.title,
-            subtitle: doc.subtitle,
-            description: doc.description,
-            Icon: fallback?.Icon ?? FALLBACK_SERVICE_SUMMARIES["ai-ml"].Icon,
-            image: doc.image
-              ? urlFor(doc.image).width(1200).height(675).url()
-              : fallback?.image ?? "",
+          if (doc.tabsInfo?.tabHighlight) {
+            description.push(doc.tabsInfo.tabHighlight);
+          }
+
+          const imageSource = doc.tabsInfo?.tabImage || doc.image;
+          const imageUrl = imageSource
+            ? urlFor(imageSource).width(1200).height(675).url()
+            : fallback.image;
+
+          const buttonLabel = doc.tabsInfo?.tabButtonLabel || "Learn More";
+
+          // Dynamically load icon if possible, else fallback
+          nextSummaries[id] = {
+            id: id,
+            title: label, // Use tabLabel for the tab list if desired, or keep original title. Let's use original title for tab list.
+            badgeLabel: label,
+            subtitle: heading, // This maps to the main heading in the display area
+            description: description,
+            image: imageUrl,
             cta: {
-              label: doc.ctaLabel,
-              href: doc.ctaHref,
+              label: buttonLabel,
+              href: `/services/${id}`,
             },
           };
+
+          // Override title for the tab list itself to be the service title (usually short)
+          nextSummaries[id].title = doc.title;
+
+          if (doc.category === 'Business Vertical') {
+            businessIds.push(id);
+          } else {
+            offeringIds.push(id);
+          }
         });
-
-        const businessIds =
-          data.businessVerticals
-            ?.map((d) => d.serviceId)
-            .filter((id) => nextSummaries[id]) ?? [];
-
-        const offeringIds =
-          data.offerings
-            ?.map((d) => d.serviceId)
-            .filter((id) => nextSummaries[id]) ?? [];
 
         const nextRows: string[][] = [];
         if (businessIds.length) nextRows.push(businessIds);
@@ -144,15 +151,20 @@ export default function TechnologyServicesTabs() {
 
         setServiceSummaries(nextSummaries);
         setTabRows(nextRows);
+
+        // Update active ID if current one is not in new list
+        if (!nextSummaries[activeId]) {
+          setActiveId(nextRows[0][0]);
+        }
       })
-      .catch(() => {
-        // keep fallback data on error
+      .catch((err) => {
+        console.error("Failed to fetch services:", err);
       });
 
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [activeId]);
 
   useEffect(() => {
     const orderedIds = tabRows.flat();
@@ -201,11 +213,10 @@ export default function TechnologyServicesTabs() {
         </div>
       )}
       <div
-        className={`absolute inset-0 -z-10 ${
-          isDark
-            ? "bg-[radial-gradient(circle_at_top,rgba(255,153,51,0.25),rgba(15,23,42,0))]"
-            : "bg-[radial-gradient(circle_at_top,rgba(249,115,22,0.15),rgba(255,255,255,0))]"
-        }`}
+        className={`absolute inset-0 -z-10 ${isDark
+          ? "bg-[radial-gradient(circle_at_top,rgba(255,153,51,0.25),rgba(15,23,42,0))]"
+          : "bg-[radial-gradient(circle_at_top,rgba(249,115,22,0.15),rgba(255,255,255,0))]"
+          }`}
       />
       <div className="max-w-6xl mx-auto space-y-10">
         <motion.div
@@ -217,9 +228,8 @@ export default function TechnologyServicesTabs() {
           style={{ willChange: "opacity, transform" }}
         >
           <p
-            className={`text-sm font-semibold uppercase tracking-[0.4em] ${
-              isDark ? "text-orange-400" : "text-orange-600"
-            }`}
+            className={`text-sm font-semibold uppercase tracking-[0.4em] ${isDark ? "text-orange-400" : "text-orange-600"
+              }`}
           >
             Our Technology Services
           </p>
@@ -244,21 +254,19 @@ export default function TechnologyServicesTabs() {
               onValueChange={(value) => setActiveId(value)}
             >
               <SelectTrigger
-                className={`w-full h-12 pl-12 pr-10 rounded-lg border text-base font-semibold transition-all duration-300 focus:ring-2 focus:ring-offset-2 ${
-                  isDark
-                    ? "border-white/20 bg-white/10 text-white focus:ring-orange-400 focus:border-orange-400"
-                    : "border-orange-200 bg-white text-slate-900 focus:ring-orange-500 focus:border-orange-500 shadow-md"
-                }`}
+                className={`w-full h-12 pl-12 pr-10 rounded-lg border text-base font-semibold transition-all duration-300 focus:ring-2 focus:ring-offset-2 ${isDark
+                  ? "border-white/20 bg-white/10 text-white focus:ring-orange-400 focus:border-orange-400"
+                  : "border-orange-200 bg-white text-slate-900 focus:ring-orange-500 focus:border-orange-500 shadow-md"
+                  }`}
                 aria-label="Select technology service"
               >
                 <SelectValue />
               </SelectTrigger>
               <SelectContent
-                className={`rounded-xl ${
-                  isDark
-                    ? "bg-gray-900 border-white/20"
-                    : "bg-white border-orange-200 shadow-xl"
-                }`}
+                className={`rounded-xl ${isDark
+                  ? "bg-gray-900 border-white/20"
+                  : "bg-white border-orange-200 shadow-xl"
+                  }`}
               >
                 {orderedServiceIds.map((id) => {
                   const service = serviceSummaries[id];
@@ -267,11 +275,10 @@ export default function TechnologyServicesTabs() {
                     <SelectItem
                       key={id}
                       value={id}
-                      className={`cursor-pointer ${
-                        isDark
-                          ? "text-white focus:bg-white/10 focus:text-white"
-                          : "text-slate-900 focus:bg-orange-50"
-                      }`}
+                      className={`cursor-pointer ${isDark
+                        ? "text-white focus:bg-white/10 focus:text-white"
+                        : "text-slate-900 focus:bg-orange-50"
+                        }`}
                     >
                       {service.title}
                     </SelectItem>
@@ -279,13 +286,6 @@ export default function TechnologyServicesTabs() {
                 })}
               </SelectContent>
             </Select>
-            <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2">
-              <activeService.Icon
-                className={`h-5 w-5 ${
-                  isDark ? "text-orange-400" : "text-orange-600"
-                }`}
-              />
-            </div>
           </div>
         </motion.div>
 
@@ -310,7 +310,6 @@ export default function TechnologyServicesTabs() {
                   const service = serviceSummaries[id];
                   if (!service) return null;
                   const isActive = activeId === id;
-                  const Icon = service.Icon;
 
                   return (
                     <button
@@ -323,31 +322,20 @@ export default function TechnologyServicesTabs() {
                       onClick={() => setActiveId(id)}
                     >
                       <div className="flex items-center gap-2">
-                        <Icon
-                          className={`h-5 w-5 ${
-                            isActive
-                              ? isDark
-                                ? "text-white"
-                                : "text-slate-900"
-                              : tabInactive
-                          }`}
-                        />
                         <span
-                          className={`text-lg ${
-                            isActive
-                              ? isDark
-                                ? "text-white"
-                                : "text-slate-900"
-                              : tabInactive
-                          }`}
+                          className={`text-lg ${isActive
+                            ? isDark
+                              ? "text-white"
+                              : "text-slate-900"
+                            : tabInactive
+                            }`}
                         >
                           {service.title}
                         </span>
                       </div>
                       <span
-                        className={`absolute bottom-0 left-0 h-1 w-full rounded-full transition-opacity ${
-                          isActive ? `${tabUnderline} opacity-100` : "opacity-0"
-                        }`}
+                        className={`absolute bottom-0 left-0 h-1 w-full rounded-full transition-opacity ${isActive ? `${tabUnderline} opacity-100` : "opacity-0"
+                          }`}
                       />
                     </button>
                   );
@@ -358,11 +346,10 @@ export default function TechnologyServicesTabs() {
         </motion.div>
 
         <motion.div
-          className={`mt-10 rounded-3xl border px-6 py-10 sm:px-12 transition-colors duration-300 ${
-            isDark
-              ? "border-white/10 bg-white/5"
-              : "border-orange-100 bg-white shadow-lg"
-          }`}
+          className={`mt-10 rounded-3xl border px-6 py-10 sm:px-12 transition-colors duration-300 ${isDark
+            ? "border-white/10 bg-white/5"
+            : "border-orange-100 bg-white shadow-lg"
+            }`}
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -372,9 +359,8 @@ export default function TechnologyServicesTabs() {
           <div className="flex flex-col gap-6 lg:flex-row lg:items-stretch">
             {/* Image Container - Fixed aspect ratio */}
             <div
-              className={`w-full overflow-hidden rounded-2xl ${
-                isDark ? "bg-black/10" : "bg-white shadow-xl"
-              } lg:w-7/12`}
+              className={`w-full overflow-hidden rounded-2xl ${isDark ? "bg-black/10" : "bg-white shadow-xl"
+                } lg:w-7/12`}
             >
               <div className="relative aspect-video">
                 {/* Render only the active image */}
@@ -399,15 +385,13 @@ export default function TechnologyServicesTabs() {
               <div
                 className={`inline-flex w-fit items-center gap-3 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] ${panelBadge}`}
               >
-                <activeService.Icon className="h-4 w-4" />
-                {activeService.title}
+                {activeService.badgeLabel || activeService.title}
               </div>
 
               {/* Title */}
               <p
-                className={`text-xl font-semibold mt-4 ${
-                  isDark ? "text-white" : "text-slate-900"
-                }`}
+                className={`text-xl font-semibold mt-4 ${isDark ? "text-white" : "text-slate-900"
+                  }`}
               >
                 {activeService.subtitle}
               </p>

@@ -69,82 +69,12 @@ export const structure: StructureResolver = (S) =>
             .title('Services')
             .items([
               S.listItem()
-                .title('Hero Section Business Verticals')
+                .title('Services')
                 .icon(CodeIcon)
-                .schemaType('servicesSettings')
+                .schemaType('service')
                 .child(
-                  S.editor()
-                    .id('servicesSettingsSingleton')
-                    .schemaType('servicesSettings')
-                    .documentId('servicesSettingsSingleton')
+                  S.documentTypeList('service').title('All Services'),
                 ),
-              S.listItem()
-                .title('Technology Services – Business Verticals & Offerings')
-                .icon(CodeIcon)
-                .schemaType('technologyServicesSettings')
-                .child(
-                  S.editor()
-                    .id('technologyServicesSettingsSingleton')
-                    .schemaType('technologyServicesSettings')
-                    .documentId('technologyServicesSettingsSingleton')
-                ),
-              S.listItem()
-                .title('All Services')
-                .icon(CodeIcon)
-                .child(
-                  S.list()
-                    .title('All Services')
-                    .items([
-                      S.listItem()
-                        .title('Business Verticals')
-                        .icon(CodeIcon)
-                        .child(
-                          S.list()
-                            .title('Business Verticals')
-                            .items([
-                              S.listItem()
-                                .title('IT Staffing')
-                                .icon(CodeIcon)
-                                .schemaType('itStaffingService')
-                                .child(
-                                  S.editor()
-                                    .id('itStaffingServiceSingleton')
-                                    .schemaType('itStaffingService')
-                                    .documentId('itStaffingServiceSingleton'),
-                                ),
-                              S.listItem()
-                                .title('Corporate Training')
-                                .icon(CodeIcon)
-                                .schemaType('corporateTrainingService')
-                                .child(
-                                  S.editor()
-                                    .id('corporateTrainingServiceSingleton')
-                                    .schemaType('corporateTrainingService')
-                                    .documentId(
-                                      'corporateTrainingServiceSingleton',
-                                    ),
-                                ),
-                              S.listItem()
-                                .title('IT Services')
-                                .icon(CodeIcon)
-                                .schemaType('itServicesService')
-                                .child(
-                                  S.editor()
-                                    .id('itServicesServiceSingleton')
-                                    .schemaType('itServicesService')
-                                    .documentId('itServicesServiceSingleton'),
-                                ),
-                            ]),
-                        ),
-                      S.listItem()
-                        .title('Offerings')
-                        .icon(CodeIcon)
-                        .schemaType('serviceOffering')
-                        .child(
-                          S.documentTypeList('serviceOffering').title('Service Offerings'),
-                        ),
-                    ]),
-                ),
-            ])
+            ]),
         ),
     ])

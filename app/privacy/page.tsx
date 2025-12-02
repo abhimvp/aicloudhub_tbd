@@ -1,11 +1,10 @@
 import Link from "next/link";
 import * as motion from "motion/react-client";
-import ScrollToTop from "@/components/layout/ScrollToTop";
 import { ChevronRight, Shield } from "lucide-react";
 
 export async function generateMetadata() {
   return {
-    title: "Privacy Policy",
+    title: "Privacy Policy | AI Cloud Hub",
     description:
       "Privacy Policy for aiCloudHub - Learn about how we collect, use, and protect your personal information.",
   };
@@ -287,9 +286,6 @@ export default function PrivacyPage() {
           </div>
         </motion.div>
       </section>
-
-      {/* Scroll to Top Button */}
-      <ScrollToTop />
     </div>
   );
 }

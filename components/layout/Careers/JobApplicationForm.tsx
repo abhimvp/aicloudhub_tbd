@@ -62,14 +62,14 @@ export default function JobApplicationForm({
         !validExtensions.includes(fileExtension)
       ) {
         alert(
-          "Please upload a valid resume file (PDF, DOC, or DOCX). Max size: 10MB"
+          "Please upload a valid resume file (PDF, DOC, or DOCX). Max size: 5MB"
         );
         return;
       }
 
-      // Validate file size (10MB max)
-      if (file.size > 10 * 1024 * 1024) {
-        alert("File size must be less than 10MB");
+      // Validate file size (5MB max)
+      if (file.size > 5 * 1024 * 1024) {
+        alert("File size must be less than 5MB");
         return;
       }
 
@@ -150,35 +150,31 @@ export default function JobApplicationForm({
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 30, stiffness: 300 }}
-            className={`fixed top-0 right-0 h-full w-full sm:w-[600px] z-50 shadow-2xl overflow-y-auto ${
-              actualTheme === "dark" ? "bg-zinc-900" : "bg-white"
-            }`}
+            className={`fixed top-0 right-0 h-full w-full sm:w-[600px] z-50 shadow-2xl overflow-y-auto ${actualTheme === "dark" ? "bg-zinc-900" : "bg-white"
+              }`}
             data-lenis-prevent
           >
             {/* Header */}
             <div
-              className={`sticky top-0 z-10 px-8 py-6 border-b ${
-                actualTheme === "dark"
-                  ? "bg-zinc-900 border-white/10"
-                  : "bg-white border-gray-200"
-              }`}
+              className={`sticky top-0 z-10 px-8 py-6 border-b ${actualTheme === "dark"
+                ? "bg-zinc-900 border-white/10"
+                : "bg-white border-gray-200"
+                }`}
             >
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <h2
-                    className={`text-2xl sm:text-3xl font-bold mb-2 transition-colors duration-300 ${
-                      actualTheme === "dark" ? "text-white" : "text-gray-900"
-                    }`}
+                    className={`text-2xl sm:text-3xl font-bold mb-2 transition-colors duration-300 ${actualTheme === "dark" ? "text-white" : "text-gray-900"
+                      }`}
                   >
                     {isSuccess ? "Application Sent!" : "Apply for Position"}
                   </h2>
                   {!isSuccess && (
                     <p
-                      className={`text-base sm:text-lg transition-colors duration-300 ${
-                        actualTheme === "dark"
-                          ? "text-gray-400"
-                          : "text-gray-600"
-                      }`}
+                      className={`text-base sm:text-lg transition-colors duration-300 ${actualTheme === "dark"
+                        ? "text-gray-400"
+                        : "text-gray-600"
+                        }`}
                     >
                       {jobTitle}
                     </p>
@@ -186,11 +182,10 @@ export default function JobApplicationForm({
                 </div>
                 <button
                   onClick={onClose}
-                  className={`p-2 rounded-lg transition-colors ${
-                    actualTheme === "dark"
-                      ? "hover:bg-white/10 text-gray-400 hover:text-white"
-                      : "hover:bg-gray-100 text-gray-600 hover:text-gray-900"
-                  }`}
+                  className={`p-2 rounded-lg transition-colors ${actualTheme === "dark"
+                    ? "hover:bg-white/10 text-gray-400 hover:text-white"
+                    : "hover:bg-gray-100 text-gray-600 hover:text-gray-900"
+                    }`}
                 >
                   <X className="w-6 h-6" />
                 </button>
@@ -209,16 +204,14 @@ export default function JobApplicationForm({
                     <CheckCircle className="w-12 h-12 text-white" />
                   </div>
                   <h3
-                    className={`text-2xl font-bold mb-3 transition-colors duration-300 ${
-                      actualTheme === "dark" ? "text-white" : "text-gray-900"
-                    }`}
+                    className={`text-2xl font-bold mb-3 transition-colors duration-300 ${actualTheme === "dark" ? "text-white" : "text-gray-900"
+                      }`}
                   >
                     Thank You!
                   </h3>
                   <p
-                    className={`text-lg transition-colors duration-300 ${
-                      actualTheme === "dark" ? "text-gray-300" : "text-gray-600"
-                    }`}
+                    className={`text-lg transition-colors duration-300 ${actualTheme === "dark" ? "text-gray-300" : "text-gray-600"
+                      }`}
                   >
                     We&apos;ve received your application and will review it
                     shortly.
@@ -230,11 +223,10 @@ export default function JobApplicationForm({
                   <div>
                     <label
                       htmlFor="name"
-                      className={`block text-sm font-semibold mb-2 transition-colors duration-300 ${
-                        actualTheme === "dark"
-                          ? "text-gray-300"
-                          : "text-gray-700"
-                      }`}
+                      className={`block text-sm font-semibold mb-2 transition-colors duration-300 ${actualTheme === "dark"
+                        ? "text-gray-300"
+                        : "text-gray-700"
+                        }`}
                     >
                       Full Name *
                     </label>
@@ -245,11 +237,10 @@ export default function JobApplicationForm({
                       required
                       value={formData.name}
                       onChange={handleChange}
-                      className={`w-full px-4 py-3 rounded-lg transition-colors duration-300 ${
-                        actualTheme === "dark"
-                          ? "bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:border-orange-400/50"
-                          : "bg-white border border-gray-300 text-gray-900 placeholder-gray-400 focus:border-orange-500"
-                      } focus:outline-none`}
+                      className={`w-full px-4 py-3 rounded-lg transition-colors duration-300 ${actualTheme === "dark"
+                        ? "bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:border-orange-400/50"
+                        : "bg-white border border-gray-300 text-gray-900 placeholder-gray-400 focus:border-orange-500"
+                        } focus:outline-none`}
                       placeholder="John Doe"
                     />
                   </div>
@@ -258,11 +249,10 @@ export default function JobApplicationForm({
                   <div>
                     <label
                       htmlFor="email"
-                      className={`block text-sm font-semibold mb-2 transition-colors duration-300 ${
-                        actualTheme === "dark"
-                          ? "text-gray-300"
-                          : "text-gray-700"
-                      }`}
+                      className={`block text-sm font-semibold mb-2 transition-colors duration-300 ${actualTheme === "dark"
+                        ? "text-gray-300"
+                        : "text-gray-700"
+                        }`}
                     >
                       Email Address *
                     </label>
@@ -273,11 +263,10 @@ export default function JobApplicationForm({
                       required
                       value={formData.email}
                       onChange={handleChange}
-                      className={`w-full px-4 py-3 rounded-lg transition-colors duration-300 ${
-                        actualTheme === "dark"
-                          ? "bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:border-orange-400/50"
-                          : "bg-white border border-gray-300 text-gray-900 placeholder-gray-400 focus:border-orange-500"
-                      } focus:outline-none`}
+                      className={`w-full px-4 py-3 rounded-lg transition-colors duration-300 ${actualTheme === "dark"
+                        ? "bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:border-orange-400/50"
+                        : "bg-white border border-gray-300 text-gray-900 placeholder-gray-400 focus:border-orange-500"
+                        } focus:outline-none`}
                       placeholder="john@email.com"
                     />
                   </div>
@@ -286,11 +275,10 @@ export default function JobApplicationForm({
                   <div>
                     <label
                       htmlFor="phone"
-                      className={`block text-sm font-semibold mb-2 transition-colors duration-300 ${
-                        actualTheme === "dark"
-                          ? "text-gray-300"
-                          : "text-gray-700"
-                      }`}
+                      className={`block text-sm font-semibold mb-2 transition-colors duration-300 ${actualTheme === "dark"
+                        ? "text-gray-300"
+                        : "text-gray-700"
+                        }`}
                     >
                       Phone Number
                     </label>
@@ -300,11 +288,10 @@ export default function JobApplicationForm({
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      className={`w-full px-4 py-3 rounded-lg transition-colors duration-300 ${
-                        actualTheme === "dark"
-                          ? "bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:border-orange-400/50"
-                          : "bg-white border border-gray-300 text-gray-900 placeholder-gray-400 focus:border-orange-500"
-                      } focus:outline-none`}
+                      className={`w-full px-4 py-3 rounded-lg transition-colors duration-300 ${actualTheme === "dark"
+                        ? "bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:border-orange-400/50"
+                        : "bg-white border border-gray-300 text-gray-900 placeholder-gray-400 focus:border-orange-500"
+                        } focus:outline-none`}
                       placeholder="+1 (555) 123-4567"
                     />
                   </div>
@@ -313,20 +300,18 @@ export default function JobApplicationForm({
                   <div>
                     <label
                       htmlFor="resume"
-                      className={`block text-sm font-semibold mb-2 transition-colors duration-300 ${
-                        actualTheme === "dark"
-                          ? "text-gray-300"
-                          : "text-gray-700"
-                      }`}
+                      className={`block text-sm font-semibold mb-2 transition-colors duration-300 ${actualTheme === "dark"
+                        ? "text-gray-300"
+                        : "text-gray-700"
+                        }`}
                     >
                       Resume (PDF, DOC, or DOCX) *
                     </label>
                     <div
-                      className={`rounded-lg border border-dashed p-6 transition-colors duration-300 ${
-                        actualTheme === "dark"
-                          ? "border-white/20 bg-white/5 hover:bg-white/10"
-                          : "border-orange-200 bg-orange-50/50 hover:bg-orange-50"
-                      }`}
+                      className={`rounded-lg border border-dashed p-6 transition-colors duration-300 ${actualTheme === "dark"
+                        ? "border-white/20 bg-white/5 hover:bg-white/10"
+                        : "border-orange-200 bg-orange-50/50 hover:bg-orange-50"
+                        }`}
                     >
                       <input
                         type="file"
@@ -342,50 +327,45 @@ export default function JobApplicationForm({
                         className="cursor-pointer flex flex-col items-center gap-3"
                       >
                         <div
-                          className={`p-4 rounded-full ${
-                            actualTheme === "dark"
-                              ? "bg-white/10"
-                              : "bg-orange-100"
-                          }`}
+                          className={`p-4 rounded-full ${actualTheme === "dark"
+                            ? "bg-white/10"
+                            : "bg-orange-100"
+                            }`}
                         >
                           <Upload
-                            className={`w-6 h-6 ${
-                              actualTheme === "dark"
-                                ? "text-orange-400"
-                                : "text-orange-600"
-                            }`}
+                            className={`w-6 h-6 ${actualTheme === "dark"
+                              ? "text-orange-400"
+                              : "text-orange-600"
+                              }`}
                           />
                         </div>
                         <span
-                          className={`text-sm font-medium ${
-                            actualTheme === "dark"
-                              ? "text-gray-300"
-                              : "text-gray-700"
-                          }`}
+                          className={`text-sm font-medium ${actualTheme === "dark"
+                            ? "text-gray-300"
+                            : "text-gray-700"
+                            }`}
                         >
                           {selectedFile
                             ? selectedFile.name
                             : "Click to upload or drag and drop"}
                         </span>
                         <span
-                          className={`text-xs ${
-                            actualTheme === "dark"
-                              ? "text-gray-500"
-                              : "text-gray-500"
-                          }`}
+                          className={`text-xs ${actualTheme === "dark"
+                            ? "text-gray-500"
+                            : "text-gray-500"
+                            }`}
                         >
-                          PDF, DOC, or DOCX (Max 10MB)
+                          PDF, DOC, or DOCX (Max 5MB)
                         </span>
                       </label>
                       {selectedFile && (
                         <div className="mt-4 flex items-center gap-2">
                           <File className="w-4 h-4 text-orange-500" />
                           <span
-                            className={`text-sm ${
-                              actualTheme === "dark"
-                                ? "text-gray-300"
-                                : "text-gray-700"
-                            }`}
+                            className={`text-sm ${actualTheme === "dark"
+                              ? "text-gray-300"
+                              : "text-gray-700"
+                              }`}
                           >
                             {selectedFile.name} ({(selectedFile.size / 1024 / 1024).toFixed(2)} MB)
                           </span>
@@ -398,11 +378,10 @@ export default function JobApplicationForm({
                   <div>
                     <label
                       htmlFor="message"
-                      className={`block text-sm font-semibold mb-2 transition-colors duration-300 ${
-                        actualTheme === "dark"
-                          ? "text-gray-300"
-                          : "text-gray-700"
-                      }`}
+                      className={`block text-sm font-semibold mb-2 transition-colors duration-300 ${actualTheme === "dark"
+                        ? "text-gray-300"
+                        : "text-gray-700"
+                        }`}
                     >
                       Cover Letter / Additional Information
                     </label>
@@ -412,11 +391,10 @@ export default function JobApplicationForm({
                       rows={4}
                       value={formData.message}
                       onChange={handleChange}
-                      className={`w-full px-4 py-3 rounded-lg transition-colors duration-300 ${
-                        actualTheme === "dark"
-                          ? "bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:border-orange-400/50"
-                          : "bg-white border border-gray-300 text-gray-900 placeholder-gray-400 focus:border-orange-500"
-                      } focus:outline-none resize-none`}
+                      className={`w-full px-4 py-3 rounded-lg transition-colors duration-300 ${actualTheme === "dark"
+                        ? "bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:border-orange-400/50"
+                        : "bg-white border border-gray-300 text-gray-900 placeholder-gray-400 focus:border-orange-500"
+                        } focus:outline-none resize-none`}
                       placeholder="Tell us why you're interested in this position..."
                     />
                   </div>
@@ -427,11 +405,10 @@ export default function JobApplicationForm({
                       type="button"
                       variant="outline"
                       onClick={onClose}
-                      className={`flex-1 transition-colors duration-300 ${
-                        actualTheme === "dark"
-                          ? "border-white/20 text-white hover:bg-white/10"
-                          : "border-gray-300 text-gray-900 hover:bg-gray-100"
-                      }`}
+                      className={`flex-1 transition-colors duration-300 ${actualTheme === "dark"
+                        ? "border-white/20 text-white hover:bg-white/10"
+                        : "border-gray-300 text-gray-900 hover:bg-gray-100"
+                        }`}
                     >
                       Cancel
                     </Button>

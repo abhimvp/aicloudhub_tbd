@@ -14,7 +14,7 @@ import * as motion from "motion/react-client";
 import type { BlogPost } from "@/lib/sanity/blogQueries";
 import {
   getFeaturedBlogPosts,
-  getAllBlogPosts,
+  getBlogPosts,
 } from "@/lib/sanity/blogQueries";
 import { urlFor } from "@/sanity/lib/image";
 import { Button } from "@/components/ui/button";
@@ -47,11 +47,10 @@ const BlogCard = ({
         ease: isActive ? [0.22, 1, 0.36, 1] : [0.25, 0.46, 0.45, 0.94],
       }}
       style={{ willChange: "opacity, transform" }}
-      className={`relative w-full rounded-3xl overflow-hidden shadow-xl cursor-pointer transition-all duration-700 hover:shadow-2xl ${
-        actualTheme === "dark"
-          ? "bg-neutral-900 hover:shadow-orange-500/20"
-          : "bg-white hover:shadow-orange-500/30 border border-orange-100"
-      }`}
+      className={`relative w-full rounded-3xl overflow-hidden shadow-xl cursor-pointer transition-all duration-700 hover:shadow-2xl ${actualTheme === "dark"
+        ? "bg-neutral-900 hover:shadow-orange-500/20"
+        : "bg-white hover:shadow-orange-500/30 border border-orange-100"
+        }`}
     >
       {coverImageUrl && (
         <div className="relative w-full h-[260px] overflow-hidden rounded-t-3xl">
@@ -74,9 +73,8 @@ const BlogCard = ({
         </div>
       )}
       <div
-        className={`p-6 text-left ${
-          actualTheme === "dark" ? "text-white" : "text-slate-900"
-        }`}
+        className={`p-6 text-left ${actualTheme === "dark" ? "text-white" : "text-slate-900"
+          }`}
       >
         <h3
           className={`text-xl font-semibold mb-2 line-clamp-2 hover:text-orange-400 transition-colors`}
@@ -84,17 +82,15 @@ const BlogCard = ({
           {post.title}
         </h3>
         <p
-          className={`text-sm mb-3 line-clamp-2 ${
-            actualTheme === "dark" ? "text-gray-400" : "text-slate-600"
-          }`}
+          className={`text-sm mb-3 line-clamp-2 ${actualTheme === "dark" ? "text-gray-400" : "text-slate-600"
+            }`}
         >
           {post.excerpt}
         </p>
         <div className="flex items-center justify-between">
           <p
-            className={`text-xs ${
-              actualTheme === "dark" ? "text-gray-500" : "text-slate-500"
-            }`}
+            className={`text-xs ${actualTheme === "dark" ? "text-gray-500" : "text-slate-500"
+              }`}
           >
             {post.date}
           </p>
@@ -124,8 +120,8 @@ const Blogs = () => {
 
         // If no featured blogs, get the latest blogs instead (limit to 6 for carousel)
         if (featured.length === 0) {
-          const allBlogs = await getAllBlogPosts();
-          setFeaturedBlogs(allBlogs.slice(0, 6)); // Get latest 6 blogs
+          const { posts } = await getBlogPosts("All", "", 1, 6);
+          setFeaturedBlogs(posts); // Get latest 6 blogs
         } else {
           setFeaturedBlogs(featured);
         }
@@ -140,11 +136,10 @@ const Blogs = () => {
     <section
       id="blogs"
       ref={sectionRef}
-      className={`blogs-section flex flex-col items-center justify-center relative transition-colors duration-300 py-24 -mb-px ${
-        actualTheme === "dark"
-          ? "bg-linear-to-br from-gray-900 via-slate-900 to-zinc-950"
-          : "bg-linear-to-br from-yellow-50 via-orange-50 to-gray-100"
-      }`}
+      className={`blogs-section flex flex-col items-center justify-center relative transition-colors duration-300 py-24 -mb-px ${actualTheme === "dark"
+        ? "bg-linear-to-br from-gray-900 via-slate-900 to-zinc-950"
+        : "bg-linear-to-br from-yellow-50 via-orange-50 to-gray-100"
+        }`}
     >
       {/* Background container with overflow-hidden for glows */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -165,19 +160,17 @@ const Blogs = () => {
         {/* Static Background Overlay - Parallax removed to prevent cut-off */}
         <div
           ref={bgRef}
-          className={`absolute inset-0 ${
-            actualTheme === "dark"
-              ? "bg-linear-to-b from-gray-900/30 via-slate-900/30 to-zinc-950/30"
-              : "bg-linear-to-b from-orange-50/30 via-yellow-50/30 to-white/30"
-          }`}
+          className={`absolute inset-0 ${actualTheme === "dark"
+            ? "bg-linear-to-b from-gray-900/30 via-slate-900/30 to-zinc-950/30"
+            : "bg-linear-to-b from-orange-50/30 via-yellow-50/30 to-white/30"
+            }`}
         />
       </div>
 
       {/* Content */}
       <motion.h2
-        className={`text-4xl md:text-6xl font-serif mb-4 relative z-10 ${
-          actualTheme === "dark" ? "text-white" : "text-gray-900"
-        }`}
+        className={`text-4xl md:text-6xl font-serif mb-4 relative z-10 ${actualTheme === "dark" ? "text-white" : "text-gray-900"
+          }`}
         initial={{ y: 60, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
         viewport={{ once: true, margin: "-100px" }}
@@ -188,9 +181,8 @@ const Blogs = () => {
       </motion.h2>
 
       <motion.p
-        className={`mb-8 relative z-10 ${
-          actualTheme === "dark" ? "text-gray-400" : "text-gray-600"
-        }`}
+        className={`mb-8 relative z-10 ${actualTheme === "dark" ? "text-gray-400" : "text-gray-600"
+          }`}
         initial={{ y: 40, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
         viewport={{ once: true, margin: "-100px" }}

@@ -17,7 +17,7 @@ interface BlogPostPageProps {
 }
 
 // Enable ISR (Incremental Static Regeneration) and allow dynamic params
-export const revalidate = 3600; // Revalidate every hour
+export const revalidate = 3600; // ISR: Revalidate every hour
 export const dynamicParams = true; // Allow dynamic params not in generateStaticParams
 
 // Generate static params for all blog posts

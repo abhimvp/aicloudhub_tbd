@@ -1,6 +1,6 @@
 import Link from "next/link";
 import * as motion from "motion/react-client";
-import ScrollToTop from "@/components/layout/ScrollToTop";
+
 import { ChevronRight, FileText } from "lucide-react";
 
 export async function generateMetadata() {
@@ -213,8 +213,7 @@ export default function TermsPage() {
         </motion.div>
       </section>
 
-      {/* Scroll to Top Button */}
-      <ScrollToTop />
+
     </div>
   );
 }

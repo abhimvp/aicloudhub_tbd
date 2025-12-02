@@ -4,12 +4,9 @@
 import React, { useState, useEffect } from "react";
 import * as motion from "motion/react-client";
 import type { BlogPost, BlogCategory } from "@/lib/sanity/blogQueries";
-import {
-  getAllBlogPosts,
-  getBlogCategories,
-} from "@/lib/sanity/blogQueries";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Search, Calendar, Clock, ArrowRight } from "lucide-react";
@@ -17,75 +14,76 @@ import { useTheme } from "@/components/theme/ThemeProvider";
 import ScrollToTop from "@/components/layout/ScrollToTop";
 import { urlFor } from "@/sanity/lib/image";
 
-export default function BlogsPageContent() {
+interface BlogsPageContentProps {
+  initialPosts: BlogPost[];
+  categories: BlogCategory[];
+  initialCategory: string;
+  initialSearch: string;
+}
+
+export default function BlogsPageContent({
+  initialPosts,
+  categories,
+  initialCategory,
+  initialSearch,
+}: BlogsPageContentProps) {
   const { actualTheme } = useTheme();
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const [searchQuery, setSearchQuery] = useState("");
-  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
-  const [blogCategories, setBlogCategories] = useState<BlogCategory[]>([]);
-  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
+  // Local state for immediate UI feedback, but source of truth is URL
+  const [searchQuery, setSearchQuery] = useState(initialSearch);
+
+  // Sync local search state with URL params
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const [posts, categories] = await Promise.all([
-          getAllBlogPosts(),
-          getBlogCategories(),
-        ]);
-        setBlogPosts(posts);
-        setBlogCategories(categories);
-      } finally {
-        setLoading(false);
-      }
+    setSearchQuery(initialSearch);
+  }, [initialSearch]);
+
+  const handleCategoryChange = (categorySlug: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (categorySlug === "All") {
+      params.delete("category");
+    } else {
+      params.set("category", categorySlug);
     }
-    fetchData();
-  }, []);
+    // Reset page to 1 when filter changes (if we had pagination)
+    router.push(`/blogs?${params.toString()}`, { scroll: false });
+  };
 
-  // Get filtered blogs based on category and search query
-  const filteredBlogs = React.useMemo(() => {
-    let blogs = blogPosts;
-
-    // Filter by category
-    if (selectedCategory !== "All") {
-      blogs = blogs.filter(
-        (blog) => blog.category?.slug?.current === selectedCategory
-      );
+  const handleSearch = (term: string) => {
+    setSearchQuery(term);
+    const params = new URLSearchParams(searchParams.toString());
+    if (term) {
+      params.set("search", term);
+    } else {
+      params.delete("search");
     }
+    // Debounce could be added here, but for now we update on every change or on blur/enter
+    // To avoid too many requests, let's update URL only after a delay or on explicit action
+    // For this implementation, we'll use a timeout
+    const timeoutId = setTimeout(() => {
+      router.push(`/blogs?${params.toString()}`, { scroll: false });
+    }, 500);
+    return () => clearTimeout(timeoutId);
+  };
 
-    // Filter by search query
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase();
-      blogs = blogs.filter(
-        (blog) =>
-          blog.title.toLowerCase().includes(query) ||
-          blog.excerpt.toLowerCase().includes(query)
-      );
-    }
-
-    return blogs;
-  }, [blogPosts, selectedCategory, searchQuery]);
-
-  // Get category names for display
   const categoryNames = React.useMemo(() => {
-    const names = ["All", ...blogCategories.map((cat) => cat.name)];
-    return names;
-  }, [blogCategories]);
+    return ["All", ...categories.map((cat) => cat.name)];
+  }, [categories]);
 
   return (
     <main
-      className={`min-h-screen transition-colors duration-300 ${
-        actualTheme === "dark"
+      className={`min-h-screen transition-colors duration-300 ${actualTheme === "dark"
           ? "bg-linear-to-r from-gray-950 via-slate-950 to-zinc-950"
           : "bg-linear-to-br from-white via-orange-50/40 to-yellow-50/50"
-      }`}
+        }`}
     >
       {/* Hero Section */}
       <section
-        className={`relative pt-32 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden transition-colors duration-300 ${
-          actualTheme === "dark"
+        className={`relative pt-32 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden transition-colors duration-300 ${actualTheme === "dark"
             ? "bg-linear-to-r from-gray-950 via-slate-950 to-zinc-950"
             : "bg-linear-to-br from-orange-50 via-white to-yellow-50"
-        }`}
+          }`}
       >
         {/* Tech Grid Background */}
         <div
@@ -148,18 +146,16 @@ export default function BlogsPageContent() {
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
               </span>
               <span
-                className={`text-sm font-medium ${
-                  actualTheme === "dark" ? "text-orange-300" : "text-orange-700"
-                }`}
+                className={`text-sm font-medium ${actualTheme === "dark" ? "text-orange-300" : "text-orange-700"
+                  }`}
               >
                 Latest Insights
               </span>
             </motion.div>
 
             <h1
-              className={`text-5xl md:text-6xl lg:text-7xl font-black mb-6 tracking-tight ${
-                actualTheme === "dark" ? "text-white" : "text-slate-900"
-              }`}
+              className={`text-5xl md:text-6xl lg:text-7xl font-black mb-6 tracking-tight ${actualTheme === "dark" ? "text-white" : "text-slate-900"
+                }`}
             >
               Explore Our{" "}
               <span className="bg-linear-to-r from-orange-500 via-amber-500 to-orange-600 bg-clip-text text-transparent">
@@ -167,9 +163,8 @@ export default function BlogsPageContent() {
               </span>
             </h1>
             <p
-              className={`text-xl md:text-2xl max-w-3xl mx-auto transition-colors duration-300 leading-relaxed ${
-                actualTheme === "dark" ? "text-slate-400" : "text-slate-600"
-              }`}
+              className={`text-xl md:text-2xl max-w-3xl mx-auto transition-colors duration-300 leading-relaxed ${actualTheme === "dark" ? "text-slate-400" : "text-slate-600"
+                }`}
             >
               Insights, tutorials, and thought leadership on AI, Cloud, DevOps,
               and Cybersecurity
@@ -185,28 +180,25 @@ export default function BlogsPageContent() {
           >
             <div className="relative group">
               <div
-                className={`absolute -inset-1 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200 ${
-                  actualTheme === "dark"
+                className={`absolute -inset-1 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200 ${actualTheme === "dark"
                     ? "bg-linear-to-r from-orange-600 to-amber-600"
                     : "bg-linear-to-r from-orange-400 to-amber-400"
-                }`}
+                  }`}
               ></div>
               <div className="relative">
                 <Search
-                  className={`absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 transition-colors duration-300 ${
-                    actualTheme === "dark" ? "text-gray-400" : "text-gray-500"
-                  }`}
+                  className={`absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 transition-colors duration-300 ${actualTheme === "dark" ? "text-gray-400" : "text-gray-500"
+                    }`}
                 />
                 <input
                   type="text"
                   placeholder="Search articles, topics..."
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className={`w-full pl-12 pr-4 py-4 rounded-2xl transition-all duration-300 ${
-                    actualTheme === "dark"
+                  onChange={(e) => handleSearch(e.target.value)}
+                  className={`w-full pl-12 pr-4 py-4 rounded-2xl transition-all duration-300 ${actualTheme === "dark"
                       ? "bg-zinc-900/80 border border-white/10 text-white placeholder-gray-400 focus:border-orange-500/50 focus:bg-zinc-900 focus:ring-1 focus:ring-orange-500/20"
                       : "bg-white border border-gray-200 text-gray-900 placeholder-gray-400 focus:border-orange-500 shadow-sm"
-                  } focus:outline-none`}
+                    } focus:outline-none`}
                 />
               </div>
             </div>
@@ -227,104 +219,73 @@ export default function BlogsPageContent() {
             >
               <div className="sticky top-24">
                 <Card
-                  className={`backdrop-blur-lg transition-colors duration-300 ${
-                    actualTheme === "dark"
+                  className={`backdrop-blur-lg transition-colors duration-300 ${actualTheme === "dark"
                       ? "bg-white/5 border-white/10"
                       : "bg-white border-gray-200 shadow-lg"
-                  }`}
+                    }`}
                 >
                   <CardContent className="p-6">
                     <h3
-                      className={`text-xl font-bold mb-4 transition-colors duration-300 ${
-                        actualTheme === "dark" ? "text-white" : "text-gray-900"
-                      }`}
+                      className={`text-xl font-bold mb-4 transition-colors duration-300 ${actualTheme === "dark" ? "text-white" : "text-gray-900"
+                        }`}
                     >
                       Categories
                     </h3>
-                    {loading ? (
-                      <div className="space-y-2">
-                        {[1, 2, 3].map((i) => (
-                          <div
-                            key={i}
-                            className="h-12 bg-gray-200 dark:bg-gray-800 rounded-lg animate-pulse"
-                          />
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="space-y-2">
-                        {categoryNames.map((categoryName) => (
-                          <button
-                            key={categoryName}
-                            onClick={() =>
-                              setSelectedCategory(
-                                categoryName === "All"
-                                  ? "All"
-                                  : blogCategories.find(
-                                      (cat) => cat.name === categoryName
-                                    )?.slug?.current || "All"
-                              )
-                            }
-                            className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 ${
-                              (selectedCategory === "All" &&
-                                categoryName === "All") ||
-                              (selectedCategory !== "All" &&
-                                blogCategories.find(
+                    <div className="space-y-2">
+                      {categoryNames.map((categoryName) => (
+                        <button
+                          key={categoryName}
+                          onClick={() =>
+                            handleCategoryChange(
+                              categoryName === "All"
+                                ? "All"
+                                : categories.find(
+                                  (cat) => cat.name === categoryName
+                                )?.slug?.current || "All"
+                            )
+                          }
+                          className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 ${(initialCategory === "All" &&
+                              categoryName === "All") ||
+                              (initialCategory !== "All" &&
+                                categories.find(
                                   (cat) =>
-                                    cat.slug?.current === selectedCategory
+                                    cat.slug?.current === initialCategory
                                 )?.name === categoryName)
-                                ? "bg-linear-to-r from-orange-500 to-yellow-400 text-black font-semibold shadow-lg shadow-orange-500/20"
-                                : actualTheme === "dark"
+                              ? "bg-linear-to-r from-orange-500 to-yellow-400 text-black font-semibold shadow-lg shadow-orange-500/20"
+                              : actualTheme === "dark"
                                 ? "text-gray-300 hover:bg-white/10 hover:text-white"
                                 : "text-gray-600 hover:bg-orange-50 hover:text-gray-900"
                             }`}
-                          >
-                            {categoryName}
-                          </button>
-                        ))}
-                      </div>
-                    )}
+                        >
+                          {categoryName}
+                        </button>
+                      ))}
+                    </div>
 
                     {/* Stats */}
                     <div
-                      className={`mt-8 pt-6 transition-colors duration-300 ${
-                        actualTheme === "dark"
+                      className={`mt-8 pt-6 transition-colors duration-300 ${actualTheme === "dark"
                           ? "border-t border-white/10"
                           : "border-t border-gray-200"
-                      }`}
+                        }`}
                     >
                       <div className="space-y-3">
                         <div className="flex justify-between items-center">
                           <span
-                            className={`text-sm transition-colors duration-300 ${
-                              actualTheme === "dark"
+                            className={`text-sm transition-colors duration-300 ${actualTheme === "dark"
                                 ? "text-gray-400"
                                 : "text-gray-500"
-                            }`}
+                              }`}
                           >
-                            Total Posts
+                            Showing
                           </span>
                           <span
-                            className={`font-semibold transition-colors duration-300 ${
-                              actualTheme === "dark"
+                            className={`font-semibold transition-colors duration-300 ${actualTheme === "dark"
                                 ? "text-white"
                                 : "text-gray-900"
-                            }`}
+                              }`}
                           >
-                            {blogPosts.length}
-                          </span>
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <span
-                            className={`text-sm transition-colors duration-300 ${
-                              actualTheme === "dark"
-                                ? "text-gray-400"
-                                : "text-gray-500"
-                            }`}
-                          >
-                            Filtered
-                          </span>
-                          <span className="text-orange-400 font-semibold">
-                            {filteredBlogs.length}
+                            {initialPosts.length} Posts
                           </span>
                         </div>
                       </div>
@@ -336,32 +297,22 @@ export default function BlogsPageContent() {
 
             {/* Blog Grid */}
             <div className="flex-1">
-              {loading ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  {[1, 2, 3, 4].map((i) => (
-                    <div
-                      key={i}
-                      className="bg-gray-200 dark:bg-gray-800 rounded-lg h-96 animate-pulse"
-                    />
-                  ))}
-                </div>
-              ) : filteredBlogs.length === 0 ? (
+              {initialPosts.length === 0 ? (
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   className="text-center py-20"
                 >
                   <p
-                    className={`text-xl transition-colors duration-300 ${
-                      actualTheme === "dark" ? "text-gray-400" : "text-gray-500"
-                    }`}
+                    className={`text-xl transition-colors duration-300 ${actualTheme === "dark" ? "text-gray-400" : "text-gray-500"
+                      }`}
                   >
                     No articles found matching your search.
                   </p>
                 </motion.div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  {filteredBlogs.map((blog, index) => {
+                  {initialPosts.map((blog, index) => {
                     const coverImageUrl = blog.cover?.asset
                       ? urlFor(blog.cover).url()
                       : "";
@@ -381,11 +332,10 @@ export default function BlogsPageContent() {
                       >
                         <Link href={`/blogs/${blog.slug.current}`}>
                           <Card
-                            className={`group backdrop-blur-lg overflow-hidden transition-all duration-300 h-[380px] cursor-pointer hover:translate-y-[-4px] hover:shadow-2xl hover:shadow-orange-500/15 flex flex-col rounded-3xl ${
-                              actualTheme === "dark"
+                            className={`group backdrop-blur-lg overflow-hidden transition-all duration-300 h-[380px] cursor-pointer hover:translate-y-[-4px] hover:shadow-2xl hover:shadow-orange-500/15 flex flex-col rounded-3xl ${actualTheme === "dark"
                                 ? "bg-zinc-950/60 border-white/10 hover:bg-zinc-900/80 hover:border-orange-400/60"
                                 : "bg-white border-gray-200 hover:bg-orange-50/60 hover:border-orange-400/70 shadow-lg"
-                            }`}
+                              }`}
                           >
                             {/* Image / Placeholder area (16:9 aspect for all cards) */}
                             <div className="relative aspect-video overflow-hidden">
@@ -401,11 +351,10 @@ export default function BlogsPageContent() {
                                 </>
                               ) : (
                                 <div
-                                  className={`w-full h-full ${
-                                    actualTheme === "dark"
+                                  className={`w-full h-full ${actualTheme === "dark"
                                       ? "bg-zinc-900"
                                       : "bg-gray-100"
-                                  }`}
+                                    }`}
                                 />
                               )}
 
@@ -429,22 +378,20 @@ export default function BlogsPageContent() {
                             <CardContent className="p-4 flex flex-col h-full gap-1">
                               {/* Title */}
                               <h3
-                                className={`text-lg md:text-xl font-semibold mb-1.5 group-hover:text-orange-400 transition-colors line-clamp-2 tracking-tight ${
-                                  actualTheme === "dark"
+                                className={`text-lg md:text-xl font-semibold mb-1.5 group-hover:text-orange-400 transition-colors line-clamp-2 tracking-tight ${actualTheme === "dark"
                                     ? "text-white"
                                     : "text-gray-900"
-                                }`}
+                                  }`}
                               >
                                 {blog.title}
                               </h3>
 
                               {/* Excerpt */}
                               <p
-                                className={`line-clamp-2 leading-relaxed text-sm transition-colors duration-300 ${
-                                  actualTheme === "dark"
+                                className={`line-clamp-2 leading-relaxed text-sm transition-colors duration-300 ${actualTheme === "dark"
                                     ? "text-gray-400"
                                     : "text-gray-600"
-                                }`}
+                                  }`}
                               >
                                 {blog.excerpt}
                               </p>
@@ -453,11 +400,10 @@ export default function BlogsPageContent() {
                               <div className="mt-auto space-y-4">
                                 {/* Meta Info */}
                                 <div
-                                  className={`flex items-center gap-4 text-xs md:text-sm transition-colors duration-300 ${
-                                    actualTheme === "dark"
+                                  className={`flex items-center gap-4 text-xs md:text-sm transition-colors duration-300 ${actualTheme === "dark"
                                       ? "text-gray-500"
                                       : "text-gray-500"
-                                  }`}
+                                    }`}
                                 >
                                   <div className="flex items-center gap-1">
                                     <Calendar className="w-4 h-4" />
@@ -472,11 +418,10 @@ export default function BlogsPageContent() {
                                 {/* Read More Button */}
                                 <Button
                                   variant="outline"
-                                  className={`w-full font-semibold transition-all duration-300 rounded-2xl ${
-                                    actualTheme === "dark"
+                                  className={`w-full font-semibold transition-all duration-300 rounded-2xl ${actualTheme === "dark"
                                       ? "border-orange-400/60 text-orange-400 hover:bg-linear-to-r hover:from-orange-500 hover:to-yellow-400 hover:text-black group-hover:border-orange-400"
                                       : "border-orange-400 text-orange-500 hover:bg-linear-to-r hover:from-orange-500 hover:to-amber-500 hover:text-white hover:border-orange-500"
-                                  }`}
+                                    }`}
                                 >
                                   Read Article
                                   <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />

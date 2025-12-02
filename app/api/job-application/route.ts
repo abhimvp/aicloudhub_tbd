@@ -9,13 +9,13 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData();
 
     // Extract form fields
-    const name = formData.get("name") as string;
+    const name = formData.get("fullName") as string;
     const email = formData.get("email") as string;
     const phone = formData.get("phone") as string;
-    const message = formData.get("message") as string;
+    const message = formData.get("coverLetter") as string;
+    const linkedin = formData.get("linkedin") as string;
     const jobTitle = formData.get("jobTitle") as string;
     const jobId = formData.get("jobId") as string;
-    const applicationEmail = formData.get("applicationEmail") as string | null;
     const resume = formData.get("resume") as File;
 
     // Validate required fields
@@ -56,10 +56,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Validate file size (10MB max)
-    if (resume.size > 10 * 1024 * 1024) {
+    // Validate file size (5MB max)
+    if (resume.size > 5 * 1024 * 1024) {
       return NextResponse.json(
-        { error: "File size must be less than 10MB" },
+        { error: "File size must be less than 5MB" },
         { status: 400 }
       );
     }
@@ -70,7 +70,7 @@ export async function POST(request: NextRequest) {
 
     // Determine recipient email (prioritize env var for testing/production control)
     const recipientEmail =
-      process.env.JOB_APPLICATION_EMAIL || applicationEmail || "info@acloudhub.com";
+      process.env.JOB_APPLICATION_EMAIL || "info@acloudhub.com";
 
     // Prepare email content
     const emailSubject = `Job Application: ${jobTitle}`;
@@ -85,6 +85,7 @@ Applicant Information:
 - Name: ${name}
 - Email: ${email}
 - Phone: ${phone || "Not provided"}
+- LinkedIn: ${linkedin || "Not provided"}
 
 ${message ? `Cover Letter/Message:\n${message}\n` : ""}
 

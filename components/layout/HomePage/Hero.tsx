@@ -49,13 +49,13 @@ const FALLBACK_BUSINESS_VERTICALS: HeroBusinessVertical[] = [
   },
 ];
 
-const HERO_VERTICALS_QUERY = `*[_type == "servicesSettings"][0].heroSectionBusinessVerticals[isActive == true]|order(order asc){
+const HERO_VERTICALS_QUERY = `*[_type == "service" && category == "Business Vertical"]|order(title asc){
   _id,
   title,
-  tagline,
-  description,
-  href,
-  image
+  "tagline": homepageInfo.tagline,
+  "description": homepageInfo.summary,
+  "href": "/services/" + slug.current,
+  "image": homepageInfo.previewImage
 }`;
 
 export default function Hero() {

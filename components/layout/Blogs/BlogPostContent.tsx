@@ -11,6 +11,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, Clock, ArrowLeft } from "lucide-react";
 import { useTheme } from "@/components/theme/ThemeProvider";
 import "@/app/blogs/blog-post-content.css";
+import { PortableTextRenderer } from "@/components/blocks/PortableTextRenderer";
 
 interface BlogPostContentProps {
   blog: BlogPost & { coverImageUrl?: string; bodyHtml?: string };
@@ -28,22 +29,20 @@ export default function BlogPostContent({
 
   return (
     <main
-      className={`min-h-screen transition-colors duration-300 ${
-        actualTheme === "dark"
-          ? "bg-linear-to-b from-[#0a0a0a] via-[#111] to-[#0a0a0a]"
-          : "bg-white"
-      }`}
+      className={`min-h-screen transition-colors duration-300 ${actualTheme === "dark"
+        ? "bg-linear-to-b from-[#0a0a0a] via-[#111] to-[#0a0a0a]"
+        : "bg-white"
+        }`}
     >
       {/* Back Button */}
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-8">
         <Link href="/blogs">
           <Button
             variant="outline"
-            className={`transition-colors duration-300 ${
-              actualTheme === "dark"
-                ? "border-white/20 text-white hover:bg-white/10"
-                : "border-gray-300 text-gray-900 hover:bg-gray-100"
-            }`}
+            className={`transition-colors duration-300 ${actualTheme === "dark"
+              ? "border-white/20 text-white hover:bg-white/10"
+              : "border-gray-300 text-gray-900 hover:bg-gray-100"
+              }`}
           >
             <ArrowLeft className="mr-2 w-4 h-4" />
             Back to All Articles
@@ -72,33 +71,29 @@ export default function BlogPostContent({
 
           {/* Title */}
           <h1
-            className={`text-4xl md:text-5xl lg:text-6xl font-black mb-6 leading-tight transition-colors duration-300 ${
-              actualTheme === "dark" ? "text-white" : "text-gray-900"
-            }`}
+            className={`text-4xl md:text-5xl lg:text-6xl font-black mb-6 leading-tight transition-colors duration-300 ${actualTheme === "dark" ? "text-white" : "text-gray-900"
+              }`}
           >
             {blog.title}
           </h1>
 
           {/* Excerpt */}
           <p
-            className={`text-xl md:text-2xl mb-8 leading-relaxed transition-colors duration-300 ${
-              actualTheme === "dark" ? "text-gray-300" : "text-gray-600"
-            }`}
+            className={`text-xl md:text-2xl mb-8 leading-relaxed transition-colors duration-300 ${actualTheme === "dark" ? "text-gray-300" : "text-gray-600"
+              }`}
           >
             {blog.excerpt}
           </p>
 
           {/* Meta Info */}
           <div
-            className={`flex flex-wrap items-center gap-6 mb-8 pb-8 border-b transition-colors duration-300 ${
-              actualTheme === "dark" ? "border-white/10" : "border-gray-200"
-            }`}
+            className={`flex flex-wrap items-center gap-6 mb-8 pb-8 border-b transition-colors duration-300 ${actualTheme === "dark" ? "border-white/10" : "border-gray-200"
+              }`}
           >
             {/* Date */}
             <div
-              className={`flex items-center gap-2 transition-colors duration-300 ${
-                actualTheme === "dark" ? "text-gray-400" : "text-gray-600"
-              }`}
+              className={`flex items-center gap-2 transition-colors duration-300 ${actualTheme === "dark" ? "text-gray-400" : "text-gray-600"
+                }`}
             >
               <Calendar className="w-4 h-4" />
               <span>{blog.date}</span>
@@ -106,9 +101,8 @@ export default function BlogPostContent({
 
             {/* Read Time */}
             <div
-              className={`flex items-center gap-2 transition-colors duration-300 ${
-                actualTheme === "dark" ? "text-gray-400" : "text-gray-600"
-              }`}
+              className={`flex items-center gap-2 transition-colors duration-300 ${actualTheme === "dark" ? "text-gray-400" : "text-gray-600"
+                }`}
             >
               <Clock className="w-4 h-4" />
               <span>{blog.readTime}</span>
@@ -130,21 +124,24 @@ export default function BlogPostContent({
             </div>
           )}
 
-          {/* Content - Render markdown HTML */}
-          {blog.bodyHtml && (
+
+
+          {/* Content - Render Portable Text or Markdown HTML */}
+          {blog.content ? (
+            <PortableTextRenderer value={blog.content} />
+          ) : blog.bodyHtml ? (
             <div
-              className={`blog-markdown-content transition-colors duration-300 ${
-                actualTheme === "dark"
-                  ? "text-gray-300"
-                  : "text-gray-800"
-              }`}
+              className={`blog-markdown-content transition-colors duration-300 ${actualTheme === "dark"
+                ? "text-gray-300"
+                : "text-gray-800"
+                }`}
               style={{
                 fontSize: "1.125rem",
                 lineHeight: "1.75rem",
               }}
               dangerouslySetInnerHTML={{ __html: blog.bodyHtml }}
             />
-          )}
+          ) : null}
 
         </motion.div>
       </article>
@@ -152,9 +149,8 @@ export default function BlogPostContent({
       {/* Related Articles */}
       {relatedBlogs.length > 0 && (
         <section
-          className={`py-20 transition-colors duration-300 ${
-            actualTheme === "dark" ? "bg-black/30" : "bg-gray-50"
-          }`}
+          className={`py-20 transition-colors duration-300 ${actualTheme === "dark" ? "bg-black/30" : "bg-gray-50"
+            }`}
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
@@ -165,9 +161,8 @@ export default function BlogPostContent({
               transition={{ duration: 0.6 }}
             >
               <h2
-                className={`text-3xl md:text-4xl font-black mb-12 transition-colors duration-300 ${
-                  actualTheme === "dark" ? "text-white" : "text-gray-900"
-                }`}
+                className={`text-3xl md:text-4xl font-black mb-12 transition-colors duration-300 ${actualTheme === "dark" ? "text-white" : "text-gray-900"
+                  }`}
               >
                 Related Articles
               </h2>
@@ -182,11 +177,10 @@ export default function BlogPostContent({
                       href={`/blogs/${relatedBlog.slug.current}`}
                     >
                       <Card
-                        className={`group backdrop-blur-lg overflow-hidden transition-all duration-300 h-full cursor-pointer hover:scale-[1.02] ${
-                          actualTheme === "dark"
-                            ? "bg-white/5 border-white/10 hover:bg-white/10 hover:border-orange-400/50"
-                            : "bg-white border-gray-200 hover:bg-gray-50 hover:border-orange-400"
-                        }`}
+                        className={`group backdrop-blur-lg overflow-hidden transition-all duration-300 h-full cursor-pointer hover:scale-[1.02] ${actualTheme === "dark"
+                          ? "bg-white/5 border-white/10 hover:bg-white/10 hover:border-orange-400/50"
+                          : "bg-white border-gray-200 hover:bg-gray-50 hover:border-orange-400"
+                          }`}
                       >
                         {/* Image */}
                         {relatedCoverUrl && (
@@ -209,29 +203,26 @@ export default function BlogPostContent({
 
                         <CardContent className="p-6">
                           <h3
-                            className={`text-lg font-bold mb-2 transition-colors line-clamp-2 ${
-                              actualTheme === "dark"
-                                ? "text-white group-hover:text-orange-400"
-                                : "text-gray-900 group-hover:text-orange-600"
-                            }`}
+                            className={`text-lg font-bold mb-2 transition-colors line-clamp-2 ${actualTheme === "dark"
+                              ? "text-white group-hover:text-orange-400"
+                              : "text-gray-900 group-hover:text-orange-600"
+                              }`}
                           >
                             {relatedBlog.title}
                           </h3>
                           <p
-                            className={`text-sm line-clamp-2 mb-4 transition-colors duration-300 ${
-                              actualTheme === "dark"
-                                ? "text-gray-400"
-                                : "text-gray-600"
-                            }`}
+                            className={`text-sm line-clamp-2 mb-4 transition-colors duration-300 ${actualTheme === "dark"
+                              ? "text-gray-400"
+                              : "text-gray-600"
+                              }`}
                           >
                             {relatedBlog.excerpt}
                           </p>
                           <div
-                            className={`flex items-center gap-3 text-xs transition-colors duration-300 ${
-                              actualTheme === "dark"
-                                ? "text-gray-500"
-                                : "text-gray-500"
-                            }`}
+                            className={`flex items-center gap-3 text-xs transition-colors duration-300 ${actualTheme === "dark"
+                              ? "text-gray-500"
+                              : "text-gray-500"
+                              }`}
                           >
                             <div className="flex items-center gap-1">
                               <Calendar className="w-3 h-3" />

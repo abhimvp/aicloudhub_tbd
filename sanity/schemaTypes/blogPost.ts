@@ -31,11 +31,23 @@ export default defineType({
       validation: (Rule) => Rule.required().max(200),
     }),
     defineField({
+      name: 'content',
+      title: 'Content',
+      type: 'array',
+      description: 'Main blog content with rich text and custom blocks.',
+      of: [
+        { type: 'block' },
+        { type: 'image', options: { hotspot: true } },
+        // Add other custom blocks here if needed in the future
+      ],
+    }),
+    defineField({
       name: 'bodyMarkdown',
-      title: 'Body (Markdown)',
+      title: 'Body (Markdown) [DEPRECATED]',
       type: 'text',
       description:
-        'Optional: main blog content written in Markdown, used by the website when present.',
+        'Legacy content field. Please use the "Content" field for new posts.',
+      readOnly: true,
     }),
     defineField({
       name: 'cover',

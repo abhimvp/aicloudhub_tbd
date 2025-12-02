@@ -27,7 +27,7 @@ export default defineType({
       name: 'locations',
       title: 'Locations',
       type: 'array',
-      of: [{type: 'reference', to: [{type: 'jobLocation'}]}],
+      of: [{ type: 'reference', to: [{ type: 'jobLocation' }] }],
       description: 'One or more locations for this role',
       validation: (Rule) =>
         Rule.required()
@@ -73,11 +73,14 @@ export default defineType({
       validation: (Rule) => Rule.required().max(300),
     }),
     defineField({
-      name: 'descriptionMarkdown',
-      title: 'Job Description (Markdown)',
-      type: 'text',
-      description:
-        'Optional: main job description written in Markdown, used by the website when present.',
+      name: 'content',
+      title: 'Job Description',
+      type: 'array',
+      of: [
+        { type: 'block' },
+        { type: 'image' },
+      ],
+      description: 'Full job description using Portable Text',
     }),
     defineField({
       name: 'isActive',
@@ -94,13 +97,6 @@ export default defineType({
       validation: (Rule) => Rule.required(),
       initialValue: () => new Date().toISOString(),
     }),
-    defineField({
-      name: 'applicationEmail',
-      title: 'Application Email',
-      type: 'string',
-      description: 'Optional: Custom email address to receive applications for this job. Leave empty to use default.',
-      validation: (Rule) => Rule.email(),
-    }),
   ],
   preview: {
     select: {
@@ -112,8 +108,8 @@ export default defineType({
       const locationNames =
         Array.isArray(locations) && locations.length > 0
           ? locations
-              .map((loc: any) => loc?.name || loc?._ref || 'Unnamed')
-              .join(' • ')
+            .map((loc: any) => loc?.name || loc?._ref || 'Unnamed')
+            .join(' • ')
           : 'No locations';
       return {
         title: title || 'Untitled Job',
@@ -134,4 +130,3 @@ export default defineType({
     },
   ],
 })
-
