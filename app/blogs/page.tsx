@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description:
     "Insights, tutorials, and thought leadership on AI, Cloud, DevOps, and Cybersecurity from the AI Cloud Hub team.",
   openGraph: {
-    title: "Blogs - AI Cloud Hub",
+    title: "Blogs - aiCloudHub",
     description:
       "Insights, tutorials, and thought leadership on AI, Cloud, DevOps, and Cybersecurity.",
     type: "website",

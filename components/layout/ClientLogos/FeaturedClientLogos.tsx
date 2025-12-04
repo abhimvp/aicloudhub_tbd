@@ -5,11 +5,11 @@ import { clientLogos } from "@/lib/constants";
 import { useTheme } from "@/components/theme/ThemeProvider";
 
 const FEATURED_CLIENTS = [
-  "Microsoft",
   "LTIMindtree",
-  "Salesforce",
   "Quadrant Technologies",
   "Altimetrik",
+  "Ariel Partners",
+  "ALKU",
 ] as const;
 
 const FeaturedClientLogos = () => {
@@ -38,9 +38,8 @@ const FeaturedClientLogos = () => {
 
   return (
     <section
-      className={`py-20 relative overflow-hidden transition-colors duration-300 ${
-        actualTheme === "dark" ? "bg-zinc-950" : "bg-gray-50"
-      }`}
+      className={`py-20 relative overflow-hidden transition-colors duration-300 ${actualTheme === "dark" ? "bg-zinc-950" : "bg-gray-50"
+        }`}
     >
       <div
         className="absolute inset-0"
@@ -57,16 +56,14 @@ const FeaturedClientLogos = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-12">
           <h2
-            className={`text-4xl md:text-5xl font-black mb-4 ${
-              actualTheme === "dark" ? "text-white" : "text-gray-900"
-            }`}
+            className={`text-4xl md:text-5xl font-black mb-4 ${actualTheme === "dark" ? "text-white" : "text-gray-900"
+              }`}
           >
             Trusted By
           </h2>
           <p
-            className={`text-xl ${
-              actualTheme === "dark" ? "text-gray-300" : "text-gray-700"
-            }`}
+            className={`text-xl ${actualTheme === "dark" ? "text-gray-300" : "text-gray-700"
+              }`}
           >
             Industry leaders who{" "}
             <span className="text-orange-400 font-semibold">
@@ -83,11 +80,7 @@ const FeaturedClientLogos = () => {
             return (
               <div
                 key={client.name}
-                className={`flex items-center justify-center rounded-2xl border shadow-sm p-6 transition-all duration-300 hover:-translate-y-1 ${
-                  actualTheme === "dark"
-                    ? "bg-white/5 border-white/10 text-white"
-                    : "bg-white border-gray-200 text-gray-900"
-                }`}
+                className="flex items-center justify-center rounded-2xl border shadow-sm p-6 transition-all duration-300 hover:-translate-y-1 bg-white border-gray-200 text-gray-900"
               >
                 <div className="relative w-full h-20 flex items-center justify-center">
                   {hasLogo ? (
@@ -105,11 +98,7 @@ const FeaturedClientLogos = () => {
                     </div>
                   ) : (
                     <div
-                      className={`flex h-full w-full items-center justify-center rounded-xl font-semibold text-2xl ${
-                        actualTheme === "dark"
-                          ? "bg-orange-500/20 text-orange-200"
-                          : "bg-orange-50 text-orange-500"
-                      }`}
+                      className="flex h-full w-full items-center justify-center rounded-xl font-semibold text-2xl bg-orange-50 text-orange-500"
                     >
                       {renderInitials(client.name)}
                     </div>

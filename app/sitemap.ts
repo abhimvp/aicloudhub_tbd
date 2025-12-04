@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { blogPosts } from "@/lib/blogData";
-import { getAllServiceSlugs } from "@/lib/servicesData";
+import { client } from "@/sanity/lib/client";
 
 const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
   ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
@@ -27,22 +27,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: path === "" ? 1 : 0.6,
   }));
 
-  // Service pages (dynamic, from hardcoded service definitions)
-  const serviceSlugs = await getAllServiceSlugs();
-  const servicePages = serviceSlugs.map((slug) => ({
-    url: `${baseUrl}/services/${slug}`,
-    lastModified,
-    changeFrequency: "monthly" as const,
-    priority: 0.8,
-  }));
+  // Fetch service slugs from Sanity
+  const query = `*[_type == "service"]{ "slug": slug.current }`;
+  const services = await client.fetch<{ slug: string }[]>(query);
 
-  // Business vertical pages (staffing, corporate-training, it-services)
-  const verticalPages = [
-    "/services/staffing",
-    "/services/corporate-training",
-    "/services/it-services",
-  ].map((path) => ({
-    url: `${baseUrl}${path}`,
+  const servicePages = services.map((service) => ({
+    url: `${baseUrl}/services/${service.slug}`,
     lastModified,
     changeFrequency: "monthly" as const,
     priority: 0.8,
@@ -56,5 +46,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  return [...staticPages, ...servicePages, ...verticalPages, ...blogPages];
+  return [...staticPages, ...servicePages, ...blogPages];
 }

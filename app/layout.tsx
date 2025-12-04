@@ -5,6 +5,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import SmoothScrollProvider from "@/components/layout/SmoothScrollProvider";
 import ConditionalLayout from "@/components/layout/ConditionalLayout";
+import StructuredData from "@/components/seo/StructuredData";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-sans",
@@ -27,30 +28,30 @@ const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: "AI Cloud Hub",
-    template: "%s - AI Cloud Hub",
+    default: "aiCloudHub",
+    template: "%s - aiCloudHub",
   },
   description:
-    "Accelerate your AI transformation with Future AI Cloud Hub—enterprise-ready AI consulting, staffing, and training solutions.",
-  applicationName: "AI Cloud Hub",
+    "Accelerate your AI transformation with aiCloudHub enterprise-ready AI consulting, staffing, and training solutions.",
+  applicationName: "aiCloudHub",
   robots: {
     index: true,
     follow: true,
   },
   openGraph: {
-    title: "AI Cloud Hub",
+    title: "aiCloudHub",
     description:
-      "Accelerate your AI transformation with Future AI Cloud Hub—enterprise-ready AI consulting, staffing, and training solutions.",
+      "Accelerate your AI transformation with aiCloudHub enterprise-ready AI consulting, staffing, and training solutions.",
     url: baseUrl,
-    siteName: "AI Cloud Hub",
+    siteName: "aiCloudHub",
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "AI Cloud Hub",
+    title: "aiCloudHub",
     description:
-      "Accelerate your AI transformation with Future AI Cloud Hub—enterprise-ready AI consulting, staffing, and training solutions.",
+      "Accelerate your AI transformation with aiCloudHub enterprise-ready AI consulting, staffing, and training solutions.",
   },
 };
 
@@ -125,7 +126,10 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <SmoothScrollProvider>
-            <ConditionalLayout>{children}</ConditionalLayout>
+            <ConditionalLayout>
+              <StructuredData />
+              {children}
+            </ConditionalLayout>
           </SmoothScrollProvider>
         </ThemeProvider>
         {/* Mark HTML as loaded after React hydration */}

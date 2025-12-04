@@ -39,7 +39,7 @@ export default function ProcessStepsBlock({ heading, steps }: ProcessStepsBlockP
                                 </div>
 
                                 {/* Content Left (Even indices on desktop) */}
-                                <div className={`pl-16 md:pl-0 md:w-1/2 md:pr-16 ${idx % 2 === 0 ? 'md:text-right' : 'md:hidden'}`}>
+                                <div className="hidden md:block md:w-1/2 md:pr-16 md:text-right">
                                     {idx % 2 === 0 && (
                                         <div className={`group-hover:-translate-x-2 transition-transform duration-300 flex flex-col justify-center min-h-[40px] ${!step.description ? 'md:items-end' : ''}`}>
                                             <h3 className={`text-2xl font-bold text-foreground group-hover:text-primary transition-colors ${step.description ? 'mb-3' : 'mb-0'}`}>{step.title}</h3>
@@ -49,7 +49,7 @@ export default function ProcessStepsBlock({ heading, steps }: ProcessStepsBlockP
                                 </div>
 
                                 {/* Content Right (Odd indices on desktop) */}
-                                <div className={`pl-16 md:pl-16 md:w-1/2 ${idx % 2 !== 0 ? '' : 'md:hidden'}`}>
+                                <div className="hidden md:block md:pl-16 md:w-1/2">
                                     {idx % 2 !== 0 && (
                                         <div className={`group-hover:translate-x-2 transition-transform duration-300 flex flex-col justify-center min-h-[40px] ${!step.description ? 'md:items-start' : ''}`}>
                                             <h3 className={`text-2xl font-bold text-foreground group-hover:text-primary transition-colors ${step.description ? 'mb-3' : 'mb-0'}`}>{step.title}</h3>

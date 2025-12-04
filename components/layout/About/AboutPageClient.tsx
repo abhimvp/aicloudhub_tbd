@@ -257,7 +257,7 @@ const AboutPageClient = () => {
                       actualTheme === "dark" ? "text-zinc-200" : "text-zinc-800"
                     }`}
                   >
-                    &quot;We bridge innovation with enablement—helping
+                    &quot;We bridge innovation with enablement - helping
                     organizations adopt the right technologies and develop the
                     right talent.&quot;
                   </p>
@@ -325,18 +325,18 @@ const AboutPageClient = () => {
                   }`}
                 >
                   <p>
-                    &quot;With over 25 years in the industry, I&apos;ve seen
+                    With over 25 years in the industry, I&apos;ve seen
                     technology evolve rapidly. But one thing remains constant:
                     the need for authentic, human-centric leadership. At
                     aiCloudHub, we don&apos;t just deliver IT services; we build
-                    partnerships rooted in trust and transparency.&quot;
+                    partnerships rooted in trust and transparency.
                   </p>
                   <p>
-                    &quot;Our mission goes beyond code and cloud. We are deeply
+                    Our mission goes beyond code and cloud. We are deeply
                     committed to diversity and inclusion, especially in
                     empowering women in tech. We are building a future where
                     innovation is inclusive, agility is the norm, and our
-                    clients&apos; success is our only metric.&quot;
+                    clients&apos; success is our only metric.
                   </p>
                 </div>
 
@@ -403,7 +403,7 @@ const AboutPageClient = () => {
                     }`}
                   >
                     To empower organizations through innovative technology solutions
-                    and hands-on learning—enabling faster growth, smarter
+                    and hands-on learning enabling faster growth, smarter
                     decisions, and sustainable success.
                   </p>
                 </div>

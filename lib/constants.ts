@@ -201,13 +201,9 @@ export const mockBlogPosts = [
 
 export const clientLogos = [
   // Top Row - Global Giants (instantly recognizable logos)
-  { name: "Microsoft", logo: "/client logos/Microsoft_logo.png", scale: 1.0 },
+
   { name: "Amazon", logo: "/client logos/Amazon_logo.svg.png", scale: 1.0 },
-  {
-    name: "Salesforce",
-    logo: "/client logos/Salesforce.com_logo.svg.webp",
-    scale: 1.3,
-  },
+
   { name: "Volvo", logo: "/client logos/volvo-logo.png", scale: 1.7 },
 
   // Second Row - Strong Mid-Tier & Industry Leaders

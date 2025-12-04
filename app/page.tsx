@@ -10,9 +10,9 @@ import Stats from "@/components/layout/HomePage/Stats";
 import CTA from "@/components/layout/HomePage/CTA";
 
 export const metadata: Metadata = {
-  title: "AI Cloud Hub",
+  title: "aiCloudHub",
   description:
-    "AI Cloud Hub delivers AI consulting, cloud migration, and corporate upskilling programs for high-growth enterprises.",
+    "aiCloudHub delivers AI consulting, cloud migration, and corporate upskilling programs for high-growth enterprises.",
 };
 
 export default function Home() {

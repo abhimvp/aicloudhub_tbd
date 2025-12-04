@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { aiCloudHubLogo } from "@/lib/images";
 import { useTheme } from "@/components/theme/ThemeProvider";
-import { LinkedinIcon, FacebookIcon, TwitterIcon, InstagramIcon, YoutubeIcon, MailIcon } from "lucide-react";
+import { Linkedin, MailIcon } from "lucide-react";
 
 import { client } from "@/sanity/lib/client";
 import { useState, useEffect } from "react";
@@ -100,11 +100,7 @@ const Footer = () => {
               {/* Social Media Icons */}
               <div className="flex gap-3">
                 {[
-                  { Icon: LinkedinIcon, href: "https://linkedin.com" },
-                  { Icon: FacebookIcon, href: "https://facebook.com" },
-                  { Icon: TwitterIcon, href: "https://twitter.com" },
-                  { Icon: InstagramIcon, href: "https://instagram.com" },
-                  { Icon: YoutubeIcon, href: "https://youtube.com" },
+                  { Icon: Linkedin, href: "https://linkedin.com" },
                 ].map(({ Icon, href }) => (
                   <a
                     key={href}

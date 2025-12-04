@@ -8,7 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { CareersFilter } from "@/components/careers/CareersFilter";
 
 export const metadata: Metadata = {
-  title: "Careers | aiCloudHub",
+  title: "Careers",
   description:
     "Join our team of innovators. Explore open roles in AI, Cloud, and Enterprise Consulting.",
 };
